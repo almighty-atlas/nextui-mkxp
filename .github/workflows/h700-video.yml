@@ -1,0 +1,26 @@
+name: H700 video source-only checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: POSIX launcher syntax
+        run: sh -n spikes/h700-video/Tools/h700/RMXP-Video-Test.pak/launch.sh
+      - name: Optional ShellCheck without installation
+        run: |
+          if command -v shellcheck >/dev/null 2>&1; then
+            shellcheck --shell=sh spikes/h700-video/Tools/h700/RMXP-Video-Test.pak/launch.sh
+          else
+            echo 'NOT_TESTED: shellcheck unavailable'
+          fi
+      - name: Original mock API compilation and offline tests
+        run: python3 -m unittest discover -s spikes/h700-video/tests -v
+      - name: Whitespace
+        run: git show --check --oneline HEAD
