@@ -49,6 +49,7 @@ Run `sh -n tools/probe-h700.sh`, `python3 -m unittest discover -s tests -v`
 and `git diff --check`. Use ShellCheck/BusyBox syntax checks if already available;
 do not install packages on the handheld. The
 [probe workflow](../.github/workflows/h700-probe.yml) runs offline checks.
-Fixture outputs are HOST evidence; real H700 results remain NOT_TESTED until
-redacted device output and firmware version are supplied using the
-[handoff and results template](DEVICE_PROBE.md).
+Fixture outputs are HOST evidence. The owner has since supplied redacted real
+device inventory, summarized in [H700 baseline](H700_BASELINE.md); it is
+**H700 inventory** evidence only. Actual EGL/SDL/audio/input/Pak functionality,
+UI release confirmation and engine/game behavior remain **NOT_TESTED**.
