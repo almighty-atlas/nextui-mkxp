@@ -4,8 +4,8 @@
 
 - Device: Anbernic RG35XX Pro; SoC family H700.
 - Firmware: official NextUI H700; **capture exact installed version**.
-- Userspace: potentially aarch64/64-bit; confirm kernel, tool userland and `/bin/sh` ELF separately with [the read-only probe](DEVICE_PROBE.md). Actual H700 baseline remains **NOT_TESTED**, pending redacted owner output in issue #1.
-- Key constraints: modest RAM, framebuffer/display/GLES/DRM integration, built-in buttons, filesystem permissions, SD card durability.
+- Observed device inventory ([baseline](H700_BASELINE.md), owner-supplied): Linux 4.9.170 aarch64, `/bin/sh` ELF64 AArch64, Base OS 1.4.0, NextUI release-file `20261013-0`, ~973 MiB physical RAM and no swap. **glibc/loader compatibility and graphics/audio/input functionality remain NOT_TESTED.**
+- Key constraints: modest RAM with no swap; `/dev/fb0` available but probed `/dev/dri` nodes absent/inaccessible; bundled EGL/GLES/SDL2 libraries exist but a usable rendering context is unproven; built-in buttons, filesystem permissions and SD card durability.
 - R36S reference targets ArkOS on RK3326/armhf, **not a binary-compatible implementation**.
 
 ## Runtime choice / architecture decision gate
