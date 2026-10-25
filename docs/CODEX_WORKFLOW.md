@@ -2,6 +2,8 @@
 
 One Codex job per GitHub issue. Start with the first unblocked M0 issue, then follow issue dependencies and roadmap gates. Never assign concurrent jobs that edit the same files or share a hardware-only resource without coordination.
 
+The first task-specific prompt is [Issue #3 — upstream licensing and provenance](PROMPTS/ISSUE-003.md).
+
 ## Reusable Codex prompt
 
 ```text
