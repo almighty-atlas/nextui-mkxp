@@ -14,7 +14,9 @@ Always include exact game build, mkxp-z commit, NextUI version, hardware model, 
 
 ## H700 baseline limitation (issue #1)
 
-Hardware ABI, graphics/audio/input functionality and standalone Pak lifecycle
-remain **NOT_TESTED** pending owner-supplied redacted output from the
-[read-only inventory](DEVICE_PROBE.md). Cloud fixtures and library/device-node
-presence do not establish H700 compatibility.
+The [owner-supplied read-only H700 inventory](H700_BASELINE.md) confirms
+Linux aarch64 with an ELF64 AArch64 shell, existing framebuffer/SDL2/EGL/GLES
+libraries, audio/input nodes and ~973 MiB physical memory with no swap.
+**GLES context creation, graphics/audio/input functionality, loader/glibc symbol
+compatibility and standalone Pak lifecycle remain NOT_TESTED.** Cloud fixture
+and library/device-node presence do not establish gameplay compatibility.
