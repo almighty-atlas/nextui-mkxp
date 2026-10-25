@@ -16,11 +16,11 @@ fail() { printf 'RMXP_VIDEO launcher_code=%s\n' "$1" >&2; exit "$1"; }
 [ "${USERDATA_PATH-}" = /mnt/SDCARD/.userdata/h700 ] || fail 82
 [ "${SYSTEM_PATH-}" = /mnt/SDCARD/.system/h700 ] || fail 82
 [ "${SDL_VIDEODRIVER-}" = mali ] || fail 82
-pak=$(CDPATH= cd -P "$(dirname "$0")" 2>/dev/null && pwd) || fail 83
+pak=$(CDPATH='' cd -P "$(dirname "$0")" 2>/dev/null && pwd) || fail 83
 # This committed blocker remains until an independently reviewed future package.
 [ ! -e "$pak/SOURCE_ONLY" ] || fail 90
 binary="$pak/bin/triangle"
-[ -f "$binary" ] && [ -x "$binary" ] && [ ! -L "$binary" ] || fail 91
+if [ ! -f "$binary" ] || [ ! -x "$binary" ] || [ -L "$binary" ]; then fail 91; fi
 command -v od >/dev/null 2>&1 || fail 92
 command -v awk >/dev/null 2>&1 || fail 92
 # ELF64, little-endian, ET_EXEC/ET_DYN, AArch64 e_machine. Never execute for inspection.
@@ -32,15 +32,17 @@ printf '%s\n' "$header" | awk '
  b[5]==2 && b[6]==1 && (b[17]==2 || b[17]==3) && b[18]==0 && b[19]==183 && b[20]==0)}' || fail 93
 # Metadata preflight only; no chmod or direct opens of these nodes by the shell.
 for node in /dev/fb0 /dev/ion; do
-    [ -c "$node" ] && [ -r "$node" ] && [ -w "$node" ] || fail 94
+    if [ ! -c "$node" ] || [ ! -r "$node" ] || [ ! -w "$node" ]; then fail 94; fi
 done
 logdir="$USERDATA_PATH/RMXP-Video-Test"
-[ ! -L "$USERDATA_PATH" ] && [ ! -L "$logdir" ] || fail 95
+if [ -L "$USERDATA_PATH" ] || [ -L "$logdir" ]; then fail 95; fi
 [ ! -L "$logdir/latest.log" ] || fail 95
 mkdir -p "$logdir" || fail 95
 cd "$pak" || fail 83
 # Per-process file-size cap (16 shell blocks; <=16 KiB on intended Linux shells).
 # Never affects the parent NextUI shell. Failure refuses launch.
+# Linux BusyBox ash/dash extension; refuse launch if not supported.
+# shellcheck disable=SC3045
 ulimit -c 0 || fail 96
 ulimit -f 16 || fail 96
 # exec preserves foreground lifetime/status and delivers own TERM/INT to C.

@@ -103,7 +103,8 @@ approved. The C entrypoint independently rejects SSH hints as defense in depth.
 
 Only the owned `$USERDATA_PATH/RMXP-Video-Test/latest.log` is replaced per run;
 final owned log-dir/log symlinks are refused. Process-local core dumping is disabled
-and the file-size limit caps logs at 16 shell blocks (at most 16 KiB on intended
+using the Linux BusyBox ash/dash `ulimit -c` extension (launcher refuses if
+unsupported), and the file-size limit caps logs at 16 shell blocks (at most 16 KiB on intended
 Linux shells). The parent UI's limits/settings are untouched. Excess library
 logging can terminate this child by SIGXFSZ; that is FAIL, not clean-return proof.
 No marker removal, device opens or log writes occur on the committed guarded path.
