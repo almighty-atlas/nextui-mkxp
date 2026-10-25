@@ -1,0 +1,1702 @@
+{
+  "schema_version": 1,
+  "audit_date": "2026-10-25",
+  "scope": "Static candidate inventory, not a resolved build lockfile or legal clearance. Hashes in wrap metadata are upstream declarations; dependency archives were not downloaded/verified. All wrap entries included, including platforms/options not selected. Nested submodules, system libraries and bundled assets still require resolution.",
+  "pins": {
+    "mkxp-z": "37a04d14413454551a7b6aadbb4e93e67168accb",
+    "r36s": "b665091c1ff571a7a468bbf33af2f7c803c75220",
+    "project_main": "fa081c9f0cd4a36e6d84fdc54aa9b2c4fcf62250"
+  },
+  "dependencies": [
+    {
+      "component": "alsa-lib",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/alsa-lib.wrap",
+      "source_url": "https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.15.3.tar.bz2",
+      "revision": "alsa-lib-1.2.15.3.tar.bz2",
+      "source_sha256": "7b079d614d582cade7ab8db2364e65271d0877a37df8757ac4ac0c8970be861e",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "alsa-lib",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "angle",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/angle.wrap",
+      "source_url": "https://github.com/google/angle/archive/refs/heads/chromium/8037_21.tar.gz",
+      "revision": "angle-chromium-8037_21.tar.gz",
+      "source_sha256": "4faf51e19e061d5f8bb83b8f03d51fb70d3a5855250ddc98cf64e80446362fea",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "angle",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/angle-bsd.patch",
+          "sha256": "fb39db990ff431eb6f809faec7721cc2b2af41908dd4e6b8717ed10316a85d92"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-d3d11-cache.patch",
+          "sha256": "fbda989d38b5862375f73901ec26895bfa61b2b280d8439391cb6b6cc55b7c44"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-direct3d-resize-callback.patch",
+          "sha256": "d1cede979255b02ddd18d6661280abb76dfe6adc27c87cc2bd67af1453033031"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-framebuffer-assert.patch",
+          "sha256": "e2a42c2f069d5571e6a2bd3dc43a2dfedc50e190abb9737d3082f2e2220751d7"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-interm-node.patch",
+          "sha256": "b46bc6d9b95248d1c5c6c443b4d40657a60cfa8a88770673c2f0b230beb91857"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-resource-map.patch",
+          "sha256": "d1c44e05dd1e72eeb9cb90f1cc73b56ea679aea59e0679b7a0f855d383f51cce"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-round-to-nearest.patch",
+          "sha256": "8917b11e8f2beac45f117bb763d0373ecc56597f3f8d0965ff3800b05f69661f"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-span.patch",
+          "sha256": "6df713317a0712359b99a9b44170dab918c5c841ddb3eafff2b813530b799e83"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-vk-mem-alloc-wrapper.patch",
+          "sha256": "8cabfaee318b9cb6225f817841a636f09335e99edcc90c0c38c04a44763fbdd8"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-vulkan-memory-allocator.patch",
+          "sha256": "1b97a15f27b29f0ebcc7249d6e02e0729db080596890c605907e34b2ac4adb9f"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-vulkan-windows-minimize.patch",
+          "sha256": "69b21392f8b7932680c5dc594a43ffe06ad029e1cd9db6f49f74c00594e0d15a"
+        },
+        {
+          "path": "subprojects/packagefiles/angle-window-surface-vk-mac.patch",
+          "sha256": "83789e739b35778da6f499c03ebcaa6d7820046413ffc9f31f3f314cfa63d6d5"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "dbus",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/dbus.wrap",
+      "source_url": "https://dbus.freedesktop.org/releases/dbus/dbus-1.16.2.tar.xz",
+      "revision": "dbus-1.16.2.tar.xz",
+      "source_sha256": "0ba2a1a4b16afe7bceb2c07e9ce99a8c2c3508e5dec290dbb643384bd6beb7e2",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "dbus",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "expat",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/expat.wrap",
+      "source_url": "https://github.com/libexpat/libexpat/releases/download/R_2_7_5/expat-2.7.5.tar.xz",
+      "revision": "expat-2.7.5.tar.xz",
+      "source_sha256": "1032dfef4ff17f70464827daa28369b20f6584d108bc36f17ab1676e1edd2f91",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "https://wrapdb.mesonbuild.com/v2/expat_2.7.5-1/get_patch",
+      "patch_archive_sha256": "f3de751df71265847b359914ac48ec2ced85a98cd6c3a35dd45890a331919f65",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/expat-native.patch",
+          "sha256": "82a97be51b2babf92ab66123d3ebb82c8eb9fb350bd02165b5f5473b5d46996f"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "fluidsynth",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/fluidsynth.wrap",
+      "source_url": "https://github.com/FluidSynth/fluidsynth/archive/refs/tags/v2.5.0.tar.gz",
+      "revision": "fluidsynth-2.5.0.tar.gz",
+      "source_sha256": "e4ae831ce02f38b5594ab4dacb11c1a4067ca65ea183523655ebdc9c1b2b92a1",
+      "spdx": "LGPL-2.1-or-later",
+      "license_evidence": "See SOURCES.md primary citations",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "fmt",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/fmt.wrap",
+      "source_url": "https://github.com/fmtlib/fmt/archive/refs/tags/12.1.0.tar.gz",
+      "revision": "fmt-12.1.0.tar.gz",
+      "source_sha256": "ea7de4299689e12b6dddd392f9896f08fb0777ac7168897a244a6d6085043fea",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "freetype",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/freetype.wrap",
+      "source_url": "https://gitlab.freedesktop.org/freetype/freetype/-/archive/VER-2-14-3/freetype-VER-2-14-3.tar.gz",
+      "revision": "freetype-VER-2-14-3.tar.gz",
+      "source_sha256": "dc49de6b01a266eef4876a4dd34d9842c475d3e28ff2eff63bd2fb760ab56261",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/freetype-version.patch",
+          "sha256": "79c58aec0aa6271598ee7020e3e160e1389634a3395a828abe6112c7e95b8a59"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "gcem",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/gcem.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/universe/g/gcem/gcem_1.18.0.orig.tar.gz",
+      "revision": "gcem-1.18.0.tar.gz",
+      "source_sha256": "0ad5125246f5e926749a491886d33662c165d5a7708910f81133c4c2144ee64e",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "gcem",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "glib",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/glib.wrap",
+      "source_url": "https://download.gnome.org/sources/glib/2.84/glib-2.84.1.tar.xz",
+      "revision": "glib-2.84.1.tar.xz",
+      "source_sha256": "2b4bc2ec49611a5fc35f86aca855f2ed0196e69e53092bab6bb73396bf30789a",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/glib-header-only.patch",
+          "sha256": "4adef4888f2ebf032b78f6b05d508cc8279c9f5b6707a473797dcbd371673bde"
+        },
+        {
+          "path": "subprojects/packagefiles/glib-printf.patch",
+          "sha256": "95218f9d1001a502160f6c1a74232def0e5a2eb0a21b02006d7c7ec23d79c040"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "ibus",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/ibus.wrap",
+      "source_url": "https://github.com/ibus/ibus/releases/download/1.5.32/ibus-1.5.32.tar.gz",
+      "revision": "ibus-1.5.32.tar.gz",
+      "source_sha256": "b24f41ae38b236b254c09f1a8f53c2354b69b0789e89cea888d0494b09d15d67",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "ibus",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "jack1",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/jack1.wrap",
+      "source_url": "https://github.com/jackaudio/jack1/releases/download/0.126.0/jack1-0.126.0.tar.gz",
+      "revision": "jack1-0.126.0.tar.gz",
+      "source_sha256": "7b290e9dc7b9262ac328d41eef80c1053c97013efacbefa30477cb9b2a5445ea",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "jack1",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libdecor",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libdecor.wrap",
+      "source_url": "https://gitlab.freedesktop.org/libdecor/libdecor/-/archive/0.2.2/libdecor-0.2.2.tar.gz",
+      "revision": "libdecor-0.2.2.tar.gz",
+      "source_sha256": "40a1d8be07d8b1f66e8fb98a1f4a84549ca6bf992407198a5055952be80a8525",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libdecor",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libdrm",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libdrm.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/main/libd/libdrm/libdrm_2.4.131.orig.tar.xz",
+      "revision": "libdrm-2.4.131.tar.xz",
+      "source_sha256": "45ba9983b51c896406a3d654de81d313b953b76e6391e2797073d543c5f617d5",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libdrm",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libffi",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libffi.wrap",
+      "source_url": "https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz",
+      "revision": "libffi-3.5.2.tar.gz",
+      "source_sha256": "f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libffi",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/libffi-cc-basename.patch",
+          "sha256": "b6a4a779f79cc4c6b815d5182c75ca13c83cb3c98a8b381bc3986fcdbd8d8b40"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libiconv",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libiconv.wrap",
+      "source_url": "https://ftpmirror.gnu.org/libiconv/libiconv-1.18.tar.gz",
+      "revision": "libiconv-1.18.tar.gz",
+      "source_sha256": "3b08f5f4f9b4eb82f151a7040bfd6fe6c6fb922efe4b1659c66ea933276965e8",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libiconv",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libinotify",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libinotify.wrap",
+      "source_url": "https://github.com/libinotify-kqueue/libinotify-kqueue/releases/download/20240724/libinotify-20240724.tar.gz",
+      "revision": "libinotify-20240724.tar.gz",
+      "source_sha256": "5cc3fb7af407b17b7daa871cc98bb882716c4b5c296fadfb66bfe86c37cc599c",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libinotify",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/libinotify-cross.patch",
+          "sha256": "a664be880d29201c14266508c8d09d1bf6dd7538ccca9daaddebccd50cab4e9e"
+        },
+        {
+          "path": "subprojects/packagefiles/libinotify-reconfig.patch",
+          "sha256": "b2bc20cd1e982acf385ddfa1c86df756f31b36a29b40508e0818f7735e8cdd76"
+        },
+        {
+          "path": "subprojects/packagefiles/libinotify-tests.patch",
+          "sha256": "831d965db5ff6d5b841e35850a8c7220740cd6b2b732a6a87bf8b1a4e90db8e1"
+        },
+        {
+          "path": "subprojects/packagefiles/libinotify-werror.patch",
+          "sha256": "dc9be1f90418cff66dc80d2e74adb33634cef246887c8e7807b372527746803b"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libx11",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libx11.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libX11-1.8.12.tar.gz",
+      "revision": "libX11-1.8.12.tar.gz",
+      "source_sha256": "220fbcf54b6e4d8dc40076ff4ab87954358019982490b33c7802190b62d89ce1",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libx11",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxau",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxau.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXau-1.0.11.tar.gz",
+      "revision": "libXau-1.0.11.tar.gz",
+      "source_sha256": "3a321aaceb803577a4776a5efe78836eb095a9e44bbc7a465d29463e1a14f189",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxau",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxcb",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxcb.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libxcb-1.17.0.tar.gz",
+      "revision": "libxcb-1.17.0.tar.gz",
+      "source_sha256": "2c69287424c9e2128cb47ffe92171e10417041ec2963bceafb65cb3fcf8f0b85",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxcb",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxcursor",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxcursor.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXcursor-1.2.3.tar.gz",
+      "revision": "libXcursor-1.2.3.tar.gz",
+      "source_sha256": "74e72da27e61cc2cfd2e267c14f500ea47775850048ee0b00362a55c9b60ee9b",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxcursor",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxext",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxext.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXext-1.3.4.tar.gz",
+      "revision": "libXext-1.3.4.tar.gz",
+      "source_sha256": "8ef0789f282826661ff40a8eef22430378516ac580167da35cc948be9041aac1",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxext",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxfixes",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxfixes.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXfixes-6.0.0.tar.gz",
+      "revision": "libXfixes-6.0.0.tar.gz",
+      "source_sha256": "82045da5625350838390c9440598b90d69c882c324ca92f73af9f0e992cb57c7",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxfixes",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxi",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxi.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXi-1.8.2.tar.gz",
+      "revision": "libXi-1.8.2.tar.gz",
+      "source_sha256": "5542daec66febfeb6f51d57abfa915826efe2e3af57534f4105b82240ea3188d",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxi",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxkbcommon",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxkbcommon.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/main/libx/libxkbcommon/libxkbcommon_1.13.1.orig.tar.gz",
+      "revision": "libxkbcommon-1.13.1.tar.gz",
+      "source_sha256": "6802621c81b674e468d2346a8f6d9a48ba5c154b72434a1c9e1a3eaa29f36fb5",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxkbcommon",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxrandr",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxrandr.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXrandr-1.5.4.tar.gz",
+      "revision": "libXrandr-1.5.4.tar.gz",
+      "source_sha256": "c72c94dc3373512ceb67f578952c5d10915b38cc9ebb0fd176a49857b8048e22",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxrandr",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libxrender",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libxrender.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/lib/libXrender-0.9.12.tar.gz",
+      "revision": "libXrender-0.9.12.tar.gz",
+      "source_sha256": "0fff64125819c02d1102b6236f3d7d861a07b5216d8eea336c3811d31494ecf7",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "libxrender",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "libyaml",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/libyaml.wrap",
+      "source_url": "https://github.com/yaml/libyaml/archive/refs/tags/0.2.5.tar.gz",
+      "revision": "libyaml-0.2.5.tar.gz",
+      "source_sha256": "fa240dbf262be053f3898006d502d514936c818e422afdcf33921c63bed9bf2e",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "mesa",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/mesa.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/main/m/mesa/mesa_26.0.3.orig.tar.xz",
+      "revision": "mesa-26.0.3.tar.xz",
+      "source_sha256": "ddb7443d328e89aa45b4b6b80f077bf937f099daeca8ba48cabe32aab769e134",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "mesa",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "ogg",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/ogg.wrap",
+      "source_url": "https://github.com/xiph/ogg/releases/download/v1.3.6/libogg-1.3.6.tar.xz",
+      "revision": "libogg-1.3.6.tar.xz",
+      "source_sha256": "5c8253428e181840cd20d41f3ca16557a9cc04bad4a3d04cce84808677fa1061",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "openal-soft",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/openal-soft.wrap",
+      "source_url": "https://github.com/kcat/openal-soft/archive/refs/tags/1.24.3.tar.gz",
+      "revision": "openal-soft-1.24.3.tar.gz",
+      "source_sha256": "7e1fecdeb45e7f78722b776c5cf30bd33934b961d7fd2a11e0494e064cc631ce",
+      "spdx": "LGPL-2.0-or-later",
+      "license_evidence": "See SOURCES.md primary citations",
+      "patch_archive_url": "https://wrapdb.mesonbuild.com/v2/openal-soft_1.24.3-2/get_patch",
+      "patch_archive_sha256": "6642f3f3321f3d00633547e3abc06657ca4e22124b6593da7bddd4d9593ccc2b",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/openal-soft-bsd.patch",
+          "sha256": "8337d5cc966db369dd171078e43fbe9b2fcade563b9b5e04a5446ce1928aacb3"
+        },
+        {
+          "path": "subprojects/packagefiles/openal-soft-cpp-standard.patch",
+          "sha256": "553ba170b8f5ff680ce220e79dc193773472d4d3f0cf5be8044c5a124954333c"
+        },
+        {
+          "path": "subprojects/packagefiles/openal-soft-info.patch",
+          "sha256": "e4211a4cc483b5b55cb9851af876467724d18bfb9337c190e8985c8f772fd530"
+        },
+        {
+          "path": "subprojects/packagefiles/openal-soft-partial-dependency.patch",
+          "sha256": "d0fb11277dc54a11d2dec1efffbe73775d4300044f14f10c6e67c835b9955de7"
+        },
+        {
+          "path": "subprojects/packagefiles/openal-soft-simd.patch",
+          "sha256": "52088145d5e31a0f5535ccd10bd3f5a0d1b496db82e44b4a9cb04e6e5b7c608f"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "openssl",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/openssl.wrap",
+      "source_url": "https://www.openssl.org/source/openssl-3.0.8.tar.gz",
+      "revision": "openssl-3.0.8.tar.gz",
+      "source_sha256": "6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e",
+      "spdx": "Apache-2.0",
+      "license_evidence": "See SOURCES.md primary citations",
+      "patch_archive_url": "https://wrapdb.mesonbuild.com/v2/openssl_3.0.8-3/get_patch",
+      "patch_archive_sha256": "300da189e106942347d61a4a4295aa2edbcf06184f8d13b4cee0bed9fb936963",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/openssl-atomic.patch",
+          "sha256": "4967ad05f5b86c64c27b9b8293b28b6a588dafb956f5c6e4869c2090ea2663ac"
+        },
+        {
+          "path": "subprojects/packagefiles/openssl-linux-ppc64.patch",
+          "sha256": "e6c16ba74f45c02d90578cf5c1aa6b373e9b04c80ec46d7f9165285cbd978efa"
+        },
+        {
+          "path": "subprojects/packagefiles/openssl-unsupported-platform.patch",
+          "sha256": "a989e00560de13f67d22eafe1fbfc1e2fd679603373618d12520e62e49eabebe"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "physfs",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/physfs.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/universe/libp/libphysfs/libphysfs_3.2.0.orig.tar.gz",
+      "revision": "physfs-3.2.0.tar.gz",
+      "source_sha256": "c0e718a1f5ba464570a383c12771879aeddb5dabcc3385acc5f14a4c26b93301",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "pipewire",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/pipewire.wrap",
+      "source_url": "https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/1.6.5/pipewire-1.6.5.tar.gz",
+      "revision": "pipewire-1.6.5.tar.gz",
+      "source_sha256": "4c9f7e85a760a4169cd4bc668bafea90fe4838aaf3f08a93f11bb9222809d490",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "pipewire",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/pipewire-bsd.patch",
+          "sha256": "94a1e0783c586ecb4039da7ba1d36efd2d8952d6661a02dcd120c7653f310089"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "pixman",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/pixman.wrap",
+      "source_url": "https://cairographics.org/releases/pixman-0.46.4.tar.gz",
+      "revision": "pixman-0.46.4.tar.gz",
+      "source_sha256": "d09c44ebc3bd5bee7021c79f922fe8fb2fb57f7320f55e97ff9914d2346a591c",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "pulseaudio",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/pulseaudio.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/main/p/pulseaudio/pulseaudio_17.0+dfsg1.orig.tar.xz",
+      "revision": "pulseaudio-17.0.tar.xz",
+      "source_sha256": "24a25d3cf8fcede801f6b3d05ca6d22b0a43ad2f710a4fbf2ec251debc9cff5b",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "pulseaudio",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "ruby-3.1",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/ruby-3.1.wrap",
+      "source_url": "https://github.com/ruby/ruby/archive/refs/tags/v3_1_3.tar.gz",
+      "revision": "ruby-3_1_3.tar.gz",
+      "source_sha256": "c87fc4789233ad90cb1b865e547a257d3c15b3e8e6918b153197e1ed4e47226b",
+      "spdx": "Ruby OR BSD-2-Clause",
+      "license_evidence": "See SOURCES.md primary citations",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "ruby-3.1",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-alignof.patch",
+          "sha256": "697a0384b1bb2ee9fd309d0021e901330d756455ec8c6e6b7b252c25a9f28731"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-bison.patch",
+          "sha256": "23d3bfb5680f87db789d37bb6a89718268663cc41a3918ce3eaba2fe99cc359b"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-bsd.patch",
+          "sha256": "b420cbb37218ad7377624339919265eda08b0a893cd1c29f8f5152773cba8d91"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-bundle.patch",
+          "sha256": "114cbc2f04c5e13679c94c356f76bf76debd7203be338a5d910b8e084c339a0e"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-ccache.patch",
+          "sha256": "a2af153ca6e96c864136d7b3b554808b4b02ff3526820f4276c5dc1dcdeeb18c"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-darwin-in6.patch",
+          "sha256": "2b95523fba581ec7b05f7154e6aada5cb2a96614255721f01a8914a63a406662"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-deps.patch",
+          "sha256": "875790a7e5e465ebd2e1c184e394ad7689d9ad7d7f7481de426c97915404c80f"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-disable-lto-for-link-tests.patch",
+          "sha256": "579eb6432756ad7f5d1909f30c79f7b44b7c4e6924bedc4b6c32d52ce6314329"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-dllexport.patch",
+          "sha256": "e08edf1f8ff3510fdfb169b843eac4da810b5b5d879c63d37c45101932b7df41"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-exp.patch",
+          "sha256": "66d3a9c89950eba05453713bcbcbc0c31b561938c7422784bdf4e546435a9169"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-extmk.patch",
+          "sha256": "e51dd34319f595ea8d7d13f7092b5cc8f20d79e0df5ff03c6fa8c92541628334"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-fake.patch",
+          "sha256": "849800714a947ab6014497fa2e069ac0dd1ac320d081fc8bd9d6727a9511da91"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-init.patch",
+          "sha256": "9d55b8475065e407b821f8ce153e59a18961fba4772d84c1462ef69c65475a61"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-libruby-static.patch",
+          "sha256": "cbbb0372533445a263199d0eedb4421a107e1205d800af1a3b2e0d26c6a3bde7"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-libs.patch",
+          "sha256": "54a38d03bc8f1c10d2837e571340e47327b3fc3b9046ecd3a9a1f3ca190d0106"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-pkg-config.patch",
+          "sha256": "d1b59e063502b6218dadbed21bfdc8bef652de538c9886678df4a720ebc1b290"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-program.patch",
+          "sha256": "cc2f41b2b6e46448571e950d122219a8e461e34f3d6c4fa1d8e7d22e317e707c"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-random.patch",
+          "sha256": "a81a456b6dcebfd431425ae3f36d5e739c38d8168818af8e7554d24af4ed51e7"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-rbinstall.patch",
+          "sha256": "8ea4be64d87717b2e9b51ba68f96ce3e4e69d1476ea9451dafb1babe1904f9f6"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-reconfig.patch",
+          "sha256": "f9a4470c2ae09fb2bf4d981ffdac9c4e0a53590bd6e42f5e8b5fd51fbf6da4c9"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-round.patch",
+          "sha256": "cce370cee4539a2089873bbbe6e0529b4a2be4d7f59eec2fbae674b92c579fc9"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-verbose.patch",
+          "sha256": "85eff4d819e1fa35b3f7bb35aba6877a69d17e8898553608e1643c5b36f5f161"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-win32-winnt.patch",
+          "sha256": "d168f5dac0f4ac2e7e435c9ddd0dc1a2d44b95f505d0f8be26c49f87fc5f51e4"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-windows-arm64.patch",
+          "sha256": "d74f745a7e700248ee6d66bf4d8d075baf5c4be69feef755f3b3f0e26adbbd68"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-windows-builtin-setjmp.patch",
+          "sha256": "e28114237af2488739d6185a25e42c40cc408f35dddbd94ca849e9a559def2d0"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-mkxp-z-patches.patch",
+          "sha256": "bf3a240de684793460db2cf3dfe5f18e2b82d174d6a4d2564dbef88980bdd281"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-clock-gettime.patch",
+          "sha256": "092302a64163ae3c63133ffd67a409f0b5f9e9d297ad578f08ac98cb744dd330"
+        },
+        {
+          "path": "subprojects/packagefiles/ruby-3.1-mkxp-z-patches-windows-libs.patch",
+          "sha256": "2d011e3c56407ca8ef8c05afe60a39d90c468b47b66c77242c2d8047865298ff"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "sdl2",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/sdl2.wrap",
+      "source_url": "https://github.com/libsdl-org/SDL/releases/download/release-2.28.1/SDL2-2.28.1.tar.gz",
+      "revision": "SDL2-2.28.1.tar.gz",
+      "source_sha256": "4977ceba5c0054dbe6c2f114641aced43ce3bf2b41ea64b6a372d6ba129cb15d",
+      "spdx": "Zlib",
+      "license_evidence": "See SOURCES.md primary citations",
+      "patch_archive_url": "https://wrapdb.mesonbuild.com/v2/sdl2_2.28.1-2/get_patch",
+      "patch_archive_sha256": "2dd332226ba2a4373c6d4eb29fa915e9d5414cf7bb9fa2e4a5ef3b16a06e2736",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/sdl2-bsd.patch",
+          "sha256": "24f623a5f8b7154e60511b90a7d183361c04ce1503cece534b12f5f50bcf0234"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-deps.patch",
+          "sha256": "002b00df9be092da9c9008d5d5957579a84301e2feb2744402b7a208263155e3"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-dylib-name.patch",
+          "sha256": "9efa48ba235712b3ca643c94c2392b6e7412dce228cc3515303b221f40e10062"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-kmsdrm.patch",
+          "sha256": "b43dab6dde05e370a997407ba73198c552e6451f2807f37ac24a89a9b1d1b366"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-remove-mwindows-flag.patch",
+          "sha256": "f160e4713d9c14aa76a3519bf1f7f9b14e4bbe7a1a5be2ece9b96f9cf81e80b9"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-disable-neon-fix-angle.patch",
+          "sha256": "4a51da873137ec258008b84d030fcd980bc463896126ca70a56e382debde0b39"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-disable-neon-in-sdl-stretch.patch",
+          "sha256": "d2fe3539d5faf03a429329e0a50b6141888b88583fa8f60d8662502cdf77f4fc"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-sane-std.patch",
+          "sha256": "e475a3cbf0bad7c135082da4400fe0c46ecad5557e01e70744f688e6c8a07af1"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-sse3.patch",
+          "sha256": "488c72d44aada98b9c098ea92ab107573b72997c462b094bfaa181e250e901a6"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2-static-angle.patch",
+          "sha256": "643a601a4fac6b8b2f67d0c94d03e556325816bf8e0d6a4df7de6e78b2b9cc54"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "sdl2_image",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/sdl2_image.wrap",
+      "source_url": "https://github.com/libsdl-org/SDL_image",
+      "revision": "release-2.6.3",
+      "source_sha256": "UNKNOWN",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/sdl2_image-deps.patch",
+          "sha256": "2b1efc26cff25320418bc1dd26446780e22c201337f135625598421d211b9b0f"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2_image-highway-exit.patch",
+          "sha256": "6f3d0118f2d4e2ad296f23f47d114a93f058feae0aace5a6e9d10d6f999b9f55"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2_image-highway-rvv.patch",
+          "sha256": "a6ad01cf764f83edf85325b19422cd66396f293a51c525fa9bfc06e155ab2e7f"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2_image-libjxl-enc.patch",
+          "sha256": "b733e7349ff574795bdfa3d3aea72ef14dc34b76fa2ab6d3118ce2200fc9925e"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2_image-libjxl-examples-tools.patch",
+          "sha256": "acb795ca7ccd9567957e24b7ee332b8850ac24252bdae3d31e9d8ef4970a1df9"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2_image-libjxl-static.patch",
+          "sha256": "2f3ae9869ebbd5d3bdc97d5f987b889ef674fcebb8551401d9bf1360c9dd5b93"
+        },
+        {
+          "path": "subprojects/packagefiles/sdl2_image-zlib-windres.patch",
+          "sha256": "3b49d5932977c51fe06fdfbd0a8380518d7ad482e2fb9164ba374444171a54ec"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "sdl2_sound",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/sdl2_sound.wrap",
+      "source_url": "https://github.com/icculus/SDL_sound/releases/download/v2.0.4/SDL2_sound-2.0.4.tar.gz",
+      "revision": "SDL2_sound-2.0.4.tar.gz",
+      "source_sha256": "f73f6720dba2e677c0bf70d0c76ca3c96d865d04025e49a8b161711685961931",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/sdl2_sound-deps.patch",
+          "sha256": "98f042cc57d5350c1ca0627444e933bd13997e5646e511c2bcc05412463a0b05"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "sdl2_ttf",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/sdl2_ttf.wrap",
+      "source_url": "https://github.com/libsdl-org/SDL_ttf/archive/refs/tags/release-2.0.18.tar.gz",
+      "revision": "SDL_ttf-release-2.0.18.tar.gz",
+      "source_sha256": "6b61544441b72bdfa1ced89034c6396fe80228eff201eb72c5f78e500bb80bd0",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/sdl2_ttf-deps.patch",
+          "sha256": "858f4e49f19d70e970e8d5ce5f4dddd77d54fd40394616137f6ef705cee3c280"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "spirv-headers",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/spirv-headers.wrap",
+      "source_url": "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.350.0.tar.gz",
+      "revision": "SPIRV-Headers-vulkan-sdk-1.4.350.0.tar.gz",
+      "source_sha256": "9905d9341f20388adb852c77dd982f2c4d539fd68e6c1f1bcebf034715f2d1d5",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "spirv-headers",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "spirv-tools",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/spirv-tools.wrap",
+      "source_url": "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-1.4.350.0.tar.gz",
+      "revision": "SPIRV-Tools-vulkan-sdk-1.4.350.0.tar.gz",
+      "source_sha256": "446b288fe76d3f31bbf9a405d62b97020ac0f135edb0ed5dbdf1136c488138f5",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "spirv-tools",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "steamshim",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/steamshim.wrap",
+      "source_url": "https://github.com/icculus/steamshim/archive/c49d0dfffc0381ed38e333f82fdac0e12840780a.tar.gz",
+      "revision": "steamshim-c49d0dfffc0381ed38e333f82fdac0e12840780a.tar.gz",
+      "source_sha256": "05a37657caab3207e09b59e2e55836ba8ca63a2568c87033c0df677b9970eaf7",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "steamshim",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/steamshim-apple-chdir.patch",
+          "sha256": "ff58f61cad3e30a3aaa902a45336500b6b638fc2b63fb45a78428de4a701416a"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "systemd",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/systemd.wrap",
+      "source_url": "https://github.com/systemd/systemd/archive/refs/tags/v259.5.tar.gz",
+      "revision": "systemd-259.5.tar.gz",
+      "source_sha256": "80ed55a8a69c4bd1fb12a36659303372b37baf9ee224ef4f032db4b748be0f76",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "systemd",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "theora",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/theora.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/main/libt/libtheora/libtheora_1.2.0+dfsg.orig.tar.gz",
+      "revision": "libtheora-1.2.0.tar.gz",
+      "source_sha256": "92a32e9c1d79984e6fc6abe325da05bf4ec97ee38d1a4d49d338545ed050a28f",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "theora",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "theoraplay",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/theoraplay.wrap",
+      "source_url": "https://github.com/icculus/theoraplay/archive/ec1aad1ee43592f216946cdc03b1ee4c4e1e2e59.tar.gz",
+      "revision": "theoraplay-ec1aad1ee43592f216946cdc03b1ee4c4e1e2e59.tar.gz",
+      "source_sha256": "f1f29e5cb8b0bc08c95be843832294c38a1efa1dddb31ec214d23982db2fcddb",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "theoraplay",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "uchardet",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/uchardet.wrap",
+      "source_url": "https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.8.tar.xz",
+      "revision": "uchardet-0.0.8.tar.xz",
+      "source_sha256": "e97a60cfc00a1c147a674b097bb1422abd9fa78a2d9ce3f3fdcc2e78a34ac5f0",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "volk",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/volk.wrap",
+      "source_url": "https://github.com/zeux/volk/archive/refs/tags/1.4.350.tar.gz",
+      "revision": "volk-1.4.350.tar.gz",
+      "source_sha256": "e47c6efe5294bb03729a976b385864bba5daf46ec60f0bdea11e1d1446345f9a",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "volk",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "vorbis",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/vorbis.wrap",
+      "source_url": "https://github.com/xiph/vorbis/releases/download/v1.3.7/libvorbis-1.3.7.tar.gz",
+      "revision": "libvorbis-1.3.7.tar.gz",
+      "source_sha256": "0e982409a9c3fc82ee06e08205b1355e5c6aa4c36bca58146ef399621b0ce5ab",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/vorbis-deps.patch",
+          "sha256": "66cdf4c5199d92b8b0ee469f941881c003bacc6c0fe8f51e8b16cc461567f8e0"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "vulkan-headers",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/vulkan-headers.wrap",
+      "source_url": "https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/vulkan-sdk-1.4.350.0.tar.gz",
+      "revision": "Vulkan-Headers-vulkan-sdk-1.4.350.0.tar.gz",
+      "source_sha256": "70270d10bf2c1e074a06ee37a50b75d332993d1b80a1d9526eeed2da6d82ed22",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "vulkan-headers",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "vulkan-memory-allocator",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/vulkan-memory-allocator.wrap",
+      "source_url": "https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/refs/tags/v3.4.0.tar.gz",
+      "revision": "VulkanMemoryAllocator-3.4.0.tar.gz",
+      "source_sha256": "822aa850c6ce77346ae96a8a1d351d52e77e85929f35363849a0a4e638e0a2a1",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "vulkan-memory-allocator",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "wayland",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/wayland.wrap",
+      "source_url": "https://gitlab.freedesktop.org/wayland/wayland/-/archive/1.23.1/wayland-1.23.1.tar.gz",
+      "revision": "wayland-1.23.1.tar.gz",
+      "source_sha256": "158ec49af498f2558c7fbf7e8b070d010d4e270cc6076003a18a6c813f87e244",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "wayland",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "xcb-proto",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/xcb-proto.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/xcb/xcb-proto-1.17.0.tar.gz",
+      "revision": "xcb-proto-1.17.0.tar.gz",
+      "source_sha256": "392d3c9690f8c8202a68fdb89c16fd55159ab8d65000a6da213f4a1576e97a16",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "xcb-proto",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "xorgproto",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/xorgproto.wrap",
+      "source_url": "https://xorg.freedesktop.org/releases/individual/proto/xorgproto-2024.1.tar.gz",
+      "revision": "xorgproto-2024.1.tar.gz",
+      "source_sha256": "4f6b9b4faf91e5df8265b71843a91fc73dc895be6210c84117a996545df296ce",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "xorgproto",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "xxhash",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/xxhash.wrap",
+      "source_url": "https://github.com/Cyan4973/xxHash/archive/refs/tags/v0.8.3.tar.gz",
+      "revision": "xxHash-0.8.3.tar.gz",
+      "source_sha256": "aae608dfe8213dfd05d909a57718ef82f30722c392344583d3f39050c7f29a80",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "xxhash",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    },
+    {
+      "component": "zlib",
+      "evidence_url": "https://github.com/mkxp-z/mkxp-z/blob/37a04d14413454551a7b6aadbb4e93e67168accb/subprojects/zlib.wrap",
+      "source_url": "https://archive.ubuntu.com/ubuntu/pool/main/z/zlib/zlib_1.3.dfsg+really1.3.1.orig.tar.gz",
+      "revision": "zlib-1.3.1.tar.gz",
+      "source_sha256": "60dd315c07f616887caa029408308a018ace66e3d142726a97db164b3b8f69fb",
+      "spdx": "UNKNOWN",
+      "license_evidence": "Not individually audited; resolve before enabling or shipping",
+      "patch_archive_url": "NONE",
+      "patch_archive_sha256": "NONE",
+      "patch_directory": "NONE",
+      "patches": [
+        {
+          "path": "subprojects/packagefiles/zlib-target-name.patch",
+          "sha256": "fde6caf183a31c981ec9f2db692f21d3250ba752a3f4e2d384d3778f7caaf7ab"
+        },
+        {
+          "path": "subprojects/packagefiles/zlib-version.patch",
+          "sha256": "52c2588c02f30c932bafb68ad97ef0e04765f85f3af2ddf97aa0e92fd5d6c46c"
+        },
+        {
+          "path": "subprojects/packagefiles/zlib-windres.patch",
+          "sha256": "2ae0f36cc502403941f55d4e6caba639bd21c83bfd6e9e872ea38c0e80b886f7"
+        },
+        {
+          "path": "subprojects/packagefiles/end-of-diff-files.patch",
+          "sha256": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+        }
+      ],
+      "obligations": "Preserve notices; audit enabled transitive sources and every local/wrapdb patch; fulfill component license and GPL combined-work source requirements",
+      "status": "BLOCKED_FOR_RELEASE"
+    }
+  ],
+  "r36s_files": [
+    {
+      "path": "LICENSE",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/LICENSE",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "NOTICE.md",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/NOTICE.md",
+      "sha256": "7a48922eaa96b5219ac0892d03f82eded5b23d937d725b86d186affd922d5c74",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "README.md",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/README.md",
+      "sha256": "e74ab8c25ba1a60b4ba47ed68ab374657732109f49408abaaa9f3cbd137a143c",
+      "last_change": "b665091c1ff571a7a468bbf33af2f7c803c75220 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/01-host-toolchain.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/01-host-toolchain.sh",
+      "sha256": "ec28ea20551323838fb6c849ca967a684cdd68928500d29d284b93c40c1bc0db",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/02-gpu-stubs.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/02-gpu-stubs.sh",
+      "sha256": "6c599db1f26a8dd3c5f66caa70d64c2710c8879f4e780bbee7772f80db66b014",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/03-source-and-patches.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/03-source-and-patches.sh",
+      "sha256": "e6a51326f35fc1eb24fb9ea0c582da21a9433f88c8d2bb77fca048fd504747dd",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/04-build-deps.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/04-build-deps.sh",
+      "sha256": "c75dcc78a8fc36bff0a9e6934d64889dcffc34fd919c7d2d1aa53db8a69007a3",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/05-build-and-package.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/05-build-and-package.sh",
+      "sha256": "4fdb961f672bb9842a66741ae419f7d25e8d842458a1d2933281f24a41a9f825",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/exitwatch.c",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/exitwatch.c",
+      "sha256": "b56fc90646f1700d0848653672b86ec7781cd0d6f3d1773ac4ebc0385e49d367",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/launcher.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/launcher.sh",
+      "sha256": "88542cf2a8fbd9c69e8bc0cd6c941b993e0dd50a8e9f07b67335827fbde80751",
+      "last_change": "8fed1bfca8455a61f97d2d3c15230f9d1c046896 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/mkxp.json",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/mkxp.json",
+      "sha256": "1d8414d1b03e4c215a81dcde85e810cf5cc4c41e281af044f4cda5d7517c8816",
+      "last_change": "fc6140b2fef9b371bbdd4ba426a07b79964c4115 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/patch-kmsdrm.py",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/patch-kmsdrm.py",
+      "sha256": "a6cc6f0d458b1ff972c50192d2e0e4ec00236144ceedfe591ebe487905ca215e",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "build/target-armv7old.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/build/target-armv7old.sh",
+      "sha256": "a69d8f561eecd3f6fe1a4c0a3f86750171165c2f8adf35aa81e1813a35ac2576",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "infinite-fusion/PokemonInfiniteFusion.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/infinite-fusion/PokemonInfiniteFusion.sh",
+      "sha256": "264c0e525609359f9917745e34e476d86ec70423b339b07aa5ed8d81ea07c55b",
+      "last_change": "64788ac4abd5aafa4a653e043ebd089239f508b2 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "launcher.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/launcher.sh",
+      "sha256": "b0e687f78dd784ad06073543b89e114063cffcb2790df419aa05ae55219254df",
+      "last_change": "fd2f71158f0e735be95ee669c7e3ac678d2ad765 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "mkxp.json",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/mkxp.json",
+      "sha256": "1d8414d1b03e4c215a81dcde85e810cf5cc4c41e281af044f4cda5d7517c8816",
+      "last_change": "fd2f71158f0e735be95ee669c7e3ac678d2ad765 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "patches/0001-sdl2-kmsdrm-async-pageflip-fallback.patch",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/patches/0001-sdl2-kmsdrm-async-pageflip-fallback.patch",
+      "sha256": "093ad87d520ebda385dc2f4a504d9f32c7b0cd438550e13e414b77ecacdde24d",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "patches/0002-sdl2-kmsdrm-honour-double-buffer-hint.patch",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/patches/0002-sdl2-kmsdrm-honour-double-buffer-hint.patch",
+      "sha256": "c1e403b969369fe79795f1fede558138137c5fed708afa94acce4da2bbbece27",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "patches/0003-mkxpz-nintendo-face-buttons.patch",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/patches/0003-mkxpz-nintendo-face-buttons.patch",
+      "sha256": "b93163ee6a7b0884c80bf19c1bd83fde78ef070610fbd2709394e0ade8b33a14",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "patches/0004-mkxpz-optional-verbose-sdl-logging.patch",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/patches/0004-mkxpz-optional-verbose-sdl-logging.patch",
+      "sha256": "89d5a5016992437182ccdb61bde41361e29a526c221662ca79d31df5517de437",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "patches/0005-mkxpz-cross-build-adjustments.patch",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/patches/0005-mkxpz-cross-build-adjustments.patch",
+      "sha256": "a0f439eb7e4b0ec50e8b4fe732e84abddffe799d9cee23670ecb59a8a7d7da15",
+      "last_change": "2857fb9b067d77b92a42cdaeb1a4041b8f5d4965 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "tools/CambiarHora.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/tools/CambiarHora.sh",
+      "sha256": "0e84ba3b92b7d198f5176a640c884f509fd430c1704bb653a0db907c068afdc9",
+      "last_change": "902c6df60cb2bc131ea67438efcecacb0ee71631 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "tools/Hora-Dia.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/tools/Hora-Dia.sh",
+      "sha256": "ad4a12e063f3d69370db2a8b0e0eaf57721e65d00724f8c0a7f3dabd65a31eb3",
+      "last_change": "902c6df60cb2bc131ea67438efcecacb0ee71631 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    },
+    {
+      "path": "tools/Hora-Noche.sh",
+      "evidence_url": "https://github.com/Periko21/mkxp-z-r36s/blob/b665091c1ff571a7a468bbf33af2f7c803c75220/tools/Hora-Noche.sh",
+      "sha256": "32a7f05de2c0fc0868c3ff2868e6ba41119362ea89b7a6643d411b00d31e43bf",
+      "last_change": "902c6df60cb2bc131ea67438efcecacb0ee71631 Pere",
+      "spdx": "UNKNOWN",
+      "license_claim": "Root LICENSE contains GPL-2.0; README/NOTICE claim GPLv2+ for engine/helper, not a file-specific grant for all scripts/SDL patches",
+      "obligations": "Resolve original authorship and explicit file/patch grant; retain original target notices and changed-file attribution",
+      "status": "REFERENCE_ONLY_NO_IMPORT"
+    }
+  ]
+}
