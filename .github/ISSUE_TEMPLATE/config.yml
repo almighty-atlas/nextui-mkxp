@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: NextUI upstream
+    url: https://github.com/LoveRetro/NextUI/issues
+    about: Report core firmware issues upstream after isolating them from this Pak.

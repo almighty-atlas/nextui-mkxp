@@ -1,0 +1,42 @@
+name: Hardware or runtime bug
+description: Report reproducible defects without uploading copyrighted game content
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: input
+    id: firmware
+    attributes:
+      label: NextUI release / device
+      placeholder: "RG35XX Pro / NextUI x.y.z"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Describe exact input/actions, including game/runtime version if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Logs, exit status, resource measurements; never include game assets, secrets or personal paths.
+  - type: dropdown
+    id: evidence-level
+    attributes:
+      label: Evidence level
+      options:
+        - H700 hardware
+        - Host / cross-build
+        - Static analysis
+        - Other device
+        - Not tested
+    validations:
+      required: true

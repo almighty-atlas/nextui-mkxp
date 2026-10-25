@@ -1,0 +1,45 @@
+# Game content and copyrighted assets — never commit
+games/
+game-data/
+user-games/
+roms/
+Roms/
+*.rxdata
+*.rgssad
+*.rgss2a
+*.rgss3a
+Game.exe
+Game.ini
+*.sav
+*.save
+*.rpgproject
+*.rpgmvp
+*.rpgmvo
+*.rpgmvm
+
+# Binaries / packaging / toolchain
+build/
+dist/
+out/
+artifacts/
+*.o
+*.a
+*.so
+*.so.*
+*.elf
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.log
+*.core
+core.*
+.DS_Store
+
+# Local configuration / caches
+.env
+.env.*
+!.env.example
+.cache/
+__pycache__/
+*.pyc
