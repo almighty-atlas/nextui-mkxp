@@ -4,7 +4,7 @@
 
 - Device: Anbernic RG35XX Pro; SoC family H700.
 - Firmware: official NextUI H700; **capture exact installed version**.
-- Userspace: potentially aarch64/64-bit; confirm on **this** device with `docs/DEVICE_PROBE.md`.
+- Userspace: potentially aarch64/64-bit; confirm kernel, tool userland and `/bin/sh` ELF separately with [the read-only probe](DEVICE_PROBE.md). Actual H700 baseline remains **NOT_TESTED**, pending redacted owner output in issue #1.
 - Key constraints: modest RAM, framebuffer/display/GLES/DRM integration, built-in buttons, filesystem permissions, SD card durability.
 - R36S reference targets ArkOS on RK3326/armhf, **not a binary-compatible implementation**.
 

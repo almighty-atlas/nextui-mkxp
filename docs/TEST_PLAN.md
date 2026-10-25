@@ -42,3 +42,13 @@
 | Example | H700 | RG35XX Pro / exact NextUI tag | NOT_TESTED | — |
 
 Use PASS / FAIL / BLOCKED / NOT_TESTED. Never claim PASS without corresponding actual execution.
+
+## M0: Read-only H700 inventory
+
+Run `sh -n tools/probe-h700.sh`, `python3 -m unittest discover -s tests -v`
+and `git diff --check`. Use ShellCheck/BusyBox syntax checks if already available;
+do not install packages on the handheld. The
+[probe workflow](../.github/workflows/h700-probe.yml) runs offline checks.
+Fixture outputs are HOST evidence; real H700 results remain NOT_TESTED until
+redacted device output and firmware version are supplied using the
+[handoff and results template](DEVICE_PROBE.md).
