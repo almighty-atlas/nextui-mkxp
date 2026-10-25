@@ -31,7 +31,7 @@ Native **RPG Maker XP** game runtime for **NextUI on Anbernic H700 handhelds**, 
 | M4 – Decay | Essentials-specific compatibility and gameplay regression testing |
 | M5 – Release | Packaging validation, instructions, CI, attribution, first release |
 
-See [ROADMAP](docs/ROADMAP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [DEVICE-PROBE](docs/DEVICE_PROBE.md) and [TEST PLAN](docs/TEST_PLAN.md). Work is tracked in [GitHub Issues](../../issues).
+See [ROADMAP](docs/ROADMAP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [DEVICE-PROBE](docs/DEVICE_PROBE.md) and [TEST PLAN](docs/TEST_PLAN.md). Work is tracked in the [master roadmap issue #18](https://github.com/almighty-atlas/nextui-mkxp/issues/18) and individual [GitHub Issues](https://github.com/almighty-atlas/nextui-mkxp/issues).
 
 ## Development workflow
 
