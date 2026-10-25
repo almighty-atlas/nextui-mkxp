@@ -37,10 +37,12 @@ printf '%s\n' 'Presence/access is not proof of working graphics, audio, input or
 section 'RELEASE / MODEL'
 # NextUI makefile writes release name + build hash at the root .system level.
 printf '%s\n' 'NextUI recorded release/build (/mnt/SDCARD/.system/version.txt; not authenticated):'
+# shellcheck disable=SC2016 # AWK program is intentionally passed literally; $fields belong to awk.
 text_fields /mnt/SDCARD/.system/version.txt '
  NR <= 2 { gsub(/[^A-Za-z0-9 ._+()\/-]/, "?"); print substr($0,1,120); n++ }
  END { if (!n) print "UNKNOWN (empty release file)" }'
 printf '%s\n' 'OS identification (not the NextUI release):'
+# shellcheck disable=SC2016 # AWK program is intentionally passed literally; $fields belong to awk.
 text_fields /etc/os-release '
  /^(NAME|VERSION_ID|PRETTY_NAME)=/ { gsub(/[^A-Za-z0-9 ="._+()\/-]/, "?"); print substr($0,1,120); n++ }
  END { if (!n) print "UNKNOWN (no selected OS fields)" }'
@@ -86,10 +88,12 @@ if have readelf && have awk && [ -f /bin/sh ] && [ -r /bin/sh ]; then
       END { if (!n) print "UNKNOWN (no PT_INTERP reported; static or unavailable)" }'
 else unknown; fi
 section 'MEMORY / SWAP (no backing filenames)'
+# shellcheck disable=SC2016 # AWK program is intentionally passed literally; $fields belong to awk.
 text_fields /proc/meminfo '
  /^(MemTotal|MemAvailable|MemFree|SwapTotal|SwapFree):/ && $2 ~ /^[0-9]+$/ {
    print $1, $2, "kB"; n++ }
  END { if (!n) print "UNKNOWN (no selected memory fields)" }'
+# shellcheck disable=SC2016 # AWK program is intentionally passed literally; $fields belong to awk.
 text_fields /proc/swaps '
  NR>1 && NF==5 && $3 ~ /^[0-9]+$/ && $4 ~ /^[0-9]+$/ && $5 ~ /^-?[0-9]+$/ {
    t=($2=="file" || $2=="partition" ? $2 : "UNKNOWN")
@@ -101,6 +105,7 @@ for probe_node in /dev/dri/card0 /dev/dri/card1 /dev/dri/renderD128 /dev/fb0 /de
 done
 printf '%s\n' 'Access flags reflect this session; no node was opened or permissions changed.'
 section 'INPUT DESCRIPTORS (no names, Phys, Uniq or event streams)'
+# shellcheck disable=SC2016 # AWK program is intentionally passed literally; $fields belong to awk.
 text_fields /proc/bus/input/devices '
  /^I: Bus=[0-9A-Fa-f]+ Vendor=[0-9A-Fa-f]+ Product=[0-9A-Fa-f]+ Version=[0-9A-Fa-f]+$/ {print; n++}
  /^H: Handlers=/ {
