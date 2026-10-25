@@ -18,7 +18,8 @@ Game.ini
 *.rpgmvm
 
 # Binaries / packaging / toolchain
-build/
+/build-output/
+/.build/
 dist/
 out/
 artifacts/
@@ -33,7 +34,7 @@ artifacts/
 *.7z
 *.log
 *.core
-core.*
+core.[0-9]*
 .DS_Store
 
 # Local configuration / caches
