@@ -1,6 +1,6 @@
 # Safe H700 hardware inventory
 
-Issue [#1](https://github.com/almighty-atlas/nextui-mkxp/issues/1): **H700 NOT_TESTED**.
+Issue [#1](https://github.com/almighty-atlas/nextui-mkxp/issues/1): **owner-supplied H700 inventory received; functional runtime tests remain NOT_TESTED.** See [H700 baseline](H700_BASELINE.md).
 The executable [tools/probe-h700.sh](../tools/probe-h700.sh) is a fixed-scope,
 read-only inventory for the owner's RG35XX Pro. It writes only to terminal output
 and needs no elevated privileges. Do not change permissions, enable services or
@@ -110,7 +110,7 @@ unknown, removal remains BLOCKED. No blanket deletion command is provided.
 
 ## Redacted results template (attach to issue #1)
 
-- Evidence: **H700 NOT_TESTED** until the owner supplies actual output.
+- Evidence: **USER-SUPPLIED H700 INVENTORY RECEIVED** on 2026-10-25; see [H700 baseline](H700_BASELINE.md). Runtime hardware checks remain NOT_TESTED.
 - Probe commit / date / session type (terminal or existing SSH):
 - Physical model / exact installed NextUI release / official or custom source:
 - Release-file value versus UI version (match, mismatch, UNKNOWN):
@@ -127,8 +127,8 @@ unknown, removal remains BLOCKED. No blanket deletion command is provided.
 Before posting, remove any unexpected identifying names/paths/release labels.
 Do not append full environments, network settings, serials, games, saves, private
 logs or screenshots containing such data. Then attach the redacted output and
-installed firmware version to issue #1. Only that evidence can finalize the real
-M0 ABI/Pak baseline; keep issue #1 open in the meantime.
+installed firmware version to issue #1. Owner-supplied inventory has now been summarized in [H700 baseline](H700_BASELINE.md).
+The remaining runtime checks and UI confirmation remain open; keep issue #1 open.
 
 ## Verification performed in cloud
 
@@ -148,4 +148,4 @@ are not a general shell security proof.
 | HOST | PASS: seven synthetic fixtures and cloud-host execution; not handheld facts |
 | BusyBox runtime / ShellCheck | NOT_TESTED locally: commands unavailable; no packages installed. POSIX shell/BusyBox-compatible syntax and applet options used; CI runs optional checks if installed |
 | CI | Workflow added; status is reported separately on the PR |
-| H700 | NOT_TESTED / baseline BLOCKED pending redacted owner output |
+| H700 inventory | OWNER-SUPPLIED observation documented in [H700 baseline](H700_BASELINE.md); on-device EGL/SDL/audio/input/Pak behavior remains NOT_TESTED |
