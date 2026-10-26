@@ -1,150 +1,140 @@
-# Zed/Codex-Folgeauftrag – Issue #26: authentisches H700 Mali-SDL/EGL/GLES-Linkinterface
+# Zed/Codex – Issue #26, Fortsetzung von PR #27 nach `bcba27f`
 
 **Repository:** `almighty-atlas/nextui-mkxp`  
-**Arbeitsbereich:** bereits offener [PR #27](https://github.com/almighty-atlas/nextui-mkxp/pull/27), Branch `build/issue-26-linux49-mali`  
-**Geprüfter Ausgangsstand:** `d678597ab6c9522594c1669a1f4eb3196fd63911`  
-**Übergeordnetes Issue:** [#26](https://github.com/almighty-atlas/nextui-mkxp/issues/26)  
-**Verboten:** Gerätezugriff, Geräteausführung, Firmwareänderungen, Binär-Uploads/Veröffentlichungen, PR-Merges und automatisches Schließen von Issues.
+**Bestehender PR:** [#27](https://github.com/almighty-atlas/nextui-mkxp/pull/27), Branch `build/issue-26-linux49-mali`  
+**Ausgangspunkt:** `bcba27f76a3fe4d8aecfebdd81cc613768e3c4d2` (vor dem Start auf neuen HEAD prüfen)  
+**Scope:** ausschließlich Quellen-/Host-Build-Experimente, Tests und Dokumentation. **Kein H700-Zugriff, keine Geräteausführung, keine veröffentlichten Binärdateien, keine Merges.**
 
-## Prompt zum Einfügen in Zed/Codex
+## Aktueller Befund
+
+- PR #27 enthält bereits den vollständig neu gebauten **Linux-4.9-Sysroot / glibc 2.28** aus dem früheren Host-Experiment, ein libc-only AArch64-Kalibrierungs-ELF und das **unveränderte** Dreieck aus PR #23 als AArch64-Objekt. Diese Resultate dürfen nicht mit einem H700-Test verwechselt werden.
+- Die folgenden SDL-Mali-Vorbereitungen erreichten `SDL_BUILD_BLOCKED`: Der private Sysroot war in der neuen Cloud-Session nicht vorhanden; der neue native Bootstrap scheiterte mit GNU **M4 1.4.20** in `_Generic`-Fehlern. `LINK_BLOCKED` bleibt separat.
+- **Neu verifizierte Lösungsquelle:** GNU [M4 **1.4.21**, Release 2026-02-06](https://lists.gnu.org/archive/html/info-gnu/2026-02/msg00004.html) behebt laut Maintainer genau Konflikte mit neueren glibc-/C23-`_Generic`-Deklarationen. Offiziell gemeldeter SHA-256 für `m4-1.4.21.tar.xz`:
+  `f25c6ab51548a73a75558742fb031e0625d6485fe5f9155949d6486a2408ab66`.
+  URL: `https://ftpmirror.gnu.org/m4/m4-1.4.21.tar.xz`; optionale Signatur `.sig`. Hash vor Entpacken unabhängig prüfen; Release-Checksum allein ist noch kein erfolgreich geprüfter Download.
+- **Neu geprüfte H700 SDL-Quelle:** In [`SDL_malivideo.c`](https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_malivideo.c#L90-L96) wird `GL_GetProcAddress` auf `MALI_GLES_GetProcAddress` gesetzt. Das [Mali-GLES-Header-Mapping](https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_maliopengles.h) definiert dies als `SDL_EGL_GetProcAddress`. SDL [dokumentiert](https://wiki.libsdl.org/SDL2/SDL_GL_GetProcAddress), dass GL-Funktionen nach dem Kontextaufbau über `SDL_GL_GetProcAddress` aufgelöst werden können. **Damit ist zu prüfen, ob die direkten GLES2-/EGL-Abhängigkeiten des SPIKE-Programms entfallen können.** GLES/EGL bleiben zur Laufzeit erforderlich.
+
+## Aktueller Codex-Master-Auftrag
 
 ```text
 Repository: almighty-atlas/nextui-mkxp
-Continue EXISTING Issue #26 and EXISTING PR #27 (branch
-build/issue-26-linux49-mali). Do not open another issue or PR for
-the same remaining issue scope. Start with git status and fetch
-up-to-date remote branch; if head differs from
-d678597ab6c9522594c1669a1f4eb3196fd63911, re-evaluate the
-current evidence and do not overwrite concurrent changes.
 
-OBJECTIVE
-The Linux-4.9 libc/sysroot gate was already addressed in PR #27:
-full private glibc 2.28 with Linux 4.9.170 headers and GNU ABI
-note 4.9.0; libc-only AArch64 calibration executable linked;
-original PR #23 triangle compiled to authentic AArch64 ET_REL.
-Both CI workflows passed (32 + 13 offline tests).
-DO NOT repeat the GNU Make 4.3/glibc rebuild as the primary task.
+Continue ONLY existing Issue #26 and PR #27, branch
+build/issue-26-linux49-mali. Re-read AGENTS.md, source/provenance
+rules, all comments on PR #27, PR #19 licensing gate, PR #21
+Mali-fbdev ADR, PR #23 original source and tests, current PR #27
+reports and CI. Fetch and inspect current remote branch head; do
+not discard work or rebase/merge other PR branches.
 
-The sole immediate engineering target is the remaining independent
-H700 Mali-fbdev graphics link gate. Prove a genuinely matched
-AArch64 SDL2/EGL/GLES *development/link interface* if legally
-and technically available, or document the precise irreducible
-missing input without faking a successful link.
+GOAL: investigate TWO narrow, independent solutions:
+A) GNU M4 1.4.21 for the blocked native source-tool bootstrap;
+B) SDL-only direct linking for an alternative game-free GLES2
+triangle using SDL_GL_GetProcAddress rather than direct EGL/GLES2
+imports. We want a reproducible private-host proof, or an exact
+first blocker; not more unsourced general speculation.
 
-READ FIRST
-- AGENTS.md and relevant project safety/provenance documents;
-  Issues #1, #2, #3, #22, #24, #26; PRs #19, #20, #21, #23,
-  #25, #27 (source, reviews, checks).
-- PR #27 docs/build/issue-26-linux49-mali.md and evidence/inputs
-  and scripts/issue_26_sysroot.py, issue_26_crosscheck.py,
-  issue_26_sandbox.py, issue_26_test.py.
-- PR #21 source-grounded Mali-fbdev ADR and the source-only
-  triangle.c in PR #23 (pinned commit
-  60721c1a81a9f54e507650f313a479ecaa9b6d2a).
+PHASE A — SOURCE-VERIFIED M4 CORRECTION
+1. Inspect the precise m4 1.4.20 build log and host compiler/glibc
+   facts in PR #27. Compare the exact _Generic/bsearch/memchr
+   failures with GNU M4 1.4.21 official release announcement
+   (2026-02-06). Verify that 1.4.21 is applicable, not merely
+   newer, and make no unsupported assertion about GCC flags.
+2. If safe: acquire m4-1.4.21.tar.xz from the OFFICIAL GNU
+   release; verify actual bytes against maintainer-published
+   SHA256 f25c6ab51548a73a75558742fb031e0625d6485fe5f9155949d6486a2408ab66
+   BEFORE inspection/extraction. Check archive paths/symlinks,
+   check license; optionally verify trusted maintainer GPG
+   signature. Build private native m4 and run a narrow smoke
+   (`m4 --version`, basic deterministic macro expansion).
+   Do not install anything globally or commit the executable.
+3. Change only the pinned M4 host-tool input in the isolated
+   sysroot/SDL preparation recipe when confirmed; don't change
+   target glibc/kernel baseline or quietly alter source flags.
+   Existing successful 4.9-sysroot build evidence is retained.
+   Rebuild the private sysroot only if this new ephemeral host
+   does not have the previously reviewed private output, and
+   mark this as a new experiment, not new H700 evidence.
+4. If feasible, reach actual SDL 2.28.5 configure and source
+   build using pinned H700 fork and H700 patch; inspect real
+   AArch64 SDL ELF, SONAME, NEEDED, RPATH, exported SDL APIs,
+   glibc/kernel notes, dynamic EGL/GLES loader and dependencies.
+   The H700 SDL Mali fork includes GPL-noticed source: PRIVATE
+   host build != permission to ship a library or binary.
+   Any authentic proprietary GPU development/link input absence
+   remains BLOCKED; never fabricate replacement vendor libraries.
 
-SOURCE/PINNING
-- NextUI H700 source at
-  5291344b3aceae5fa197437a70824afb41e2d338.
-- H700 toolchain recipe at
-  04faa348c112617fc6b99be62308099ee6d43581.
-- JohnnyonFlame SDL-malifbdev-rot at
-  d4a7d7503524cc469fe775242f3f925d4dd56c88.
-- Prior AArch64 libc investigation and private-build evidence
-  from PR #27 head (not installed-device attestation).
-- The device reports AArch64 Linux 4.9.170 and NextUI
-  libSDL2-2.0.so.0.2800.5; this is OWNER-SUPPLIED METADATA,
-  not a hash or proof of the installed ELF/driver.
+PHASE B — A MORE DIRECT WAY AROUND LINK-TIME GLES/EGL
+5. Review original triangle.c at PR #23 pinned head
+   60721c1a81a9f54e507650f313a479ecaa9b6d2a
+   and its real 19 SDL / 2 EGL / 26 GLES2 calls. Explore a
+   separate EXPERIMENTAL variant inside the private host
+   workspace, without overwriting or editing PR #23 source:
+   - Keep original functional draw/animated triangle, shader
+     compile/link checks, cleanup, signal/timeout, metadata
+     safety and strict failure codes.
+   - Get GL entrypoints via correctly typed GL function pointers
+     returned by SDL_GL_GetProcAddress AFTER a successfully
+     created/current GLES2 context. Verify non-null pointers and
+     GLES2 version/profile, and use actual shader draw, not
+     glClear-only/no-op behavior.
+   - Consider removing direct eglGetCurrentDisplay /
+     eglQueryString calls for the feasibility spike; log
+     GL_VENDOR / GL_RENDERER / GL_VERSION via glGetString and
+     SDL driver identity. If EGL-specific diagnostics remain,
+     explicitly research a legitimate separately loaded EGL
+     handle; do not assume SDL_GL_GetProcAddress exposes core
+     eglQueryString, and do not treat optional EGL metadata as
+     GPU proof.
+   - Use SDL2 as the ONLY directly linked video library IF the
+     native linker/ELF evidence permits; allow target runtime SDL
+     to dynamically load the actual EGL/GLES implementation.
+   - No dummy GLES/EGL stubs, static vendor imports, PowerVR/Mesa
+     substitution, forced unresolved symbols or omission of
+     required GL calls. Keep an explicit original-vs-variant
+     source and ABI delta.
+6. If a matching AUTHENTIC SOURCE-BUILT SDL library exists and
+   the variant compiles/links against it in the verified private
+   Linux-4.9 sysroot, run native readelf on the *result*:
+   PT_INTERP, DT_NEEDED, GLIBC requirements, ABI note, SDL
+   SONAME and any transitive dependencies. No foreign ldd.
+   Ensure no executable DT_NEEDED libEGL/libGLESv2 unless
+   independently justified. Runtime EGL/GLES/ION/pixmap closure
+   and physical presentation remain UNKNOWN and NOT_TESTED.
+7. Adapt only offline mock tests for the alternative variant to
+   assert all function lookups, null-pointer failure branches,
+   real draw/swap calls, bounded output and clean shutdown.
+   Be explicit: host mocks/static link are NOT H700 graphics
+   evidence, and success must never be inferred from missing
+   real hardware/driver input. Do not replace PR #23 tests.
+   Do not create a distributable Pak.
 
-STEPS
-1. Construct an exact function/symbol/dependency matrix for
-   the original C triangle.c:
-   - SDL2 needed entrypoints and source fork declarations;
-   - direct eglGetCurrentDisplay/eglQueryString and GLES2
-     compile/shader/buffer/draw/swap entrypoints;
-   - expected SONAME/NEEDED, possible SDL dynamic loading,
-     Mali-fbdev vendor pixmap API, /dev/fb0 and /dev/ion;
-   - real link-time vs runtime dependencies, and the distinction
-     between native GLES2 symbols and SDL's EGL loader.
-   Ground claims to immutable source locations, do not infer
-   installed binaries from filenames.
-2. Examine the pinned H700 recipe and source repositories
-   for an authentic, auditable source-build path for the
-   patched SDL2 2.28.5 library and an authorized AArch64
-   EGL/GLES link interface. Prefer source/pinned headers and
-   legitimate development import libraries over borrowed
-   TrimUI SDK/PowerVR blobs. Do not invent or fabricate dummy
-   .so/stub libraries that report success. Do not suppress
-   undefined references or ignore DT_NEEDED closure.
-3. If source/headers/build dependencies actually permit,
-   BUILD SDL's H700 Mali-fbdev variant privately against the
-   reviewed Linux-4.9-compatible sysroot; inspect the produced
-   library ABI/SONAME, NEEDED, symbol exports, GNU ABI notes,
-   and compiler/link maps. Confirm source/patch/license pins.
-   Do not upload build outputs. If the SDL build requires
-   proprietary headers or authenticated vendor .so files,
-   isolate the first concrete requirement and stop that route.
-4. Investigate provenance-reviewed H700 EGL/GLES *development*
-   inputs from maintainers and published source/release
-   manifests (e.g. NextUI/BaseOS H700 source/build recipes).
-   If an eligible artifact exists: hash before extraction,
-   inspect archives and licenses, and verify all AArch64
-   symbol/version/NEEDED requirements offline. Do not copy
-   unreviewed GPU/vendor binaries, do not release any.
-   If unavailable, report a table of missing specific symbols,
-   required SONAMEs/source IDs and why the linker cannot proceed.
-5. Only when actual matching permissible inputs exist, attempt
-   an isolated REAL link of the UNMODIFIED original triangle
-   against the Linux-4.9 sysroot + verified H700 SDL/EGL/GLES
-   dev inputs, then inspect PT_INTERP, NEEDED, RPATH/RUNPATH,
-   GLIBC/GLIBC_PRIVATE needs, GNU Linux ABI note, load-time
-   and SDL dlopen dependency closure. Include a complete link
-   map and hashes. The test ELF must remain PRIVATE on host.
-   A static linker PASS is not a functioning H700 graphics PASS.
-6. Retain robust host isolation: clean explicit environment,
-   pinned inputs/tools, no host-header/lib contamination,
-   no lib/vendor copies into repo, no device/SSH operations,
-   no root/system changes. Add tests for missing library
-   inputs, bogus/host ELF, unexpectedly successful link with
-   unreviewed inputs, and DLL/SONAME mismatch.
-7. Harden the existing .github/workflows/issue-26-offline.yml
-   only as appropriate: whitespace should cover the full PR
-   base-to-head change set, including on push events, rather
-   than silently relying on HEAD^ HEAD. Ensure docs/build
-   issue-26 changes also trigger an offline check. Prefer a
-   simple, reviewable implementation with explicit checkout
-   history/base fetching. Preserve the pinned checkout and
-   read-only permissions; DO NOT add a network-dependent CI
-   toolchain build or artifact upload.
-8. Update the existing Issue #26 report/JSON in PR #27;
-   retain historical 87ca744 blocked experiment and the
-   already successful libc progress. Include a clear matrix:
-   LIBC49_BUILT, SDL_SOURCE_BUILT or SDL_BUILD_BLOCKED,
-   EGL_GLES_LINK_INPUTS_VERIFIED or LINK_BLOCKED,
-   TRIANGLE_HOST_LINKED or NOT_LINKED,
-   ELF_POLICY_HOST_ONLY, H700_RUNTIME_NOT_TESTED,
-   LICENSE_DISTRIBUTION_BLOCKED.
-   Preserve source/host/owner/hardware evidence separation.
-9. Respect licensing: the original C is MIT, while SDL's
-   mali.h contains GPL notices, glibc has LGPL obligations,
-   and proprietary EGL/GLES rights remain unresolved.
-   Private build/testing does NOT authorize redistribution.
-   Do not deem a release legally cleared without human review.
-10. Verify changed-file diff, Python/JSON, offline tests and
-    GitHub CI. Push ONLY to the current PR #27 branch and
-    provide its new head SHA, CI run, actual source/host
-    verification and smallest outstanding blocker.
-    Keep PRs #19-#27 OPEN/UNMERGED; do not close #22/#24/#26.
+PHASE C — SOURCE REVIEW AND DELIVERY
+8. Update only Issue-26-scoped docs/JSON/scripts in EXISTING
+   PR #27. Record full pinned source/hash/link evidence, which
+   variant was compiled, M4 resolution or failure, link closure,
+   and remaining exact vendor/runtime/rights unknowns.
+   Distinguish M4_NATIVE_FIXED, GLIBC49_HOST_BUILT,
+   SDL_SOURCE_BUILT, SDL_ONLY_HOST_LINKED,
+   H700_RUNTIME_NOT_TESTED, and DISTRIBUTION_BLOCKED.
+9. CI must remain read-only/offline, test the complete
+   branch-vs-base PR diff and never fetch/bundle toolchain,
+   SDL binaries, driver blobs, or execute an ARM target.
+   Re-run both offline suites, check CI and document exact
+   head SHA/runs; do not claim CI rebuilt glibc/SDL.
+10. No SSH commands, firmware/library installs, GPU device
+    access or other action on the RG35XX Pro. No merge/close
+    PRs or Issues; do not begin engine compilation or games.
+    Honor license gate PR #19; no combined-work release
+    clearance is implied by source build or SDL-only linking.
 
-STOP CRITERIA
-No genuine, rights-reviewed development EGL/GLES library or
-build route -> document LINK_BLOCKED with concrete needs and
-stop. Never replace the unavailable library by PowerVR,
-Mesa/glvnd, a fabricated stub, linker ignore flags or
-an arbitrary vendor runtime copied from another device.
-No device actions, graphics launch via SSH, ROM assets,
-mkxp-z engine build or published H700 Pak.
+If the new M4 build works but SDL still needs genuine unavailable
+vendor inputs, stop with the exact evidence rather than faking
+a solution. If SDL-only linking works, that is SOURCE/HOST
+feasibility only; owner hardware GPU-test remains separate.
 ```
 
-## Übergabe und Entscheidungspunkt
+## Erwarteter Abschluss
 
-Die Aufgabe darf keine Geräteinformationen nacherheben, keine NextUI-Laufzeit starten und keinen binären Test verteilen. Falls der Link an proprietären EGL/GLES-Entwicklungsdateien hängt, muss das als **konkreter, nachprüfbarer Blocker** zurückkommen. Ein späteres, gesondert freigegebenes read-only H700-Inventar wäre dann zu besprechen, aber nicht Bestandteil dieses Codex-Auftrags.
+Codex soll **denselben PR #27** aktualisieren, ohne PRs #19–#25 anzufassen. Das Ziel ist ein nachprüfbarer, möglichst vendor-unabhängiger **Link-Zeit**-Nachweis für ein spiel­freies GLES2-Programm. Die echten Mali-/EGL-/GLES-Treiber und Rechte bleiben eigene Freigabeschritte.
+
+**Kein Geräte- oder Binärtest ist mit diesem Auftrag autorisiert.**
