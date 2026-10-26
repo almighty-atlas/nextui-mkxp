@@ -32,6 +32,21 @@ archive, copied header and system library stays in private scratch space.
 Nothing was installed, executed or modified on the handheld. No target ELF,
 target `ldd`, target test suite, emulator, or target `ldconfig` was run.
 
+## Earlier Issue #26 report
+
+This advances existing PR #27 rather than opening another PR. Its earlier
+[blocked experiment at 87ca744](https://github.com/almighty-atlas/nextui-mkxp/blob/87ca74459a760cc80e52290d1f79ebbd79ec0dac/docs/build/issue-26-linux49-mali.md),
+[input fingerprints](https://github.com/almighty-atlas/nextui-mkxp/blob/87ca74459a760cc80e52290d1f79ebbd79ec0dac/docs/build/issue-26-inputs.json)
+and [evidence](https://github.com/almighty-atlas/nextui-mkxp/blob/87ca74459a760cc80e52290d1f79ebbd79ec0dac/docs/build/issue-26-evidence.json)
+remain available in the preserved Git history. That separate experiment used
+Linux 4.9.0 headers and reported 103 Make restarts in a three-second diagnostic;
+it did not complete glibc or compile the triangle. The new experiment uses
+Linux 4.9.170 headers, independently pinned GNU sources and a completed Make
+4.3 rebuild. Its metadata supersedes the blocked status without treating the
+two experiments as identical. The prior scanner and its regression suite are
+retained (13 tests after the native-tool regression); its child environment now omits HOME and scanner tools must be native
+x86_64 ELF. No earlier PR branch was overwritten or rebased.
+
 ## Inputs and mandatory review
 
 [Input lock](issue-26-inputs.json), [host evidence](issue-26-evidence.json),
@@ -210,6 +225,7 @@ Run offline tests (also run automatically by the read-only CI workflow):
 
 ```sh
 python3 -I -B scripts/issue_26_test.py
+python3 -I -B -m unittest discover -s scripts/issue_26_tests -v
 ```
 
 They cover hostile environment/preload/PATH, wrappers and target execution

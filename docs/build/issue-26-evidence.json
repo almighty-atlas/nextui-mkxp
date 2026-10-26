@@ -1581,15 +1581,22 @@
     "raw_triangle_object_identical_to_initial": true
   },
   "offline_tests": {
-    "command": "python3 -I -B scripts/issue_26_test.py",
-    "passed": 32,
+    "commands": [
+      "python3 -I -B scripts/issue_26_test.py",
+      "python3 -I -B -m unittest discover -s scripts/issue_26_tests -v"
+    ],
+    "passed": 45,
+    "new_boundary_tests": 32,
+    "retained_scanner_tests": 13,
     "target_execution": "NEVER"
   },
   "script_snapshots": {
     "issue_26_sandbox.py": "d355c77346651ef464be39c4298fe580f9966aa2cd3382f16c1007232d85e20a",
     "issue_26_crosscheck.py": "b884e8fdc58d25b9763dd985c54db76f39775ca06f41130d0b3a7b4a48f67fb1",
+    "issue_26_gate.py": "fd6e61ed7cadcbed634ebf7da05a7df3b239a1ad302c6e09cdb778f4c53bed2d",
     "issue_26_sysroot.py": "f7adbc02b6624fb1600ca305ba345b98cdb3772c6780a16c4cfd7ca7ec61a677",
-    "issue_26_test.py": "5e02649f3cf67df0cd2b0c294ec0446aea5424669bffcf61dcf6653d0d78a095"
+    "issue_26_test.py": "5e02649f3cf67df0cd2b0c294ec0446aea5424669bffcf61dcf6653d0d78a095",
+    "issue_26_tests/test_gate.py": "5991f6dd51445e6e54872ee5ecae48cd7f8aa1dafb56ca4b5ab8407708349728"
   },
   "fresh_child_environments": {
     "environment_1": {
