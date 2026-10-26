@@ -91,5 +91,35 @@
       "sha256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83",
       "bytes": 11131
     }
-  ]
+  ],
+  "mali_followup": {
+    "parent_head": "d678597ab6c9522594c1669a1f4eb3196fd63911",
+    "baseos": {
+      "repository": "https://github.com/pvaibhav/BaseOS",
+      "commit": "5866358eb4ad7cf1e6c0b09228e6cfa11f2cf3d5",
+      "tag": "v1.4.0",
+      "files": {
+        "README.md": "2ac06737a7179efb47474db7fac935f15261cf3d709ef9e71a6758096102e9e3",
+        "manifest/harvest.list": "5e434f5de60ac58d751f2086d07bf91da07e4513612e07a99f48820a9cdcb1de",
+        "manifest/prepared/rg35xxpro.json": "92e931a667e0375af5dfe637b5be316167f19ed2e4c9cc048b06122144c88adb",
+        "manifest/prepared/bundle.url": "c0599c1047711f1cd88ccdf8c18a2804c11c95de81b3c65a488ff3ac8b931401",
+        "manifest/prepared/bundle.sha256": "d2cf7c53c4a6a2f12a42c058ee78d402e128036b84596a213607db3e6b19841b",
+        "tools/source_manifest.py": "3c0319067f9b29314f6b1a09ff51452123d0e928f3fca12c719d17e95ee71d9e",
+        "tools/prepare_stock.py": "ea814b4d05b49013fc82b671a8096861ddf627d307cb01451c1ceb506858c939",
+        "prepare-stock.sh": "f07d5b3abd22e669097c4fa22ae3b2fc8b7dfe15cc5b7954b6d72977b8841062"
+      },
+      "scope": "text manifests/recipes only; no firmware, prepared bundles, harvested libraries or vendor DSOs acquired"
+    },
+    "sdl_recipe": {
+      "commit": "04faa348c112617fc6b99be62308099ee6d43581",
+      "patch_sha256": "e6d7e16806c36f619d1cd99ff49a30d34d044f9c6c94761fa2c7f846605cbf04",
+      "patch_applied_this_followup": false
+    },
+    "sdl_dynapi_sha256": "2a6cd1a97f73ccb9cb1ac106def2daa4a41ecb6b539f0f6975f5da0a4f825ab6",
+    "approved_h700_development_inputs": {
+      "SDL2": null,
+      "EGL": null,
+      "GLESv2": null
+    }
+  }
 }

@@ -1671,5 +1671,623 @@
       "PKG_CONFIG_LIBDIR": "$REPLAY_CHECK/empty-pkgconfig",
       "PKG_CONFIG_SYSROOT_DIR": "$REPLAY/sysroot"
     }
+  },
+  "mali_followup": {
+    "date": "2026-10-26",
+    "parent_head": "d678597ab6c9522594c1669a1f4eb3196fd63911",
+    "levels": {
+      "libc": "LIBC49_BUILT (prior HOST evidence preserved; no new complete rebuild)",
+      "sdl": "SDL_BUILD_BLOCKED (no completed prior sysroot locally; native m4 bootstrap failure)",
+      "development_interface": "LINK_BLOCKED",
+      "triangle": "NOT_LINKED",
+      "elf_policy": "ELF_POLICY_HOST_ONLY",
+      "hardware": "H700_RUNTIME_NOT_TESTED",
+      "rights": "LICENSE_DISTRIBUTION_BLOCKED"
+    },
+    "source_symbol_matrix": {
+      "SDL2": [
+        {
+          "symbol": "SDL_ClearError",
+          "triangle_lines": [
+            160
+          ],
+          "declaration_lines": [
+            148
+          ]
+        },
+        {
+          "symbol": "SDL_CreateWindow",
+          "triangle_lines": [
+            100
+          ],
+          "declaration_lines": [
+            551
+          ]
+        },
+        {
+          "symbol": "SDL_Delay",
+          "triangle_lines": [
+            164
+          ],
+          "declaration_lines": [
+            524
+          ]
+        },
+        {
+          "symbol": "SDL_DestroyWindow",
+          "triangle_lines": [
+            179
+          ],
+          "declaration_lines": [
+            586
+          ]
+        },
+        {
+          "symbol": "SDL_GL_CreateContext",
+          "triangle_lines": [
+            103
+          ],
+          "declaration_lines": [
+            596
+          ]
+        },
+        {
+          "symbol": "SDL_GL_DeleteContext",
+          "triangle_lines": [
+            177
+          ],
+          "declaration_lines": [
+            604
+          ]
+        },
+        {
+          "symbol": "SDL_GL_GetDrawableSize",
+          "triangle_lines": [
+            140
+          ],
+          "declaration_lines": [
+            600
+          ]
+        },
+        {
+          "symbol": "SDL_GL_MakeCurrent",
+          "triangle_lines": [
+            105
+          ],
+          "declaration_lines": [
+            597
+          ]
+        },
+        {
+          "symbol": "SDL_GL_SetAttribute",
+          "triangle_lines": [
+            96,
+            97,
+            98,
+            99
+          ],
+          "declaration_lines": [
+            594
+          ]
+        },
+        {
+          "symbol": "SDL_GL_SetSwapInterval",
+          "triangle_lines": [
+            120
+          ],
+          "declaration_lines": [
+            601
+          ]
+        },
+        {
+          "symbol": "SDL_GL_SwapWindow",
+          "triangle_lines": [
+            161
+          ],
+          "declaration_lines": [
+            603
+          ]
+        },
+        {
+          "symbol": "SDL_GetCurrentVideoDriver",
+          "triangle_lines": [
+            91
+          ],
+          "declaration_lines": [
+            538
+          ]
+        },
+        {
+          "symbol": "SDL_GetError",
+          "triangle_lines": [
+            162
+          ],
+          "declaration_lines": [
+            147
+          ]
+        },
+        {
+          "symbol": "SDL_GetTicks",
+          "triangle_lines": [
+            144,
+            149,
+            166
+          ],
+          "declaration_lines": [
+            521
+          ]
+        },
+        {
+          "symbol": "SDL_GetVersion",
+          "triangle_lines": [
+            79
+          ],
+          "declaration_lines": [
+            531
+          ]
+        },
+        {
+          "symbol": "SDL_Init",
+          "triangle_lines": [
+            87
+          ],
+          "declaration_lines": [
+            88
+          ]
+        },
+        {
+          "symbol": "SDL_PollEvent",
+          "triangle_lines": [
+            148
+          ],
+          "declaration_lines": [
+            156
+          ]
+        },
+        {
+          "symbol": "SDL_Quit",
+          "triangle_lines": [
+            181
+          ],
+          "declaration_lines": [
+            92
+          ]
+        },
+        {
+          "symbol": "SDL_getenv",
+          "triangle_lines": [
+            73,
+            74,
+            75,
+            85
+          ],
+          "declaration_lines": [
+            418
+          ]
+        }
+      ],
+      "EGL": [
+        {
+          "symbol": "eglGetCurrentDisplay",
+          "triangle_lines": [
+            115
+          ],
+          "declaration_lines": [
+            141
+          ]
+        },
+        {
+          "symbol": "eglQueryString",
+          "triangle_lines": [
+            117,
+            118
+          ],
+          "declaration_lines": [
+            149
+          ]
+        }
+      ],
+      "GLESv2": [
+        {
+          "symbol": "glAttachShader",
+          "triangle_lines": [
+            126
+          ],
+          "declaration_lines": [
+            508
+          ]
+        },
+        {
+          "symbol": "glBindAttribLocation",
+          "triangle_lines": [
+            127
+          ],
+          "declaration_lines": [
+            509
+          ]
+        },
+        {
+          "symbol": "glBindBuffer",
+          "triangle_lines": [
+            134
+          ],
+          "declaration_lines": [
+            510
+          ]
+        },
+        {
+          "symbol": "glBufferData",
+          "triangle_lines": [
+            135
+          ],
+          "declaration_lines": [
+            519
+          ]
+        },
+        {
+          "symbol": "glClear",
+          "triangle_lines": [
+            157
+          ],
+          "declaration_lines": [
+            522
+          ]
+        },
+        {
+          "symbol": "glClearColor",
+          "triangle_lines": [
+            157
+          ],
+          "declaration_lines": [
+            523
+          ]
+        },
+        {
+          "symbol": "glCompileShader",
+          "triangle_lines": [
+            38
+          ],
+          "declaration_lines": [
+            527
+          ]
+        },
+        {
+          "symbol": "glCreateProgram",
+          "triangle_lines": [
+            124
+          ],
+          "declaration_lines": [
+            532
+          ]
+        },
+        {
+          "symbol": "glCreateShader",
+          "triangle_lines": [
+            34
+          ],
+          "declaration_lines": [
+            533
+          ]
+        },
+        {
+          "symbol": "glDeleteBuffers",
+          "triangle_lines": [
+            173
+          ],
+          "declaration_lines": [
+            535
+          ]
+        },
+        {
+          "symbol": "glDeleteProgram",
+          "triangle_lines": [
+            174
+          ],
+          "declaration_lines": [
+            537
+          ]
+        },
+        {
+          "symbol": "glDeleteShader",
+          "triangle_lines": [
+            40,
+            175,
+            176
+          ],
+          "declaration_lines": [
+            539
+          ]
+        },
+        {
+          "symbol": "glDrawArrays",
+          "triangle_lines": [
+            158
+          ],
+          "declaration_lines": [
+            547
+          ]
+        },
+        {
+          "symbol": "glEnableVertexAttribArray",
+          "triangle_lines": [
+            139
+          ],
+          "declaration_lines": [
+            550
+          ]
+        },
+        {
+          "symbol": "glGenBuffers",
+          "triangle_lines": [
+            132
+          ],
+          "declaration_lines": [
+            556
+          ]
+        },
+        {
+          "symbol": "glGetError",
+          "triangle_lines": [
+            141,
+            159
+          ],
+          "declaration_lines": [
+            567
+          ]
+        },
+        {
+          "symbol": "glGetProgramiv",
+          "triangle_lines": [
+            128
+          ],
+          "declaration_lines": [
+            571
+          ]
+        },
+        {
+          "symbol": "glGetShaderiv",
+          "triangle_lines": [
+            39
+          ],
+          "declaration_lines": [
+            574
+          ]
+        },
+        {
+          "symbol": "glGetString",
+          "triangle_lines": [
+            107,
+            108,
+            111,
+            112,
+            113,
+            114
+          ],
+          "declaration_lines": [
+            578
+          ]
+        },
+        {
+          "symbol": "glGetUniformLocation",
+          "triangle_lines": [
+            130
+          ],
+          "declaration_lines": [
+            583
+          ]
+        },
+        {
+          "symbol": "glLinkProgram",
+          "triangle_lines": [
+            128
+          ],
+          "declaration_lines": [
+            596
+          ]
+        },
+        {
+          "symbol": "glShaderSource",
+          "triangle_lines": [
+            37
+          ],
+          "declaration_lines": [
+            605
+          ]
+        },
+        {
+          "symbol": "glUniform1f",
+          "triangle_lines": [
+            155
+          ],
+          "declaration_lines": [
+            618
+          ]
+        },
+        {
+          "symbol": "glUseProgram",
+          "triangle_lines": [
+            136
+          ],
+          "declaration_lines": [
+            637
+          ]
+        },
+        {
+          "symbol": "glVertexAttribPointer",
+          "triangle_lines": [
+            137,
+            138
+          ],
+          "declaration_lines": [
+            647
+          ]
+        },
+        {
+          "symbol": "glViewport",
+          "triangle_lines": [
+            142
+          ],
+          "declaration_lines": [
+            648
+          ]
+        }
+      ]
+    },
+    "sdl_version_macro": "SDL_VERSION is a header macro, not an ELF export",
+    "runtime_only": {
+      "objects": [
+        "libEGL.so",
+        "libGLESv2.so"
+      ],
+      "vendor_symbols": [
+        "egl_create_pixmap_ID_mapping",
+        "egl_destroy_pixmap_ID_mapping"
+      ],
+      "device_nodes": [
+        "/dev/fb0",
+        "/dev/ion"
+      ],
+      "closure": "Additional SDL blitter EGL/GLES function tables, extension/context ABI and vendor NEEDED closure remain unverified"
+    },
+    "baseos_metadata": {
+      "harvest": {
+        "optional_omissions": [],
+        "sha256": "e113df176e27f9b0d2f8686bed5d57f571edab4eb7b24a62d1a96a764308a5fe",
+        "size": 108533760
+      },
+      "origin": "RG35XXPRO-V1.0.5-BASE-20260522-mod-v3.9.9.img",
+      "reason_not_eligible": "stockmod-image runtime harvest; no reviewed vendor development grant, per-library source/build identity or symbol/SONAME attestations"
+    },
+    "local_dependency_attempt": {
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/issue_26_sysroot.py",
+        "--workspace",
+        "<MALI_PRIVATE>/libc-build",
+        "--archives",
+        "<MALI_PRIVATE>/archives",
+        "--compiler",
+        "<PRIOR_PRIVATE>/compiler",
+        "--compiler-archive",
+        "<PRIOR_PRIVATE>/inputs/compiler.tar.xz"
+      ],
+      "reason": "Restore dependency for SDL only; previous complete private sysroot is not available on this host",
+      "stages": [
+        {
+          "argv": [
+            "/usr/bin/sh",
+            "<MALI_PRIVATE>/libc-build/source/m4-1.4.20/m4-1.4.20/configure",
+            "--prefix=<MALI_PRIVATE>/libc-build/native",
+            "--disable-nls"
+          ],
+          "cwd": "<MALI_PRIVATE>/libc-build/build-m4-1.4.20",
+          "exit_code": 0,
+          "elapsed_seconds": 22.447,
+          "environment": {
+            "PATH": "<MALI_PRIVATE>/libc-build/tools",
+            "LC_ALL": "C",
+            "LANG": "C",
+            "TMPDIR": "<MALI_PRIVATE>/libc-build/tmp",
+            "CONFIG_SITE": "/dev/null",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "SOURCE_DATE_EPOCH": "1533081600"
+          },
+          "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29"
+        },
+        {
+          "argv": [
+            "/usr/bin/make",
+            "-j2"
+          ],
+          "cwd": "<MALI_PRIVATE>/libc-build/build-m4-1.4.20",
+          "exit_code": 2,
+          "elapsed_seconds": 0.214,
+          "environment": {
+            "PATH": "<MALI_PRIVATE>/libc-build/tools",
+            "LC_ALL": "C",
+            "LANG": "C",
+            "TMPDIR": "<MALI_PRIVATE>/libc-build/tmp",
+            "CONFIG_SITE": "/dev/null",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "SOURCE_DATE_EPOCH": "1533081600"
+          },
+          "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51"
+        }
+      ],
+      "first_errors": [
+        "./stdlib.h:827:20: error: expected identifier or '(' before '_Generic'",
+        "./stdlib.h:827:20: error: expected identifier or '(' before '_Generic'",
+        "./string.h:777:20: error: expected identifier or '(' before '_Generic'"
+      ],
+      "native_cc": "gcc (GCC) 16.2.1 20260810",
+      "native_default_c_standard": "__STDC_VERSION__ 202311L",
+      "outcome": "Stopped after first native bootstrap failure; no SDL configure/make or fresh target link performed",
+      "logs": {
+        "m4-1.4.20-configure.log": "f33fb032093c0d293a7f0165988a8774fcc7df30bf67e9354c6ab39dd96be0b5",
+        "m4-1.4.20-make.log": "87c6d453de26af11a7063dc92e00b068373721a14d27872819819b788126f29e"
+      },
+      "selected_native_tool_observations": {
+        "sh": {
+          "path": "/usr/bin/bash",
+          "sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "make": {
+          "path": "/usr/bin/make",
+          "sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "gcc": {
+          "path": "/usr/bin/gcc",
+          "sha256": "585673b6f1d2b1f58bf33174ddea5ac9be0cfbf043f1bf6b41c160f2e0943a45",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "cc": {
+          "path": "/usr/bin/gcc",
+          "sha256": "585673b6f1d2b1f58bf33174ddea5ac9be0cfbf043f1bf6b41c160f2e0943a45",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "as": {
+          "path": "/usr/bin/as",
+          "sha256": "e6a1297b03cf3318b6a0f889bdecbdd9d41201fc888b11e05e8acd2f7aa145fd",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "ld": {
+          "path": "/usr/bin/ld",
+          "sha256": "239eadb638b144619992d527efbd85cb545977807cee349606b8ade9bc0a47aa",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        }
+      }
+    },
+    "offline_tests": {
+      "boundary": 32,
+      "scanner_ci_and_mali": 22,
+      "result": "PASS on host"
+    },
+    "limits": [
+      "No new DSO exports/SONAME/GLIBC/kernel-note measurements exist",
+      "No patched SDL build, target link/map or target execution in this followup",
+      "BaseOS harvest paths are manifest claims, not installed-library identity",
+      "No proprietary/runtime library bytes acquired or uploaded"
+    ],
+    "interface_gate": {
+      "status": "LINK_BLOCKED",
+      "errors": [
+        "missing development input: SDL2",
+        "missing development input: EGL",
+        "missing development input: GLESv2"
+      ],
+      "reason": "No approved library input; no linker invocation authorized by this gate"
+    }
   }
 }

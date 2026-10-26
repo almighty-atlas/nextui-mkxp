@@ -32,6 +32,138 @@ archive, copied header and system library stays in private scratch space.
 Nothing was installed, executed or modified on the handheld. No target ELF,
 target `ldd`, target test suite, emulator, or target `ldconfig` was run.
 
+## Mali-link follow-up from d678597
+
+The follow-up continues this same PR after fetching and fast-forwarding to
+`d678597ab6c9522594c1669a1f4eb3196fd63911`. The complete earlier libc build,
+calibration ELF and original-object evidence above are preserved. They were
+not reclassified as failures because their private build directory is absent
+on this host. The pinned SDL tree and all five Khronos headers were independently
+rehashed; the original triangle hash still matches the lock.
+
+| Requested gate | Current follow-up result | Evidence |
+| --- | --- | --- |
+| LIBC49_BUILT | Preserved | Prior HOST build at d678597; not installed-device attestation |
+| SDL_SOURCE_BUILT / SDL_BUILD_BLOCKED | **SDL_BUILD_BLOCKED** locally | Complete prior sysroot unavailable here; dependency preparation failed in native M4 before SDL configure/make |
+| EGL_GLES_LINK_INPUTS_VERIFIED / LINK_BLOCKED | **LINK_BLOCKED** | No approved development implementation found in inspected NextUI/toolchain/BaseOS sources and manifests |
+| TRIANGLE_HOST_LINKED / NOT_LINKED | **NOT_LINKED** | No new target link attempted without eligible inputs |
+| ELF_POLICY_HOST_ONLY | Retained | Previous libc/object metadata and offline gates; no new SDL/graphics ELF exists |
+| H700_RUNTIME_NOT_TESTED | Unchanged | No device operation |
+| LICENSE_DISTRIBUTION_BLOCKED | Unchanged | No new permission for Mali/vendor/combined-work distribution |
+
+### Exact source symbol contract
+
+The evidence JSON's `mali_followup.source_symbol_matrix` records each symbol,
+its original C call lines and declaration lines. These are source declarations,
+not installed DSO exports or a freshly measured object undefined-symbol table.
+The source is [unchanged PR #23 triangle.c](https://github.com/almighty-atlas/nextui-mkxp/blob/60721c1a81a9f54e507650f313a479ecaa9b6d2a/spikes/h700-video/triangle.c).
+
+| Provider / phase | Exact source calls | Required evidence still missing |
+| --- | --- | --- |
+| SDL2, direct link: init/events/metadata | `SDL_Init`, `SDL_Quit`, `SDL_getenv`, `SDL_GetVersion`, `SDL_GetCurrentVideoDriver`, `SDL_GetTicks`, `SDL_Delay`, `SDL_PollEvent`, `SDL_GetError`, `SDL_ClearError` | Matching AArch64 SDL DSO, actual SONAME, these exports and version/dependency requirements |
+| SDL2, direct link: window/context/swap | `SDL_CreateWindow`, `SDL_DestroyWindow`, `SDL_GL_SetAttribute`, `SDL_GL_CreateContext`, `SDL_GL_DeleteContext`, `SDL_GL_MakeCurrent`, `SDL_GL_GetDrawableSize`, `SDL_GL_SetSwapInterval`, `SDL_GL_SwapWindow` | Same SDL input; a swap call is through SDL, not a direct original-triangle `eglSwapBuffers` reference |
+| EGL, direct link (2) | `eglGetCurrentDisplay`, `eglQueryString` | Authentic EGL development DSO/import interface, source/build/rights identity, exports/SONAME/closure |
+| GLES2, direct link: shader/program | `glCreateShader`, `glShaderSource`, `glCompileShader`, `glGetShaderiv`, `glDeleteShader`, `glCreateProgram`, `glAttachShader`, `glBindAttribLocation`, `glLinkProgram`, `glGetProgramiv`, `glGetUniformLocation`, `glUseProgram`, `glDeleteProgram` | Authentic GLES2 development interface with all these exports |
+| GLES2, direct link: buffers/draw/identity | `glGenBuffers`, `glBindBuffer`, `glBufferData`, `glDeleteBuffers`, `glVertexAttribPointer`, `glEnableVertexAttribArray`, `glUniform1f`, `glViewport`, `glClearColor`, `glClear`, `glDrawArrays`, `glGetError`, `glGetString` | Same GLES2 input; these 13 plus the 13 shader/program calls total 26 |
+| C/POSIX source calls | `memset`, `printf`, `setvbuf`, `strcmp`, `strncmp`, `sigemptyset`, `sigaction` | Rebuilt libc/startup gate already established; a future real link must inspect compiler-selected symbols and support objects again |
+| Header macro | `SDL_VERSION` | No ELF symbol; do not request a fabricated export |
+
+All 19 SDL functions occur in the pinned fork's
+[dynapi declarations](https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/dynapi/SDL_dynapi_procs.h).
+The direct EGL/GLES functions are declared in the exact Khronos headers already
+locked in `issue-26-inputs.json`, not definitions of a Mali implementation.
+The SDL 2.28.5 libtool source convention predicts `libSDL2-2.0.so.0`; the
+BaseOS harvest lists filenames `libEGL.so.1`, `libGLESv2.so.2` and
+`libmali.so.0`. Actual SONAMEs and the resulting application's DT_NEEDED remain
+UNKNOWN until authentic bytes are inspected. EGL/GLES may resolve through
+vendor shims/aliases; no monolithic-vs-shim layout is assumed from the names.
+
+There is a second, runtime-only contract beyond these direct calls:
+
+- [Mali window creation](https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_malivideo.c#L452-L464)
+  resolves `egl_create_pixmap_ID_mapping` and `egl_destroy_pixmap_ID_mapping`.
+  Public EGL/GLES2 symbols alone do not establish that vendor pixmap ABI.
+- [The blitter loader](https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_maliblitter.c#L404-L430)
+  loads `libEGL.so` and `libGLESv2.so`, then resolves both function tables through
+  `eglGetProcAddress` and its EGL-object symbol fallback. The tables additionally
+  require image/fence/pixmap functions (`eglCreateImageKHR`, `eglCreateSyncKHR`,
+  `eglClientWaitSyncKHR`, `eglCreatePixmapSurface`) and GLES extensions such as
+  `glEGLImageTargetTexture2DOES` and `glGenVertexArraysOES`. These are distinct
+  from the original triangle's 26 direct GLES2 calls.
+- The backend opens `/dev/fb0` and `/dev/ion` and uses the bundled `mali_pixmap`,
+  `fbdev_window_s` and ION ioctl definitions. No proprietary header requirement
+  was identified in this source inspection. Layout compatibility, kernel access,
+  vendor extension support and successful context/presentation remain untested.
+  The H700 source patch changes input behavior; it was reviewed and fingerprinted
+  but not applied in this follow-up because the build dependency failed earlier.
+
+### Published BaseOS input investigation and stop
+
+The newly inspected BaseOS v1.4.0 annotated tag resolves to source commit
+[`5866358eb4ad7cf1e6c0b09228e6cfa11f2cf3d5`](https://github.com/pvaibhav/BaseOS/tree/5866358eb4ad7cf1e6c0b09228e6cfa11f2cf3d5).
+Only recipe/manifest text and Git tree metadata were fetched. Its
+[harvest allowlist](https://github.com/pvaibhav/BaseOS/blob/5866358eb4ad7cf1e6c0b09228e6cfa11f2cf3d5/manifest/harvest.list#L1-L29)
+explicitly calls the GPU set stock Mali plus GLES/EGL shims, with symlink paths
+dereferenced during harvesting. It does not build that vendor implementation.
+The [RG35XX Pro manifest](https://github.com/pvaibhav/BaseOS/blob/5866358eb4ad7cf1e6c0b09228e6cfa11f2cf3d5/manifest/prepared/rg35xxpro.json)
+declares `stockmod-image` provenance and
+`RG35XXPRO-V1.0.5-BASE-20260522-mod-v3.9.9.img`. Its aggregate harvest hash
+identifies a runtime collection, not per-library symbols, source identity or a
+vendor development/linking grant. Those manifests do not attest this owner's
+installed bytes. No prepared bundle, disk image or stock/vendor DSO was fetched.
+
+The pinned H700 toolchain still
+[overlays the TrimUI SDK](https://github.com/LoveRetro/h700-toolchain/blob/04faa348c112617fc6b99be62308099ee6d43581/Dockerfile#L45-L51).
+Neither that recipe nor the inspected BaseOS manifests provide the missing
+rights-reviewed H700 development interface. Public release availability does
+not establish permission to use harvested vendor DSOs as development inputs.
+
+| Missing specific input | Source/SONAME identity | Why the route stops |
+| --- | --- | --- |
+| Patched H700 SDL2 shared library | Source fork and patch pinned; source SONAME convention above; actual DSO absent | Cannot inspect actual exports/NEEDED/GLIBC; local source build prerequisite failed |
+| EGL development interface | 2 direct symbols above plus SDL loader/vendor/extension requirements; actual shim/vendor source and SONAME UNKNOWN | No reviewed development grant, implementation identity or matching link input in inspected sources |
+| GLES2 development interface | 26 direct symbols above plus blitter extension table; actual source/SONAME UNKNOWN | Khronos headers give declarations only; no matching approved library |
+| Driver and load closure | Harvest filename `libmali.so.0`; version/build/source/NEEDED UNKNOWN | Aggregate stock harvest is neither corresponding source nor library-specific clearance |
+
+**LINK_BLOCKED.** No fabricated import/stub DSO, PowerVR/Mesa/glvnd substitute,
+ignored undefined reference or arbitrary vendor runtime was used. No fresh
+triangle link/map was produced. The smallest remaining graphics input is a
+maintainer-provided, reviewable development manifest or source-build route for
+the actual H700 fbdev EGL/GLES provider: exact source/build identity, permissible
+private-link terms/notices, candidate hashes, SONAMEs, exports and dependency
+closure. No contact with maintainers or additional device inventory was performed.
+
+### Local SDL build dependency and verification limits
+
+To supply only SDL's missing build dependency, the existing pinned
+`issue_26_sysroot.py` was invoked with a fresh private workspace, the same
+source lock and revalidated compiler. It stopped before glibc/SDL:
+M4 1.4.20 configure returned 0 in **22.447 s**, but native M4 make returned
+**2 in 0.214 s**. The first errors are declarations of `bsearch`/`memchr` in
+gnulib-generated headers: `expected identifier or '(' before '_Generic'`.
+Native GCC identifies as 16.2.1 and reports default `__STDC_VERSION__=202311L`;
+a C23/host-header interaction is the hypothesis, not a proved fix. This is a
+host-specific bootstrap failure, not a newly observed Mali/vendor-header failure
+and not a reversal of the earlier successful libc build on its different host.
+No source/compiler-standard patch or broader bootstrap investigation was made.
+Exact normalized stage arguments, fresh environments, tool hashes and log hashes
+are appended under `mali_followup` in the existing JSON files.
+
+Offline checks now pass **32 boundary tests plus 22 scanner/CI/Mali tests**.
+The added Mali tests use metadata fixtures only, never constructed or linked
+DSOs, and cover missing inputs, bogus/host ABI, SONAME/DLL mismatch, changed or
+unreviewed provenance, exports/closure/private-version errors and rejection of
+an unexpected successful link with unreviewed inputs. A static metadata match
+does not authorize linking without genuine input review or any runtime claim.
+
+The existing offline workflow now includes `docs/build/issue-26-*` triggers,
+fetches checkout history explicitly, and uses PR base SHA or the default remote
+branch on push to find the merge point. `issue_26_ci.py` checks the entire
+base-to-head branch diff. Its regression constructs multiple commits and proves
+that a whitespace error in the earlier commit fails even when `HEAD^..HEAD`
+passes. CI remains offline after checkout: no toolchain build, dependency fetch,
+target execution or binary artifact upload.
+
 ## Earlier Issue #26 report
 
 This advances existing PR #27 rather than opening another PR. Its earlier
