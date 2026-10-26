@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "archives": {
+    "glibc-2.28.tar.xz": {
+      "url": "https://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz",
+      "bytes": 16484344,
+      "sha256": "b1900051afad76f7a4f73e71413df4826dce085ef8ddb785a945b66d7d513082",
+      "retrieved_utc": "2026-10-26T11:32:11.304439+00:00",
+      "digest_kind": "independently observed; not signature-verified"
+    },
+    "m4-1.4.20.tar.xz": {
+      "url": "https://ftp.gnu.org/gnu/m4/m4-1.4.20.tar.xz",
+      "bytes": 2044756,
+      "sha256": "e236ea3a1ccf5f6c270b1c4bb60726f371fa49459a8eaaebc90b216b328daf2b",
+      "digest_kind": "independently observed; not signature-verified"
+    },
+    "linux-4.9.170.tar.xz": {
+      "url": "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.170.tar.xz",
+      "bytes": 93432664,
+      "sha256": "33887b40fc8e0b71f423bb7afe112a4ae190378145f4a3f3892c563b7e43131d",
+      "retrieved_utc": "2026-10-26T11:32:12.592311+00:00",
+      "digest_kind": "independently observed; not signature-verified"
+    },
+    "gawk-5.3.2.tar.xz": {
+      "url": "https://ftp.gnu.org/gnu/gawk/gawk-5.3.2.tar.xz",
+      "bytes": 3749260,
+      "sha256": "f8c3486509de705192138b00ef2c00bbbdd0e84c30d5c07d23fc73a9dc4cc9cc",
+      "retrieved_utc": "2026-10-26T11:32:10.259027+00:00",
+      "digest_kind": "independently observed; not signature-verified"
+    },
+    "bison-3.8.2.tar.xz": {
+      "url": "https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz",
+      "bytes": 2817324,
+      "sha256": "9bba0214ccf7f1079c5d59210045227bcf619519840ebfa80cd3849cff5a5bf2",
+      "retrieved_utc": "2026-10-26T11:32:09.911758+00:00",
+      "digest_kind": "independently observed; not signature-verified"
+    },
+    "make-4.3.tar.gz": {
+      "url": "https://ftp.gnu.org/gnu/make/make-4.3.tar.gz",
+      "sha256": "e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19",
+      "bytes": 2317073
+    }
+  },
+  "compiler": {
+    "url": "https://github.com/LoveRetro/gcc-arm-8.3-aarch64-tg5040/releases/download/v8.3.0-20260204-190602-d37268f5/gcc-8.3.0-aarch64-nextui-linux-gnu-x86_64-host.tar.xz",
+    "sha256": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
+    "recipe_commit": "d37268f5160ec6cd4da541524c8111797e060c36"
+  },
+  "triangle": {
+    "commit": "60721c1a81a9f54e507650f313a479ecaa9b6d2a",
+    "path": "spikes/h700-video/triangle.c",
+    "sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42"
+  },
+  "sdl": {
+    "repository": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot",
+    "commit": "d4a7d7503524cc469fe775242f3f925d4dd56c88",
+    "tree_sha256": "12fc58cd483d8c7a7c7daf31abfd4e2fe8a2a88b5727a304d1c202621f148550",
+    "configure_sha256": "2276e94109b79469d43c318e0abd54cc3f7a7966526f895a3b971e6e6e315bce",
+    "recipe_commit": "04faa348c112617fc6b99be62308099ee6d43581",
+    "recipe_patch_sha256": "e6d7e16806c36f619d1cd99ff49a30d34d044f9c6c94761fa2c7f846605cbf04",
+    "recipe_patch_applied": false
+  },
+  "khronos": [
+    {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/6af574a14089ccfee87efe230ebcdd8742859813/api/GLES2/gl2.h",
+      "path": "GLES2/gl2.h",
+      "sha256": "ba5e8e1755642efeb2d0f34b4cfe261cdbf6471e7763a40c7de10dff4c3c4921",
+      "bytes": 42930
+    },
+    {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/6af574a14089ccfee87efe230ebcdd8742859813/api/GLES2/gl2platform.h",
+      "path": "GLES2/gl2platform.h",
+      "sha256": "f5da0747540a50be5f44aad264aae45bdf157a192c40f17487dd9a2f99c71b6c",
+      "bytes": 642
+    },
+    {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/EGL-Registry/e964211ff5f7c2bcada786954a16d5b813379395/api/EGL/egl.h",
+      "path": "EGL/egl.h",
+      "sha256": "a7c24c828bf2e1a4dfe6511b4f4812b948a285eb54787074015896976d4da076",
+      "bytes": 19286
+    },
+    {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/EGL-Registry/e964211ff5f7c2bcada786954a16d5b813379395/api/EGL/eglplatform.h",
+      "path": "EGL/eglplatform.h",
+      "sha256": "25b5391655effcf363a38fa00c3154f356a3eab3d35dc067847875513cf1e441",
+      "bytes": 5239
+    },
+    {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/EGL-Registry/e964211ff5f7c2bcada786954a16d5b813379395/api/KHR/khrplatform.h",
+      "path": "KHR/khrplatform.h",
+      "sha256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83",
+      "bytes": 11131
+    }
+  ]
+}
