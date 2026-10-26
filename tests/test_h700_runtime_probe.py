@@ -4,6 +4,8 @@ Fixtures rewrite the probe's fixed system roots into a fresh temporary directory
 They never invoke the script against a physical device or installed firmware.
 """
 import hashlib
+import os
+import shutil
 from pathlib import Path
 import re
 import subprocess
@@ -94,6 +96,59 @@ class MetadataProbeTests(unittest.TestCase):
         result = self.run_probe()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn(digest, result.stdout)
+
+    def test_filtered_readelf_output_and_redaction(self):
+        """Synthetic readelf text: verify no RPATH or odd dependency contents leak."""
+        path = self.root / 'lib/aarch64-linux-gnu/libc.so.6'
+        self.write_elf(path)
+        bindir = self.root / 'fake-bin'
+        bindir.mkdir()
+        fake = bindir / 'readelf'
+        fake.write_text(
+            '#!/bin/sh\n'
+            'case "$2" in\n'
+            ' -d)\n'
+            "   printf '%s\\n' ' 0x1 (NEEDED) Shared library: [libSDL2-2.0.so.0]'"
+            " ' 0x1 (NEEDED) Shared library: [../PRIVATE-SENTINEL]'"
+            " ' 0x1d (RUNPATH) Library runpath: [/PRIVATE-PATH-SENTINEL]' ;;\n"
+            ' -V)\n'
+            "   printf '%s\\n' \"Version needs section '.gnu.version_r' contains 1 entry:\""
+            " '  0x0010:   Name: GLIBC_2.27  Flags: none  Version: 2'"
+            " \"Version definition section '.gnu.version_d' contains 1 entry:\""
+            " '  0x001c: Rev: 1  Flags: none  Index: 2  Cnt: 1  Name: GLIBC_2.28' ;;\n"
+            'esac\n')
+        fake.chmod(0o755)
+        result = subprocess.run(['/bin/sh', str(self.program)],
+                                env=dict(os.environ, PATH=str(bindir) + os.pathsep +
+                                         os.environ.get('PATH', '/usr/bin:/bin')),
+                                capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('    libSDL2-2.0.so.0', result.stdout)
+        self.assertIn('    REDACTED', result.stdout)
+        self.assertIn('    GLIBC_2.27', result.stdout)
+        self.assertIn('    GLIBC_2.28', result.stdout)
+        self.assertIn('runtime_search_paths: PRESENT (values suppressed)', result.stdout)
+        self.assertNotIn('PRIVATE-SENTINEL', result.stdout)
+        self.assertNotIn('PRIVATE-PATH-SENTINEL', result.stdout)
+
+    def test_busybox_ash_applets_if_available(self):
+        """Host BusyBox semantics only; does not assert H700 BusyBox availability."""
+        busybox = shutil.which('busybox')
+        if not busybox:
+            self.skipTest('BusyBox not installed on this host')
+        bindir = self.root / 'busybox-bin'
+        bindir.mkdir()
+        for applet in ('awk', 'od', 'readlink', 'sha256sum', 'uname'):
+            (bindir / applet).symlink_to(busybox)
+        path = self.root / 'lib/aarch64-linux-gnu/libc.so.6'
+        expected = self.write_elf(path)
+        result = subprocess.run([busybox, 'ash', str(self.program)],
+                                env={'PATH': str(bindir), 'LC_ALL': 'C'},
+                                capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('ELF64 little machine=183 AArch64', result.stdout)
+        self.assertIn('sha256: ' + expected, result.stdout)
+        self.assertIn('readelf_available: no', result.stdout)
 
     def test_static_no_mutating_or_execute_commands(self):
         source = SCRIPT.read_text()
