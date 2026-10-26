@@ -1,0 +1,285 @@
+{
+  "build_status": "HOST_VERIFIED_SDK_ABI_EXPERIMENT_ONLY",
+  "compiler_triple": "aarch64-nextui-linux-gnu",
+  "compiler_version": "aarch64-nextui-linux-gnu-gcc (crosstool-NG 1.25.0) 8.3.0",
+  "source_sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42",
+  "commands": [
+    {
+      "stage": "compiler-triple",
+      "argv": [
+        "<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "-dumpmachine"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "compiler-version",
+      "argv": [
+        "<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "compile-1",
+      "argv": [
+        "<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc",
+        "-std=c99",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I<RESEARCH>/rebuild/sdk/usr/include",
+        "-v",
+        "-H",
+        "-c",
+        "<RESEARCH>/pr23/spikes/h700-video/triangle.c",
+        "-o",
+        "<RESEARCH>/rebuild/triangle-1.o"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "link-1",
+      "argv": [
+        "<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc",
+        "<RESEARCH>/rebuild/triangle-1.o",
+        "-L<RESEARCH>/rebuild/sdk/usr/lib",
+        "-Wl,-rpath-link,<RESEARCH>/rebuild/sdk/usr/lib",
+        "-Wl,-t",
+        "-Wl,-Map,<RESEARCH>/rebuild/triangle-1.map",
+        "-o",
+        "<RESEARCH>/rebuild/triangle-1",
+        "-lSDL2",
+        "-lGLESv2",
+        "-lEGL"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "compile-2",
+      "argv": [
+        "<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc",
+        "-std=c99",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I<RESEARCH>/rebuild/sdk/usr/include",
+        "-v",
+        "-H",
+        "-c",
+        "<RESEARCH>/pr23/spikes/h700-video/triangle.c",
+        "-o",
+        "<RESEARCH>/rebuild/triangle-2.o"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "link-2",
+      "argv": [
+        "<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc",
+        "<RESEARCH>/rebuild/triangle-2.o",
+        "-L<RESEARCH>/rebuild/sdk/usr/lib",
+        "-Wl,-rpath-link,<RESEARCH>/rebuild/sdk/usr/lib",
+        "-Wl,-t",
+        "-Wl,-Map,<RESEARCH>/rebuild/triangle-2.map",
+        "-o",
+        "<RESEARCH>/rebuild/triangle-2",
+        "-lSDL2",
+        "-lGLESv2",
+        "-lEGL"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "object_hashes": [
+    "b6c55e65b5dba4742f16a6ee576a65bdf58520b20b268b73fb54053743ba7f62",
+    "b6c55e65b5dba4742f16a6ee576a65bdf58520b20b268b73fb54053743ba7f62"
+  ],
+  "elf_hashes": [
+    "507c5800d1e98055117f56d1f04b4564fcd9f51be3aa358755c6f8c63745b37e",
+    "507c5800d1e98055117f56d1f04b4564fcd9f51be3aa358755c6f8c63745b37e"
+  ],
+  "repeat_build_identical": true,
+  "elf_gate": {
+    "status": "BLOCKED",
+    "facts": {
+      "interpreter": "/lib/ld-linux-aarch64.so.1",
+      "needed": [
+        "libEGL.so.1",
+        "libGLESv2.so.2",
+        "libSDL2-2.0.so.0",
+        "libc.so.6"
+      ],
+      "rpaths": [],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": "4.19.0",
+      "sha256": "507c5800d1e98055117f56d1f04b4564fcd9f51be3aa358755c6f8c63745b37e",
+      "class": 64,
+      "endian": "little",
+      "type": 2,
+      "machine": 183
+    },
+    "errors": [
+      "UNKNOWN target policy: interpreter",
+      "UNKNOWN target policy: allowed_needed",
+      "UNKNOWN target policy: max_glibc",
+      "UNKNOWN target policy: allowed_rpaths",
+      "GNU Linux ABI note exceeds observed kernel"
+    ],
+    "limitation": "No execution; no dlopen closure, rights or H700 runtime approval"
+  },
+  "artifact_bytes": 24744,
+  "first_attempt": {
+    "compile_exit_code": 0,
+    "link_exit_code": 1,
+    "cause": "Initial SDK subset lacked libIMGegl.so, libsrv_um.so, libusc.so, libglslcompiler.so required by PowerVR GLES/EGL",
+    "fix": "Added exactly these four archive members for local link-only closure; no driver was loaded, installed or redistributed"
+  },
+  "manual_initial_elf_sha256": "a1f6ccd476089ee96272304670b1eede8ed73985325f448312bb11847f4d0c42",
+  "cross_root_reproducibility": "Object bytes matched; unstripped ELF differs across extraction roots because CRT file symbol strings contain absolute input paths. Only two rebuilds under one extraction root are byte-identical.",
+  "source_header_version": "SDL 2.26.1 with SDL_VIDEO_DRIVER_MALI defined; not installed H700 SDL 2.28.5 identity",
+  "sdk_libraries_inspected": [
+    {
+      "basename": "libEGL.so",
+      "sha256": "09aad21b26c0fefe35cc010739a46822e1722fc31091cd87a51cd7ef3c688ca3",
+      "interpreter": null,
+      "needed": [
+        "libIMGegl.so",
+        "libc.so.6",
+        "libgcc_s.so.1"
+      ],
+      "rpaths": [
+        "/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib"
+      ],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    },
+    {
+      "basename": "libGLESv2.so",
+      "sha256": "3208de84cd811c38fa39c25d5dd7ccaded377608a5e3fb08df2bae2972d72084",
+      "interpreter": null,
+      "needed": [
+        "libIMGegl.so",
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libglslcompiler.so",
+        "libm.so.6",
+        "libpthread.so.0",
+        "librt.so.1",
+        "libsrv_um.so",
+        "libusc.so"
+      ],
+      "rpaths": [
+        "/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib"
+      ],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    },
+    {
+      "basename": "libIMGegl.so",
+      "sha256": "cae9835bc514ef15b83a7c30ca0f989134110b6ccb45ba761e7d8962cd4b1251",
+      "interpreter": null,
+      "needed": [
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libpthread.so.0",
+        "libsrv_um.so"
+      ],
+      "rpaths": [
+        "/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib"
+      ],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    },
+    {
+      "basename": "libSDL2-2.0.so.0.2600.1",
+      "sha256": "8c4fa7cf9a2a73f776e2bdbc7797dcb3dbc268c3d58237435901f4184b6460e1",
+      "interpreter": null,
+      "needed": [
+        "libc.so.6",
+        "libdl.so.2",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libpthread.so.0"
+      ],
+      "rpaths": [],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    },
+    {
+      "basename": "libglslcompiler.so",
+      "sha256": "4aeac50dcbbd8d8ce88e31f7f4159a497c1e322157a1ea982a51f8fb69316470",
+      "interpreter": null,
+      "needed": [
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libsrv_um.so",
+        "libusc.so"
+      ],
+      "rpaths": [
+        "/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib"
+      ],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    },
+    {
+      "basename": "libsrv_um.so",
+      "sha256": "7b21d0437d8ca00251595103bb5c1812b1a47ec8f7fd0b67776bc20889b755dc",
+      "interpreter": null,
+      "needed": [
+        "libc.so.6",
+        "libdl.so.2",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libpthread.so.0",
+        "librt.so.1"
+      ],
+      "rpaths": [
+        "/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib"
+      ],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    },
+    {
+      "basename": "libusc.so",
+      "sha256": "1f3fc37aac597ec89132dda290418192c10a2f545e72fa7a8c8fb20ac9f4676b",
+      "interpreter": null,
+      "needed": [
+        "libc.so.6",
+        "libgcc_s.so.1",
+        "libm.so.6",
+        "libsrv_um.so"
+      ],
+      "rpaths": [
+        "/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../lib:/home/<sdk-build-user>/gpu-src/tools/toolchains/aarch64-openwrt-linux-gnu/bin//../../usr/lib"
+      ],
+      "required_versions": [
+        "GLIBC_2.17"
+      ],
+      "gnu_linux_abi": null
+    }
+  ],
+  "raw_link_map_sha256": "a5ee9cfcc73000633c51e3b62104543165114b5f715636d5defcf9514191b70a"
+}
