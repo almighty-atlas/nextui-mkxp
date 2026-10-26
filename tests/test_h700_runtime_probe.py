@@ -97,6 +97,14 @@ class MetadataProbeTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn(digest, result.stdout)
 
+    def test_baseos_harvested_aarch64_loader_candidate(self):
+        """BaseOS harvest.list includes /usr/lib/aarch64-linux-gnu loader."""
+        path = self.root / 'usr-lib/aarch64-linux-gnu/ld-linux-aarch64.so.1'
+        expected = self.write_elf(path)
+        result = self.run_probe()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('sha256: ' + expected, result.stdout)
+
     def test_filtered_readelf_output_and_redaction(self):
         """Synthetic readelf text: verify no RPATH or odd dependency contents leak."""
         path = self.root / 'lib/aarch64-linux-gnu/libc.so.6'
