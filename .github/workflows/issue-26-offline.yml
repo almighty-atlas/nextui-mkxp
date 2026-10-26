@@ -13,7 +13,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
+          fetch-depth: 2
       - name: Offline negative tests (no target build or execution)
         run: PYTHONDONTWRITEBYTECODE=1 python3 -I -m unittest discover -s scripts/issue_26_tests -v
       - name: Whitespace
-        run: git show --check --oneline HEAD
+        run: git diff --check HEAD^ HEAD
