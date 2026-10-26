@@ -106,7 +106,11 @@ for candidate in \
     /lib/aarch64-linux-gnu/libm.so.6 \
     /lib/aarch64-linux-gnu/libdl.so.2 \
     /lib/aarch64-linux-gnu/libpthread.so.0 \
+    /usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1 \
     /usr/lib/aarch64-linux-gnu/libc.so.6 \
+    /usr/lib/aarch64-linux-gnu/libm.so.6 \
+    /usr/lib/aarch64-linux-gnu/libdl.so.2 \
+    /usr/lib/aarch64-linux-gnu/libpthread.so.0 \
     /lib/libEGL.so.1 /lib/libGLESv2.so.2 /lib/libmali.so.0 \
     /usr/lib/libEGL.so.1 /usr/lib/libGLESv2.so.2 /usr/lib/libmali.so.0 \
     /usr/lib/aarch64-linux-gnu/libEGL.so.1 \
