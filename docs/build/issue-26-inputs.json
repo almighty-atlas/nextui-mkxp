@@ -8,12 +8,6 @@
       "retrieved_utc": "2026-10-26T11:32:11.304439+00:00",
       "digest_kind": "independently observed; not signature-verified"
     },
-    "m4-1.4.20.tar.xz": {
-      "url": "https://ftp.gnu.org/gnu/m4/m4-1.4.20.tar.xz",
-      "bytes": 2044756,
-      "sha256": "e236ea3a1ccf5f6c270b1c4bb60726f371fa49459a8eaaebc90b216b328daf2b",
-      "digest_kind": "independently observed; not signature-verified"
-    },
     "linux-4.9.170.tar.xz": {
       "url": "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.170.tar.xz",
       "bytes": 93432664,
@@ -39,6 +33,13 @@
       "url": "https://ftp.gnu.org/gnu/make/make-4.3.tar.gz",
       "sha256": "e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19",
       "bytes": 2317073
+    },
+    "m4-1.4.21.tar.xz": {
+      "url": "https://ftpmirror.gnu.org/m4/m4-1.4.21.tar.xz",
+      "sha256": "f25c6ab51548a73a75558742fb031e0625d6485fe5f9155949d6486a2408ab66",
+      "bytes": 2080016,
+      "digest_kind": "independently verified against GNU maintainer announcement 2026-02-06; signature not verified",
+      "announcement": "https://lists.gnu.org/archive/html/info-gnu/2026-02/msg00004.html"
     }
   },
   "compiler": {
@@ -121,5 +122,24 @@
       "EGL": null,
       "GLESv2": null
     }
+  },
+  "m4_121_followup": {
+    "previous_archive": {
+      "url": "https://ftp.gnu.org/gnu/m4/m4-1.4.20.tar.xz",
+      "bytes": 2044756,
+      "sha256": "e236ea3a1ccf5f6c270b1c4bb60726f371fa49459a8eaaebc90b216b328daf2b",
+      "digest_kind": "independently observed; not signature-verified"
+    },
+    "base_head": "bcba27f76a3fe4d8aecfebdd81cc613768e3c4d2",
+    "m4_license": "GPL-3.0-or-later private native tool; no binary redistribution",
+    "m4_COPYING_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "m4_NEWS_sha256": "e45dc9758c9424d0b1d3415025bed1c505723a5bca25cefde9204c3bad18c3f4",
+    "original_fixture": {
+      "commit": "60721c1a81a9f54e507650f313a479ecaa9b6d2a",
+      "sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42",
+      "license": "MIT; retained original LICENSE; mocks adapted separately"
+    },
+    "sdl_variant": "pinned fork plus pinned H700 patch; video-only build; no vendor inputs",
+    "generated_variant_sha256": "9b95b0bf6cddfebb6f2946b39896b69fea61614157b80ccc52d698d81e48f19d"
   }
 }

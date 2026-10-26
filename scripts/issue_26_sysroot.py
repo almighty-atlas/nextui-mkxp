@@ -42,7 +42,7 @@ def main():
         result=gate.checked_run(argv,cwd,env,records,r/'logs',label)
         print(label,result['exit_code'],flush=True)
         if result['exit_code']:raise ValueError('build failed: '+label+'; inspect private log')
-    for name,flags in [('m4-1.4.20',[]),('bison-3.8.2',[]),
+    for name,flags in [('m4-1.4.21',[]),('bison-3.8.2',[]),
                        ('gawk-5.3.2',['--without-readline','--without-libsigsegv']),('make-4.3',[])]:
         build=r/('build-'+name);build.mkdir()
         run(name+'-configure',['/usr/bin/sh',r/'source'/name/name/'configure',
@@ -54,6 +54,15 @@ def main():
             native=r/'native/bin'/tool
             if native.exists():records[tool]=gate.tool_record(native,'private hash-locked GNU source build')
         gate.farm(r/'tools',records)
+        if name == 'm4-1.4.21':
+            run('m4-version', [records['m4']['path'], '--version'], build)
+            if not (r/'logs/m4-version.log').read_text().startswith('m4 (GNU M4) 1.4.21\n'):
+                raise ValueError('native m4 version mismatch')
+            smoke = r/'m4-smoke.m4'
+            smoke.write_text("define(`answer',`42')answer\n")
+            run('m4-smoke', [records['m4']['path'], smoke], build)
+            if (r/'logs/m4-smoke.log').read_text() != '42\n':
+                raise ValueError('native m4 macro expansion mismatch')
     base=a.compiler/'x86_64-aarch64-nextui-linux-gnu'
     for name in CROSS_TOOLS:
         path=base/'bin'/('aarch64-nextui-linux-gnu-'+name)

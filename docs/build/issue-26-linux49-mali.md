@@ -7,6 +7,25 @@ shared files and unmerged PRs #19–#25 are deliberately untouched.
 
 ## Result
 
+The latest follow-up after `bcba27f` resolves the native M4 bootstrap and
+demonstrates a **private SDL-only direct link of a separate experimental
+triangle variant**. It does not change the original PR #23 triangle or provide
+H700 runtime/distribution approval.
+
+| Latest gate | Actual SOURCE/HOST result |
+| --- | --- |
+| M4_NATIVE_FIXED | Verified GNU M4 1.4.21 archive; private build, version and macro smoke PASS |
+| GLIBC49_HOST_BUILT | New complete glibc 2.28/Linux 4.9.170 private build/install; minimum kernel 4.9.0 |
+| SDL_SOURCE_BUILT | Real pinned SDL 2.28.5 fork + H700 patch, video-only shared-library build |
+| SDL_ONLY_HOST_LINKED | Experimental proc-address variant; AArch64, direct SDL2 + libc only |
+| H700_RUNTIME_NOT_TESTED | No target binary, graphics context, ION or vendor driver executed |
+| DISTRIBUTION_BLOCKED | GPL-noticed Mali source, linked-work/vendor/glibc obligations remain separate |
+
+The previous complete libc build and the earlier blocked experiments remain
+recorded below and in the JSON; their outcomes are not overwritten.
+
+## Original triangle and earlier libc result
+
 A complete glibc 2.28 was rebuilt with Linux 4.9.170 headers and
 `--enable-kernel=4.9.0`, using the pinned GCC 8.3 compiler from PR #25.
 The rebuilt `crt1.o` and libc encode Linux **4.9.0**, without editing ELF notes
@@ -28,9 +47,138 @@ SDL2/EGL/GLES link libraries were not supplied. No substitute library was made.
 | Distribution/rights | **BLOCKED** | PR #19 gate remains in force |
 
 Only text, original build scripts and offline tests are published. Every ELF,
-archive, copied header and system library stays in private scratch space.
+archive, third-party SDL/Khronos header and system library stays in private
+scratch space; committed mock declarations are original MIT test fixtures.
 Nothing was installed, executed or modified on the handheld. No target ELF,
 target `ldd`, target test suite, emulator, or target `ldconfig` was run.
+
+## M4 1.4.21 and SDL proc-address experiment
+
+GNU's [2026-02-06 release announcement](https://lists.gnu.org/archive/html/info-gnu/2026-02/msg00004.html)
+and the archive's NEWS describe adaptation to modern glibc/C23 function macros.
+That is applicable to the recorded M4 1.4.20 `_Generic` declaration failures.
+This host reports native glibc **2.44**, GCC **16.2.1** and a C23 default; the
+release note discusses glibc 2.43. The direct evidence is that the new version
+builds here with the **same source flags**, not a claim that GCC flags fixed it.
+
+The official GNU archive was independently hashed **before** safe inspection
+and extraction: `f25c6ab51548a73a75558742fb031e0625d6485fe5f9155949d6486a2408ab66`.
+It matches the maintainer-published SHA256. The archive COPYING is GPLv3;
+license/version output identifies GPLv3-or-later. Signature verification was
+not performed. The private native build passed, `m4 --version` reports 1.4.21,
+and `define` plus macro expansion produces exactly `42\n`. No native executable
+is committed or installed globally.
+
+Only the pinned M4 input changed in the source-tool recipe, with version/macro
+smokes added. glibc 2.28, Linux 4.9.170, GCC 8.3 and `--enable-kernel=4.9.0`
+remain unchanged. Because the earlier completed sysroot was not present locally,
+this experiment built a fresh one. All **18 stages** passed; full glibc make
+took **106.327 s**, staged install **12.931 s**. This is a new HOST experiment,
+not a new measurement of the owner's device.
+
+### Separate source variant and bounded mock tests
+
+`issue_26_proc_variant.py` requires the exact original C hash and emits the
+alternative source exclusively into a private output file. It does not modify
+PR #23. Original-versus-generated hashes and the explicit delta are recorded
+under `m4_proc_followup` in the evidence JSON:
+
+- All **26** GL calls use correctly typed Khronos `PFNGL*PROC` pointers obtained
+  via `SDL_GL_GetProcAddress` after context creation and MakeCurrent. Every
+  lookup is checked before any shader/buffer/draw work; missing pointer exits 32.
+- The variant checks the SDL ES profile (exit 33) and GL version, retains the
+  original GL vendor/renderer/version/GLSL metadata, shader compile/link checks,
+  real buffer/draw/swap calls, animated offset, cleanup, signal handlers,
+  cooperative five-second deadline, frame cap and bounded diagnostic strings.
+- Direct `eglGetCurrentDisplay` and `eglQueryString` calls and the EGL header
+  are removed. It does not assume SDL's GL lookup exports EGL core functions.
+  EGL-specific metadata is deliberately absent in this variant.
+
+The pinned [Mali mapping](https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_maliopengles.h#L30-L36)
+routes through SDL_EGL_GetProcAddress. [SDL's API guidance](https://wiki.libsdl.org/SDL2/SDL_GL_GetProcAddress)
+requires correctly typed pointers, appropriate context/version checks and
+defensive handling of absent functions. The variant uses only GLES2 core calls;
+the Mali backend's additional extension/pixmap requirements remain independent.
+
+The original MIT source is retained as a hash-checked offline fixture alongside
+its LICENSE. Original mock headers/runtime are adapted in Issue-26-only paths;
+the original PR #23 tests are untouched. **27 tests** now cover scanner/CI/Mali
+and proc behavior, including a separate null-pointer case for every lookup,
+lookup ordering, ES profile/version rejection, shader/link/draw/swap failures,
+movement, clock wrapping/stall, signals, cleanup and output bounds. Mock code
+does not load SDL/GL, access nodes or count as GPU evidence. CI compiles and
+runs only a temporary **native host mock**, never the target executable.
+
+### Actual SDL build, link correction and ELF evidence
+
+The source driver verifies the compiler tree, rebuilt sysroot digest, SDL tree,
+H700 patch and API headers, then builds the real shared SDL library privately.
+The H700 input patch is applied. Audio is explicitly disabled for this
+video/timer spike; this is not the exact shipped ALSA-enabled SDL configuration
+or an identity claim about installed `.2800.5` bytes. No proprietary GPU
+development headers or link DSOs were required by this source-build route.
+
+Actual map inspection was necessary: SDL's Make link rule omits CFLAGS, and
+Libtool filters bare `-B` and `-static-libgcc`. The first library links were
+therefore not accepted as retargeted proof. After moving sysroot flags into
+LDFLAGS, a verbose failing link isolated the remaining dropped flags
+(`cannot find crti.o`). The final recipe uses Libtool's documented `-Wc` escape
+for those two compiler-driver options. It retains the generated GNU ld INPUT
+script by omitting only its cleanup registration in the private generated
+Libtool file, recording before/after hashes. Every actual LOAD file can then be
+resolved and checked; old compiler-libc paths fail closed. No undefined symbol
+is ignored: the SDL shared link uses `-z defs` plus `--no-undefined`.
+
+The final seven SDL/variant stages passed. The
+[complete normalized variant link map](issue-26-proc-link-map.txt), raw map hash,
+all stage arguments/environments, selected hashes, 21 verified SDL exports,
+SDL SONAME, app/SDL ELF facts and matching rebuilt libc/loader closure are
+recorded. Private source/ELF hashes identify this experiment:
+
+| Material | SHA256 / native readelf facts |
+| --- | --- |
+| Generated variant C | `9b95b0bf6cddfebb6f2946b39896b69fea61614157b80ccc52d698d81e48f19d` |
+| Private variant ELF | `8552510fc511dec981ffd7f0689cb88cd5c35b28ffcd9b0725eecf57d50bc5a7`; AArch64 ET_EXEC, PT_INTERP `/lib/ld-linux-aarch64.so.1`, GNU ABI 4.9.0 |
+| Variant direct requirements | `libSDL2-2.0.so.0`, `libc.so.6`; GLIBC_2.17; no RPATH/RUNPATH; no EGL/GLES or GLIBC_PRIVATE import |
+| Private SDL ELF | `23dcb139996219fcbc16f287d4165f2406cd9bb674e0f3382cb8424c09fbd3dd`; AArch64 ET_DYN; SONAME `libSDL2-2.0.so.0` |
+| SDL dependencies | libc, libdl, libm, libpthread from the matched rebuilt sysroot; GLIBC_2.17 and **GLIBC_2.27**; no RPATH; no direct EGL/GLES import |
+| SDL GNU kernel note | Absent; no note was fabricated/inserted. Source/sysroot settings do not substitute for device evidence |
+
+The ELF is linked twice within the same workspace and the bytes match.
+This is not cross-root or cross-host reproducibility. Core glibc/loader private
+versions are recorded separately; application policy was not relaxed to allow
+GLIBC_PRIVATE. A direct application GLIBC_2.17 requirement does not eliminate
+SDL's transitive GLIBC_2.27 requirement.
+
+### Reproduce privately and retain the runtime/rights stop
+
+Use the existing sysroot command below with the updated lock (M4 1.4.21).
+Then pass that build's reviewed tree digest into:
+
+```sh
+python3 -I -B scripts/issue_26_sdl_proc.py \
+  --workspace "$NEW_PRIVATE_SDL_BUILD" \
+  --compiler "$COMPILER_PARENT" --compiler-archive "$COMPILER_ARCHIVE" \
+  --records "$PRIVATE_BUILD/host-tools.json" --sysroot "$PRIVATE_BUILD/sysroot" \
+  --sysroot-tree-sha256 "$REVIEWED_SYSROOT_DIGEST" \
+  --sdl "$SDL_CHECKOUT" --patch "$PINNED_H700_PATCH" \
+  --api "$API" --triangle "$PR23_CHECKOUT/spikes/h700-video/triangle.c"
+```
+
+All outputs remain private. No target `ldd`, ARM execution, package or upload
+is involved. The input-lock snapshot hash in the build receipt identifies the
+lock before result metadata was appended; actual archive/source inputs remain
+the same. The three earlier SDL-driver attempts and their rejected paths/flags
+are recorded separately from the successful result.
+
+This removes **direct link-time** EGL/GLES inputs only for the alternative
+source variant. The original triangle retains those imports and remains
+LINK_BLOCKED without approved vendor inputs. SDL still loads EGL/GLES at runtime
+and requires the vendor pixmap ABI, extension/function tables and framebuffer/
+ION resources. Their exact installed hashes, SONAME/driver closure, access,
+real context, presentation and clean NextUI return remain UNKNOWN/NOT_TESTED.
+MIT source, GPL-noticed Mali code/patch context, vendor rights and glibc/GCC
+obligations remain separate; SDL-only linking grants no distribution exception.
 
 ## Mali-link follow-up from d678597
 
