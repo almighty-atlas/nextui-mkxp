@@ -9,7 +9,7 @@ This independent draft adds only a fixed-path probe, host tests and this documen
 ## Fixed scope
 
 - Existence and session-specific read/write permission tests for **/dev/ion, /dev/fb0, /dev/mali, /dev/mali0, /dev/dri/card0, /dev/dri/renderD128**. These are metadata tests only; no open/ioctl or permissions changes.
-- Only fixed candidate files: AArch64 loader, libc, libm, libdl, libpthread, SDL2, EGL, GLES and Mali libraries in **/lib, /usr/lib, /mnt/vendor/lib64, /mnt/SDCARD/.system/h700/lib**. No recursive scans, arbitrary paths, home directories, games, saves or Syncthing data.
+- Only fixed candidate files: AArch64 loader (including the BaseOS v1.4.0 harvested `/usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1`),, libc, libm, libdl, libpthread, SDL2, EGL, GLES and Mali libraries in **/lib, /usr/lib, /mnt/vendor/lib64, /mnt/SDCARD/.system/h700/lib**. No recursive scans, arbitrary paths, home directories, games, saves or Syncthing data.
 - If pre-installed: od+awk interpret the first 20 ELF header bytes, sha256sum computes hashes, and optional readelf prints only DT_NEEDED basenames, GLIBC version needs, GLIBC provider-version definitions and presence (not contents) of RPATH/RUNPATH.
 - Symlinks and ancestor paths are resolved with readlink -f; only candidates resolving inside the allowlisted system/NextUI library roots are read. Canonical paths and symlink targets are not printed. Missing commands result in **UNKNOWN**, not invented compatibility.
 - The prior H700 inventory did **not** find readelf. No tools are to be installed merely for this probe. No ldd or loader execution.
@@ -28,7 +28,7 @@ Run on the **development host only**:
 - sh -n tools/probe-h700-runtime.sh
 - python3 -I -B -m unittest discover -s tests -v
 
-Eight host tests use a temporary probe copy and synthetic fixtures (one tests local BusyBox applets only when BusyBox is installed; otherwise it is explicitly skipped). They verify argument rejection, missing files, fake AArch64 ELF headers, SHA-256, approved symlink resolution, refusal to read private-path symlink targets, filtered `readelf` fields with redaction, and the supported BusyBox `ash`/`awk`/`od`/`readlink`/`sha256sum` code path. Static checks reject mutating and network commands. A native BusyBox host test, if run, proves only the tested host BusyBox version. None of these tests prove the actual H700's BusyBox configuration, runtime library versions or graphics behavior.
+Nine host tests use a temporary probe copy and synthetic fixtures (one tests local BusyBox applets only when BusyBox is installed; otherwise it is explicitly skipped). They verify the BaseOS-harvested AArch64 loader candidate, argument rejection, missing files, fake AArch64 ELF headers, SHA-256, approved symlink resolution, refusal to read private-path symlink targets, filtered `readelf` fields with redaction, and the supported BusyBox `ash`/`awk`/`od`/`readlink`/`sha256sum` code path. Static checks reject mutating and network commands. A native BusyBox host test, if run, proves only the tested host BusyBox version. None of these tests prove the actual H700's BusyBox configuration, runtime library versions or graphics behavior.
 
 ## Future handoff: NOT AUTHORIZED YET
 
@@ -38,7 +38,7 @@ The game-free physical graphics test is separate [Issue #22](https://github.com/
 
 ## Acceptance
 
-- [x] Source-only probe and eight host tests (optional BusyBox test skips explicitly when unavailable).
+- [x] Source-only probe and nine host tests (optional BusyBox test skips explicitly when unavailable).
 - [ ] Independent source/BusyBox review and CI on current PR head.
 - [ ] Separate owner authorization for read-only device metadata execution.
 - [ ] Owner-observed ABI/runtime metadata with explicit UNKNOWN fields.
