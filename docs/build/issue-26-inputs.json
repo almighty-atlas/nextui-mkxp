@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "issue": 26,
+  "base": "201dd309a6fd311f3e53acba330bc9d58a364f4f",
+  "sources": [
+    {
+      "repository": "https://github.com/LoveRetro/gcc-arm-8.3-aarch64-tg5040",
+      "commit": "d37268f5160ec6cd4da541524c8111797e060c36",
+      "files": [
+        {
+          "path": "x86_64-aarch64.config",
+          "sha256": "1c16e87ef197bcc0c2d81d3d4a7bdcda7bc0402b9b0388206ca8aecc660ed009"
+        },
+        {
+          "path": "aarch64.config",
+          "sha256": "71a313021d0375172ada79dc86c3d342109f5e10b7c8bc410586741e91e5e599"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/crosstool-ng/crosstool-ng",
+      "commit": "8fa98eeeff9bc53478d97ef722f366fea151ae64",
+      "files": [
+        {
+          "path": "config/libc/glibc.in",
+          "sha256": "9a7f8c8e87d1a510a1293116062b0c3c2ddea51499d1844a54590ec8e0a63bcf"
+        },
+        {
+          "path": "scripts/build/libc/glibc.sh",
+          "sha256": "01479633c9127a884bdc88f0f0a1271060ed10b8cd38846b52d9bef6e06f89c1"
+        },
+        {
+          "path": "packages/glibc/2.28/chksum",
+          "sha256": "73979ae95237f0491aa285bc5ac915396f23c04fe6f515b57b94ad2e9e44a792"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/bminor/glibc",
+      "commit": "3c03baca37fdcb52c3881e653ca392bba7a99c2b",
+      "files": [
+        {
+          "path": "sysdeps/unix/sysv/linux/aarch64/configure.ac",
+          "sha256": "94e2e19640134e73f33d238b79663edd3a9e0b62b62767d230394ad2426a8065"
+        },
+        {
+          "path": "sysdeps/unix/sysv/linux/configure.ac",
+          "sha256": "3e42cbaa3d165db8af63f99bf8d67aee03a9c16f54aa018ffe387e2ba7354043"
+        },
+        {
+          "path": "sysdeps/unix/sysv/linux/kernel-features.h",
+          "sha256": "0e2eef97794831c0c7baac81110fde38721411f4a443c6282c368f62c3680cc3"
+        },
+        {
+          "path": "sysdeps/unix/sysv/linux/statx.c",
+          "sha256": "a7987bc11db00b55e19b687d541d2f384f99b6dc269ef706cd693067d5de56c6"
+        },
+        {
+          "path": "csu/abi-note.S",
+          "sha256": "b0a435ab1d1997a75125946b23172f75fc1bfa2204f445de2e346ab43e754dc4"
+        },
+        {
+          "path": "csu/Makefile",
+          "sha256": "c4a355640ab9cad0fb05a6fc05d36b79961c316727a81984bec27d11e89b6b74"
+        },
+        {
+          "path": "COPYING.LIB",
+          "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/LoveRetro/h700-toolchain",
+      "commit": "04faa348c112617fc6b99be62308099ee6d43581",
+      "files": [
+        {
+          "path": "Dockerfile",
+          "sha256": "16111e7358ee8ee8c6fdebaf8d20f159121969ab651f586dcf0813c6df6f24b1"
+        },
+        {
+          "path": "support/build-sdl2.sh",
+          "sha256": "6baa5250e4155fb1366eb3693de5af97ec26e364e6924b88ce65276fbf1d1b35"
+        },
+        {
+          "path": "support/sdl2-h700.patch",
+          "sha256": "e6d7e16806c36f619d1cd99ff49a30d34d044f9c6c94761fa2c7f846605cbf04"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot",
+      "commit": "d4a7d7503524cc469fe775242f3f925d4dd56c88",
+      "files": [
+        {
+          "path": "include/SDL_version.h",
+          "sha256": "303c1f3b551e05db7cd3397a25b1a4220fb1f8b1cc9d5696c1623e7d2be2c26e"
+        },
+        {
+          "path": "configure.ac",
+          "sha256": "dd4bef086580ec21c3825dd33c516be934be007951aa31dea7bf06573aa502e5"
+        },
+        {
+          "path": "include/SDL_video.h",
+          "sha256": "7a7de3a010604485f63d664a65fbe238ff7cdb12290ddf0bd137fb86e2813544"
+        },
+        {
+          "path": "src/video/mali-fbdev/mali.h",
+          "sha256": "bdec38aca4ac6fe81271d5b357481762b345a68d7baa0d8e2c8dfd24f4a1da8d"
+        },
+        {
+          "path": "src/video/mali-fbdev/SDL_malivideo.c",
+          "sha256": "9dd97d60edaef1328d5bf81e6f93cd035e8612c0372d1243ccaec61093fd22dc"
+        },
+        {
+          "path": "src/video/mali-fbdev/SDL_maliopengles.c",
+          "sha256": "c05ff14716d11b3430ef4a485e02299857d2f15a0d87fddcc2c09221bc57359e"
+        },
+        {
+          "path": "src/video/SDL_egl.c",
+          "sha256": "3e12e86a9a7a887a95909bf367129827cef8dcb5463e60282fa2193aa33ab7b7"
+        },
+        {
+          "path": "src/dynapi/SDL_dynapi_procs.h",
+          "sha256": "2a6cd1a97f73ccb9cb1ac106def2daa4a41ecb6b539f0f6975f5da0a4f825ab6"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/LoveRetro/NextUI",
+      "commit": "5291344b3aceae5fa197437a70824afb41e2d338",
+      "files": [
+        {
+          "path": "makefile.toolchain",
+          "sha256": "19a8ea03d44c4a5181d7a6e2f8e0240b2481de356dfcb3b8cc0f841b4d0c5b6f"
+        },
+        {
+          "path": "workspace/h700/makefile",
+          "sha256": "a9301b0110c2aa2a786af7aca4f0aa34a4dca269c56885ec6525218f7d562588"
+        },
+        {
+          "path": "skeleton/SYSTEM/h700/bin/h700-init.sh",
+          "sha256": "86f55d36de7d1653ac00861f7c31503c1727ac372d12aae101196932e36b1652"
+        }
+      ]
+    }
+  ],
+  "archives": [
+    {
+      "url": "https://github.com/LoveRetro/gcc-arm-8.3-aarch64-tg5040/releases/download/v8.3.0-20260204-190602-d37268f5/gcc-8.3.0-aarch64-nextui-linux-gnu-x86_64-host.tar.xz",
+      "bytes": 231900984,
+      "sha256": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
+      "digest_evidence": "independently rehashed; matches PR25 and published GitHub digest"
+    },
+    {
+      "url": "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.xz",
+      "bytes": 93192404,
+      "sha256": "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a",
+      "digest_evidence": "independently rehashed; matches upstream sha256sums.asc; PGP signature NOT verified"
+    }
+  ],
+  "triangle": {
+    "commit": "60721c1a81a9f54e507650f313a479ecaa9b6d2a",
+    "path": "spikes/h700-video/triangle.c",
+    "sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42",
+    "license": "MIT original only"
+  },
+  "installed_h700_runtime": "UNKNOWN",
+  "distribution": "BLOCKED"
+}

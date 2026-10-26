@@ -1,0 +1,495 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-10-26",
+  "level": "HOST",
+  "statuses": {
+    "toolchain_baseline": "KNOWN_4.19",
+    "retargeted_sysroot": "BLOCKED_INCOMPLETE_BUILD",
+    "original_triangle_object": "NOT_TESTED",
+    "h700_link": "LINK_BLOCKED",
+    "original_triangle_elf": "BLOCKED",
+    "installed_runtime": "OWNER_NOT_TESTED",
+    "distribution": "BLOCKED"
+  },
+  "stages": [
+    {
+      "stage": "headers_install",
+      "argv": [
+        "<PRIVATE>/host-bin/make",
+        "ARCH=arm64",
+        "INSTALL_HDR_PATH=<PRIVATE>/headers",
+        "headers_install"
+      ],
+      "cwd": "<PRIVATE>/kernel/linux-4.9",
+      "exit_code": 0,
+      "seconds": 2.43
+    },
+    {
+      "stage": "configure-initial",
+      "exit_code": 127,
+      "cause": "ls absent from initial allowlist; added canonical /usr/bin/ls, recorded digest; no source changes"
+    },
+    {
+      "stage": "glibc-configure",
+      "argv": [
+        "<PRIVATE>/glibc/configure",
+        "--build=x86_64-pc-linux-gnu",
+        "--host=aarch64-nextui-linux-gnu",
+        "--prefix=/usr",
+        "--enable-kernel=4.9.0",
+        "--with-headers=<PRIVATE>/headers/include",
+        "--disable-werror",
+        "--disable-selinux",
+        "--disable-nscd",
+        "CC=<PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "CXX=<PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-g++"
+      ],
+      "cwd": "<PRIVATE>/glibc-build",
+      "exit_code": 0,
+      "seconds": 0.82
+    },
+    {
+      "stage": "glibc-make",
+      "argv": [
+        "<PRIVATE>/host-bin/make",
+        "-j4"
+      ],
+      "cwd": "<PRIVATE>/glibc-build",
+      "exit_code": -15,
+      "seconds": 281.33,
+      "reason": "own processes terminated after stdio-common/others stopped advancing; child CPU 98.8%; full build not complete"
+    },
+    {
+      "stage": "bounded-stdio-common-reproduction",
+      "argv": [
+        "<PRIVATE>/host-bin/make",
+        "--debug=m",
+        "objdir=<PRIVATE>/glibc-build",
+        "subdir=stdio-common",
+        "-C",
+        "stdio-common",
+        "..=../",
+        "others"
+      ],
+      "limit_seconds": 3,
+      "exit_code": -15,
+      "seconds": 3.0,
+      "reexecutions": 103,
+      "first": [
+        "Re-executing[1]: <PRIVATE>/host-bin/make --debug=m objdir=<PRIVATE>/glibc-build subdir=stdio-common -C stdio-common ..=../ others",
+        "Re-executing[2]: <PRIVATE>/host-bin/make --debug=m objdir=<PRIVATE>/glibc-build subdir=stdio-common -C stdio-common ..=../ others",
+        "Re-executing[3]: <PRIVATE>/host-bin/make --debug=m objdir=<PRIVATE>/glibc-build subdir=stdio-common -C stdio-common ..=../ others"
+      ],
+      "last": [
+        "Re-executing[103]: <PRIVATE>/host-bin/make --debug=m objdir=<PRIVATE>/glibc-build subdir=stdio-common -C stdio-common ..=../ others"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "private_path": "compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/crt1.o",
+      "bytes": 4472,
+      "sha256": "5149f7930f2ce896583dc744fe6a7812172fcf1d369245949a4ad1c51967e544",
+      "readelf": {
+        "interpreters": [],
+        "needed": [],
+        "rpaths": [],
+        "versions": [],
+        "kernel_notes": [
+          "4.19.0"
+        ]
+      },
+      "elf_header": [
+        "Class:                             ELF64",
+        "Data:                              2's complement, little endian",
+        "Type:                              REL (Relocatable file)",
+        "Machine:                           AArch64"
+      ]
+    },
+    {
+      "private_path": "glibc-build/csu/crt1.o",
+      "bytes": 4352,
+      "sha256": "3e70702ded7a884a3ff4818cc19e28cdeb464d990498536886513db351a8e21e",
+      "readelf": {
+        "interpreters": [],
+        "needed": [],
+        "rpaths": [],
+        "versions": [],
+        "kernel_notes": [
+          "4.9.0"
+        ]
+      },
+      "elf_header": [
+        "Class:                             ELF64",
+        "Data:                              2's complement, little endian",
+        "Type:                              REL (Relocatable file)",
+        "Machine:                           AArch64"
+      ]
+    },
+    {
+      "private_path": "glibc-build/libc.so",
+      "bytes": 17449072,
+      "sha256": "a6677d9d07038789ee435bacfc8160fccf9583f2c8e2829420f609e72f47c776",
+      "readelf": {
+        "interpreters": [
+          "/lib/ld-linux-aarch64.so.1"
+        ],
+        "needed": [
+          "ld-linux-aarch64.so.1"
+        ],
+        "rpaths": [],
+        "versions": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ],
+        "kernel_notes": [
+          "4.9.0"
+        ]
+      },
+      "elf_header": [
+        "Class:                             ELF64",
+        "Data:                              2's complement, little endian",
+        "Type:                              DYN (Shared object file)",
+        "Machine:                           AArch64"
+      ]
+    },
+    {
+      "private_path": "compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/lib/libgcc_s.so.1",
+      "bytes": 782752,
+      "sha256": "3e250c02603da82479e64559d926bae3964e6ea6128f1c74dc8339bfb97fe476",
+      "readelf": {
+        "interpreters": [],
+        "needed": [
+          "libc.so.6"
+        ],
+        "rpaths": [],
+        "versions": [
+          "GLIBC_2.17"
+        ],
+        "kernel_notes": []
+      },
+      "elf_header": [
+        "Class:                             ELF64",
+        "Data:                              2's complement, little endian",
+        "Type:                              DYN (Shared object file)",
+        "Machine:                           AArch64"
+      ]
+    }
+  ],
+  "host_tools": [
+    {
+      "name": "sh",
+      "path": "/usr/bin/bash",
+      "sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29"
+    },
+    {
+      "name": "bash",
+      "path": "/usr/bin/bash",
+      "sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29"
+    },
+    {
+      "name": "make",
+      "path": "/usr/bin/make",
+      "sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51"
+    },
+    {
+      "name": "gcc",
+      "path": "/usr/bin/gcc",
+      "sha256": "585673b6f1d2b1f58bf33174ddea5ac9be0cfbf043f1bf6b41c160f2e0943a45"
+    },
+    {
+      "name": "g++",
+      "path": "/usr/bin/g++",
+      "sha256": "5156405e2923375537c94c59a92df79234487dcca4d97e3517b98c6adf41eaf8"
+    },
+    {
+      "name": "cc",
+      "path": "/usr/bin/gcc",
+      "sha256": "585673b6f1d2b1f58bf33174ddea5ac9be0cfbf043f1bf6b41c160f2e0943a45"
+    },
+    {
+      "name": "as",
+      "path": "/usr/bin/as",
+      "sha256": "e6a1297b03cf3318b6a0f889bdecbdd9d41201fc888b11e05e8acd2f7aa145fd"
+    },
+    {
+      "name": "ld",
+      "path": "/usr/bin/ld",
+      "sha256": "239eadb638b144619992d527efbd85cb545977807cee349606b8ade9bc0a47aa"
+    },
+    {
+      "name": "ar",
+      "path": "/usr/bin/ar",
+      "sha256": "0c1aceed56dde02eeed19228a4ba712f5e5d571bc7efb84f94960dd191b66656"
+    },
+    {
+      "name": "nm",
+      "path": "/usr/bin/nm",
+      "sha256": "ec0bfb75038561afe044cd9667a303e16a24cba6d15ca4dc331dad3b8d501b9b"
+    },
+    {
+      "name": "ranlib",
+      "path": "/usr/bin/ranlib",
+      "sha256": "4b3ba4992eca8cb46d857f6686a29c3d3a514e7e199da71719705a06dbdc0377"
+    },
+    {
+      "name": "objdump",
+      "path": "/usr/bin/objdump",
+      "sha256": "0305569dc1b3f1dbebdd0d3253082301fd15014148fa74ad2cd43a3c2da8cd2e"
+    },
+    {
+      "name": "objcopy",
+      "path": "/usr/bin/objcopy",
+      "sha256": "f14a0ba11dac314e7a04a47faf7729c2be10ab91e4bb1337fb5415c5e8303d01"
+    },
+    {
+      "name": "readelf",
+      "path": "/usr/bin/readelf",
+      "sha256": "76bf1b2996e4374b48174efffa7a3905d67f235aeda560e945bc7bde4f0ba967"
+    },
+    {
+      "name": "strip",
+      "path": "/usr/bin/strip",
+      "sha256": "c9d5bed9e2834d144f89f51a95d148ab4433c4e235cbeb1d98a3fe599db47bce"
+    },
+    {
+      "name": "awk",
+      "path": "/usr/bin/gawk",
+      "sha256": "19deee5f93180e2ffd1ee02c13d29391a2513499661234545c279fd14b360dfe"
+    },
+    {
+      "name": "gawk",
+      "path": "/usr/bin/gawk",
+      "sha256": "19deee5f93180e2ffd1ee02c13d29391a2513499661234545c279fd14b360dfe"
+    },
+    {
+      "name": "bison",
+      "path": "/usr/bin/bison",
+      "sha256": "3b7cbabfaa9a79cf906ec179ee495cfd415d8ef6ddcd6a75292e0cd65434dc38"
+    },
+    {
+      "name": "sed",
+      "path": "/usr/bin/sed",
+      "sha256": "ab0baa3a8f4249be06868d410b494c801631a1cb859754769eee56b8824529e8"
+    },
+    {
+      "name": "grep",
+      "path": "/usr/bin/grep",
+      "sha256": "1f000906a29a17f35c3e3563f742533c7e917292c963ccd139d11a82b543c4ea"
+    },
+    {
+      "name": "egrep",
+      "path": "/usr/bin/egrep",
+      "sha256": "6848c4b9df827591f8af3d846c98b4766d262f06c440efb8b6535eb6accac084"
+    },
+    {
+      "name": "fgrep",
+      "path": "/usr/bin/fgrep",
+      "sha256": "e512071d46a7816b96564588c5ebbd1b9189212aa4130e453eb7cdcaabd30f9a"
+    },
+    {
+      "name": "sort",
+      "path": "/usr/bin/sort",
+      "sha256": "9fac34d6007eb6f2ed5a40aaa362f570dc89eb6758ecfcb89dbffb6b43f6294b"
+    },
+    {
+      "name": "uniq",
+      "path": "/usr/bin/uniq",
+      "sha256": "5b1d69526ef4ae32e92d805f7dad50fcea9eda75662575cc3c1a333a9d3b967c"
+    },
+    {
+      "name": "cut",
+      "path": "/usr/bin/cut",
+      "sha256": "66f0c15af9364cd62186aebaf1fb9dd5af66b3e2fae2db041ee1fbe4dffbcd7a"
+    },
+    {
+      "name": "tr",
+      "path": "/usr/bin/tr",
+      "sha256": "10e5f21b06ac680dd6b2e0ee8bfb798a2bc2253d0973e000c48e055de012725a"
+    },
+    {
+      "name": "head",
+      "path": "/usr/bin/head",
+      "sha256": "078201badeb023d15cf72db477a794d303132296b27860b55f85bf6f7e7a4133"
+    },
+    {
+      "name": "tail",
+      "path": "/usr/bin/tail",
+      "sha256": "78be062b99277693de93169118f4fe9c167c4be356109c6c8270ca6f2d169bb8"
+    },
+    {
+      "name": "cat",
+      "path": "/usr/bin/cat",
+      "sha256": "364e0574030000b6d924441bef25e153a4aaa1ce07123d7fcaee8fa2e807ce40"
+    },
+    {
+      "name": "cp",
+      "path": "/usr/bin/cp",
+      "sha256": "8ce26f08c86483fc25658a8bcb52a85f3dfe571ba17f2039d4ae84e80d8bcea7"
+    },
+    {
+      "name": "mv",
+      "path": "/usr/bin/mv",
+      "sha256": "bb1366f2f314679df9e1eb1ecbd74090386fbc089fc673c6c0eea0edcec41ad0"
+    },
+    {
+      "name": "rm",
+      "path": "/usr/bin/rm",
+      "sha256": "011c2d0c1af901153e60667924c84ecdbb2052282b3e617aec9fc4b562325804"
+    },
+    {
+      "name": "mkdir",
+      "path": "/usr/bin/mkdir",
+      "sha256": "32b4cd6a6de33a2d2b384c6fa98a2fffa436d20d2b89fd20c7d26a24f94339c2"
+    },
+    {
+      "name": "rmdir",
+      "path": "/usr/bin/rmdir",
+      "sha256": "4312083e96fe2e924e46ff5d3e5f7fc2a819130a04687575d69bc47a8692db54"
+    },
+    {
+      "name": "ln",
+      "path": "/usr/bin/ln",
+      "sha256": "c4928c689e59d7186f957b47313ca1c7af2811552ba38fdcaa39681cd0bd3f48"
+    },
+    {
+      "name": "install",
+      "path": "/usr/bin/install",
+      "sha256": "58fc5edff27c7a9cf0841e361bd738d4fd3fea6d2938afbfd573039f86f304ee"
+    },
+    {
+      "name": "chmod",
+      "path": "/usr/bin/chmod",
+      "sha256": "8b0e61201872bcc027da6c2090045efccfc3bbb6bb9b9cab65f911559bc09f15"
+    },
+    {
+      "name": "touch",
+      "path": "/usr/bin/touch",
+      "sha256": "7e5a26ca65265eb796b0ef6fe3e1e88a32a7da4218d000752175ce03d64429fe"
+    },
+    {
+      "name": "expr",
+      "path": "/usr/bin/expr",
+      "sha256": "f2574bba50552755ddbd13053f2468a9ea23a7fd7f53eb65057ab3aa5080644e"
+    },
+    {
+      "name": "dirname",
+      "path": "/usr/bin/dirname",
+      "sha256": "8db4d9adbb2b425c3ca1271e3d1f137a533c04a66ece898a804dbf759799c883"
+    },
+    {
+      "name": "basename",
+      "path": "/usr/bin/basename",
+      "sha256": "a0488c233f2cedba5dc2be2505dc731fa0448f1ef75297a938e7e831ced5cfe9"
+    },
+    {
+      "name": "pwd",
+      "path": "/usr/bin/pwd",
+      "sha256": "9fdb014786f7231e509108e9dfc213400de09a3de16ba9506f0d8d5582002ed4"
+    },
+    {
+      "name": "uname",
+      "path": "/usr/bin/uname",
+      "sha256": "69368312cf5e9db975a2c6ac55d7a372b0baac4f739f5e954a99c9d1bd6477a4"
+    },
+    {
+      "name": "env",
+      "path": "/usr/bin/env",
+      "sha256": "b91fd720ef6f3c0a69ad78d2ca446049d9a181900b0c0bad5aa0c6e11e18ef7f"
+    },
+    {
+      "name": "perl",
+      "path": "/usr/bin/perl",
+      "sha256": "13864ef975653e0ce732042a779ad4ec7873f2a96e401f606d05e34bb04579f5"
+    },
+    {
+      "name": "python3",
+      "path": "/usr/bin/python3.14",
+      "sha256": "7579d289e4d95778305acd13fc71be2a3800f7f6a202619505875234659c2c60"
+    },
+    {
+      "name": "find",
+      "path": "/usr/bin/find",
+      "sha256": "dd7db3e8da1775fd4f196db8a9000d5d31c20bf82f105af567bea7c3db4303d6"
+    },
+    {
+      "name": "xargs",
+      "path": "/usr/bin/xargs",
+      "sha256": "cc7e58da54ad0e016cb4c827cc071ebb656e9408584b1deddfbb6ffd8e56361a"
+    },
+    {
+      "name": "cmp",
+      "path": "/usr/bin/cmp",
+      "sha256": "edcc51a8c7e7e85668f77f9a60b64ac9a771f20d0a2474348174c530ccf09abb"
+    },
+    {
+      "name": "diff",
+      "path": "/usr/bin/diff",
+      "sha256": "6289e2e9460f0ad5b46ebe090baab2ea54a9681d7490cd57317f4ebdd4c9fc5d"
+    },
+    {
+      "name": "printf",
+      "path": "/usr/bin/printf",
+      "sha256": "f946efc457b67ae1e9e251ad82d8cc7b3b1d28abfd65a0b110305899e9c3709e"
+    },
+    {
+      "name": "true",
+      "path": "/usr/bin/true",
+      "sha256": "1573301c316fd6297e2352441a9fb42eca9c32f97b3bb7ae1d45d3362811234d"
+    },
+    {
+      "name": "false",
+      "path": "/usr/bin/false",
+      "sha256": "16ed3c6201c23f5f91bdfb589f2e9d6318d4984c0a423f8fdb5d2448486ed195"
+    },
+    {
+      "name": "wc",
+      "path": "/usr/bin/wc",
+      "sha256": "89b0a9b3ca913dbd7da9fd7bf01048478827087cf2f88192b1bb9bc215ee76f3"
+    },
+    {
+      "name": "date",
+      "path": "/usr/bin/date",
+      "sha256": "1b99e1afca2642169fa0cf9a12eff6ea76b24adfa69c23be5bb843f320d77e33"
+    },
+    {
+      "name": "ls",
+      "path": "/usr/bin/ls",
+      "sha256": "aee98dea6ec77563422f024b81051cc75cd74ac0c4669478d1d922afe22905e0"
+    }
+  ],
+  "environment": {
+    "PATH": "<PRIVATE>/host-bin",
+    "HOME": "<PRIVATE>/home",
+    "TMPDIR": "<PRIVATE>/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "SOURCE_DATE_EPOCH": "1533081600"
+  },
+  "logs": [
+    {
+      "name": "headers.log",
+      "sha256": "27d8f091057238482d7d72e77c6e2731f1008f10329dc09234d1f95c9c8d230f"
+    },
+    {
+      "name": "configure.log",
+      "sha256": "7038612678a690f9e8f1d6cf7f4fcb9a9e612f7810635726c2f31286d448a810"
+    },
+    {
+      "name": "glibc-make.log",
+      "sha256": "2a740b2c54be2cd94b74d89c5413a5355435425451aa277d23f1b178aeda287f"
+    },
+    {
+      "name": "make-restart.log",
+      "sha256": "a1e1de11a7305148d7d328a86a3f4164cd9bce694d1cdc298796dbc5214e1387"
+    }
+  ],
+  "limits": [
+    "No target execution, install, H700 access, SDK/vendor library copy or binary upload",
+    "Partial libc/crt metadata is not a completed sysroot or triangle link",
+    "No repeated or cross-root triangle build performed",
+    "Environment isolation is not a filesystem/network sandbox; absolute paths in reviewed build recipes remain possible",
+    "Stock host tools observed by hash, not a pinned host OS/image; no upstream authentication claim for those binaries"
+  ]
+}
