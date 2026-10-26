@@ -8,6 +8,7 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 - Compare native mkxp-z, R36S ArkOS port and NextUI Pak lifecycle; write the architecture decision.
 - Run a narrowly scoped, independently reviewed, game-free Mali-fbdev GLES2 feasibility spike ([#22](https://github.com/almighty-atlas/nextui-mkxp/issues/22)) **before treating H700 graphics as functional**; this is not the later full engine/audio/input test.
 - Verify a pinned cross-toolchain, safe sysroot, ELF ABI and narrow linked-library distribution gate ([#24](https://github.com/almighty-atlas/nextui-mkxp/issues/24)) before any H700 executable is provided.
+- Resolve the Linux 4.9 minimum-kernel/sysroot discrepancy and H700 Mali-fbdev link-interface separately ([#26](https://github.com/almighty-atlas/nextui-mkxp/issues/26)); do not equate the prior TrimUI/PowerVR host link with H700 readiness.
 - Audit upstream license obligations and dependency provenance before copying code/binaries.
 - Establish repository hygiene, offline docs/packaging validations and a safe cross-build environment.
 
