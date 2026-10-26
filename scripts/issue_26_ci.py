@@ -19,8 +19,9 @@ def check_whitespace(repository, base, head='HEAD'):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--base', required=True)
+    parser.add_argument('--head', default='HEAD')
     args = parser.parse_args()
-    common, result = check_whitespace('.', args.base)
+    common, result = check_whitespace('.', args.base, args.head)
     print('Checking full branch diff from ' + common)
     print(result.stdout + result.stderr, end='')
     return result.returncode

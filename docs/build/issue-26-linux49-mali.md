@@ -158,10 +158,13 @@ does not authorize linking without genuine input review or any runtime claim.
 
 The existing offline workflow now includes `docs/build/issue-26-*` triggers,
 fetches checkout history explicitly, and uses PR base SHA or the default remote
-branch on push to find the merge point. `issue_26_ci.py` checks the entire
+branch on push to find the merge point. The explicit PR head SHA is checked,
+excluding upstream-only files in GitHub's synthetic merge checkout.
+`issue_26_ci.py` checks the entire
 base-to-head branch diff. Its regression constructs multiple commits and proves
 that a whitespace error in the earlier commit fails even when `HEAD^..HEAD`
-passes. CI remains offline after checkout: no toolchain build, dependency fetch,
+passes; it also covers the synthetic-merge/upstream-file case. CI remains offline
+after checkout: no toolchain build, dependency fetch,
 target execution or binary artifact upload.
 
 ## Earlier Issue #26 report

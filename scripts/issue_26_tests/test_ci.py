@@ -37,6 +37,15 @@ class BranchWhitespaceTests(unittest.TestCase):
             (root/'earlier').write_text('fixed\n')
             git('add', '.'); git('commit', '-qm', 'fix original whitespace')
             self.assertEqual(check_whitespace(root, base)[1].returncode, 0)
+            # PR checkout can be a synthetic merge containing upstream files.
+            # Only the explicit PR head belongs in the branch diff.
+            branch_head = git('rev-parse', 'HEAD')
+            git('checkout', '-qb', 'upstream', base)
+            (root/'upstream-prompt.md').write_text('upstream Markdown break  \n')
+            git('add', '.'); git('commit', '-qm', 'upstream-only file')
+            git('merge', '-qm', 'synthetic PR merge', branch_head)
+            self.assertNotEqual(check_whitespace(root, base)[1].returncode, 0)
+            self.assertEqual(check_whitespace(root, base, branch_head)[1].returncode, 0)
 
     def test_missing_base_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
