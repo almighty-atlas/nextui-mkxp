@@ -28,7 +28,7 @@ Run on the **development host only**:
 - sh -n tools/probe-h700-runtime.sh
 - python3 -I -B -m unittest discover -s tests -v
 
-Six synthetic host tests rewrite a temporary probe copy to read only synthetic fixtures. They verify argument rejection, missing files, fake AArch64 ELF headers, SHA-256, approved symlink resolution, and refusal to read private-path symlink targets. Static checks reject mutating and network commands. Host tests are **not** BusyBox/H700 evidence.
+Eight host tests use a temporary probe copy and synthetic fixtures (one tests local BusyBox applets only when BusyBox is installed; otherwise it is explicitly skipped). They verify argument rejection, missing files, fake AArch64 ELF headers, SHA-256, approved symlink resolution, refusal to read private-path symlink targets, filtered `readelf` fields with redaction, and the supported BusyBox `ash`/`awk`/`od`/`readlink`/`sha256sum` code path. Static checks reject mutating and network commands. A native BusyBox host test, if run, proves only the tested host BusyBox version. None of these tests prove the actual H700's BusyBox configuration, runtime library versions or graphics behavior.
 
 ## Future handoff: NOT AUTHORIZED YET
 
@@ -38,7 +38,7 @@ The game-free physical graphics test is separate [Issue #22](https://github.com/
 
 ## Acceptance
 
-- [x] Source-only probe and six synthetic tests.
+- [x] Source-only probe and eight host tests (optional BusyBox test skips explicitly when unavailable).
 - [ ] Independent source/BusyBox review and CI on current PR head.
 - [ ] Separate owner authorization for read-only device metadata execution.
 - [ ] Owner-observed ABI/runtime metadata with explicit UNKNOWN fields.
