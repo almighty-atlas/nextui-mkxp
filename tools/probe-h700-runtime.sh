@@ -1,5 +1,5 @@
 #!/bin/sh
-# H700 runtime-library metadata inventory v1. Review source before any device run.
+# H700 runtime-library metadata inventory v2. Review source before device use.
 # Fixed candidates only. Never execute target ELF/loader/ldd or open GPU nodes.
 LC_ALL=C; export LC_ALL
 set -f
@@ -10,7 +10,7 @@ fi
 have() { command -v "$1" >/dev/null 2>&1; }
 unknown() { printf '%s\n' 'UNKNOWN'; }
 
-printf '%s\n' 'H700 runtime metadata inventory v1 — NOT_TESTED on physical H700.'
+printf '%s\n' 'H700 runtime metadata inventory v2 — graphic functionality NOT_TESTED.'
 printf '%s\n' 'Fixed system-library candidates, no device opens, no file modifications.'
 printf 'kernel_release: '
 if have uname; then uname -r 2>/dev/null || unknown; else unknown; fi
@@ -34,7 +34,7 @@ done
 # or read symlink targets outside fixed system/NextUI library directories.
 within_system_roots() {
     case "$1" in
-        /lib/*|/usr/lib/*|/mnt/vendor/lib64/*|/mnt/SDCARD/.system/h700/lib/*) return 0 ;;
+        /lib/*|/usr/lib/*|/mnt/vendor/lib64/*|/mnt/SDCARD/.system/h700/lib/*|/mnt/sdcard/.system/h700/lib/*) return 0 ;;
         *) return 1 ;;
     esac
 }
