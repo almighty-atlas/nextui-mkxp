@@ -8,6 +8,16 @@
 | Pokémon Infinite Fusion | TBD (6.8.x reported on R36S only) | RPG Maker XP/mkxp-z variant TBD | NOT_TESTED | — | R36S success is not H700 evidence |
 | Pokémon Decay | TBD | Confirm upstream game package / Essentials version | NOT_TESTED | — | Scripts/plugins and native dependency audit needed |
 
+## Engine input preflight (Issue #4 static preparation)
+
+[Offline input contract and prerequisite review](H700_ENGINE_PREFLIGHT.md) records
+the existing owner-confirmed **tiny02 Debian builder** (GCC 8.3 AArch64,
+Linux-4.9.170/glibc-2.28, successful SDL/testbuild), not an absent build host.
+That is host evidence, not clean-room reproducibility or engine compatibility.
+The input manifest remains **BLOCKED** by #1/#2/#3, complete dependency/license
+closure and exact current builder receipt binding. No engine/C++ cross-build,
+device changes or distribution permission result from this static checker.
+
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.
