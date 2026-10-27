@@ -8,6 +8,16 @@
 | Pokémon Infinite Fusion | TBD (6.8.x reported on R36S only) | RPG Maker XP/mkxp-z variant TBD | NOT_TESTED | — | R36S success is not H700 evidence |
 | Pokémon Decay | TBD | Confirm upstream game package / Essentials version | NOT_TESTED | — | Scripts/plugins and native dependency audit needed |
 
+## H700 runtime preflight (2026-10-27)
+
+Linux 4.9.170 is owner-reported. PR #27's Linux-4.9 sysroot and SDL-only link
+are HOST evidence only: direct GLIBC_2.17 does not remove SDL's transitive
+GLIBC_2.27 requirement. Installed libc definitions remain UNKNOWN/BLOCKED;
+the new [host-only libc gate](H700_HOST_LIBC.md) is tested with synthetic metadata,
+not the actual firmware libc. Installed SDL identity, Mali/GLES2/ION operation,
+visible rendering and NextUI return remain **NOT_TESTED**. No distribution or
+device-test authorization follows from the host checks.
+
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.
