@@ -1,10 +1,19 @@
 # Issue #22 — stock-SDL proc-triangle preparation
 
-**Current result: BUILD_BLOCKED.** A pinned private source scaffold and host
+**Latest result: limited owner-observed H700 video PASS.** See the
+[dated hardware evidence](../../docs/H700_VIDEO_EVIDENCE.md) for the exact tested
+ELF, sanitized trace, observation and remaining tests, and the
+[host-only engine plan](../../docs/H700_MINIMAL_ENGINE_PLAN.md). SOURCE_ONLY was
+restored after that single trial; distribution remains BLOCKED. No guard removal
+or new execution is authorized here.
+
+**Historical preparation-session result: BUILD_BLOCKED.** The following records
+the earlier Alpine preparation attempt, not the later build/trial. A pinned private source scaffold and host
 verification/staging tools exist; **no new AArch64 executable or installable Pak
 was built**. No target code or graphics ran. Do not deploy the scaffold or remove
 `SOURCE_ONLY`. Refs [Issue #22](https://github.com/almighty-atlas/nextui-mkxp/issues/22).
-Machine-readable facts: [evidence.json](evidence.json).
+Machine-readable facts: [evidence.json](evidence.json) (historical preparation
+fields retained, later follow-up explicitly separated).
 
 ## Source and runtime decision
 

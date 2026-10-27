@@ -42,3 +42,22 @@
 | Example | H700 | RG35XX Pro / exact NextUI tag | NOT_TESTED | — |
 
 Use PASS / FAIL / BLOCKED / NOT_TESTED. Never claim PASS without corresponding actual execution.
+
+## Recorded narrow video result and next host gate
+
+[Issue #22 / PR #30 evidence](H700_VIDEO_EVIDENCE.md) records one owner-run H700
+video PASS separately from supplied host build facts and physical observation.
+Do not promote this to M1 engine/audio/input acceptance. Exact NextUI release,
+orientation and process audit remain incomplete; a log's cleanup/exit code alone
+does not establish a responsive UI. No further hardware test is requested now.
+
+The [next implementation milestone](H700_MINIMAL_ENGINE_PLAN.md) defines offline
+lockfile/cache rejection tests, C++ ABI calibration and engine-stage acceptance.
+Current offline regression commands (no ARM execution):
+
+```sh
+python3 -I -B -m unittest discover -s spikes/h700-stock-video -p 'test_*.py' -v
+```
+
+This includes evidence-consistency checks and existing synthetic ELF/assembly
+tests. It does not inspect the tested private ELF or repeat the owner's trial.

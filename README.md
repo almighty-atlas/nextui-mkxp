@@ -2,7 +2,7 @@
 
 Native **RPG Maker XP** game runtime for **NextUI on Anbernic H700 handhelds**, initially targeting the **RG35XX Pro**. Based on [mkxp-z](https://github.com/mkxp-z/mkxp-z), with [mkxp-z-r36s](https://github.com/Periko21/mkxp-z-r36s) as an important research reference.
 
-> **Status: planning / feasibility. No installable Pak or tested H700 binary exists in this repository yet.**
+> **Status: planning / feasibility. One owner-observed game-free H700 video trial passed ([limited evidence](docs/H700_VIDEO_EVIDENCE.md)). No tested mkxp-z engine or installable release exists; binary distribution remains blocked.**
 
 ## Goals
 

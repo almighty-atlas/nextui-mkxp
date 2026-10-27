@@ -2,6 +2,12 @@
 
 This is a **planning roadmap**, not a statement of implemented features. Phase codes in issue titles are used because GitHub Milestones may not yet be configured.
 
+2026-10-27 update: the [single owner-observed H700 video trial](H700_VIDEO_EVIDENCE.md)
+passed its narrow graphics/normal-return gate. It does not complete M0, M1,
+licensing, audio/input or engine acceptance. The
+[minimal engine plan](H700_MINIMAL_ENGINE_PLAN.md) prioritizes an offline #4
+input/ABI-preflight milestone before #5 engine compilation; no device action now.
+
 ## M0 — Foundations (prerequisite for engineering work)
 
 - Confirm H700 NextUI aarch64 ABI, graphics, audio, input, memory and exact firmware baseline.

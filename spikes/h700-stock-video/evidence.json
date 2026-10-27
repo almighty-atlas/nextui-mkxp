@@ -1,6 +1,53 @@
 {
   "date": "2026-10-27",
-  "status": "BUILD_BLOCKED",
+  "status": "LIMITED_H700_VIDEO_PASS_OWNER_OBSERVED",
+  "historical_preparation_status": "BUILD_BLOCKED",
+  "historical_fields_scope": "Except status and hardware_followup, fields below describe the earlier Alpine preparation session only; NEVER/NOT_TESTED are not the later trial state.",
+  "hardware_followup": {
+    "recorded_date": "2026-10-27",
+    "source": "Owner-supplied task: verified build facts, physical observation and sanitized RMXP_VIDEO lines; no independent rerun in this documentation session",
+    "evidence_document": "../../docs/H700_VIDEO_EVIDENCE.md",
+    "elf_sha256": "d41477f3a3803ee22e778629d4b5c9a0947cd4449e1717f1e7f347226a09a5f9",
+    "host_facts": {
+      "level": "verified-on-host (supplied facts, not repeated here)",
+      "architecture": "AArch64",
+      "status": "SDL_ONLY_HOST_LINKED",
+      "sdl_exports": 21,
+      "deterministic_repeat_link": true,
+      "initial_markers": ["HOST_VERIFIED", "SOURCE_ONLY"]
+    },
+    "device": {"model": "RG35XX Pro", "firmware": "NextUI", "exact_firmware_version": null, "architecture": "AArch64", "kernel": "4.9.170"},
+    "owner_observation": {
+      "level": "OWNER_OBSERVED_H700",
+      "visible_colorful_moving_triangle": true,
+      "automatic_return_seconds_approx": 5,
+      "nextui_menu_operable": true
+    },
+    "trace": {
+      "level": "verified-on-H700 (owner-supplied trace)",
+      "sdl_compiled": "2.28.5", "sdl_linked": "2.28.5", "sdl_driver": "mali",
+      "gl_vendor": "ARM", "gl_renderer": "Mali-G31",
+      "gl_version": "OpenGL ES 3.2 v1.r20p0-01rel0.6bf520cc6fc11e5ebc382522e4d4ab38",
+      "glsl_version": "OpenGL ES GLSL ES 3.20",
+      "frames": 297, "elapsed_ms": 5007,
+      "cleanup_complete_code": 0,
+      "last_stage": "exit_owner_verification_required",
+      "last_stage_code": 0
+    },
+    "post_trial": {"level": "OWNER_REPORTED_H700", "source_only_restored": true, "elf_hash_rechecked_successfully": true},
+    "not_tested": ["exact NextUI build identity", "explicit orientation measurement", "surviving-process audit", "complete library closure inventory", "audio", "engine input mapping", "exit chord", "failure/hang recovery", "mkxp-z startup", "Ruby/RGSS", "saves", "games", "performance/stability"],
+    "documentation_session_checks": {
+      "level": "verified-on-host",
+      "preparation_and_evidence_tests": {"count": 19, "result": "PASS", "seconds": 0.108},
+      "pinned_proc_native_mock_tests": {"count": 5, "result": "PASS", "seconds": 0.377},
+      "launcher_shell_syntax": "PASS",
+      "git_diff_check": "PASS",
+      "new_target_build_or_device_run": false,
+      "verified_in_ci": false
+    },
+    "distribution": "BLOCKED",
+    "further_device_action_authorized": false
+  },
   "base_main": "107db135b8e8ef72f6d61c78be14416330727b0d",
   "pr23": "60721c1a81a9f54e507650f313a479ecaa9b6d2a",
   "pr27": "1c04c578e3a35acc40b8669986228e3a2ae056c0",
