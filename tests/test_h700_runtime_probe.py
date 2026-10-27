@@ -25,11 +25,13 @@ class MetadataProbeTests(unittest.TestCase):
         self.root.joinpath('usr-lib').mkdir()
         self.root.joinpath('vendor').mkdir()
         self.root.joinpath('nextui').mkdir()
+        self.root.joinpath('nextui-real').mkdir()
         source = SCRIPT.read_text()
         # Descending path specificity prevents partial substitution, and
         # targets only source-owned fixed library roots, not /dev/null.
         substitutions = (
             ('/mnt/SDCARD/.system/h700/lib/', str(self.root / 'nextui') + '/'),
+            ('/mnt/sdcard/.system/h700/lib/', str(self.root / 'nextui-real') + '/'),
             ('/mnt/vendor/lib64/', str(self.root / 'vendor') + '/'),
             ('/usr/lib/', str(self.root / 'usr-lib') + '/'),
             ('/lib/', str(self.root / 'lib') + '/'),
@@ -104,6 +106,28 @@ class MetadataProbeTests(unittest.TestCase):
         result = self.run_probe()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('sha256: ' + expected, result.stdout)
+
+    def test_nextui_uppercase_alias_canonical_lowercase_is_read(self):
+        """Owner observed /mnt/SDCARD => canonical /mnt/sdcard NextUI lib root."""
+        actual = self.root / 'nextui-real/libSDL2-2.0.so.0'
+        digest = self.write_elf(actual)
+        alias = self.root / 'nextui/libSDL2-2.0.so.0'
+        alias.symlink_to(actual)
+        result = self.run_probe()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('sha256: ' + digest, result.stdout)
+        self.assertNotIn('outside fixed system roots; not read', result.stdout)
+
+    def test_nextui_alias_other_root_stays_blocked(self):
+        """Allowlisting /mnt/sdcard does not allow unrelated resolved roots."""
+        secret = self.root / 'private-secret-sdl'
+        secret.write_bytes(b'CONFIDENTIAL_DUMMY_TEST')
+        alias = self.root / 'nextui/libSDL2-2.0.so.0'
+        alias.symlink_to(secret)
+        result = self.run_probe()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('outside fixed system roots; not read', result.stdout)
+        self.assertNotIn(hashlib.sha256(secret.read_bytes()).hexdigest(), result.stdout)
 
     def test_filtered_readelf_output_and_redaction(self):
         """Synthetic readelf text: verify no RPATH or odd dependency contents leak."""
