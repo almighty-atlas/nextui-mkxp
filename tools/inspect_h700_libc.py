@@ -1,4 +1,4 @@
-"""Host-only metadata gate for the single owner-fingerprinted H700 libc.
+"""Host-only metadata gate for four owner-fingerprinted H700 glibc DSOs.
 
 Never executes a target ELF. No network, device access, downloads or file writes.
 Linux host with trusted GNU readelf required. See docs/H700_HOST_LIBC.md.
@@ -15,7 +15,14 @@ import struct
 import subprocess
 
 
-EXPECTED_SHA256 = "dd80538bfc685542511168f4cde5dcce476c22d310e727578f17cf23eebb6822"
+# Owner-supplied fingerprints, PR #28 at 69cddf33056ab5c2840540c49393ea934584f9c5,
+# docs/H700_RUNTIME_METADATA.md. Names select SONAME policy, never input paths.
+TARGETS = {
+    "libc.so.6": "dd80538bfc685542511168f4cde5dcce476c22d310e727578f17cf23eebb6822",
+    "libm.so.6": "b24316bc659ab74096d8679a9e423c1673082649bf148b513579b5acb4e9294a",
+    "libdl.so.2": "7f0db218d2126ed6d8df831a24abb0e1b6e96e3952813944a914051ea712440b",
+    "libpthread.so.0": "cc12f9592e8d130630b7e95a390aa238dfad6d4092615a65c516e3cf93d30aa3",
+}
 MAX_SIZE = 32 * 1024 * 1024
 ENV = {"PATH": "/usr/bin:/bin", "LC_ALL": "C", "LANG": "C"}
 VERSION = re.compile(r"GLIBC_[0-9]+(?:\.[0-9]+)+\Z")
@@ -66,7 +73,10 @@ def digest(fd):
     return hashlib.sha256(data).hexdigest(), bytes(data[:20])
 
 
-def inspect(path, tool, expected=EXPECTED_SHA256):
+def inspect(path, tool, targets=None):
+    # Explicit alternate tables are an internal synthetic-test seam, not a CLI option.
+    if targets is None:
+        targets = TARGETS
     if not tool.is_absolute() or not tool.is_file():
         raise Blocked("ABSOLUTE_TRUSTED_READELF_REQUIRED")
     try:
@@ -84,15 +94,17 @@ def inspect(path, tool, expected=EXPECTED_SHA256):
         if not stat.S_ISREG(info.st_mode) or not 64 <= info.st_size <= MAX_SIZE:
             raise Blocked("REGULAR_BOUNDED_ELF_REQUIRED")
         sha, header = digest(fd)
-        if sha != expected:
+        matches = [name for name, expected in targets.items() if sha == expected]
+        if len(matches) != 1:
             raise Blocked("SHA256_MISMATCH")
+        expected_soname = matches[0]
         if (header[:7] != b"\x7fELF\x02\x01\x01"
                 or struct.unpack_from("<HH", header, 16) != (3, 183)):
             raise Blocked("AARCH64_ELF64_LE_ET_DYN_REQUIRED")
         dynamic = readelf(fd, tool, "--dynamic")
         sonames = re.findall(r"\(SONAME\).*\[([^\]]+)\]", dynamic)
-        if sonames != ["libc.so.6"]:
-            raise Blocked("LIBC_SONAME_REQUIRED")
+        if sonames != [expected_soname]:
+            raise Blocked("GLIBC_DSO_SONAME_REQUIRED")
         versions = provider_versions(readelf(fd, tool, "--version-info"))
         if not versions:
             raise Blocked("NO_PUBLIC_GLIBC_DEFINITIONS")
@@ -103,7 +115,7 @@ def inspect(path, tool, expected=EXPECTED_SHA256):
             "status": "HOST_METADATA_ONLY",
             "sha256": sha,
             "elf": "ELF64_LE_AARCH64_ET_DYN",
-            "soname": "libc.so.6",
+            "soname": expected_soname,
             "glibc_provider_definitions": versions,
             "defines_GLIBC_2_17": "GLIBC_2.17" in versions,
             "defines_GLIBC_2_27": "GLIBC_2.27" in versions,
@@ -117,7 +129,7 @@ def inspect(path, tool, expected=EXPECTED_SHA256):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("libc", type=Path, help="already authorized local regular file")
+    parser.add_argument("libc", type=Path, help="one already authorized local glibc DSO regular file")
     parser.add_argument("--readelf", type=Path, default=Path("/usr/bin/readelf"))
     args = parser.parse_args()
     try:

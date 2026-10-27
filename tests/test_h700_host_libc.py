@@ -28,14 +28,14 @@ Version needs section '.gnu.version_r' contains 1 entry:
 """
 
 
-def elf_fixture():
+def elf_fixture(soname="libc.so.6"):
     """Original synthetic metadata, not a runnable library or a link stub."""
     names = b"\0.shstrtab\0.dynstr\0.gnu.version_d\0.dynamic\0"
-    strings = b"\0libc.so.6\0GLIBC_2.17\0GLIBC_2.27\0"
+    strings = b"\0" + soname.encode("ascii") + b"\0GLIBC_2.17\0GLIBC_2.27\0"
     defs = b"".join(
         struct.pack("<HHHHIII", 1, 0, i + 1, 1, 0, 20, 28 if i < 2 else 0)
         + struct.pack("<II", strings.index(name), 0)
-        for i, name in enumerate((b"libc.so.6", b"GLIBC_2.17", b"GLIBC_2.27"))
+        for i, name in enumerate((soname.encode("ascii"), b"GLIBC_2.17", b"GLIBC_2.27"))
     )
     strings_offset = 176 + len(names)
     dynamic = struct.pack("<qQqQqQqQ", 5, strings_offset, 10, len(strings), 14, 1, 0, 0)
@@ -69,10 +69,82 @@ class LibcInspectionTests(unittest.TestCase):
         self.sha = hashlib.sha256(self.file.read_bytes()).hexdigest()
 
     def inspect(self):
-        return M.inspect(self.file, TOOL, self.sha)
+        return M.inspect(self.file, TOOL, {"libc.so.6": self.sha})
 
     def test_definitions_not_needs_symbols_or_parents(self):
         self.assertEqual(M.provider_versions(DEFS), ["GLIBC_2.17", "GLIBC_2.27"])
+
+    def test_definitions_with_hash_field(self):
+        text = DEFS.replace("Cnt: 1 Name:", "Cnt: 1 Hash: 0x06969197 Name:")
+        text = text.replace("Cnt: 2 Name:", "Cnt: 2 Hash: 0x06969187 Name:")
+        self.assertEqual(M.provider_versions(text), ["GLIBC_2.17", "GLIBC_2.27"])
+
+    def test_multi_count_parent_is_not_a_definition(self):
+        text = """Version definition section '.gnu.version_d' contains 1 entry:
+  0x0000: Rev: 1 Flags: none Index: 2 Cnt: 2 Name: GLIBC_2.27
+  0x001c: Parent 1: GLIBC_2.17
+"""
+        self.assertEqual(M.provider_versions(text), ["GLIBC_2.27"])
+
+    def test_abi_dt_relr_is_excluded(self):
+        text = DEFS.replace("GLIBC_2.27", "GLIBC_ABI_DT_RELR")
+        self.assertEqual(M.provider_versions(text), ["GLIBC_2.17"])
+
+    def test_base_soname_is_not_a_version(self):
+        text = """Version definition section '.gnu.version_d' contains 1 entry:
+  0x0000: Rev: 1 Flags: BASE Index: 1 Cnt: 1 Name: libc.so.6
+"""
+        self.assertEqual(M.provider_versions(text), [])
+
+    def test_pinned_targets_exact_and_unique(self):
+        expected = {
+            "libc.so.6": "dd80538bfc685542511168f4cde5dcce476c22d310e727578f17cf23eebb6822",
+            "libm.so.6": "b24316bc659ab74096d8679a9e423c1673082649bf148b513579b5acb4e9294a",
+            "libdl.so.2": "7f0db218d2126ed6d8df831a24abb0e1b6e96e3952813944a914051ea712440b",
+            "libpthread.so.0": "cc12f9592e8d130630b7e95a390aa238dfad6d4092615a65c516e3cf93d30aa3",
+        }
+        self.assertEqual(M.TARGETS, expected)
+        self.assertEqual(len(set(M.TARGETS.values())), 4)
+
+    def test_all_four_targets_use_hash_not_filename(self):
+        # Actual readelf on four original metadata-only fixtures. Only digest is
+        # mocked to select each production policy; no stock DSO is acquired/read.
+        for soname, sha in M.TARGETS.items():
+            with self.subTest(soname=soname):
+                data = elf_fixture(soname)
+                self.file.write_bytes(data)
+                with patch.object(M, "digest", return_value=(sha, data[:20])):
+                    report = M.inspect(self.file, TOOL)
+                self.assertEqual(report["soname"], soname)
+                self.assertEqual(report["sha256"], sha)
+                self.assertEqual(report["h700_runtime"], "NOT_TESTED")
+                self.assertNotIn(str(self.file), json.dumps(report))
+
+    def test_target_specific_soname_is_required(self):
+        for soname, sha in M.TARGETS.items():
+            with self.subTest(soname=soname):
+                wrong = "libm.so.6" if soname == "libc.so.6" else "libc.so.6"
+                data = elf_fixture(wrong)
+                self.file.write_bytes(data)
+                with patch.object(M, "digest", return_value=(sha, data[:20])):
+                    with self.assertRaisesRegex(M.Blocked, "SONAME"):
+                        M.inspect(self.file, TOOL)
+
+    def test_duplicate_hash_is_blocked_before_readelf(self):
+        with patch.object(M, "readelf") as reader:
+            with self.assertRaisesRegex(M.Blocked, "SHA256_MISMATCH"):
+                M.inspect(self.file, TOOL, {"libc.so.6": self.sha, "libm.so.6": self.sha})
+            reader.assert_not_called()
+
+    def test_allowlisted_filename_cannot_bypass_hash(self):
+        for soname in M.TARGETS:
+            with self.subTest(soname=soname):
+                named = self.file.with_name(soname)
+                named.write_bytes(elf_fixture(soname))
+                with patch.object(M, "readelf") as reader:
+                    with self.assertRaisesRegex(M.Blocked, "SHA256_MISMATCH"):
+                        M.inspect(named, TOOL)
+                    reader.assert_not_called()
 
     def test_numeric_order_and_no_private_or_injected_text(self):
         text = DEFS.replace("GLIBC_2.17", "GLIBC_2.9").replace("GLIBC_2.27", "GLIBC_2.10")
@@ -101,18 +173,18 @@ class LibcInspectionTests(unittest.TestCase):
         link = self.file.with_name("alias")
         link.symlink_to(self.file)
         with self.assertRaisesRegex(M.Blocked, "SYMLINK"):
-            M.inspect(link, TOOL, self.sha)
+            M.inspect(link, TOOL, {"libc.so.6": self.sha})
 
     def test_fifo_rejected_without_wait(self):
         fifo = self.file.with_name("fifo")
         os.mkfifo(fifo)
         with self.assertRaisesRegex(M.Blocked, "REGULAR"):
-            M.inspect(fifo, TOOL, self.sha)
+            M.inspect(fifo, TOOL, {"libc.so.6": self.sha})
 
     def test_missing_and_relative_tool(self):
         for tool in (Path("readelf"), Path("/nonexistent/readelf")):
             with self.assertRaisesRegex(M.Blocked, "TRUSTED_READELF"):
-                M.inspect(self.file, tool, self.sha)
+                M.inspect(self.file, tool, {"libc.so.6": self.sha})
 
     def test_real_readelf_on_synthetic_metadata(self):
         report = self.inspect()
@@ -189,6 +261,16 @@ class LibcInspectionTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertEqual(json.loads(result.stdout)["reason"], "SHA256_MISMATCH")
         self.assertNotIn(str(self.file), result.stdout + result.stderr)
+
+    def test_cli_has_no_policy_override(self):
+        for flag in ("--hash", "--expected", "--targets", "--sha256", "--expected-sha256"):
+            with self.subTest(flag=flag):
+                result = subprocess.run(
+                    [sys.executable, "-I", "-B", str(ROOT / "tools/inspect_h700_libc.py"),
+                     str(self.file), flag, self.sha], capture_output=True, text=True, check=False,
+                )
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("unrecognized arguments", result.stderr)
 
 
 if __name__ == "__main__":
