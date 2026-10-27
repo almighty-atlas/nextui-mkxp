@@ -173,10 +173,15 @@ No real cache/compiler/sysroot input was approved or opened. Missing-file and
 hash-mutation refusal with otherwise valid metadata are separately tested by
 the synthetic suite. `git diff --check` passed (exit 0, no output).
 
-The read-only pinned-checkout CI workflow runs only these tests and full
-base-to-head whitespace checks. It never installs/builds dependencies, executes
-ARM, uses credentials after checkout or uploads artifacts. CI success must be
-reported separately from local tests and prior build evidence.
+**CI activation BLOCKED:** the attempted push of commit `4e6461d` was rejected
+because the available GitHub PAT lacks `workflow` scope. No token permissions
+were changed or bypass attempted. The active workflow was removed from the branch
+tip; its proposed content is retained as the **inactive template**
+`build/h700-engine/offline-workflow.example.yml`, not under `.github/workflows`.
+It would run only the tests and complete base-to-head whitespace checks, with
+pinned checkout/read-only permissions, no installs/builds, ARM, post-checkout
+credentials or artifact uploads. An appropriately authorized maintainer can
+review/activate it later. **No automatic CI run or verified-in-CI result is claimed.**
 
 ## Next separate C++14 ABI work (not performed here)
 

@@ -1,3 +1,4 @@
+# INACTIVE TEMPLATE: activation requires a separately authorized workflow-capable push.
 name: H700 engine input preflight (offline)
 on:
   push:
