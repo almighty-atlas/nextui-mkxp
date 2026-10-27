@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-27",
+  "status": "BUILD_BLOCKED",
+  "base_main": "107db135b8e8ef72f6d61c78be14416330727b0d",
+  "pr23": "60721c1a81a9f54e507650f313a479ecaa9b6d2a",
+  "pr27": "1c04c578e3a35acc40b8669986228e3a2ae056c0",
+  "source_variant_sha256": "9b95b0bf6cddfebb6f2946b39896b69fea61614157b80ccc52d698d81e48f19d",
+  "owner_report": {
+    "level": "OWNER_REPORTED_METADATA",
+    "source": "https://github.com/almighty-atlas/nextui-mkxp/issues/22#issuecomment-6450135998",
+    "sdl_soname": "libSDL2-2.0.so.0",
+    "sdl_sha256": "76de58c80f9a6d901fc5563711b9edc869a759c9446c5a6cd798f4c6774f7577",
+    "sdl_matching_export_names": 21,
+    "sdl_max_glibc_need": "2.17",
+    "sdl_needed": ["libm.so.6", "libdl.so.2", "libsamplerate.so.0", "libpthread.so.0", "libc.so.6"],
+    "libc_defines_GLIBC_2_27": true,
+    "kernel": "4.9.170",
+    "independently_repeated_here": false
+  },
+  "toolchain_probe": {
+    "archive_url": "https://github.com/LoveRetro/gcc-arm-8.3-aarch64-tg5040/releases/download/v8.3.0-20260204-190602-d37268f5/gcc-8.3.0-aarch64-nextui-linux-gnu-x86_64-host.tar.xz",
+    "archive_sha256_expected_and_observed": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
+    "compiler_host_elf_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+    "compiler_host_interpreter": "/lib64/ld-linux-x86-64.so.2",
+    "host": "Alpine Linux 3.24.3, musl, x86_64",
+    "host_interpreter_present": false,
+    "gcc_version_exit": 127,
+    "gcc_version_message": "not found (missing ELF interpreter, file itself exists)",
+    "private_linux49_sysroot_available": false,
+    "container_runtime_available": false,
+    "first_blocker": "Pinned glibc-host GCC cannot start natively on this musl Alpine host. No private Linux-4.9 sysroot/SDL build outputs are present."
+  },
+  "new_target_elf": null,
+  "private_pak_with_binary": "NOT_CREATED",
+  "source_only_scaffold": "PREPARED_PRIVATELY",
+  "native_mock_toolchain": "Alpine GCC 15.2.0 in private user-cache root, not an AArch64 compiler",
+  "host_checks": {
+    "new_preparation_and_elf_policy_tests": {"count": 15, "result": "PASS", "seconds": 0.093},
+    "pinned_proc_native_mock_tests": {"count": 5, "result": "PASS", "seconds": 0.181},
+    "each_missing_gl_proc_tested": 26,
+    "launcher_shell_syntax": "PASS",
+    "launcher_source_only_exit": 90,
+    "launcher_ssh_hint_exit": 81,
+    "positive_elf_policy_fixture": "SYNTHETIC_TEXT_ONLY",
+    "positive_pak_assembly_fixture": "MOCKED_INSPECTION_ONLY_NOT_A_TARGET_ELF",
+    "actual_new_aarch64_positive_elf_inspection": "NOT_TESTED"
+  },
+  "target_execution": "NEVER",
+  "h700_runtime": "NOT_TESTED",
+  "ci": "BLOCKED (existing workflow permission limitation; no activation attempted)",
+  "distribution": "BLOCKED"
+}
