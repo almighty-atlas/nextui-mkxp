@@ -28,7 +28,7 @@ Run on the **development host only**:
 - sh -n tools/probe-h700-runtime.sh
 - python3 -I -B -m unittest discover -s tests -v
 
-Nine host tests use a temporary probe copy and synthetic fixtures (one tests local BusyBox applets only when BusyBox is installed; otherwise it is explicitly skipped). They verify the BaseOS-harvested AArch64 loader candidate, argument rejection, missing files, fake AArch64 ELF headers, SHA-256, approved symlink resolution, refusal to read private-path symlink targets, filtered `readelf` fields with redaction, and the supported BusyBox `ash`/`awk`/`od`/`readlink`/`sha256sum` code path. Static checks reject mutating and network commands. A native BusyBox host test, if run, proves only the tested host BusyBox version. None of these tests prove the actual H700's BusyBox configuration, runtime library versions or graphics behavior.
+Eleven host tests use a temporary probe copy and synthetic fixtures (one tests local BusyBox applets only when BusyBox is installed; otherwise it is explicitly skipped). They verify the BaseOS-harvested AArch64 loader candidate, argument rejection, missing files, fake AArch64 ELF headers, SHA-256, approved symlink resolution, refusal to read private-path symlink targets, filtered `readelf` fields with redaction, and the supported BusyBox `ash`/`awk`/`od`/`readlink`/`sha256sum` code path. Static checks reject mutating and network commands. A native BusyBox host test, if run, proves only the tested host BusyBox version. None of these tests prove the actual H700's BusyBox configuration, runtime library versions or graphics behavior.
 
 ## First owner-observed output and next authorization boundary
 
@@ -38,7 +38,7 @@ The game-free physical graphics test is separate [Issue #22](https://github.com/
 
 ## Acceptance
 
-- [x] Source-only probe and nine host tests (optional BusyBox test skips explicitly when unavailable).
+- [x] Source-only probe and eleven host tests (optional BusyBox test skips explicitly when unavailable).
 - [ ] Independent source/BusyBox review and CI on current PR head.
 - [x] Owner-performed, metadata-only probe run on 2026-10-26 (user-supplied output).
 - [x] Owner-observed selected runtime hashes and /dev/ion /dev/mali0 /dev/fb0 access; dynamic ELF/GLIBC versions explicitly UNKNOWN.
@@ -65,8 +65,22 @@ Evidence class: **USER-SUPPLIED H700**, one voluntarily performed read-only inve
 
 Every readable sampled candidate was reported **ELF64 little-endian AArch64**. The `/lib` and `/usr/lib` aliases of the loader, libc and GPU libraries gave matching hashes; this proves sampled *content equality only*. `/dev/ion`, `/dev/fb0` and `/dev/mali0` reported `present r=yes w=yes` for the active SSH session, without opening those nodes. The probed `/dev/mali` and DRM nodes were UNKNOWN/absent.
 
-Both NextUI SDL2 candidate filenames returned **UNKNOWN (resolved outside fixed system roots; not read)**. They must not be called missing; the probe intentionally declined to hash them. Before modifying an allowlist, inspect only their canonical target **metadata** and determine the narrow real target root.
+The v1 inventory did not read the two SDL2 candidate files because their resolved paths were outside the original uppercase allowlist. A subsequent **owner-supplied readlink -f** check confirmed the fixed candidates resolve to `/mnt/sdcard/.system/h700/lib/libSDL2-2.0.so.0` and `/mnt/sdcard/.system/h700/lib/libSDL2-2.0.so.0.2800.5`, respectively. The original `/mnt/SDCARD/...` names are aliases of this lowercase canonical directory. The v2 probe adds only the exact lowercase NextUI library-root allowlist and adds two synthetic tests for in-root resolution and rejection of unrelated symlink escapes. **The owner has not run v2 on H700; SDL ELF/SONAME/NEEDED and hash results remain UNKNOWN until separately observed.**
 
-`readelf` was absent, so provider-version definitions (including whether `GLIBC_2.27` is actually available), DT_NEEDED, symbol exports and the actual NextUI loader/SDL runtime selection are still **UNKNOWN**. The source-built SDL from PR #27 requires up to GLIBC_2.27 indirectly; the owner-provided hashes are not themselves an ABI-compatibility pass. No EGL/ION/pixmap/display functionality was tested.
+`readelf` was absent on the H700. The owner subsequently verified the original matching-hash `libc.so.6` copy with macOS host GNU readelf and reported a **VERDEF `Name: GLIBC_2.27`** entry (Issue #1 and PR #29). That confirms the selected libc namespace definition only. The other glibc DSOs, exact symbol resolution, DT_NEEDED, SDL and loader identity and actual NextUI runtime selection are still **UNKNOWN**. The source-built SDL from PR #27 requires up to GLIBC_2.27 indirectly; the owner-provided hashes are not themselves an ABI-compatibility pass. No EGL/ION/pixmap/display functionality was tested.
 
 Next possible *separately user-initiated* non-GPU investigation: examine this already-fingerprinted `libc.so.6` on the user's own trusted development host with host `readelf`, after verifying its SHA-256, and inspect SDL symlink target path metadata without reading the target. Do not upload vendor libraries or add a GPU display test to this PR.
+
+
+## NextUI SDL canonical path metadata — owner-observed follow-up
+
+The owner executed **readlink -f only**, reporting:
+
+```text
+/mnt/SDCARD/.system/h700/lib/libSDL2-2.0.so.0 -> /mnt/sdcard/.system/h700/lib/libSDL2-2.0.so.0
+/mnt/SDCARD/.system/h700/lib/libSDL2-2.0.so.0.2800.5 -> /mnt/sdcard/.system/h700/lib/libSDL2-2.0.so.0.2800.5
+```
+
+This confirms the casing/alias mismatch behind v1's safe refusal. It **does not yet** prove either file's ELF format, equality, hash, SONAME, ABI or runtime selection. v2 permits only the canonical `/mnt/sdcard/.system/h700/lib/*` directory in addition to the existing fixed roots, retaining rejection of paths outside all roots. No device command was initiated by this repository edit.
+
+A separate owner read-only terminal check of only these two exact files' `ls -l` and `sha256sum` can provide identity without copying their bytes. No vendor-file upload, firmware write, library loading, SDL activation, GPU access or Pak run is part of this evidence. Preserve draft/rights/runtime gates.
