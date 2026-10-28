@@ -817,3 +817,56 @@ Do not mistake the build sysroot glibc 2.28 for stock
 firmware glibc or claim runtime compatibility.
 All prior prerequisite, licensing, source and release
 gates remain blocked.
+
+
+### Owner H700 Ruby 3.1.3 runtime, zlib and Psych trials: PASS (2026-10-28)
+
+**Owner-reported physical-device results, not executed by the PR author
+or CI.** Raw device logs and the exact NextUI firmware version were not
+supplied with this update; per `AGENTS.md` these results are recorded as
+`OWNER_REPORTED_H700_PASS`, **not** as `verified-on-H700`, until a
+sanitized log plus firmware version is attached. The agent session that
+wrote this section had no network route to tiny02 or SSH credentials for
+the device and did not re-run or re-hash anything.
+
+Device: RG35XX Pro, AArch64, Linux `4.9.170`, reached via SSH.
+Private staging directory (tmpfs, non-persistent):
+`/tmp/nextui-mkxp-ruby-3.1.3-8b884d90`. The directory suffix matches the
+`$ORIGIN`-RUNPATH probe interpreter above (SHA-256 prefix `8b884d90`);
+the exact interpreter hash used in the run should be confirmed from the
+device log.
+
+| Component | Private artifact SHA-256 | H700 result | Open points |
+| --- | --- | --- | --- |
+| `libruby.so.3.1.3` (+ `ruby`, `DT_RUNPATH=$ORIGIN`) | `4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793` | Interpreter start + Ruby core test PASS | Which stdlib/encoding files were staged is not recorded |
+| `zlib.so` (static private zlib 1.3.2) | `fcc514925e8274c6d06819c0988ae2ed06aa68bdee3fdd92b311649f7e708752` | Deflate, Inflate, CRC32 PASS | — |
+| `psych.so` (bundled libyaml from Ruby 3.1.3 `ext/psych/yaml`) | `49ab079312da72116993e0cadba827fb16b87a76de0adc7622bb686035bb727f` | Extension load, YAML parse, syntax-error handling PASS | Warnings: `UTF-16LE`/`UTF-16BE` encodings missing; `Psych.safe_load`/`Psych.dump` high-level API NOT_TESTED |
+
+What this establishes: the private glibc-2.28-sysroot AArch64 Ruby
+3.1.3 interpreter and two native extensions loaded and executed on the
+stock H700 userspace in that run. Because the interpreter started, the
+`libcrypt.so.1`, `libpthread.so.0`, `librt.so.1`, `libdl.so.2` providers
+were resolvable at runtime **in that environment**; whether the run
+used only stock device libraries (expected, no `LD_LIBRARY_PATH` to
+sysroot copies) must be confirmed from the log before the earlier
+"Ruby-specific providers unverified" note is closed.
+
+Interpretation of the UTF-16 warning: with `--enable-shared`, Ruby loads
+non-builtin encodings such as `UTF-16LE`/`UTF-16BE` from
+`<rubyarchdir>/enc/*.so` on demand. Their absence indicates that the
+encoding shared objects (`make encs`) were not built or staged; it is
+not evidence of a Psych defect.
+
+**Private vs public:** every artifact above is a **private** tiny02 build
+output. None is committed, attached or published. The build commands
+are recorded only as owner narrative in this file; no checked-in script
+reproduces them yet, so these results are **not a publicly reproducible
+build**. `DISTRIBUTION_BLOCKED`, #1/#2/#3, source/license gates and the
+mkxp-z engine status (`NOT_BUILT`) are unchanged.
+
+Markers: `OWNER_REPORTED_H700_RUBY_CORE_PASS`,
+`OWNER_REPORTED_H700_ZLIB_PASS`, `OWNER_REPORTED_H700_PSYCH_PASS`,
+`RUBY_ENCODINGS_INCOMPLETE`, `PSYCH_HIGH_LEVEL_API_NOT_TESTED`,
+`FIDDLE_NOT_BUILT`, `MKXP_Z_NOT_BUILT`, `DISTRIBUTION_BLOCKED`.
+Machine-readable record:
+[ruby-runtime-evidence.json](../build/h700-engine/ruby-runtime-evidence.json).

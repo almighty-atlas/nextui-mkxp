@@ -28,6 +28,19 @@ observed search paths or actual link inputs). No new ELF/map, native-runtime,
 engine or H700 compatibility result. The 20-GiB floor is enforced by the runner;
 tiny02 free space still needs its own measurement. Distribution remains BLOCKED.
 
+## Ruby 3.1.3 runtime components (owner-reported H700, 2026-10-28)
+
+| Component | H700 result | Evidence level | Limitation |
+| --- | --- | --- | --- |
+| Ruby 3.1.3 interpreter + core test | PASS | Owner-reported; log/firmware version not attached | Private build, not reproducible from this repo yet |
+| `zlib.so` (deflate/inflate/CRC32) | PASS | Owner-reported | Private build |
+| `psych.so` + bundled libyaml (load/parse/syntax error) | PASS | Owner-reported | `UTF-16LE`/`UTF-16BE` encodings missing; `safe_load`/`dump` NOT_TESTED |
+| Ruby encodings (`enc/*.so`), Fiddle/libffi | NOT_TESTED | — | Not built |
+| mkxp-z engine | NOT_TESTED | — | Not built; no engine start |
+
+Details and hashes: [H700_ENGINE_PREFLIGHT.md](H700_ENGINE_PREFLIGHT.md#owner-h700-ruby-313-runtime-zlib-and-psych-trials-pass-2026-10-28).
+Private artifacts are never distributed.
+
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.
