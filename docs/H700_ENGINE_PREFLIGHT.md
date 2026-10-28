@@ -731,3 +731,40 @@ actual Ruby 3.1.3 Makefile/configure linker and install variables
 read-only before changing any flags, then continue target extension
 source/build closure. Do not imply target runtime PASS or amend the
 existing #1/#2/#3/source/license/distribution blocks.
+
+
+### Owner Ruby portable runtime link-layout source audit (2026-10-28)
+
+Owner performed a read-only generated Makefile and Ruby source
+`configure.ac`/Makefile.in inventory after linking the first
+AArch64 Ruby interpreter. The owner recorded:
+
+- `prefix=/usr`, `libdir=${exec_prefix}/lib`,
+  `archlibdir=${libdir}/${arch}`,
+  `rubyarchdir=${rubylibdir}/${arch}`.
+- `LIBRUBYARG_SHARED = -Wl,-rpath,$(libdir) -l$(RUBY_SO_NAME)`.
+  The executable's observed `DT_RPATH=/usr/lib` is therefore
+  attributable to the configured preliminary install prefix
+  (not an ELF linker failure).
+- `LDSHARED=$(CC) -shared`, `DLDFLAGS` include target-only
+  sysroot lib64 and privately built target zlib search locations;
+  `EXTSTATIC` was empty.
+- Private `ruby`, `libruby.so.3.1` alias,
+  `libruby.so.3.1.3`, `rbconfig.rb`,
+  `aarch64-linux-fake.rb` exist. `exts.mk` not yet generated:
+  no extension build has been attempted.
+
+Marker `RUBY_PORTABLE_LAYOUT_PREFLIGHT_COMPLETE`,
+`NO_BUILDS`, `NO_CHANGES`, `NO_TARGET_EXECUTION`.
+
+The next bounded operation should **not** overwrite a successful
+interpreter or patch the existing binary in place. Test a **separate**
+private AArch64 Ruby interpreter link against already built
+`main.o`, `dmyext.o`, and the unchanged shared `libruby`,
+using `-Wl,--enable-new-dtags,-rpath,'$ORIGIN'` (properly quoted
+against host-shell expansion) and audit resulting
+`DT_RUNPATH`, interpreter, NEEDED, version requirements and
+hashes. `$ORIGIN` alone does not solve availability or compatibility
+of the absolute ELF program interpreter or glibc providers on
+the actual NextUI firmware. Existing license/source/#1/#2/#3
+and distribution gates remain blocked.
