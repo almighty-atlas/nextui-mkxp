@@ -4,7 +4,10 @@
 
 - Device: Anbernic RG35XX Pro; SoC family H700.
 - Firmware: official NextUI H700; **capture exact installed version**.
-- Userspace: potentially aarch64/64-bit; confirm on **this** device with `docs/DEVICE_PROBE.md`.
+- Userspace: AArch64 confirmed on the tested RG35XX Pro, kernel 4.9.170,
+  BaseOS 1.4.0 / NextUI-20261013-0 (39a06de); see the
+  [private Ruby batch evidence](H700_RUBY_BATCH.md). This confirms that
+  runtime baseline, not engine graphics/audio/Pak integration.
 - Key constraints: modest RAM, framebuffer/display/GLES/DRM integration, built-in buttons, filesystem permissions, SD card durability.
 - R36S reference targets ArkOS on RK3326/armhf, **not a binary-compatible implementation**.
 

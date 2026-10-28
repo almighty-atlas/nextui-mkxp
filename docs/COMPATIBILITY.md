@@ -28,14 +28,21 @@ observed search paths or actual link inputs). No new ELF/map, native-runtime,
 engine or H700 compatibility result. The 20-GiB floor is enforced by the runner;
 tiny02 free space still needs its own measurement. Distribution remains BLOCKED.
 
+Those authoring-host blockers describe the initial report. Tooling and SSH
+were subsequently restored: the native C++14 probe and local offline tests
+now pass. New Ruby batch builds ran separately with 2 CPUs / 4 GiB and a
+26-GiB stop guard; historical C++ helper limits were not reused.
+
 ## Ruby 3.1.3 runtime components (owner-reported H700, 2026-10-28)
 
 | Component | H700 result | Evidence level | Limitation |
 | --- | --- | --- | --- |
 | Ruby 3.1.3 interpreter + core test | PASS | Owner-reported; log/firmware version not attached | Private build, not reproducible from this repo yet |
 | `zlib.so` (deflate/inflate/CRC32) | PASS | Owner-reported | Private build |
-| `psych.so` + bundled libyaml (load/parse/syntax error) | PASS | Owner-reported | `UTF-16LE`/`UTF-16BE` encodings missing; `safe_load`/`dump` NOT_TESTED |
-| Ruby encodings (`enc/*.so`), Fiddle/libffi | NOT_TESTED | — | Build/staging state unknown; UTF-16 encodings unavailable in reported Psych test |
+| `psych.so` + bundled libyaml (load/parse/syntax error) | PASS | Owner-reported initial trial | Unchanged bytes reused in the later high-level trial |
+| Psych high-level `safe_load`/`dump`, object/alias rejection | PASS | verified-on-H700, [batch report](H700_RUBY_BATCH.md) | BaseOS 1.4.0 / NextUI-20261013-0 (39a06de); not every Psych API |
+| Ruby encodings/transcoders, StringIO/Date/Set/Shellwords | PASS | verified-on-H700, [runtime log](evidence/2026-10-28-ruby-runtime.txt) | Selected roundtrips and stdlib tests only; not all 61 built encoding modules exercised |
+| Fiddle + bundled libffi 3.2.1 | PASS | verified-on-H700, [batch report](H700_RUBY_BATCH.md) | Stock libc `strlen`, allocation/free; callbacks and broader FFI NOT_TESTED |
 | mkxp-z engine | NOT_TESTED | — | Not built; no engine start |
 
 Details and hashes: [H700_ENGINE_PREFLIGHT.md](H700_ENGINE_PREFLIGHT.md#owner-h700-ruby-313-runtime-zlib-and-psych-trials-pass-2026-10-28).
@@ -47,6 +54,11 @@ ELF gate requirements and grouped hardware checklist. No new build, static
 ELF validation, test package or engine start was performed. The active task's
 free-space reserve is **25 GiB**; the historical C++ helper's 20-GiB guard is
 not sufficient for new work under this scope.
+
+The preceding access report is historical: the subsequent
+[Ruby extension batch](H700_RUBY_BATCH.md) implements the private build/audit/
+trial slice and records new hardware PASS. It does **not** complete public
+reproducibility, engine dependency closure, license review or engine startup.
 
 ## Rules for updating
 

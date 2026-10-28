@@ -2,6 +2,11 @@
 
 2026-10-28 · Refs #6 (pre-build analysis, not acceptance/closure).
 
+**Superseded access snapshot:** the access/tool blockers below describe the
+earlier session. SSH and local tooling have since been restored; the
+[private extension pipeline and grouped H700 trial](H700_RUBY_BATCH.md)
+now pass. Engine-source/dependency/license closure remains blocked.
+
 **Outcome: execution BLOCKED; source analysis completed to the boundaries below.**
 No new build, test deployment, device execution or engine start occurred.
 This is a handoff specification, **not an implemented/reproducible pipeline**.

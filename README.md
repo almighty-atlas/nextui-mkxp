@@ -4,6 +4,11 @@ Native **RPG Maker XP** game runtime for **NextUI on Anbernic H700 handhelds**, 
 
 > **Status: planning / feasibility. No installable Pak or tested H700 binary exists in this repository yet.**
 
+Private Ruby 3.1.3 runtime/extension builds now have a
+[verified H700 grouped test](docs/H700_RUBY_BATCH.md), including encodings,
+Psych high-level API and Fiddle. This is not an mkxp-z engine start or a
+publicly reproducible/releasable binary; no private artifacts are distributed.
+
 ## Goals
 
 1. A reproducible, native **aarch64/H700** engine build compatible with the real NextUI environment.

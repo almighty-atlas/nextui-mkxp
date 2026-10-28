@@ -16,6 +16,10 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 
 ## M1 — Native engine
 
+Private Ruby prerequisite progress: [offline extension batch and grouped H700
+PASS](H700_RUBY_BATCH.md), 2026-10-28. The full engine lock/build/start and
+public reproducibility gates remain open.
+
 - Build and package pinned mkxp-z sources and dependencies for real H700 ABI.
 - Inspect interpreter/ELF requirements, `NEEDED` libraries, glibc and OpenGL/GLES requirements.
 - Minimal game-free engine smoke test, with defined outcomes and logs.

@@ -873,3 +873,14 @@ Markers: `OWNER_REPORTED_H700_RUBY_CORE_PASS`,
 `DISTRIBUTION_BLOCKED`.
 Machine-readable record:
 [ruby-runtime-evidence.json](../build/h700-engine/ruby-runtime-evidence.json).
+
+### Agent-executed private extension batch and high-level H700 trial (2026-10-28)
+
+After owner-provided SSH access and authoring-image tooling were restored,
+the [Ruby batch report](H700_RUBY_BATCH.md) records actual source/hash
+verification, separate offline builds and a new grouped physical-device
+trial. Encodings, selected stdlib, Psych `safe_load`/`dump` and Fiddle PASS
+on BaseOS 1.4.0 / NextUI-20261013-0 (39a06de), with raw sanitized output.
+This supersedes the earlier Fiddle/encoding/high-level-Psych unknowns;
+the original successful core/zlib/low-level-Psych trial was not repeated.
+Private/public and engine/distribution gates remain distinct and blocked.

@@ -45,5 +45,7 @@ Use PASS / FAIL / BLOCKED / NOT_TESTED. Never claim PASS without corresponding a
 
 For the 2026-10-28 private Ruby extension follow-up, see the
 [grouped hardware checklist and ELF validator contract](H700_RUNTIME_PIPELINE.md).
-These are pending tests, not evidence of execution. Successful unchanged
-Ruby-core/zlib/low-level-Psych trials should not be repeated unnecessarily.
+The historical checklist is not itself evidence of execution. The subsequent
+[private Ruby batch report](H700_RUBY_BATCH.md) links actual static checks and
+the grouped H700 encoding/Psych/Fiddle PASS with exact firmware and raw log.
+Successful unchanged trials should not be repeated unnecessarily.

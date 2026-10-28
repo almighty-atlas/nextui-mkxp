@@ -3,6 +3,7 @@
   "source": "Owner-supplied tiny02 build and RG35XX Pro trial results, 2026-10-28; not independently repeated or re-hashed in the documenting session",
   "evidence_level": "OWNER_REPORTED_H700",
   "raw_device_log_committed": false,
+  "subsequent_agent_trial": "runtime-batch-evidence.json",
   "nextui_firmware_version": null,
   "device": {"model": "RG35XX Pro", "arch": "aarch64", "kernel": "4.9.170",
              "staging_dir": "/tmp/nextui-mkxp-ruby-3.1.3-8b884d90", "staging_fs": null},
