@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "issue": 38,
+  "status": "STAGED; AWAITING_MANUAL_DEVICE_TEST",
+  "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+  "engine_stage": {
+    "path": "/tmp/nextui-mkxp-kb-boot-v1",
+    "archive_sha256": "83d2073c2fab1defd699892afff4c58929607e03e78df54e202c4dac5413341c",
+    "archive_bytes": 14358828,
+    "private_receipt_sha256": "83eb0968144fd1c4d14d7dbcf43249482441a1d4a72ffc170895142a3c1c50b7",
+    "device_manifest": "PASS"
+  },
+  "game_inputs_stage": {
+    "path": "/mnt/SDCARD/.userdata/h700/nextui-mkxp-test",
+    "filesystem": "vfat",
+    "files": 1640,
+    "manifest_sha256": "db19db9f1cb01e7fdc880a33dd83051366aa6f5ff17db24ea7fe389669538011",
+    "device_manifest": "PASS",
+    "contents": "games/KN_E (owner-provided), rtp/Standard (Graphics+Audio extracted from owner-designated RTP installer), soundfonts/TimGM6mb.sf2 with copyright",
+    "fat_invalid_names": 0,
+    "case_insensitive_collisions": 0
+  },
+  "soundfont": {
+    "name": "TimGM6mb",
+    "package": "timgm6mb-soundfont 1.3-5 (Debian snapshot 20261020T213255Z, apt-verified)",
+    "deb_sha256": "034abdfb296d9353433513dad5dbdcab46425ee6008fc02fe7039b46e75edc54",
+    "sf2_sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+    "sf2_bytes": 5969788,
+    "license": "GPL-2",
+    "reason": "small (6 MB) to limit RAM on a 1 GB device; quality is secondary for a boot test"
+  },
+  "controls": {
+    "source": "tests/hardware/knight-blade-boot/keybindings.json",
+    "generated_sha256": "cc11f43b8f75d7de64c79ffa56a1a02528ef0483b0d811f1fc0bc77618425b6b",
+    "summary": "physical A (SDL B) = C confirm, physical B (SDL A) = B cancel, Start = B menu, X/Y = A/X, L/R, stick clicks Y/Z, D-pad and left stick move",
+    "status": "NOT_TESTED"
+  },
+  "fixture_sha256": {
+    "mkxp.json": "203fa486a22caeba10e2b366e1954cdf703bb517b55081d0fa7566e87cf7a9f3",
+    "run.sh": "9630d40d8f6f16c7f879b7f56cdee8b058d29aaf7d2ac663b485b80278022f74",
+    "launch.sh": "79625f26dfafe82d67f23d166b4b25864c9d2360ad6a5e8d9f9f866110c97a56",
+    "keybindings.json": "33ea70803b001162d9d42a1cb5979adb9c85d4b88c2d9bfeca06794a8c7cd264"
+  },
+  "tool_entry": "Tools/h700/Knight Blade Boot Test.pak/launch.sh",
+  "watchdog_seconds": 1800,
+  "cleanup_before_staging": "Removed own superseded /tmp stages smoke v1, smoke v2 and loader after archiving their logs privately (archive sha256 138291d7b80e0c7342d52b9391701273da80eeb247d1941de58c7c6e3d05858a); v3 smoke stage kept",
+  "title_screen": "NOT_TESTED",
+  "music": "NOT_TESTED",
+  "new_game": "NOT_TESTED",
+  "first_map": "NOT_TESTED",
+  "exit": "NOT_TESTED",
+  "engine_main_executed_by_agent": false
+}

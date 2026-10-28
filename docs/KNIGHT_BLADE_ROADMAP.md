@@ -69,9 +69,9 @@ No game assets or RTP may be committed or distributed here.
   official game and RTP downloads, hash-recorded and kept private. 583
   references: 520 game, 62 RTP, 1 pre-existing gap; no Win32API. RTP and a
   MIDI soundfont (28 MIDI tracks) are required.
-- **Next:** first game boot (5%): private device stage with RTP, soundfont,
-  `pathCache` on and a deliberate save location; owner checks title screen,
-  new game and first map. Soundfont choice needs a documented license.
+- **Next:** [first game boot](KNIGHT_BLADE_BOOT.md) (5%). Staged on the device
+  with RTP, TimGM6mb soundfont (GPL-2), `pathCache` on, saves in the private
+  game copy and A = confirm / B = cancel / Start = menu. Awaiting owner run.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 
