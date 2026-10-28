@@ -626,3 +626,33 @@ symbols and versioned imports to AArch64 exports across this
 resolved dependency graph; inspect unresolved weak imports
 separately, then distinguish sysroot-only closure from NextUI
 firmware provider closure. No execution or distribution implied.
+
+
+### Owner AArch64 Ruby candidate symbol-closure check PASS (2026-10-28)
+
+Owner performed offline, read-only `readelf -W --dyn-syms` inspection
+of private `libruby.so.3.1.3` (SHA-256
+`4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793`)
+and seven AArch64 sysroot glibc-2.28 dependency providers.
+The symbol-candidate script reported 486 **strong** undefined dynamic
+imports across the eight ELF objects; 486 had at least one
+name/version-compatible export across the entire candidate provider
+set; unresolved strong candidate count was zero.
+All 486 strong imports were versioned. The diagnostic additionally
+counted 89 `GLIBC_PRIVATE` imports **across all eight libraries**
+and 35 undefined weak symbols. It reported no versioned
+`GLIBC_*` strong import above 2.28.
+Marker: `RUBY_AARCH64_SYMBOL_CANDIDATES_PASS`,
+`LOADER_RUNTIME_RESOLUTION_NOT_VERIFIED`,
+`NEXTUI_FIRMWARE_PROVIDERS_NOT_VERIFIED`,
+`NO_TARGET_EXECUTION`, `NO_CHANGES`.
+
+**Proof boundary:** candidate matching across all exports is not
+symbol-provider-specific dynamic loader resolution, and the
+`GLIBC_PRIVATE` count must be split by requester (glibc internal
+imports vs actual libruby imports). Next review should parse
+`.gnu.version_r` per ELF and verify named providers and required
+version definitions, and inspect the owner-provided glibc-2.28
+runtime closure without executing target code. No claim of
+on-device compatibility or redistributability; all #1/#2/#3 and
+licensing/distribution gates remain blocked.
