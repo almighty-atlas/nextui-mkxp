@@ -73,6 +73,27 @@ class SourceLock(unittest.TestCase):
             self.assertIn('ARCHIVE_HASH_MISSING:z', issues)
             self.assertIn('NON_HTTPS_URL:z', issues)
 
+    def test_wrapdb_overlay_is_locked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            text = self.file_wrap() + ('patch_url = https://example.invalid/o\n'
+                                       'patch_filename = o.zip\npatch_hash = ' + 'c' * 64 + '\n')
+            r = M.lock(self.tree(tmp, {'z': text}), self.profile(['z']))
+            self.assertEqual(r['issues'], [])
+            self.assertEqual(r['wraps']['z']['patch_archive'],
+                             {'urls': ['https://example.invalid/o'], 'sha256': 'c' * 64,
+                              'filename': 'o.zip'})
+        with tempfile.TemporaryDirectory() as tmp:
+            text = self.file_wrap() + 'patch_url = http://example.invalid/o.zip\n'
+            issues = M.lock(self.tree(tmp, {'z': text}), self.profile(['z']))['issues']
+            self.assertIn('ARCHIVE_HASH_MISSING:z:overlay', issues)
+            self.assertIn('NON_HTTPS_URL:z:overlay', issues)
+
+    def test_unknown_wrap_key_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            text = self.file_wrap() + 'lead_directory_missing = true\n'
+            self.assertIn('UNKNOWN_WRAP_KEY:z:lead_directory_missing',
+                          M.lock(self.tree(tmp, {'z': text}), self.profile(['z']))['issues'])
+
     def test_missing_patch_file(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = self.tree(tmp, {'z': self.file_wrap()})

@@ -199,6 +199,13 @@
       "directory": "openal-soft-1.24.3",
       "filename": "openal-soft-1.24.3.tar.gz",
       "kind": "wrap-file",
+      "patch_archive": {
+        "filename": "openal-soft_1.24.3-2_patch.zip",
+        "sha256": "6642f3f3321f3d00633547e3abc06657ca4e22124b6593da7bddd4d9593ccc2b",
+        "urls": [
+          "https://wrapdb.mesonbuild.com/v2/openal-soft_1.24.3-2/get_patch"
+        ]
+      },
       "sha256": "7e1fecdeb45e7f78722b776c5cf30bd33934b961d7fd2a11e0494e064cc631ce",
       "urls": [
         "https://github.com/kcat/openal-soft/archive/refs/tags/1.24.3.tar.gz",

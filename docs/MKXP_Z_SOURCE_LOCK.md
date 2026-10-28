@@ -9,9 +9,10 @@
 | PASS | verified-on-host | mkxp-z `37a04d14413454551a7b6aadbb4e93e67168accb` fetched by exact commit; `git rev-parse HEAD` matches. Upstream `HEAD` equalled this commit on 2026-10-28 |
 | PASS | verified-on-host | All 56 Meson wraps classified: 22 selected, 34 explicitly excluded ([profile](../build/h700-engine/mkxp-z-profile.json)) |
 | PASS | verified-on-host | [Lock](../build/h700-engine/mkxp-z-lock.json) `LOCK_COMPLETE`: 21 HTTPS archives with wrap SHA-256, 1 git wrap at an immutable commit plus 17 recursive submodule commits, every patch file and patch-directory digest |
-| PASS | verified-on-host | All 21 archives downloaded into a private Meson packagecache (outside Git), verified while streaming and re-verified afterwards. 409 MiB used, 30 GiB still free (26-GiB stop guard respected) |
+| PASS | verified-on-host | Offline cross `meson setup` for aarch64, see [below](#offline-configure-meson-setup-pass-verified-on-host) |
+| PASS | verified-on-host | All 21 archives (plus 1 WrapDB overlay) downloaded into a private Meson packagecache (outside Git), verified while streaming and re-verified afterwards. 409 MiB used, 30 GiB still free (26-GiB stop guard respected) |
 | NOT_PERFORMED | — | License/grant review of the selected closure (#3); embedded-asset review |
-| NOT_ATTEMPTED | — | Meson configure, compile, link, device execution |
+| NOT_ATTEMPTED | — | Compile, link, device execution |
 
 Private `git archive` of the commit: SHA-256
 `93fbab8c9683ec79e01909de91fc33d23938c2aa7372213ffcd80301cca55ff2`
@@ -85,10 +86,41 @@ stay in the private cache and are not tracked here.
 
 Local check: `python3 -m unittest discover -s tests` (verified-on-host, not CI).
 
-## Next step
+## Offline configure: `meson setup` PASS (verified-on-host)
 
-Write a Meson cross file for `aarch64-nextui-linux-gnu` (pinned GCC 8.3 and
-sysroot, private Mali SDL prefix via a dedicated pkg-config directory, native
-Ruby 3.1.3 as `baseruby`). Then run `meson setup --wrap-mode=nodownload`
-against this packagecache in the offline container. Configure failures are
-the next evidence; nothing has been compiled yet.
+`scripts/mkxp_z_configure.py` re-derives the lock and requires it to equal
+the committed one. It re-hashes every cached archive, the private SDL
+library (`25dba080…`, as in its build receipt) and the pinned native Ruby,
+compiler archive and sysroot tree. It then stages everything in a fresh
+private job and runs only `meson setup --wrap-mode=nodownload` in the tools
+image: no network, read-only rootfs, unprivileged UID, 2 CPUs / 4 GiB,
+`build_alias=x86_64-pc-linux-gnu` for every nested autoconf, a 26-GiB
+free-space stop guard and a 3-GiB job budget. Afterwards it scans every
+configure log for target-execution attempts.
+
+| Attempt | Result | Cause / fix |
+| --- | --- | --- |
+| 1 | BLOCKED at OpenAL Soft | **Lock gap:** the OpenAL Soft wrap also downloads a WrapDB overlay (`patch_url`/`patch_hash`) that the lock did not record. The lock now records overlays with HTTPS and hash requirements and rejects any unknown wrap key. The overlay (`6642f3f3…`) was fetched and verified |
+| 2 | BLOCKED at SDL_image | Meson does not apply `diff_files` to a pre-provided git checkout, so mkxp-z's SDL_image patches were missing. The driver now applies the locked patches in wrap order with `patch -p1 --forward`, after a hash check |
+| 3 | **MESON_SETUP_PASS** in 63 s | All 22 subprojects configured, including the patched Ruby; exit 0; **no target-execution attempts** in any configure log |
+
+The configuration mkxp-z reports: version 2.4.2, ALSA on; ANGLE, OpenSSL,
+JACK, PulseAudio, PipeWire, OSS and the GPLv3 extra shaders off;
+`License: GPL-2.0-or-later`. Non-blocking warnings: pixman OpenMP header
+missing, FluidSynth `gnu90` c_std ignored, SDL_image `extract_all_objects`.
+
+Private receipt `configure-result.json` SHA-256
+`51e7cd531cab6f560067ee819e9f5ca1fc7f6cf372a47a516c55e7852ec44893`; it binds
+lock `4d9d9a97…`, profile `a05d93ad…` and driver `1a1c00c1…`. The job is
+about 1.0 GB. Logs of the two failed attempts were kept privately; their
+job trees were deleted to stay above the disk guard.
+
+## Next step and blocker
+
+Compile (`meson compile`) in the same container profile, then the static
+ABI audit of the engine ELF. **Disk:** after configuring, tiny02 has
+about 28.1 GiB free, i.e. only ~2.1 GiB above the 26-GiB stop guard. The
+full dependency build (static Ruby with extensions, libjxl/Highway,
+OpenAL Soft, FluidSynth and the engine) may need more than that. Either
+the owner frees space or the reserve is approved for adjustment; the
+guard is not changed silently.

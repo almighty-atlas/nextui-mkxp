@@ -24,6 +24,14 @@ HEX40 = re.compile(r'[0-9a-f]{40}')
 HEX64 = re.compile(r'[0-9a-f]{64}')
 ENV = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'LC_ALL': 'C', 'GIT_TERMINAL_PROMPT': '0'}
 MAX_ARCHIVE = 256 * 1024**2
+# Every key must be understood; an unknown key could fetch or alter sources.
+KNOWN_KEYS = {
+    'wrap-file': {'directory', 'source_url', 'source_fallback_url', 'source_filename',
+                  'source_hash', 'patch_url', 'patch_fallback_url', 'patch_filename',
+                  'patch_hash', 'patch_directory', 'diff_files', 'wrapdb_version', 'method'},
+    'wrap-git': {'directory', 'url', 'revision', 'depth', 'clone-recursive', 'method',
+                 'patch_directory', 'diff_files'},
+}
 
 
 def require(ok, message):
@@ -79,16 +87,12 @@ def lock(source, profile):
         kind, fields = parse_wrap(path)
         entry = {'kind': kind, 'wrap_sha256': sha(path),
                  'directory': fields.get('directory', name)}
+        issues += ['UNKNOWN_WRAP_KEY:' + name + ':' + k
+                   for k in sorted(set(fields) - KNOWN_KEYS.get(kind, set()))]
         if kind == 'wrap-file':
-            urls = [fields.get('source_url', '')]
-            if 'source_fallback_url' in fields:
-                urls.append(fields['source_fallback_url'])
-            entry.update(urls=urls, sha256=fields.get('source_hash'),
-                         filename=fields.get('source_filename') or urls[0].rsplit('/', 1)[-1])
-            if not HEX64.fullmatch(entry['sha256'] or ''):
-                issues.append('ARCHIVE_HASH_MISSING:' + name)
-            if not all(u.startswith('https://') for u in urls):
-                issues.append('NON_HTTPS_URL:' + name)
+            entry.update(archive(fields, 'source', name, issues))
+            if 'patch_url' in fields or 'patch_filename' in fields or 'patch_hash' in fields:
+                entry['patch_archive'] = archive(fields, 'patch', name, issues)
         elif kind == 'wrap-git':
             pin = profile.get('git_pins', {}).get(name, {})
             entry.update(url=fields.get('url', ''), revision=fields.get('revision', ''),
@@ -120,6 +124,23 @@ def lock(source, profile):
             'status': 'LOCK_COMPLETE' if not issues else 'LOCK_INCOMPLETE',
             'issues': issues, 'wraps': entries, 'excluded_wraps': sorted(excluded),
             'license_review': 'NOT_PERFORMED', 'distribution': 'BLOCKED'}
+
+
+def archive(fields, prefix, name, issues):
+    """Source archive or WrapDB overlay ('patch_*' keys); both need HTTPS and a hash."""
+    urls = [fields.get(prefix + '_url', '')]
+    if prefix + '_fallback_url' in fields:
+        urls.append(fields[prefix + '_fallback_url'])
+    record = {'urls': urls, 'sha256': fields.get(prefix + '_hash'),
+              'filename': fields.get(prefix + '_filename') or urls[0].rsplit('/', 1)[-1]}
+    label = name if prefix == 'source' else name + ':overlay'
+    if not HEX64.fullmatch(record['sha256'] or ''):
+        issues.append('ARCHIVE_HASH_MISSING:' + label)
+    if not all(u.startswith('https://') for u in urls):
+        issues.append('NON_HTTPS_URL:' + label)
+    if not record['filename'] or '/' in record['filename']:
+        issues.append('ARCHIVE_FILENAME:' + label)
+    return record
 
 
 def download(urls, expected, destination):
@@ -178,6 +199,10 @@ def fetch(result, cache):
     for name, entry in sorted(result['wraps'].items()):
         if entry['kind'] == 'wrap-file':
             outcome[name] = download(entry['urls'], entry['sha256'], cache / entry['filename'])
+            if 'patch_archive' in entry:
+                overlay = entry['patch_archive']
+                outcome[name + ':overlay'] = download(overlay['urls'], overlay['sha256'],
+                                                      cache / overlay['filename'])
         elif entry['kind'] == 'wrap-git':
             submodules = clone(entry, cache / 'git' / entry['directory'])
             if entry['submodules'] is not None:
