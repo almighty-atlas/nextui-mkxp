@@ -4,7 +4,7 @@ Native **RPG Maker XP** game runtime for **NextUI on Anbernic H700 handhelds**, 
 
 > **Status: planning / feasibility. No installable Pak or tested H700 binary exists in this repository yet.**
 
-**Knight Blade progress: 65%.** First AArch64 engine build linked; device
+**Knight Blade progress: 70%.** Installed engine static ABI candidates pass; device
 engine test pending. See the maintained [playability roadmap](docs/KNIGHT_BLADE_ROADMAP.md).
 
 Private Ruby 3.1.3 runtime/extension builds now have a

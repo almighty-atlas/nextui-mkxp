@@ -158,5 +158,7 @@ Remaining: initial readelf inspection found build RPATH
 `/job/sdl-prefix/lib:$ORIGIN`. Upstream's private DESTDIR install step removes
 the build path and leaves `$ORIGIN` as configured by `install_rpath`.
 This is expected Meson build/install behavior, not a required source patch.
-The full provider ABI audit is still pending. No engine device run is claimed.
+The subsequent [static provider ABI audit](H700_ENGINE_ABI.md) passes;
+the device loader check is blocked by SSH reachability. No engine device
+run is claimed.
 Follow [Knight Blade progress](KNIGHT_BLADE_ROADMAP.md) for the next milestone.

@@ -1,6 +1,6 @@
 # Milestones and issue breakdown
 
-## Active first-game target: Knight Blade — 65%
+## Active first-game target: Knight Blade — 70%
 
 The [maintained Knight Blade checklist](KNIGHT_BLADE_ROADMAP.md) defines
 weighted progress and the 100% acceptance gate. Continue its first unfinished
@@ -27,7 +27,8 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 
 Private Ruby prerequisite progress: [offline extension batch and grouped H700
 PASS](H700_RUBY_BATCH.md), 2026-10-28. The first private engine compile/link
-also [passes on host](MKXP_Z_SOURCE_LOCK.md). Full ABI validation, engine start
+also [passes on host](MKXP_Z_SOURCE_LOCK.md), as does the
+[static provider ABI audit](H700_ENGINE_ABI.md). Device loader, engine start
 and public reproducibility gates remain open.
 
 - Build and package pinned mkxp-z sources and dependencies for real H700 ABI.

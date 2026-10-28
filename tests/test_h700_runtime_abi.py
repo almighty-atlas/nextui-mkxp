@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 """Synthetic ELF metadata/negative fixtures, not ARM binaries or hardware tests."""
 import importlib.util
+import copy
 from pathlib import Path
 import tempfile
 import unittest
@@ -99,6 +100,102 @@ class RuntimeABI(unittest.TestCase):
     def test_copy_requires_separate_audit(self):
         f = M.parse(TEXT + '\n 00000 00000 R_AARCH64_COPY 00000 data + 0')
         self.assertIn('COPY_RELOCATION_REQUIRES_SIZE_AUDIT', M.new_policy(f, 'program'))
+
+    def test_origin_rpath_requires_explicit_program_policy(self):
+        f = M.parse(TEXT.replace('(RUNPATH)', '(RPATH)'))
+        self.assertIn('UNREVIEWED_RPATH_RUNPATH', M.new_policy(f, 'program'))
+        self.assertNotIn('UNREVIEWED_RPATH_RUNPATH',
+                         M.new_policy(f, 'program', {'rpath': 'origin-only'}))
+        for value in ('', '/job/lib', '$ORIGIN:/job/lib', '$ORIGIN/../lib'):
+            bad = M.parse(TEXT.replace('(RUNPATH)', '(RPATH)').replace('[$ORIGIN]', '[' + value + ']'))
+            self.assertIn('UNREVIEWED_RPATH_RUNPATH',
+                          M.new_policy(bad, 'program', {'rpath': 'origin-only'}))
+        with self.assertRaisesRegex(ValueError, 'INVALID_RPATH_POLICY'):
+            M.new_policy(f, 'shared', {'rpath': 'origin-only'})
+        with self.assertRaisesRegex(ValueError, 'UNKNOWN_OBJECT_POLICY'):
+            M.new_policy(f, 'program', {'allow_everything': True})
+
+    def copy_fixture(self):
+        app = M.parse(TEXT + '\n 1000 00000 R_AARCH64_COPY 1000 stdout@GLIBC_2.17 + 0\n'
+                      '  6: 0000000000001000 8 OBJECT GLOBAL DEFAULT 28 stdout@GLIBC_2.17 (2)\n')
+        libc = M.parse('  1: 0000000000002000 8 OBJECT GLOBAL DEFAULT 28 stdout@@GLIBC_2.17\n')
+        libc['sha256'] = 'a' * 64
+        return {'app': app, 'libc': libc}, {'libc.so.6': 'libc'}, ['app', 'libc'], {
+            'stdout@GLIBC_2.17': {'provider': 'libc.so.6', 'size': 8}}
+
+    def test_copy_object_size_version_address(self):
+        objects, providers, scope, approval = self.copy_fixture()
+        report = M.copy_audit('app', objects, providers, scope, approval)
+        self.assertEqual(report[0]['bytes'], 8)
+        self.assertEqual(report[0]['provider_sha256'], 'a' * 64)
+        self.assertTrue(objects['app']['copy_relocations'])
+
+    def test_copy_wrong_sizes_fail(self):
+        for owner, size in (('app', 4), ('libc', 16)):
+            objects, providers, scope, approval = self.copy_fixture()
+            objects[owner]['exports'][-1]['size'] = size
+            with self.assertRaisesRegex(ValueError, 'COPY_SIZE_MISMATCH'):
+                M.copy_audit('app', objects, providers, scope, approval)
+
+    def test_copy_missing_or_extra_approval_fails(self):
+        objects, providers, scope, approval = self.copy_fixture()
+        for bad in ({}, {**approval, 'extra': {'provider': 'libc.so.6', 'size': 8}}):
+            with self.assertRaisesRegex(ValueError, 'COPY_ALLOWLIST_MISMATCH'):
+                M.copy_audit('app', objects, providers, scope, bad)
+
+    def test_copy_wrong_type_weak_address_or_version_fails(self):
+        for key, value, code in (('kind', 'FUNC', 'COPY_NOT_STRONG_OBJECT'),
+                                 ('weak', True, 'COPY_NOT_STRONG_OBJECT'),
+                                 ('value', 0, 'COPY_ADDRESS_MISMATCH'),
+                                 ('version', 'OTHER', 'COPY_DEFINITION_AMBIGUOUS_OR_MISSING')):
+            objects, providers, scope, approval = self.copy_fixture()
+            objects['app']['exports'][-1][key] = value
+            with self.assertRaisesRegex(ValueError, code):
+                M.copy_audit('app', objects, providers, scope, approval)
+
+    def test_copy_unreachable_or_ambiguous_provider_fails(self):
+        objects, providers, scope, approval = self.copy_fixture()
+        with self.assertRaisesRegex(ValueError, 'COPY_PROVIDER_NOT_REACHABLE'):
+            M.copy_audit('app', objects, providers, ['app'], approval)
+        objects['other'] = copy.deepcopy(objects['libc'])
+        with self.assertRaisesRegex(ValueError, 'COPY_DEFINITION_AMBIGUOUS_OR_MISSING'):
+            M.copy_audit('app', objects, providers, scope + ['other'], approval)
+
+    def test_copy_needs_named_version_provider(self):
+        objects, providers, scope, approval = self.copy_fixture()
+        objects['app']['needs'] = {}
+        with self.assertRaisesRegex(ValueError, 'COPY_VERSION_PROVIDER'):
+            M.copy_audit('app', objects, providers, scope, approval)
+
+    def test_unknown_copy_relocation_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, 'UNPARSED_COPY_RELOCATION'):
+            M.parse(' 1000 00000 R_ARM_COPY 1000 stdout + 0')
+
+    def test_audit_integration_only_clears_copy_gate_after_size_check(self):
+        objects, _, _, approval = self.copy_fixture()
+        objects['app']['rpath'], objects['app']['runpath'] = ['$ORIGIN'], []
+        objects['libc']['definitions'] = ['GLIBC_2.17']
+        objects['libc']['exports'].append(symbol())
+        objects['libc']['soname'] = 'libc.so.6'
+        objects['loader'] = M.parse(' 0xe (SONAME) Library soname: [ld-linux-aarch64.so.1]')
+        for name, facts in objects.items():
+            facts['sha256'] = 'a' * 64
+        with tempfile.TemporaryDirectory() as tmp:
+            tool = Path(tmp) / 'readelf-fixture'
+            tool.write_bytes(b'\x7fELF\x02\x01\x01' + bytes(11) + struct.pack('<H', 62) + bytes(44))
+            plan = {'schema': 1, 'readelf': {'path': str(tool), 'sha256': 'b' * 64}, 'objects': [
+                {'id': name, 'role': 'program' if name == 'app' else 'stock',
+                 'file': {'path': '/' + name}, 'provides': [] if name == 'app' else [facts['soname']]}
+                for name, facts in objects.items()]}
+            plan['objects'][0]['policy'] = {'rpath': 'origin-only', 'copy_relocations': approval}
+            with patch.object(M, 'checked', side_effect=lambda r: Path(r['path'])), \
+                    patch.object(M, 'inspect', side_effect=lambda p, _: objects[p.name]):
+                result = M.audit(plan)
+                self.assertEqual(result['status'], 'STATIC_ABI_CANDIDATES_PASS')
+                self.assertEqual(result['objects']['app']['issues'], [])
+                objects['libc']['exports'][0]['size'] = 16
+                with self.assertRaisesRegex(ValueError, 'COPY_SIZE_MISMATCH'):
+                    M.audit(plan)
 
     def test_version_floor_is_numeric(self):
         for version in ('GLIBC_2.29', 'GLIBC_2.100', 'GLIBC_3.0'):

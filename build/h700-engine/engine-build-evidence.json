@@ -27,6 +27,7 @@
     "device_transfer": false
   },
   "abi": "NOT_YET_VALIDATED; upstream install staging removes build RPATH",
+  "subsequent_abi_evidence": "engine-abi-evidence.json",
   "preliminary_provider_audit": {
     "status": "INCOMPLETE",
     "device_sdl_sha256": "76de58c80f9a6d901fc5563711b9edc869a759c9446c5a6cd798f4c6774f7577",
