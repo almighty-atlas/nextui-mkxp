@@ -454,3 +454,32 @@ whether an offline source build is safe. Configure success does not
 establish that an AArch64 mini-ruby will never be invoked or that
 Fiddle/Psych/zlib target modules are linked. Existing
 #1/#2/#3, license/source/distribution gates remain blocked.
+
+
+### Owner Ruby cross-build rule inventory (2026-10-28)
+
+Owner-reported **read-only static inspection** of the generated Ruby 3.1.3
+AArch64 V2 `Makefile`, `config.log`, `common.mk` and `ext/extmk.rb`:
+
+- `CROSS_COMPILING = yes`.
+- `BASERUBY = /work/prefix/bin/ruby --disable=gems` uses the owner-built
+  x86_64 Ruby 3.1.3 host bootstrap.
+- `MINIRUBY` also starts with the **native** `/work/prefix/bin/ruby`,
+  adds `-I/target`, and requires `-r$(arch)-fake`.
+  `arch = aarch64-linux`. The final generated fake-platform module and
+  rules must still be checked before any `make`.
+- `RUNRUBY = $(RUNRUBY_COMMAND) $(RUN_OPTS)`,
+  `LDSHARED = $(CC) -shared`; `CC`, `LDFLAGS`, `CPPFLAGS`
+  retain the explicit cross sysroot and reviewed target zlib paths.
+- The Ruby Makefiles also contain bootstrap test/spec/testunit
+  targets invoking `$(RUNRUBY)` and `$(PROGRAM)`; no conclusion
+  that every `make` goal is safe follows merely from
+  `CROSS_COMPILING=yes`.
+
+Marker: `RUBY_CROSS_BUILD_RULES_INVENTORY_COMPLETE`,
+`NO_COMPILATION`, `NO_INSTALLATION`, `NO_TARGET_EXECUTION`.
+Next: inspect exact generated fake-platform file, default/explicit
+build targets and recipes **without running make**, then scope
+one limited private target compile; avoid build tests, native/target
+architecture mixing and distribution. All pre-existing
+license/source/#1/#2/#3 gates remain blocked.
