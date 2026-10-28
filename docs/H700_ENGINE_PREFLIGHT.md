@@ -260,3 +260,42 @@ generators vs AArch64 target runtime. Keep the `inputs.json` engine
 and distribution gates `BLOCKED`, with #1/#2/#3 and licensing
 requirements unchanged. This tools-image result is not permission
 for engine build, download of game assets or device execution.
+
+
+### Owner-built native Ruby 3.1.3 bootstrap (2026-10-28)
+
+**Owner-reported isolated x86_64 host build, not a target build nor CI:**
+
+- Official Ruby 3.1.3 source archive from
+  `https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.3.tar.xz`,
+  size 15,300,224 bytes, SHA-256
+  `4ee161939826bcdfdafa757cf8e293a7f14e357f62be7144f040335cc8c7371a`.
+  Distinct from the GitHub-generated `.tar.gz` currently tracked as the
+  Ruby source candidate in `inputs.json`; neither URL nor digest is
+  silently substituted in that manifest.
+- Source archive inspected and extracted privately: 12,477 members.
+- New private `nextui-mkxp-tools:trixie-20261020` image ID
+  `sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b`
+  used with network disabled, read-only root filesystem, and
+  2-CPU / 4-GiB resource limits.
+- Isolated `configure`, `make -j2`, and `make install` all
+  reported success, with flags
+  `--prefix=/work/prefix --disable-install-doc --disable-yjit --disable-rubygems`.
+  Native output resides under owner's private
+  `~/nextui-mkxp-tools-20261020/ruby-native-3.1.3/prefix/`.
+- Host Ruby executable reports
+  `ruby 3.1.3p185 (2022-11-24 revision 1a6b16756e) [x86_64-linux]`
+  and exact version/architecture assertions passed:
+  **`RUBY_NATIVE_HOST_PASS`**.
+- Native Ruby binary SHA-256:
+  `4363b3068689a2f238f9f93a00eda3be1c072bf69716d91bb746a8c5a35687c9`.
+- End-of-run storage reported approximately 32 GiB free on the
+  900-GiB tiny02 filesystem.
+
+Markers: `NATIVE_RUBY_3_1_3_COMPLETE`,
+`AARCH64_RUBY_NOT_BUILT`, `NO_TARGET_EXECUTION`.
+The successful native x86_64 interpreter can be considered a candidate
+**build-only** Ruby bootstrap, not the H700 runtime. AArch64 Ruby remains
+unbuilt, its target glibc/libffi/libyaml/zlib/iconv closure unverified.
+No engine is linked, deployed or distributed; existing #1/#2/#3,
+license/source obligations and `DISTRIBUTION_BLOCKED` remain unchanged.
