@@ -2,7 +2,7 @@
 
 2026-10-28 · Refs #7 · Stacked on PR #34 (the completed #6 loader result).
 **Knight Blade: 85%. Ruby, GLES rendering, audible sound, core RGSS controls
-and NextUI return pass on H700 (owner-observed). v3 hold-to-cancel not exercised.**
+and NextUI return pass on H700 (owner-observed). v3 hold-to-cancel also passes.**
 
 The physical [loader-only test](H700_ENGINE_ABI.md) passed. This test
 actually enters mkxp-z and its patched Ruby. It is deliberately launched
@@ -34,8 +34,8 @@ tone with peak 3000 (about −42 dBFS combined), before the device mixer.
 | D-pad / analog | **PASS** — pink square follows D-pad and left analog stick |
 | Buttons | RGSS A, B, C, X, Y, Z, L, R logged and labelled; names differ from printed labels |
 | Not recognized | Start, Select, Menu, two of four shoulder buttons (L2/R2) |
-| Exit / return | Two runs, frame limit, exit 0 + `SMOKE_RUNNER_PASS`; NextUI menu normal afterwards |
-| Hold-to-cancel | NOT_TESTED (both runs ended by frame limit) |
+| Exit / return | Two runs by frame limit, exit 0 + `SMOKE_RUNNER_PASS`; NextUI menu normal afterwards |
+| Hold-to-cancel | **PASS** — third run: owner held Cancel 1 s, `SMOKE_EXIT cancel_hold`, exit 0 |
 
 [Sanitized v3 excerpts](evidence/2026-10-28-engine-smoke-v3.txt).
 

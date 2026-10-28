@@ -20,7 +20,7 @@
   "audio": "PASS in v3 (owner heard tones); v2 NOT_HEARD at volume40/200ms",
   "input": "PASS for RGSS core set: D-pad and left analog stick move square; A B C X Y Z L R events logged. Start, Select, Menu, L2, R2 not mapped by mkxp-z default bindings; RGSS names differ from physical labels",
   "ruby_embedding": "PASS; four traces report Ruby 3.1.3 aarch64-linux and SMOKE_SCRIPT_PASS",
-  "clean_exit": "PASS: 6 process exits 0 + SMOKE_RUNNER_PASS (v2+v3); owner confirmed normal NextUI menu after v3 automatic end; v2 Cancel exit also returned. v3 hold-to-cancel not exercised",
+  "clean_exit": "PASS: 7 process exits 0 + SMOKE_RUNNER_PASS (v2+v3); owner confirmed normal NextUI menu after v3 automatic end; v2 Cancel exit also returned. v3 hold-to-cancel PASS",
   "user_observation": "Color bars and moving white square seen; physical A ended test; no tones heard; automatic end after about 30 seconds reported",
   "log_excerpt": "docs/evidence/2026-10-28-engine-smoke-v2.txt",
   "raw_log_sha256": {
@@ -48,13 +48,14 @@
     },
     "audio": "PASS; owner heard timed and Confirm-triggered tones",
     "input_visual_feedback": "PASS; pink square follows D-pad and left analog stick; labels shown for most buttons",
-    "hold_cancel": "NOT_TESTED; both v3 runs ended by frame limit",
+    "hold_cancel": "PASS; owner held Cancel 1s and the tool ended (SMOKE_EXIT cancel_hold, exit 0)",
     "nextui_navigation_after_return": "PASS; owner reports NextUI menu works normally after automatic end",
     "user_observation": "Tones heard; pink square follows D-pad and left stick; most buttons recognized but RGSS labels do not match printed labels; Select, Start and Menu not recognized; only 2 of 4 shoulder buttons shown; NextUI menu normal after automatic close",
     "log_excerpt": "docs/evidence/2026-10-28-engine-smoke-v3.txt",
     "raw_log_sha256": {
       "run-bfPJOf": "5821ef97ff594b1ca8458343aff747133b5378a7ddebe109563e32a215a56f7f",
-      "run-pdAjoP": "547a70ff80cc516e7490981046c0707f1a979beaf05bc434c5542f738ccdc9cd"
+      "run-pdAjoP": "547a70ff80cc516e7490981046c0707f1a979beaf05bc434c5542f738ccdc9cd",
+      "run-GpcFNB": "f85015da294c4d4571e698feb35b8fb63e3a1bf637feb4163e2af8439b803528"
     },
     "mkxp_z_default_controller_bindings": {
       "SDL X": "A",

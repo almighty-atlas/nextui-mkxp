@@ -38,9 +38,8 @@ class EngineSmoke(unittest.TestCase):
         for name, expected in followup['fixture_sha256'].items():
             self.assertEqual(M.digest(ROOT / 'tests/hardware/engine-smoke' / name), expected)
         self.assertIn(followup['device_stage'], (ROOT / 'tests/hardware/engine-smoke/launch.sh').read_text())
-        for feature in ('audio', 'input_visual_feedback', 'nextui_navigation_after_return'):
+        for feature in ('audio', 'input_visual_feedback', 'hold_cancel', 'nextui_navigation_after_return'):
             self.assertTrue(followup[feature].startswith('PASS'))
-        self.assertTrue(followup['hold_cancel'].startswith('NOT_TESTED'))
         v3_log = (ROOT / followup['log_excerpt']).read_text()
         self.assertEqual(v3_log.count('SMOKE_RUNNER_PASS'), len(followup['raw_log_sha256']))
         self.assertNotRegex(v3_log, r'0x[0-9a-fA-F]+|/tmp/')
