@@ -686,3 +686,48 @@ extensions. The next narrow host step is to build only the Ruby
 AArch64 `program` target and audit its produced ELF, with
 no `make all`, tests, installation, release or target run.
 All #1/#2/#3/source/license/distribution gates remain blocked.
+
+
+### Owner AArch64 Ruby executable static ABI + SONAME audit PASS (2026-10-28)
+
+Owner reported a **successful host-only static ELF audit** of the
+target `ruby` and `libruby.so.3.1.3` in private
+`~/nextui-mkxp-tools-20261020/ruby-aarch64-3.1.3-v2`.
+An initial offline audit failed to read `/target/ruby` from
+another container user because the private mount directory had mode
+0700; rerunning with the host-matching `--user 1000:1000`
+succeeded **without changing permissions**.
+
+- AArch64 `ruby` linked successfully as an ELF64 ET_EXEC
+  executable; SHA-256
+  `c644a2de993540ec4d0414f63c4fbc5e854977bbc9b52740fd0d6ca98832b735`.
+- `libruby.so.3.1.3` SHA-256 again verified as
+  `4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793`.
+- `libruby.so.3.1` SONAME alias exists and resolves to
+  `libruby.so.3.1.3` (`SONAME_ALIAS_PASS`).
+- Interpreter: `/lib/ld-linux-aarch64.so.1`.
+  Executable `DT_NEEDED`:
+  `libruby.so.3.1`, `libpthread.so.0`, `librt.so.1`,
+  `libdl.so.2`, `libcrypt.so.1`, `libm.so.6`,
+  `libc.so.6`, `ld-linux-aarch64.so.1`.
+- Direct executable version need: `GLIBC_2.17`;
+  no `GLIBC_PRIVATE`, TEXTREL or RUNPATH.
+- Its **only RPATH** is `/usr/lib` from the selected
+  `--prefix=/usr`, confirmed by the actual linker argument
+  `-Wl,-rpath,/usr/lib`. The previous strict
+  `UNEXPECTED_DYNAMIC_FLAGS` status was therefore an audit policy
+  issue, **not** a failed target build.
+- Owner marker: `RUBY_AARCH64_PROGRAM_STATIC_ABI_PASS`,
+  `PORTABLE_RUNTIME_LAYOUT_NOT_YET_CONFIGURED`,
+  `NO_TARGET_EXECUTION`, `NO_CHANGES`.
+
+The private Ruby executable and library are linked, not installed,
+deployed or executed on NextUI. The absolute `/usr/lib` RPATH
+must be addressed by a reviewed Pak-local loader strategy
+(e.g. a proven `$ORIGIN`-relative runtime layout or a launcher
+with explicitly controlled `LD_LIBRARY_PATH`, rather than writing
+system directories on the handheld). Next bounded action: inspect
+actual Ruby 3.1.3 Makefile/configure linker and install variables
+read-only before changing any flags, then continue target extension
+source/build closure. Do not imply target runtime PASS or amend the
+existing #1/#2/#3/source/license/distribution blocks.
