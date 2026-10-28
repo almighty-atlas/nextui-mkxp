@@ -25,21 +25,25 @@ finally:
 class EngineSmoke(unittest.TestCase):
     def test_v2_result_and_staged_v3_fixture_hashes(self):
         evidence = json.loads((ROOT / 'build/h700-engine/engine-smoke-evidence.json').read_text())
-        self.assertEqual(evidence['status'], 'PARTIAL_PASS; VISUAL_AND_RUBY_CONFIRMED_AUDIO_OPEN')
+        self.assertEqual(evidence['status'], 'PASS; V3_AUDIO_INPUT_RETURN_CONFIRMED')
         self.assertTrue(evidence['video'].startswith('PASS'))
         self.assertTrue(evidence['ruby_embedding'].startswith('PASS'))
-        self.assertFalse(evidence['audio'].startswith('PASS'))
+        self.assertTrue(evidence['audio'].startswith('PASS in v3'))
         self.assertFalse(evidence['engine_main_executed_by_agent'])
         log = (ROOT / evidence['log_excerpt']).read_text()
         self.assertEqual(log.count('SMOKE_RUNNER_PASS'), 4)
         self.assertNotRegex(log, r'0x[0-9a-fA-F]+|/tmp/')
         followup = evidence['followup']
-        self.assertEqual(followup['status'], 'STAGED; AWAITING_MANUAL_DEVICE_TEST')
+        self.assertEqual(followup['status'], 'PASS; OWNER_OBSERVED')
         for name, expected in followup['fixture_sha256'].items():
             self.assertEqual(M.digest(ROOT / 'tests/hardware/engine-smoke' / name), expected)
         self.assertIn(followup['device_stage'], (ROOT / 'tests/hardware/engine-smoke/launch.sh').read_text())
-        for feature in ('audio', 'input_visual_feedback', 'hold_cancel', 'nextui_navigation_after_return'):
-            self.assertEqual(followup[feature], 'NOT_TESTED')
+        for feature in ('audio', 'input_visual_feedback', 'nextui_navigation_after_return'):
+            self.assertTrue(followup[feature].startswith('PASS'))
+        self.assertTrue(followup['hold_cancel'].startswith('NOT_TESTED'))
+        v3_log = (ROOT / followup['log_excerpt']).read_text()
+        self.assertEqual(v3_log.count('SMOKE_RUNNER_PASS'), len(followup['raw_log_sha256']))
+        self.assertNotRegex(v3_log, r'0x[0-9a-fA-F]+|/tmp/')
 
     def fixture(self, temp):
         root, prefix = Path(temp) / 'repo', Path(temp) / 'prefix'

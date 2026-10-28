@@ -2,7 +2,7 @@
   "schema": 1,
   "date": "2026-10-28",
   "issue": 7,
-  "status": "PARTIAL_PASS; VISUAL_AND_RUBY_CONFIRMED_AUDIO_OPEN",
+  "status": "PASS; V3_AUDIO_INPUT_RETURN_CONFIRMED",
   "tested_payload_version": "v2",
   "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
   "archive_sha256": "266230d3194f30172230c7a170f5e0bd866f474b1f10cd9030a96288b8a086dd",
@@ -17,10 +17,10 @@
   "kernel": "4.9.170",
   "all_nine_provider_hashes_reconfirmed": true,
   "video": "PASS; owner saw color bars and moving white square, logs show ARM Mali-G31 GLES 3.2",
-  "audio": "NOT_HEARD_BY_OWNER; ALSA opened and SE playback requested without logged error; not an audible PASS",
-  "input": "RGSS events recorded for DOWN LEFT RIGHT UP L R A B C X; physical mapping and visual feedback incomplete",
+  "audio": "PASS in v3 (owner heard tones); v2 NOT_HEARD at volume40/200ms",
+  "input": "PASS for RGSS core set: D-pad and left analog stick move square; A B C X Y Z L R events logged. Start, Select, Menu, L2, R2 not mapped by mkxp-z default bindings; RGSS names differ from physical labels",
   "ruby_embedding": "PASS; four traces report Ruby 3.1.3 aarch64-linux and SMOKE_SCRIPT_PASS",
-  "clean_exit": "Four process exits 0 and SMOKE_RUNNER_PASS; one frame_limit and three cancel; normal NextUI navigation still needs explicit observation",
+  "clean_exit": "PASS: 6 process exits 0 + SMOKE_RUNNER_PASS (v2+v3); owner confirmed normal NextUI menu after v3 automatic end; v2 Cancel exit also returned. v3 hold-to-cancel not exercised",
   "user_observation": "Color bars and moving white square seen; physical A ended test; no tones heard; automatic end after about 30 seconds reported",
   "log_excerpt": "docs/evidence/2026-10-28-engine-smoke-v2.txt",
   "raw_log_sha256": {
@@ -31,10 +31,10 @@
   },
   "followup": {
     "version": "v3",
-    "status": "STAGED; AWAITING_MANUAL_DEVICE_TEST",
+    "status": "PASS; OWNER_OBSERVED",
     "reason": "v2 input actions other than Cancel had no visual feedback; 200ms PCM at volume40 corresponds to about -42dBFS peak before device mixer",
     "changes": "Visible RGSS labels and D-pad-controlled pink square; Cancel held 60 frames to exit; tone 600ms with PCM peak6000 and SE volume85, Confirm replays tone; no mixer changes",
-    "audio_cause": "Low signal level is a source-grounded hypothesis, not proven root cause",
+    "audio_cause": "Consistent with low signal level: v3 at volume85/600ms audible where v2 was not; not a formal root-cause proof",
     "archive_sha256": "4f6ec237d6a178d1b29bea2b509fb46d35f622250156030eda0c76186abfaeca",
     "archive_bytes": 14359819,
     "private_receipt_sha256": "490663d83579f67c78868ea128fc434701558eb0c74b02e75b73228eb3998196",
@@ -46,10 +46,29 @@
       "mkxp.json": "6deccb56667a4efaf4fd0108d6b274e38637a25494f1d6391fa468e711f98b7a",
       "launch.sh": "13cb699299e3009322c5d03e2a328429562bb07a62c4442ca07b02bb44e40418"
     },
-    "audio": "NOT_TESTED",
-    "input_visual_feedback": "NOT_TESTED",
-    "hold_cancel": "NOT_TESTED",
-    "nextui_navigation_after_return": "NOT_TESTED"
+    "audio": "PASS; owner heard timed and Confirm-triggered tones",
+    "input_visual_feedback": "PASS; pink square follows D-pad and left analog stick; labels shown for most buttons",
+    "hold_cancel": "NOT_TESTED; both v3 runs ended by frame limit",
+    "nextui_navigation_after_return": "PASS; owner reports NextUI menu works normally after automatic end",
+    "user_observation": "Tones heard; pink square follows D-pad and left stick; most buttons recognized but RGSS labels do not match printed labels; Select, Start and Menu not recognized; only 2 of 4 shoulder buttons shown; NextUI menu normal after automatic close",
+    "log_excerpt": "docs/evidence/2026-10-28-engine-smoke-v3.txt",
+    "raw_log_sha256": {
+      "run-bfPJOf": "5821ef97ff594b1ca8458343aff747133b5378a7ddebe109563e32a215a56f7f",
+      "run-pdAjoP": "547a70ff80cc516e7490981046c0707f1a979beaf05bc434c5542f738ccdc9cd"
+    },
+    "mkxp_z_default_controller_bindings": {
+      "SDL X": "A",
+      "SDL B": "B",
+      "SDL A": "C",
+      "SDL Y": "X",
+      "LEFTSTICK click": "Y",
+      "RIGHTSTICK click": "Z",
+      "LEFTSHOULDER": "L",
+      "RIGHTSHOULDER": "R",
+      "DPAD and LEFT stick axes": "directions",
+      "unbound": "START BACK GUIDE TRIGGERLEFT TRIGGERRIGHT"
+    },
+    "bindings_source": "mkxp-z src/input/keybindings.cpp default controller tables (source-reviewed, not measured per SDL event)"
   },
   "engine_main_executed_by_agent": false,
   "host_checks": {

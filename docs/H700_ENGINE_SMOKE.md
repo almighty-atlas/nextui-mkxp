@@ -1,8 +1,8 @@
-# Asset-free engine smoke: v2 partial PASS, v3 staged
+# Asset-free engine smoke: PASS on H700 (v3)
 
 2026-10-28 · Refs #7 · Stacked on PR #34 (the completed #6 loader result).
-**Knight Blade: 80%. Engine/Ruby and visible GLES rendering pass on H700;
-audible sound, full controls and NextUI navigation after return remain open.**
+**Knight Blade: 85%. Ruby, GLES rendering, audible sound, core RGSS controls
+and NextUI return pass on H700 (owner-observed). v3 hold-to-cancel not exercised.**
 
 The physical [loader-only test](H700_ENGINE_ABI.md) passed. This test
 actually enters mkxp-z and its patched Ruby. It is deliberately launched
@@ -26,7 +26,29 @@ Audio hypothesis (source-grounded, not proven): mkxp-z maps RGSS volume onto
 a −35 dB scale, so v2's volume 40 was about −21 dB on top of a 200 ms PCM
 tone with peak 3000 (about −42 dBFS combined), before the device mixer.
 
-## v3 — staged, awaiting manual test
+## v3 result (verified-on-H700, owner-launched)
+
+| Check | Result |
+| --- | --- |
+| Audio | **PASS** — owner heard the timed tones and the Confirm-triggered tones |
+| D-pad / analog | **PASS** — pink square follows D-pad and left analog stick |
+| Buttons | RGSS A, B, C, X, Y, Z, L, R logged and labelled; names differ from printed labels |
+| Not recognized | Start, Select, Menu, two of four shoulder buttons (L2/R2) |
+| Exit / return | Two runs, frame limit, exit 0 + `SMOKE_RUNNER_PASS`; NextUI menu normal afterwards |
+| Hold-to-cancel | NOT_TESTED (both runs ended by frame limit) |
+
+[Sanitized v3 excerpts](evidence/2026-10-28-engine-smoke-v3.txt).
+
+The unrecognized buttons are expected from mkxp-z's default controller table
+(`src/input/keybindings.cpp`, source-reviewed): SDL X→A, B→B, A→C, Y→X,
+left/right stick click→Y/Z, shoulders→L/R, D-pad and left stick→directions.
+Start, Back/Select, Guide/Menu and both analog triggers are unbound. SDL uses
+Xbox positions, so on Anbernic labels the physical A produced RGSS Cancel.
+That is not an engine fault but must be fixed by an explicit Pak mapping
+(physical A = Confirm/C, B = Cancel/B, Start = menu) and a deliberate quit path.
+Whether Menu reaches SDL at all is unmeasured; NextUI may reserve it.
+
+## v3 staging
 
 v3 changes only `smoke.rb` and the launcher path: 600 ms tone, PCM peak 6000,
 SE volume 85 (about −5.25 dB), Confirm replays the tone, a magenta square
