@@ -336,3 +336,24 @@ The owner performed a read-only shell inventory on the H700 device, reporting:
 - `H700_RUNTIME_ENVIRONMENT_INVENTORY_COMPLETE`; `CXX_PROBE_NOT_EXECUTED`.
 
 The inventory establishes **staging feasibility**, not execution permission or runtime success. Keep target trial separate, explicitly approved, bounded by timeout, and requiring only the fingerprinted private probe ELF and existing stock libraries. No additional libraries or demo assets to be installed; no system/NextUI file replacement.
+
+
+### Owner-observed staged H700 C++14 probe (2026-10-28)
+
+The owner staged the **already cross-linked, hash-verified test ELF only**
+from the private tiny02 `nextui-mkxp-builder` via their MacBook to
+`/tmp/nextui-mkxp-cxx14-748974b7/probe-aarch64` on the RG35XX Pro.
+Both local Mac and on-device SHA-256 checks matched:
+
+`748974b7412b321ac81001e2516584d33015a1a880b87eb3d905eef68c9d1b73`
+
+Reported markers: `LOCAL_ELF_HASH_PASS`,
+`DEVICE_ELF_HASH_PASS`, `H700_CXX14_STAGED`,
+`CXX_PROBE_NOT_EXECUTED`, `DISTRIBUTION_BLOCKED`.
+
+No additional shared libraries, assets, NextUI replacements or
+persistent target paths were involved. The path is an isolated directory
+under the device's `/tmp` tmpfs; the original test file is still held
+privately on tiny02. Staging is **not** H700 execution success or
+permission for a run. Any bounded runtime trial is a separate explicitly
+owner-authorized operation; PR/release/license gates remain unchanged.
