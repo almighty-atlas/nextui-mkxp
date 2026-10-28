@@ -213,3 +213,50 @@ No C++14 compile, full engine build/import, device change, release, merge or iss
 closure is included here. Rollback is branch removal only; no runtime state changed.
 
 [PLAN]: https://github.com/almighty-atlas/nextui-mkxp/blob/91b5a27378150bb479fc8546f2bddb6c6e5b1da7/docs/H700_MINIMAL_ENGINE_PLAN.md
+
+
+## Owner-supplied separate native tools image evidence (2026-10-28)
+
+**Owner-observed result on tiny02 (not CI/agent execution).** A separate local
+image `nextui-mkxp-tools:trixie-20261020` was built with Docker Buildx
+`default` from the **existing image**
+`nextui-mkxp-builder:local` (base resolved at SHA-256
+`eb1d35cbd58c4b6e2be9697c40d7ea11730282188fcdb6122212809ad21ebfe3`).
+The original builder was left running, network-isolated and read-only.
+The tools-image build used Debian package indexes from the explicit
+`20261020T213255Z` snapshot for trixie, trixie-updates and trixie-security
+rather than floating `deb.debian.org` during that build. It fetched
+21.8 MB of .deb archives and installed 34 packages in the new image.
+The full actual installed package-version list was written inside the
+image at
+`/usr/local/share/nextui-mkxp/package-versions.txt`; it has not yet
+been exported into a reviewed release lock.
+
+The **new** image passed a read-only rootfs, network-disabled offline tool
+smoke with the following owner-reported stdout versions:
+
+| Tool | Reported version |
+| --- | --- |
+| Meson | 1.7.0 |
+| Ninja | 1.12.1 |
+| CMake | 3.31.6 |
+| pkg-config | 1.8.1 |
+| Autoconf | 2.72 |
+| Automake | 1.17 |
+
+Also installed inside the new image: libtool, libffi-dev, libyaml-dev
+and zlib1g-dev. The build log reported
+`H700_NATIVE_TOOLS_PASS`, `H700_TOOL_IMAGE_BUILD_COMPLETE`,
+`EXISTING_BUILDER_UNCHANGED`, `NO_ENGINE_BUILD` and
+`NO_TARGET_EXECUTION`. Host filesystem showed approximately 33 GiB
+free after the operation, **not** a new clean-room build/reproducibility
+attestation. No Ruby source or target libruby was built.
+
+**Remaining prerequisites:** verify actual final local image ID and
+record the package manifest; bind the new tool-container mounts without
+modifying the original compiler/sysroot receipts; procure/hash-verify
+the pinned Ruby 3.1.3 source and separately review the native host
+generators vs AArch64 target runtime. Keep the `inputs.json` engine
+and distribution gates `BLOCKED`, with #1/#2/#3 and licensing
+requirements unchanged. This tools-image result is not permission
+for engine build, download of game assets or device execution.
