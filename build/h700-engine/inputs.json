@@ -91,7 +91,7 @@
       "cache_path": "sources/mkxp-z-37a04d14413454551a7b6aadbb4e93e67168accb.tar", "format": "tar", "sha256": null,
       "license": {"expression": "GPL-2.0-or-later", "evidence": "PR #19 source audit; optional features can require GPLv3; source/assets/nested files need individual review.", "obligations": "Resolve selected feature closure, embedded font/icon/controller DB, corresponding source and source/relink responsibilities."},
       "approval": {"state": "BLOCKED", "reviewer": null, "evidence": "No engine import/build grant."},
-      "blockers": ["Exact source archive digest unavailable; nested dependencies, patches and embedded-asset rights not closed."]
+      "blockers": ["Commit-verified private checkout and complete wrap/patch/submodule lock exist (mkxp-z-lock.json, docs/MKXP_Z_SOURCE_LOCK.md); git-archive digest is git-version dependent, so no canonical archive hash. License grants and embedded-asset rights still not closed."]
     },
     {
       "id": "sdl", "role": "source", "platform": "neutral",
