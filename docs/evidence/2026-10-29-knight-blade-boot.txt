@@ -1,4 +1,4 @@
-Sanitized excerpt of private Knight Blade boot run.log (run-ljOadD), owner-launched from NextUI Tools.
+Sanitized excerpts of two private Knight Blade boot run.log files, owner-launched from NextUI Tools.
 OpenAL Soft info lines omitted; repeated lines collapsed with counts; ASLR addresses removed.
 
 1 BOOT_LAUNCH_BEGIN
@@ -28,3 +28,20 @@ OpenAL Soft info lines omitted; repeated lines collapsed with counts; ASLR addre
 1 BOOT_RUNNER_EXIT_OK
 
 MEMORY (VmRSS samples every 5 s): 89 samples over ~441 s, peak 209752 kB
+
+RUN KJnpKo (fresh launch, Continue -> Save1, dialogue, in-game shutdown); font/fluidsynth stub lines omitted
+BOOT_LAUNCH_BEGIN
+RGSS version 1 (RPG Maker XP)
+ALC_SOFT_pause_device present
+GL Vendor    : ARM
+GL Renderer  : Mali-G31
+GL Version   : OpenGL ES 3.2 v1.r20p0-01rel0.6bf520cc6fc11e5ebc382522e4d4ab38
+GLSL Version : OpenGL ES GLSL ES 3.20
+Loading path cache...
+Path cache completed.
+EventThread termination requested
+RGSS thread ack'd request after 0 ms
+Shutting down.
+BOOT_PROCESS_EXIT=0
+BOOT_RUNNER_EXIT_OK
+MEMORY: 34 samples over ~165 s, peak 167788 kB

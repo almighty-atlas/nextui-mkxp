@@ -1,8 +1,12 @@
 # Knight Blade first boot on H700: PASS
 
 2026-10-29 · Refs #38 · Stacked on PR #37 ([inventory](KNIGHT_BLADE_INVENTORY.md)).
-**Knight Blade: 98%. Boot and representative gameplay verified-on-H700
-(NextUI-20261013-0, 39a06de); load after a cold start not yet tested.**
+**Knight Blade: 100%. Playable, verified-on-H700 (NextUI-20261013-0, 39a06de).**
+
+Second run (run-KJnpKo): fresh engine launch, Continue loaded `Save1`, NPC
+dialogue and play, in-game shutdown (exit 0, ~165 s, peak RSS 167,788 kB);
+the owner confirmed NPC dialogue and a normal NextUI return. No device
+reboot happened between the runs.
 
 ## Result (owner-launched, run-ljOadD)
 

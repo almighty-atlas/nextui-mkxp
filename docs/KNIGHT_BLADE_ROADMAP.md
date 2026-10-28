@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 98% — Knight Blade boots and plays on H700; load after cold start remains.**
+**Current progress: 100% — Knight Blade is playable on H700 (private test stage, owner-verified).**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -23,7 +23,7 @@ reduces progress. Hard blockers can still exist at 99%.
 | Yes | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
 | Yes | 5% | Title screen, new game, first playable map |
 | Yes | 5% | Movement, dialogue, representative battle/event, music/effects |
-| No | 2% | Save/load, repeated cold start, safe exit and final evidence |
+| Yes | 2% | Save/load, repeated cold start, safe exit and final evidence |
 
 ## What 100% means
 
@@ -73,8 +73,11 @@ No game assets or RTP may be committed or distributed here.
   the title screen, heard MIDI music and effects, started a new game, moved,
   fought, used the main menu and saved, with no restriction noticed. ~7 min run,
   in-game shutdown, exit 0, peak RSS ≈205 MB of 1 GB.
-- **Next (2%):** cold start (fresh launch), load `Save1`, play briefly, exit
-  via Shutdown, confirm NextUI returns. Then 100%.
+- Second run (fresh engine launch, no device reboot): Continue loaded `Save1`,
+  dialogue, play, in-game shutdown, NextUI returned normally; exit 0 again.
+- **100% reached.** Not covered: full playthrough, reboot between sessions,
+  long-session thermals/battery, installable Pak. Next project goal: a real
+  RMXP.pak (#8 launch discovery, #10 controls/exit, #11 save isolation).
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

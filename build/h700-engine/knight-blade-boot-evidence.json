@@ -2,7 +2,7 @@
   "schema": 1,
   "date": "2026-10-29",
   "issue": 38,
-  "status": "PASS; OWNER_PLAYED_WITHOUT_RESTRICTION",
+  "status": "PASS; KNIGHT_BLADE_PLAYABLE_ON_H700",
   "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
   "engine_stage": {
     "path": "/tmp/nextui-mkxp-kb-boot-v1",
@@ -49,14 +49,14 @@
   "music": "PASS; MIDI via TimGM6mb plus OGG/WAV effects audible",
   "new_game": "PASS",
   "first_map": "PASS; movement works",
-  "exit": "PASS; in-game shutdown, engine exit 0, BOOT_RUNNER_EXIT_OK; NextUI return implied by continued use, not separately reported",
+  "exit": "PASS; two in-game shutdowns, exit 0 and BOOT_RUNNER_EXIT_OK each; owner confirmed normal NextUI return",
   "engine_main_executed_by_agent": false,
   "level": "verified-on-H700 (owner observation + logs), NextUI-20261013-0 (39a06de)",
   "user_observation": "Owner: title screen shown, music and sound effects audible, everything works flawlessly with no restriction so far; saving worked; movement and battles work; main menu works",
   "battle": "PASS; owner fought battles",
   "main_menu": "PASS",
   "save": "PASS; Save1.rxdata (126258 bytes) written into the private game copy",
-  "load_after_cold_start": "NOT_TESTED",
+  "load_after_cold_start": "PASS; fresh engine launch, Continue loaded Save1, dialogue, play, in-game shutdown, NextUI returned (owner); no device reboot in between",
   "run": {
     "id": "run-ljOadD",
     "duration_seconds_approx": 441,
@@ -67,5 +67,18 @@
     "private_log_archive_sha256": "4f7784353be23e12818bb1e8180f166e68579a8d0451c3986df0d1f3b306186a",
     "log_excerpt": "docs/evidence/2026-10-29-knight-blade-boot.txt",
     "warnings": "16x Primary font not found: Arial/Arial Black (embedded fallback font used, owner found text fine); 9x fluidsynth stub messages for fluid_file_test/fluid_stat (vendored build without file helpers; soundfont loaded and music played); 1 instrument substitution bank1 prog9 -> bank0"
-  }
+  },
+  "dialogue": "PASS; owner confirmed NPC dialogue in second run",
+  "user_observation_run2": "Owner: everything named (fresh start, load Save1, play, dialogue, shutdown, NextUI return) works perfectly",
+  "run2": {
+    "id": "run-KJnpKo",
+    "duration_seconds_approx": 165,
+    "peak_vmrss_kb": 167788,
+    "samples": 34,
+    "raw_log_sha256": "a5a66b99f409ecce937f9dcdb4a373bdab2ecdead4cd6f06a2ab7e46ff78f8b7",
+    "mem_log_sha256": "e275efb7c0b39f0a53c5b89291e7d772f7aeb7f2ad99dd70f4ba73394394fd66",
+    "private_log_archive_sha256": "4e57c0a7d4d88efd1ae8223097094818c48613da1809d49baf260737eeb99ef0",
+    "save_rewritten": "Save1.rxdata 81930 bytes at end of run 2"
+  },
+  "not_covered": "Full playthrough, device reboot between sessions, long-session thermal/battery behaviour, installable Pak integration"
 }

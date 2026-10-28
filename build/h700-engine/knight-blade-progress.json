@@ -13,7 +13,7 @@
     {"id": "game-inputs", "weight": 3, "done": true, "evidence": "build/h700-engine/knight-blade-inventory.json"},
     {"id": "game-boot", "weight": 5, "done": true, "evidence": "build/h700-engine/knight-blade-boot-evidence.json"},
     {"id": "gameplay", "weight": 5, "done": true, "evidence": "build/h700-engine/knight-blade-boot-evidence.json"},
-    {"id": "persistence", "weight": 2, "done": false, "evidence": null}
+    {"id": "persistence", "weight": 2, "done": true, "evidence": "build/h700-engine/knight-blade-boot-evidence.json"}
   ],
   "reserve": {"hard_gib": 5, "stop_gib": 6, "fresh_setup_minimum_gib": 7}
 }
