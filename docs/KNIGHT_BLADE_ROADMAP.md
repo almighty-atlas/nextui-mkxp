@@ -53,9 +53,10 @@ No game assets or RTP may be committed or distributed here.
   (`--verify` and `--list`, both exit 0; provider hashes matched before/after).
   Engine was transferred to a private `/tmp` stage but **not started**.
   **Next:** [asset-free engine smoke](H700_ENGINE_SMOKE.md); visible output needs
-  human confirmation. Fixture/v2 package ready; final device staging is blocked
-  by a second SSH outage. The existing v1 Tools entry must not be launched
-  until v2 is staged and its launcher updated.
+  human confirmation. The v2 payload is now fully hash-verified on device and
+  our Tools launcher updated. Exit Pak Store normally, then manually launch
+  **Tools → MKXP Engine Smoke** and report image/sound/buttons/menu return.
+  Preparation/staging does not complete a hardware milestone.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

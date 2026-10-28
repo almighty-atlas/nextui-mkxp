@@ -1,4 +1,4 @@
-# Asset-free engine smoke: prepared, final device staging blocked
+# Asset-free engine smoke: staged, awaiting manual device test
 
 2026-10-28 · Refs #7 · Stacked on PR #34 (the completed #6 loader result).
 **Knight Blade: 70%. No engine-start/render/audio/input milestone is complete.**
@@ -8,7 +8,22 @@ actually enters mkxp-z and its patched Ruby. It is deliberately launched
 **by the owner from NextUI Tools**, not via an unsolicited SSH command while
 NextUI is drawing. No daemon is killed/restarted and no firmware is changed.
 
-## Current staging / blocker — do not launch yet
+## Current staging — ready for the human test
+
+The owner restored access and kept the device awake in Pak Store. The final
+v2 payload is now staged and **every manifest entry passed SHA-256 validation**.
+The nine runtime-provider hashes, NextUI revision and kernel still match.
+Only our own Tools launcher was atomically replaced after checking its previous
+hash. At the final check neither v1 nor v2 had a work directory: no smoke run
+was started by the agent. Exit Pak Store normally, then select
+**Tools → MKXP Engine Smoke**. Do not run Pak Store and the smoke concurrently.
+
+The active launcher hash is
+`fa98ec6f9788dda9bce70e77335efd8178fa9f6331245bddc360f21da302d380`.
+It points to `/tmp/nextui-mkxp-engine-smoke-v2`. The only remaining immediate
+gate is the manual observation checklist below, not another build or transfer.
+
+### Historical staging interruption
 
 - A first private v1 payload was hash-verified in `/tmp`, with a new
   `Tools/h700/MKXP Engine Smoke.pak/launch.sh` entry. Existing Tools/games
@@ -18,13 +33,12 @@ NextUI is drawing. No daemon is killed/restarted and no firmware is changed.
   so this freshly generated file can be found; no engine patch is needed.
 - v2 is packaged on tiny02, but the device disconnected again: SSH timeout,
   then `Host is unreachable`, **before** v2 directory creation or launcher
-  replacement. The installed launcher still points at v1. **Do not use it.**
+  replacement. At that time the installed launcher still pointed at v1.
 - Keep the device powered and awake with the authorized network/SSH available.
   No idle/standby or networking policy was changed to work around this.
 
-The next agent action is to stage v2, validate all manifest entries, and
-atomically replace **only our own** Tools launcher after checking its v1
-hash and confirming no old test is active. Never overwrite an unrelated tool.
+Those final staging/launcher actions are now complete. Never overwrite an
+unrelated tool on future retries.
 If the device rebooted, `/tmp` payloads may have disappeared: re-stage using
 fresh paths; do not assume their presence from the SD launcher alone.
 
@@ -81,16 +95,16 @@ Private receipt SHA-256:
 `5640aa8426dbf1e6706d32df4678201d09fedbe1b3e34d5b009d072f51dc9ab9`.
 [Evidence record](../build/h700-engine/engine-smoke-evidence.json).
 
-Host verification: **135 unit tests PASS**, native Ruby 3.1.3 `-c` PASS,
+Host verification: **136 unit tests PASS**, native Ruby 3.1.3 `-c` PASS,
 Python compileall, shell syntax and diff checks. Tests use synthetic inputs,
 not a graphics mock presented as hardware evidence. No CI/hardware smoke PASS.
 
 ## Human device checklist (German)
 
-**Erst nach bestätigter v2-Übertragung starten.**
+**Die v2-Übertragung ist bestätigt; der Test kann jetzt manuell gestartet werden.**
 
 1. Gerät eingeschaltet und wach lassen, SSH aktiv. Falls nötig den Tools-Ordner
-   neu öffnen; keine Dienste neu starten. Noch nicht starten, solange v1 aktiv ist.
+   neu öffnen; keine Dienste neu starten. Den Pak Store vorher regulär verlassen.
 2. In NextUI unter **Tools → MKXP Engine Smoke** auswählen. Das ist ein
    temporärer Test, kein Spiel und kein fertiges RMXP-Pak.
 3. Erwartet: links nach rechts rote, grüne, blaue und gelbe Streifen, lesbarer

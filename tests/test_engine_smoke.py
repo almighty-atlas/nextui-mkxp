@@ -23,6 +23,15 @@ finally:
 
 
 class EngineSmoke(unittest.TestCase):
+    def test_staged_fixture_hashes_match_tracked_sources(self):
+        evidence = json.loads((ROOT / 'build/h700-engine/engine-smoke-evidence.json').read_text())
+        self.assertEqual(evidence['status'], 'STAGED; AWAITING_MANUAL_DEVICE_TEST')
+        for name, expected in evidence['fixture_sha256'].items():
+            self.assertEqual(M.digest(ROOT / 'tests/hardware/engine-smoke' / name), expected)
+        for feature in ('video', 'audio', 'input', 'ruby_embedding', 'clean_exit'):
+            self.assertEqual(evidence[feature], 'NOT_TESTED')
+        self.assertFalse(evidence['engine_main_executed_by_agent'])
+
     def fixture(self, temp):
         root, prefix = Path(temp) / 'repo', Path(temp) / 'prefix'
         shutil.copytree(ROOT / 'tests/hardware/engine-smoke', root / 'tests/hardware/engine-smoke')
