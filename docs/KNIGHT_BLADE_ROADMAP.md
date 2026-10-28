@@ -52,7 +52,10 @@ No game assets or RTP may be committed or distributed here.
 - Device access restored: [loader-only test](H700_ENGINE_ABI.md) now PASS
   (`--verify` and `--list`, both exit 0; provider hashes matched before/after).
   Engine was transferred to a private `/tmp` stage but **not started**.
-  **Next:** asset-free engine smoke; visible output needs human confirmation.
+  **Next:** [asset-free engine smoke](H700_ENGINE_SMOKE.md); visible output needs
+  human confirmation. Fixture/v2 package ready; final device staging is blocked
+  by a second SSH outage. The existing v1 Tools entry must not be launched
+  until v2 is staged and its launcher updated.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 
