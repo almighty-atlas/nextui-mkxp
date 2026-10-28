@@ -115,12 +115,48 @@ lock `4d9d9a97…`, profile `a05d93ad…` and driver `1a1c00c1…`. The job is
 about 1.0 GB. Logs of the two failed attempts were kept privately; their
 job trees were deleted to stay above the disk guard.
 
-## Next step and blocker
+## Disk reserve decision
 
-Compile (`meson compile`) in the same container profile, then the static
-ABI audit of the engine ELF. **Disk:** after configuring, tiny02 has
-about 28.1 GiB free, i.e. only ~2.1 GiB above the 26-GiB stop guard. The
-full dependency build (static Ruby with extensions, libjxl/Highway,
-OpenAL Soft, FluidSynth and the engine) may need more than that. Either
-the owner frees space or the reserve is approved for adjustment; the
-guard is not changed silently.
+After configuring, tiny02 had about 28.1 GiB free, only ~2.1 GiB above the
+previous 26-GiB stop guard (25-GiB hard reserve). **On 2026-10-28 the owner
+lowered the hard reserve to 5 GiB** for these builds. The driver takes it
+as `--reserve-gib` (default still 25; values below 5 are rejected),
+stops 1 GiB above it and refuses to start a fresh setup with less than
+reserve + 2 GiB free. No Docker prune or deletion of other data is
+implied.
+
+## Compile
+
+`--phase compile --job <configured job>` reuses a `MESON_SETUP_PASS` job.
+It requires identical lock, profile and pinned inputs, runs `meson compile
+-j 2` in the same container profile, scans all logs for target-execution
+attempts and records the hashes of AArch64 ELF executables in the build
+root. ABI and device execution remain separate steps.
+
+### First successful compile (verified-on-host)
+
+Final private job `engine-build-20261028T172043Z`: setup PASS, then **684/684**
+compile/link steps PASS in **463 seconds**. Candidate `mkxp-z.aarch64`:
+34,914,232 bytes, SHA-256
+`245e5cb379f305660c12afe41cc9047da5ceec3bff67dd156f92ae100770558c`.
+Receipt SHA-256 `ef2d2bff731e64f25f3c174badf6726f19590631427aa79bc50f22c642b7db9c`.
+No target-execution attempts found in logs. See
+[machine-readable evidence](../build/h700-engine/engine-build-evidence.json).
+
+Failures fixed before success:
+
+- Meson's `sys_root` property prefixed the private SDL include paths with the
+  sysroot; removed that property while preserving explicit compiler `--sysroot`.
+- OpenAL Soft 1.24.3 exposed GCC 8 limitations: 12 runtime enum helpers could
+  not be `constexpr`, `std::reduce` was unavailable, and `std::filesystem`
+  required `libstdc++fs`. The local, hash-pinned
+  `patches/h700/openal-soft-1.24.3-gcc8.patch` is appended to the staged wrap.
+  It uses `inline` helpers, sequential `std::accumulate` and a filesystem link
+  dependency. Runtime behavior remains untested; reduction order may differ.
+
+Remaining: initial readelf inspection found build RPATH
+`/job/sdl-prefix/lib:$ORIGIN`. Upstream's private DESTDIR install step removes
+the build path and leaves `$ORIGIN` as configured by `install_rpath`.
+This is expected Meson build/install behavior, not a required source patch.
+The full provider ABI audit is still pending. No engine device run is claimed.
+Follow [Knight Blade progress](KNIGHT_BLADE_ROADMAP.md) for the next milestone.

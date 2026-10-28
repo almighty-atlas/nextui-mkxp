@@ -3,9 +3,11 @@
 import argparse
 import importlib.util
 from pathlib import Path
+import struct
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
@@ -34,6 +36,37 @@ class Configure(unittest.TestCase):
         self.assertIn("ruby = '/work/prefix/bin/ruby'", text)
         self.assertNotIn('/usr/lib/pkgconfig', text)
 
+    def test_no_pkgconfig_sysroot_prefix(self):
+        self.assertNotIn('sys_root', M.cross_file().replace('No sys_root', ''))
+
+    def test_local_patch_appended_before_sentinel_and_hash_checked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, sub = Path(tmp) / 'repo', Path(tmp) / 'subprojects'
+            (root / 'patches').mkdir(parents=True)
+            (sub / 'packagefiles').mkdir(parents=True)
+            patch_file = root / 'patches/fix.patch'
+            patch_file.write_text('# fixture\n')
+            (sub / 'z.wrap').write_text('[wrap-file]\ndiff_files =\n    up.patch,\n'
+                                        '    end-of-diff-files.patch\n')
+            profile = {'local_patches': {'z': [{'file': 'patches/fix.patch',
+                                                'sha256': M.sha(patch_file)}]}}
+            with patch.object(M, 'ROOT', root):
+                applied = M.add_local_patches(sub, profile)
+                self.assertEqual(list(applied), ['patches/fix.patch'])
+                self.assertIn('    up.patch,\n    nextui-fix.patch,\n    end-of-diff-files.patch\n',
+                              (sub / 'z.wrap').read_text())
+                self.assertTrue((sub / 'packagefiles/nextui-fix.patch').is_file())
+                profile['local_patches']['z'][0]['sha256'] = '0' * 64
+                with self.assertRaisesRegex(ValueError, 'LOCAL_PATCH_HASH'):
+                    M.add_local_patches(sub, profile)
+
+    def test_repository_local_patch_matches_profile(self):
+        import json
+        profile = json.loads((M.ROOT / 'build/h700-engine/mkxp-z-profile.json').read_text())
+        for patches in profile['local_patches'].values():
+            for item in patches:
+                self.assertEqual(M.sha(M.ROOT / item['file']), item['sha256'])
+
     def test_sdl_pc_has_no_rpath(self):
         pc = M.sdl_pc()
         self.assertNotIn('rpath', pc)
@@ -46,7 +79,7 @@ class Configure(unittest.TestCase):
         self.assertIn('-Duse_miniffi=false', cmd)
 
     def test_container_limits(self):
-        cmd = M.docker_command(self.args(), Path('/private/job'), 'test', PROFILE)
+        cmd = M.docker_command(self.args(), Path('/private/job'), 'test', M.setup_command(PROFILE))
         for option in ('--pull=never', '--network=none', '--read-only', '--cpus=2',
                        '--memory=4g', '--memory-swap=4g', '--cap-drop=ALL'):
             self.assertIn(option, cmd)
@@ -57,7 +90,7 @@ class Configure(unittest.TestCase):
 
     def test_mount_injection_rejected(self):
         with self.assertRaisesRegex(ValueError, 'UNSUPPORTED_MOUNT_PATH'):
-            M.docker_command(self.args('/x,readonly=false'), Path('/job'), 'test', PROFILE)
+            M.docker_command(self.args('/x,readonly=false'), Path('/job'), 'test', M.COMPILE_COMMAND)
 
     def test_locked_diffs_applied_in_order_and_hash_checked(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -74,6 +107,34 @@ class Configure(unittest.TestCase):
                 M.apply_diffs(root, files, {'1.patch': '0' * 64})
             with self.assertRaisesRegex(ValueError, 'DIFF_APPLY_FAILED'):
                 M.apply_diffs(root, files, {'1.patch': diffs['1.patch']})
+
+    def test_reserve_guard(self):
+        with patch.object(M.shutil, 'disk_usage') as disk, patch.object(M, 'tree_size', return_value=0):
+            disk.return_value.free = 6 * M.GIB - 1
+            with self.assertRaisesRegex(ValueError, 'FREE_SPACE_GUARD_6_GIB'):
+                M.guard(Path('/unused'), M.GIB, 5)
+            disk.return_value.free = 6 * M.GIB
+            M.guard(Path('/unused'), M.GIB, 5)
+
+    def test_reserve_below_approval_rejected(self):
+        args = argparse.Namespace(reserve_gib=4)
+        with patch.object(M.os, 'getuid', return_value=1000):
+            with self.assertRaisesRegex(ValueError, 'RESERVE_BELOW_OWNER_APPROVAL'):
+                M.resolve_tools(args)
+
+    def test_compile_command_in_container(self):
+        cmd = M.docker_command(self.args(), Path('/private/job'), 'test', M.COMPILE_COMMAND)
+        self.assertEqual(cmd[cmd.index(M.IMAGE) - 1], '--entrypoint=meson')
+        self.assertEqual(cmd[cmd.index(M.IMAGE) + 1:], ['compile', '-C', '/job/build', '-j', '2'])
+
+    def test_engine_outputs_only_aarch64_elf(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            elf = b'\x7fELF\x02\x01\x01' + bytes(9)
+            (root / 'mkxp-z').write_bytes(elf + struct.pack('<HH', 3, 183) + bytes(44))
+            (root / 'host-tool').write_bytes(elf + struct.pack('<HH', 3, 62) + bytes(44))
+            (root / 'notes.txt').write_text('not an ELF')
+            self.assertEqual(list(M.engine_outputs(root)), ['mkxp-z'])
 
     def test_exec_attempt_detection(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -7,7 +7,8 @@
     "SDL comes from the existing private Mali-fbdev SDL prefix (sdl_system=enabled); the vendored SDL 2.28.1 wrap and its X11/Wayland/ANGLE/udev/D-Bus/IBus/DRM branch are excluded.",
     "Ruby uses the engine's vendored, patched static Ruby 3.1.3 wrap (ruby_system=disabled): the mkxp-z patch relaxes method visibility, superclass mismatch and sprintf argument checks that RGSS scripts rely on.",
     "mesa is a headers-only subproject in this engine revision (packagefiles/mesa/meson.build); no Mesa library is built.",
-    "alsa-lib is a candidate for the OpenAL Soft ALSA backend; on-device ALSA configuration compatibility is unverified."
+    "alsa-lib is a candidate for the OpenAL Soft ALSA backend; on-device ALSA configuration compatibility is unverified.",
+    "Local H700 patches (local_patches) are appended to the staged wrap diff_files before end-of-diff-files.patch; the committed lock describes the unmodified upstream wraps."
   ],
   "meson_options": {
     "default_system": "disabled",
@@ -109,5 +110,14 @@
       },
       "submodules_evidence": "git submodule status --recursive after shallow recursive clone of the pinned commit on tiny02, 2026-10-28; gitlinks are fixed by the superproject commit"
     }
+  },
+  "local_patches": {
+    "openal-soft": [
+      {
+        "file": "patches/h700/openal-soft-1.24.3-gcc8.patch",
+        "sha256": "557455144d9b0325c8ab2292fc7451be90d09380c01f4e9e7e052d5a77e69aa7",
+        "reason": "GCC 8.3 rejects throw/log calls in constexpr functions and lacks std::reduce; runtime-only helpers made inline, std::reduce -> std::accumulate; link libstdc++fs for std::filesystem (GCC 8)"
+      }
+    ]
   }
 }
