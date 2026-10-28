@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 70% — static ABI and device loader pass; engine start pending.**
+**Current progress: 80% — engine/Ruby and visible rendering pass; audio/input follow-up open.**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -18,7 +18,7 @@ reduces progress. Hard blockers can still exist at 99%.
 | Yes | 5% | Offline cross configuration |
 | Yes | 30% | Dependencies, patched Ruby and engine compiled and linked |
 | Yes | 5% | Remove build RPATH; audit architecture, interpreter and exact symbol/version/provider closure |
-| No | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
+| Yes | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
 | No | 5% | Audio, controls, bounded exit and clean NextUI return |
 | No | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
 | No | 5% | Title screen, new game, first playable map |
@@ -53,10 +53,15 @@ No game assets or RTP may be committed or distributed here.
   (`--verify` and `--list`, both exit 0; provider hashes matched before/after).
   Engine was transferred to a private `/tmp` stage but **not started**.
   **Next:** [asset-free engine smoke](H700_ENGINE_SMOKE.md); visible output needs
-  human confirmation. The v2 payload is now fully hash-verified on device and
-  our Tools launcher updated. Exit Pak Store normally, then manually launch
-  **Tools → MKXP Engine Smoke** and report image/sound/buttons/menu return.
-  Preparation/staging does not complete a hardware milestone.
+  human confirmation. v2 produced four successful process traces, patched
+  Ruby 3.1.3, Mali-G31/GLES 3.2 and owner-confirmed color bars/moving square.
+  One frame-limit exit and three Cancel exits completed normally.
+- **Next:** audible sound, full physical control mapping and normal NextUI
+  navigation after return. Owner heard no v2 tone. Logs do show D-pad,
+  shoulder and RGSS A/B/C/X events; v2 only displayed a reaction for Cancel.
+  The v3 follow-up (visible input feedback, longer/moderately stronger tone,
+  hold-to-exit) is hash-verified on the device and awaits the owner's run.
+  Audio is not PASS just because ALSA initialization succeeds.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

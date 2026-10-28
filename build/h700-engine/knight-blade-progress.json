@@ -8,7 +8,7 @@
     {"id": "configure", "weight": 5, "done": true, "evidence": "docs/MKXP_Z_SOURCE_LOCK.md"},
     {"id": "compile", "weight": 30, "done": true, "evidence": "build/h700-engine/engine-build-evidence.json"},
     {"id": "abi", "weight": 5, "done": true, "evidence": "build/h700-engine/engine-abi-evidence.json"},
-    {"id": "engine-smoke", "weight": 10, "done": false, "evidence": null},
+    {"id": "engine-smoke", "weight": 10, "done": true, "evidence": "build/h700-engine/engine-smoke-evidence.json"},
     {"id": "lifecycle", "weight": 5, "done": false, "evidence": null},
     {"id": "game-inputs", "weight": 3, "done": false, "evidence": null},
     {"id": "game-boot", "weight": 5, "done": false, "evidence": null},

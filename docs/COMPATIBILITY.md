@@ -45,7 +45,9 @@ now pass. New Ruby batch builds ran separately with 2 CPUs / 4 GiB and a
 | Fiddle + bundled libffi 3.2.1 | PASS | verified-on-H700, [batch report](H700_RUBY_BATCH.md) | Stock libc `strlen`, allocation/free; callbacks and broader FFI NOT_TESTED |
 | mkxp-z cross-build / static ABI candidates | PASS | verified-on-host, [ABI report](H700_ENGINE_ABI.md) | Engine linked; exact stock provider graph and COPY sizes checked; not runtime binding |
 | mkxp-z loader verify/list | PASS | verified-on-H700, [loader log](evidence/2026-10-28-engine-loader.txt) | Exact expected stock providers resolved; not an engine start or lazy-binding test |
-| mkxp-z engine start | NOT_TESTED | — | No engine start; stock-Ruby PASS is not evidence for engine Ruby semantics |
+| mkxp-z engine start, Ruby 3.1.3, GLES rendering | PASS | verified-on-H700, [smoke v2 log](evidence/2026-10-28-engine-smoke-v2.txt) | Asset-free procedural fixture only; owner saw color bars/moving square on Mali-G31 GLES 3.2; not game compatibility |
+| mkxp-z audio (OpenAL Soft → ALSA) | NOT_HEARD | verified-on-H700 (negative observation) | ALSA opened without error, but no v2 tone heard; low signal level suspected, v3 retest pending |
+| Physical input mapping | PARTIAL | verified-on-H700 log | RGSS events logged for D-pad, L, R, A, B, C, X; physical-to-RGSS mapping not yet documented |
 
 Details and hashes: [H700_ENGINE_PREFLIGHT.md](H700_ENGINE_PREFLIGHT.md#owner-h700-ruby-313-runtime-zlib-and-psych-trials-pass-2026-10-28).
 Private artifacts are never distributed.

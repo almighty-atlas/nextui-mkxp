@@ -23,14 +23,23 @@ finally:
 
 
 class EngineSmoke(unittest.TestCase):
-    def test_staged_fixture_hashes_match_tracked_sources(self):
+    def test_v2_result_and_staged_v3_fixture_hashes(self):
         evidence = json.loads((ROOT / 'build/h700-engine/engine-smoke-evidence.json').read_text())
-        self.assertEqual(evidence['status'], 'STAGED; AWAITING_MANUAL_DEVICE_TEST')
-        for name, expected in evidence['fixture_sha256'].items():
-            self.assertEqual(M.digest(ROOT / 'tests/hardware/engine-smoke' / name), expected)
-        for feature in ('video', 'audio', 'input', 'ruby_embedding', 'clean_exit'):
-            self.assertEqual(evidence[feature], 'NOT_TESTED')
+        self.assertEqual(evidence['status'], 'PARTIAL_PASS; VISUAL_AND_RUBY_CONFIRMED_AUDIO_OPEN')
+        self.assertTrue(evidence['video'].startswith('PASS'))
+        self.assertTrue(evidence['ruby_embedding'].startswith('PASS'))
+        self.assertFalse(evidence['audio'].startswith('PASS'))
         self.assertFalse(evidence['engine_main_executed_by_agent'])
+        log = (ROOT / evidence['log_excerpt']).read_text()
+        self.assertEqual(log.count('SMOKE_RUNNER_PASS'), 4)
+        self.assertNotRegex(log, r'0x[0-9a-fA-F]+|/tmp/')
+        followup = evidence['followup']
+        self.assertEqual(followup['status'], 'STAGED; AWAITING_MANUAL_DEVICE_TEST')
+        for name, expected in followup['fixture_sha256'].items():
+            self.assertEqual(M.digest(ROOT / 'tests/hardware/engine-smoke' / name), expected)
+        self.assertIn(followup['device_stage'], (ROOT / 'tests/hardware/engine-smoke/launch.sh').read_text())
+        for feature in ('audio', 'input_visual_feedback', 'hold_cancel', 'nextui_navigation_after_return'):
+            self.assertEqual(followup[feature], 'NOT_TESTED')
 
     def fixture(self, temp):
         root, prefix = Path(temp) / 'repo', Path(temp) / 'prefix'
@@ -101,7 +110,10 @@ class EngineSmoke(unittest.TestCase):
         self.assertIn('LD_BIND_NOW=1', shell)
         self.assertIn('pidof nextui.elf', shell)
         self.assertIn('grep -qx SMOKE_SCRIPT_PASS', shell)
-        self.assertIn('1800.times', (fixture / 'smoke.rb').read_text())
+        smoke = (fixture / 'smoke.rb').read_text()
+        self.assertIn('1800.times', smoke)
+        self.assertIn("Audio.se_play('tone.wav', 85, 100)", smoke)
+        self.assertIn('cancel_frames >= 60', smoke)
 
 
 if __name__ == '__main__':

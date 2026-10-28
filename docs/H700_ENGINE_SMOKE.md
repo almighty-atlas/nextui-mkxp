@@ -1,27 +1,49 @@
-# Asset-free engine smoke: staged, awaiting manual device test
+# Asset-free engine smoke: v2 partial PASS, v3 staged
 
 2026-10-28 · Refs #7 · Stacked on PR #34 (the completed #6 loader result).
-**Knight Blade: 70%. No engine-start/render/audio/input milestone is complete.**
+**Knight Blade: 80%. Engine/Ruby and visible GLES rendering pass on H700;
+audible sound, full controls and NextUI navigation after return remain open.**
 
-The physical [loader-only test](H700_ENGINE_ABI.md) passed. This next test
+The physical [loader-only test](H700_ENGINE_ABI.md) passed. This test
 actually enters mkxp-z and its patched Ruby. It is deliberately launched
 **by the owner from NextUI Tools**, not via an unsolicited SSH command while
 NextUI is drawing. No daemon is killed/restarted and no firmware is changed.
 
-## Current staging — ready for the human test
+## v2 result (verified-on-H700, owner-launched)
 
-The owner restored access and kept the device awake in Pak Store. The final
-v2 payload is now staged and **every manifest entry passed SHA-256 validation**.
-The nine runtime-provider hashes, NextUI revision and kernel still match.
-Only our own Tools launcher was atomically replaced after checking its previous
-hash. At the final check neither v1 nor v2 had a work directory: no smoke run
-was started by the agent. Exit Pak Store normally, then select
-**Tools → MKXP Engine Smoke**. Do not run Pak Store and the smoke concurrently.
+| Check | Result |
+| --- | --- |
+| Video | **PASS** — owner saw color bars and moving white square; logs: ARM Mali-G31, OpenGL ES 3.2 v1.r20p0-01rel0 |
+| Ruby embedding | **PASS** — four traces report Ruby 3.1.3 aarch64-linux and `SMOKE_SCRIPT_PASS` |
+| Exit | Four process exits 0 + `SMOKE_RUNNER_PASS` (one frame limit, three Cancel); owner reports automatic end after ~30 s |
+| Input | RGSS events logged for DOWN/LEFT/RIGHT/UP, L, R, A, B, C, X; v2 only visibly reacted to Cancel (physical A) |
+| Audio | **NOT_HEARD** — ALSA opened and SE playback requested without logged error; not a PASS |
 
-The active launcher hash is
-`fa98ec6f9788dda9bce70e77335efd8178fa9f6331245bddc360f21da302d380`.
-It points to `/tmp/nextui-mkxp-engine-smoke-v2`. The only remaining immediate
-gate is the manual observation checklist below, not another build or transfer.
+[Sanitized log excerpts](evidence/2026-10-28-engine-smoke-v2.txt); raw log
+hashes are in the [evidence record](../build/h700-engine/engine-smoke-evidence.json).
+
+Audio hypothesis (source-grounded, not proven): mkxp-z maps RGSS volume onto
+a −35 dB scale, so v2's volume 40 was about −21 dB on top of a 200 ms PCM
+tone with peak 3000 (about −42 dBFS combined), before the device mixer.
+
+## v3 — staged, awaiting manual test
+
+v3 changes only `smoke.rb` and the launcher path: 600 ms tone, PCM peak 6000,
+SE volume 85 (about −5.25 dB), Confirm replays the tone, a magenta square
+moved by the D-pad, an on-screen label for every RGSS input, and Cancel must
+be **held for one second** to exit. No mixer or system volume is changed.
+
+All v3 manifest entries passed SHA-256 validation on the device; our own
+Tools launcher was atomically replaced after checking the v2 launcher hash
+(new hash `13cb699299e3009322c5d03e2a328429562bb07a62c4442ca07b02bb44e40418`,
+pointing to `/tmp/nextui-mkxp-engine-smoke-v3`). No engine process and no v3
+work directory existed at the final check.
+
+## v2 staging (historical)
+
+The owner restored access and kept the device awake in Pak Store. The v2
+payload was staged with every manifest entry hash-verified and the nine
+runtime-provider hashes, NextUI revision and kernel unchanged.
 
 ### Historical staging interruption
 
@@ -55,7 +77,7 @@ fresh paths; do not assume their presence from the SD launcher alone.
 - `run.sh`: fresh per-run work/home/data directories, clean environment,
   measured NextUI library path, `LD_BIND_NOW=1`, Mali/GLES and ALSA (no null
   audio fallback). Existing device ALSA config/plugins are only read.
-- `launch.sh`: the sole new SD file, pointing to the private `/tmp` v2 payload.
+- `launch.sh`: the sole new SD file, pointing to the private `/tmp` v3 payload.
 
 The launcher requires `IS_NEXT=yes`, `PLATFORM=h700` and the Tools argument,
 and refuses if `nextui.elf` is still running. The observed firmware's
@@ -89,41 +111,36 @@ engine/license and our explicit fixture allowlist, writes SHA256SUMS and a
 private archive/receipt. It never deploys or executes the engine. Downloaded
 third-party sources and binaries remain outside Git; distribution is BLOCKED.
 
-Final v2 archive: 14,359,358 bytes; 842 pure Ruby files; SHA-256
+Tested v2 archive: 14,359,358 bytes; SHA-256
 `266230d3194f30172230c7a170f5e0bd866f474b1f10cd9030a96288b8a086dd`.
-Private receipt SHA-256:
-`5640aa8426dbf1e6706d32df4678201d09fedbe1b3e34d5b009d072f51dc9ab9`.
+Staged v3 archive: 14,359,819 bytes; 842 pure Ruby files; SHA-256
+`4f6ec237d6a178d1b29bea2b509fb46d35f622250156030eda0c76186abfaeca`;
+private receipt SHA-256
+`490663d83579f67c78868ea128fc434701558eb0c74b02e75b73228eb3998196`.
 [Evidence record](../build/h700-engine/engine-smoke-evidence.json).
 
 Host verification: **136 unit tests PASS**, native Ruby 3.1.3 `-c` PASS,
 Python compileall, shell syntax and diff checks. Tests use synthetic inputs,
 not a graphics mock presented as hardware evidence. No CI/hardware smoke PASS.
 
-## Human device checklist (German)
+## Human device checklist v3 (German)
 
-**Die v2-Übertragung ist bestätigt; der Test kann jetzt manuell gestartet werden.**
-
-1. Gerät eingeschaltet und wach lassen, SSH aktiv. Falls nötig den Tools-Ordner
-   neu öffnen; keine Dienste neu starten. Den Pak Store vorher regulär verlassen.
-2. In NextUI unter **Tools → MKXP Engine Smoke** auswählen. Das ist ein
-   temporärer Test, kein Spiel und kein fertiges RMXP-Pak.
-3. Erwartet: links nach rechts rote, grüne, blaue und gelbe Streifen, lesbarer
-   Text, bewegtes weißes Quadrat; Orientierung und Seitenverhältnis korrekt?
-4. Bei niedriger, hörbarer Gerätelautstärke auf zwei kurze Töne achten
-   (etwa nach 1 und 10 Sekunden). Die Testskripte ändern die Lautstärke nicht.
-5. D-Pad und Face-/Schultertasten einzeln drücken. Die tatsächliche physische
-   Zuordnung wird erst aus Beobachtung + Log ermittelt, nicht vorausgesetzt.
-   **RGSS-Cancel** beendet den Test; dadurch kann er schon vor Ton 2 enden.
-6. Ohne Eingabe endet er regulär nach ungefähr 30 Sekunden (Watchdog spätestens
-   nach rund 48 Sekunden). Gibt es einen Fehlerdialog, schwarz/falsch gedrehtes
-   Bild oder einen Hänger? Nicht wiederholt blind starten; Zustand melden.
-7. Kommt NextUI zurück? Navigation und Ton danach normal? Das gilt auch als
-   notwendige Kontrolle nach einem abgebrochenen oder fehlgeschlagenen Test.
-8. Kurz berichten: **Bild / Ton / gedrückte Tasten / Rückkehr**. Der Agent liest
-   anschließend nur die privaten Testlogs und aktualisiert Evidenz/Roadmap.
+1. Gerät eingeschaltet und wach lassen, SSH aktiv. Pak Store vorher regulär
+   verlassen; keine Dienste neu starten.
+2. Gerätelautstärke auf ein mittleres, angenehmes Niveau stellen.
+3. **Tools → MKXP Engine Smoke** starten. Farbstreifen und weißes Quadrat wie
+   bei v2 erwartet.
+4. Auf Töne achten: nach ca. 1 und 10 Sekunden (je 0,6 s lang). Zusätzlich die
+   Bestätigen-Taste drücken – jedes Drücken fordert den Ton erneut an.
+5. Mit dem D-Pad das **pinke Quadrat** bewegen. Jede Taste einzeln drücken
+   (A, B, X, Y, L1, R1, L2, R2, Select, Start) und notieren, welcher Text oben
+   erscheint („RGSS input: …“). Kurzes Drücken von Cancel beendet nicht mehr.
+6. Zum Beenden Cancel **eine Sekunde halten**, oder ca. 30 Sekunden warten.
+7. Kommt NextUI zurück? Menü-Navigation und Menüton danach normal?
+8. Kurz berichten: **Ton ja/nein, Quadrat folgt D-Pad, Tasten→Text, Rückkehr**.
 
 No screenshot/video, game data or personal path is required in the public repo.
-Logs stay in `/tmp/nextui-mkxp-engine-smoke-v2/work/run-*/run.log`; preserve
+Logs stay in `/tmp/nextui-mkxp-engine-smoke-v3/work/run-*/run.log`; preserve
 them before reboot. A fresh run never reuses another run's work/data directory.
 
 ## Cleanup after testing
