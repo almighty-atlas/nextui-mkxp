@@ -11,8 +11,8 @@
     {"id": "engine-smoke", "weight": 10, "done": true, "evidence": "build/h700-engine/engine-smoke-evidence.json"},
     {"id": "lifecycle", "weight": 5, "done": true, "evidence": "build/h700-engine/engine-smoke-evidence.json"},
     {"id": "game-inputs", "weight": 3, "done": true, "evidence": "build/h700-engine/knight-blade-inventory.json"},
-    {"id": "game-boot", "weight": 5, "done": false, "evidence": null},
-    {"id": "gameplay", "weight": 5, "done": false, "evidence": null},
+    {"id": "game-boot", "weight": 5, "done": true, "evidence": "build/h700-engine/knight-blade-boot-evidence.json"},
+    {"id": "gameplay", "weight": 5, "done": true, "evidence": "build/h700-engine/knight-blade-boot-evidence.json"},
     {"id": "persistence", "weight": 2, "done": false, "evidence": null}
   ],
   "reserve": {"hard_gib": 5, "stop_gib": 6, "fresh_setup_minimum_gib": 7}

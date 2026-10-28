@@ -1,0 +1,30 @@
+Sanitized excerpt of private Knight Blade boot run.log (run-ljOadD), owner-launched from NextUI Tools.
+OpenAL Soft info lines omitted; repeated lines collapsed with counts; ASLR addresses removed.
+
+1 BOOT_LAUNCH_BEGIN
+1 RGSS version 1 (RPG Maker XP)
+1 ALC_SOFT_pause_device present
+1 GL Vendor    : ARM
+1 GL Renderer  : Mali-G31
+1 GL Version   : OpenGL ES 3.2 v1.r20p0-01rel0.6bf520cc6fc11e5ebc382522e4d4ab38
+1 GLSL Version : OpenGL ES GLSL ES 3.20
+1 Loading path cache...
+1 Path cache completed.
+2 fluidsynth: error: function fluid_file_test is a stub, always returning true
+1 fluidsynth: error: function fluid_stat is a stub, always returning -1
+2 fluidsynth: error: function fluid_file_test is a stub, always returning true
+1 fluidsynth: error: function fluid_stat is a stub, always returning -1
+4 Primary font not found: Arial
+2 fluidsynth: warning: Instrument not found on channel 12 [bank=1 prog=9], substituted [bank=0 prog=9]
+7 Primary font not found: Arial
+3 Primary font not found: Arial Black
+2 fluidsynth: error: function fluid_file_test is a stub, always returning true
+1 fluidsynth: error: function fluid_stat is a stub, always returning -1
+2 Primary font not found: Arial
+1 EventThread termination requested
+1 RGSS thread ack'd request after 0 ms
+1 Shutting down.
+1 BOOT_PROCESS_EXIT=0
+1 BOOT_RUNNER_EXIT_OK
+
+MEMORY (VmRSS samples every 5 s): 89 samples over ~441 s, peak 209752 kB

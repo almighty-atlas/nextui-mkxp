@@ -1,6 +1,6 @@
 # Milestones and issue breakdown
 
-## Active first-game target: Knight Blade — 88%
+## Active first-game target: Knight Blade — 98%
 
 The [maintained Knight Blade checklist](KNIGHT_BLADE_ROADMAP.md) defines
 weighted progress and the 100% acceptance gate. Continue its first unfinished

@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 88% — engine smoke passes on H700; game/RTP inventory complete; game boot next.**
+**Current progress: 98% — Knight Blade boots and plays on H700; load after cold start remains.**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -21,8 +21,8 @@ reduces progress. Hard blockers can still exist at 99%.
 | Yes | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
 | Yes | 5% | Audio, controls, bounded exit and clean NextUI return |
 | Yes | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
-| No | 5% | Title screen, new game, first playable map |
-| No | 5% | Movement, dialogue, representative battle/event, music/effects |
+| Yes | 5% | Title screen, new game, first playable map |
+| Yes | 5% | Movement, dialogue, representative battle/event, music/effects |
 | No | 2% | Save/load, repeated cold start, safe exit and final evidence |
 
 ## What 100% means
@@ -69,9 +69,12 @@ No game assets or RTP may be committed or distributed here.
   official game and RTP downloads, hash-recorded and kept private. 583
   references: 520 game, 62 RTP, 1 pre-existing gap; no Win32API. RTP and a
   MIDI soundfont (28 MIDI tracks) are required.
-- **Next:** [first game boot](KNIGHT_BLADE_BOOT.md) (5%). Staged on the device
-  with RTP, TimGM6mb soundfont (GPL-2), `pathCache` on, saves in the private
-  game copy and A = confirm / B = cancel / Start = menu. Awaiting owner run.
+- [First game boot](KNIGHT_BLADE_BOOT.md) **PASS (verified-on-H700)**: owner saw
+  the title screen, heard MIDI music and effects, started a new game, moved,
+  fought, used the main menu and saved, with no restriction noticed. ~7 min run,
+  in-game shutdown, exit 0, peak RSS ≈205 MB of 1 GB.
+- **Next (2%):** cold start (fresh launch), load `Save1`, play briefly, exit
+  via Shutdown, confirm NextUI returns. Then 100%.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

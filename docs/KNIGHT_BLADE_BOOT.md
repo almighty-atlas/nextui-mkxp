@@ -1,7 +1,22 @@
-# Knight Blade first boot on H700: staged, awaiting manual test
+# Knight Blade first boot on H700: PASS
 
 2026-10-29 · Refs #38 · Stacked on PR #37 ([inventory](KNIGHT_BLADE_INVENTORY.md)).
-**Knight Blade: 88%. Nothing about the game boot is verified yet.**
+**Knight Blade: 98%. Boot and representative gameplay verified-on-H700
+(NextUI-20261013-0, 39a06de); load after a cold start not yet tested.**
+
+## Result (owner-launched, run-ljOadD)
+
+The owner reports: title screen, music and sound effects work; everything works
+flawlessly with no restriction noticed; saving, movement, battles and the main
+menu work. Logs: Mali-G31 GLES 3.2, path cache built, ~441 s run, in-game
+shutdown, engine exit 0, `BOOT_RUNNER_EXIT_OK`. `Save1.rxdata` (126,258 bytes)
+was written into the private game copy. Peak RSS 209,752 kB (89 samples).
+[Sanitized log](evidence/2026-10-29-knight-blade-boot.txt).
+
+Non-blocking warnings: Arial/Arial Black not found, the embedded fallback font
+is used (text looked fine to the owner); vendored FluidSynth prints stub
+messages for `fluid_file_test`/`fluid_stat` but the soundfont loads and music
+plays; one MIDI instrument is substituted from bank 0.
 
 ## Layout (private, owner device only)
 
