@@ -550,3 +550,39 @@ completed successfully, not that core object compilation, shared
 `make objs` (core objects only) with output architecture audit;
 do not use generic `make all` and do not change distribution
 or issue prerequisite gates.
+
+
+### Owner AArch64 Ruby 3.1.3 shared library link PASS (2026-10-28)
+
+Owner-reported private offline `make -j2 V=1 libruby.so.3.1.3` from
+the previously successful cross-configured Ruby V2 workspace. The
+cross compiler used the reviewed glibc-2.28 sysroot and CRT
+`-B<sysroot>/usr/lib64/` correction; private zlib search path
+`-L/zlib/lib -lz` was on the link command. The generated shared
+library was **not** installed, run on H700 or published.
+
+- `LIBRUBY_AARCH64_LINK_PASS` and
+  `AARCH64_SHARED_LIBRARY_PASS` for ELF64/AArch64/ET_DYN;
+  size 4,033,040 bytes.
+- Private `libruby.so.3.1.3` SHA-256
+  `4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793`.
+- `DT_NEEDED`: `libpthread.so.0`, `librt.so.1`,
+  `libdl.so.2`, `libcrypt.so.1`, `libm.so.6`,
+  `libc.so.6`, `ld-linux-aarch64.so.1`.
+  `DT_SONAME` was passed to the linker as `libruby.so.3.1`.
+- Observed direct version needs: GLIBC_2.17, GLIBC_2.25,
+  GLIBC_2.27, GLIBC_2.28. No unexpected RPATH/RUNPATH
+  or GLIBC_PRIVATE need reported by the owner's preliminary script.
+- A `libruby-static.a` was also assembled as a Make dependency;
+  the scope intentionally did not build extensions or a runnable Ruby.
+- Markers: `ELF_ABI_PRELIMINARY_PASS`,
+  `DEPENDENCY_PROVIDER_CLOSURE_NOT_YET_VERIFIED`,
+  `RUBY_AARCH64_LIBRUBY_COMPLETE`,
+  `RUBY_EXTENSIONS_NOT_BUILT`, `NO_INSTALLATION`,
+  `NO_INTENDED_TARGET_EXECUTION`, `DISTRIBUTION_BLOCKED`.
+
+**Proof boundary:** check ELF file providers/versions and architecture
+against the actual private sysroot, especially `libcrypt.so.1`
+and dynamic loader, before further linking. A linked library is not
+proof of a complete runnable Ruby runtime or NextUI compatibility.
+#1/#2/#3 and rights/distribution gates remain blocked.
