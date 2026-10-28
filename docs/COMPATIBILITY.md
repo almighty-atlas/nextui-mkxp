@@ -44,7 +44,8 @@ now pass. New Ruby batch builds ran separately with 2 CPUs / 4 GiB and a
 | Ruby encodings/transcoders, StringIO/Date/Set/Shellwords | PASS | verified-on-H700, [runtime log](evidence/2026-10-28-ruby-runtime.txt) | Selected roundtrips and stdlib tests only; not all 61 built encoding modules exercised |
 | Fiddle + bundled libffi 3.2.1 | PASS | verified-on-H700, [batch report](H700_RUBY_BATCH.md) | Stock libc `strlen`, allocation/free; callbacks and broader FFI NOT_TESTED |
 | mkxp-z cross-build / static ABI candidates | PASS | verified-on-host, [ABI report](H700_ENGINE_ABI.md) | Engine linked; exact stock provider graph and COPY sizes checked; not runtime binding |
-| mkxp-z engine start | NOT_TESTED | — | Loader check BLOCKED: device SSH unreachable. No engine start; stock-Ruby PASS is not evidence for engine Ruby semantics |
+| mkxp-z loader verify/list | PASS | verified-on-H700, [loader log](evidence/2026-10-28-engine-loader.txt) | Exact expected stock providers resolved; not an engine start or lazy-binding test |
+| mkxp-z engine start | NOT_TESTED | — | No engine start; stock-Ruby PASS is not evidence for engine Ruby semantics |
 
 Details and hashes: [H700_ENGINE_PREFLIGHT.md](H700_ENGINE_PREFLIGHT.md#owner-h700-ruby-313-runtime-zlib-and-psych-trials-pass-2026-10-28).
 Private artifacts are never distributed.

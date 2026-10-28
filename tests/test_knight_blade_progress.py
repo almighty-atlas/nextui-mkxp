@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 """Roadmap consistency checks, not proof of gameplay or hardware execution."""
 import json
+import hashlib
 from pathlib import Path
 import re
 import subprocess
@@ -45,7 +46,14 @@ class KnightBladeProgress(unittest.TestCase):
         self.assertEqual(evidence['unresolved_strong_imports'], 0)
         self.assertEqual(len(evidence['provider_sha256']), evidence['objects'] - 1)
         self.assertEqual(evidence['engine_start'], 'NOT_TESTED')
-        self.assertEqual(evidence['loader_test']['status'], 'BLOCKED')
+        self.assertEqual(evidence['loader_test']['status'], 'ENGINE_LOADER_PASS')
+        self.assertEqual(evidence['loader_test']['verify_exit'], 0)
+        self.assertEqual(evidence['loader_test']['list_exit'], 0)
+        self.assertEqual(hashlib.sha256((ROOT / evidence['loader_test']['script']).read_bytes()).hexdigest(),
+                         evidence['loader_test']['script_sha256'])
+        log = (ROOT / evidence['loader_test']['log']).read_text()
+        self.assertTrue(log.endswith('ENGINE_LOADER_PASS\n'))
+        self.assertNotRegex(log, r'0x[0-9a-fA-F]+')
         self.assertFalse(evidence['loader_test']['engine_main_executed'])
         for item in evidence['copy_relocations']:
             self.assertEqual(item['bytes'], 8)

@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 70% — static ABI candidates pass; device loader test blocked.**
+**Current progress: 70% — static ABI and device loader pass; engine start pending.**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -49,9 +49,10 @@ No game assets or RTP may be committed or distributed here.
   objects, including actual device SDL, samplerate and libgcc. Both COPY
   relocation sizes match. The narrow opt-in `$ORIGIN` policy does not permit
   arbitrary RPATH/COPY bypasses. This does **not** prove runtime binding.
-- **Next / blocked:** bounded device loader test, then asset-free engine smoke.
-  SSH timed out and then returned `Host is unreachable` before creating the
-  new stage. No engine was transferred or executed. Restore device access.
+- Device access restored: [loader-only test](H700_ENGINE_ABI.md) now PASS
+  (`--verify` and `--list`, both exit 0; provider hashes matched before/after).
+  Engine was transferred to a private `/tmp` stage but **not started**.
+  **Next:** asset-free engine smoke; visible output needs human confirmation.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

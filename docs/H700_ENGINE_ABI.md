@@ -1,11 +1,12 @@
-# Installed H700 engine: static ABI candidates PASS, loader BLOCKED
+# Installed H700 engine: static ABI candidates and H700 loader PASS
 
 2026-10-28 · Refs #6 · Stacked on PR #33 to use the unmerged build and
 roadmap; not an independent clean-main change. Main was inspected, not merged.
 
 **verified-on-host:** the installed engine passes the explicit provider graph
-audit. **No engine execution on H700 occurred.** The device became unreachable
-before the bounded loader-only test could create its private staging directory.
+audit. **No engine entry-point execution on H700 occurred.** The device was
+initially unreachable; after the owner restored access, the bounded loader-only
+test passed. The engine was copied only into a private device `/tmp` directory.
 
 ## Evidence
 
@@ -25,11 +26,11 @@ Engine SHA-256:
 | Closure | 10 objects, 926 strong imports, 0 missing strong candidates |
 | Weak imports | 31 unresolved, reported rather than treated as proof of safety |
 | COPY relocations | stdout and stderr, GLIBC_2.17, 8-byte OBJECTs in engine and libc |
-| Hardware loader | **BLOCKED:** SSH timeout, then `Host is unreachable` |
+| Hardware loader | **verified-on-H700 PASS:** `--verify` and `--list` both exit 0 |
 
 The static graph is **not an ld.so simulation**: it does not prove dynamic
 load order, interposition, optional weak-code paths or `dlopen` dependencies.
-The planned loader check is a separate gate and would still not prove an
+The loader check is a separate gate and does not prove an
 engine start, rendering, sound or controls.
 
 ## Exact runtime-provider table
@@ -116,6 +117,18 @@ environment and strips ASLR addresses from displayed logs. It runs only
 destination hashes, device identity and adequate `/tmp` space before copying.
 Never stage stock libraries or replace libc/graphics libraries.
 
-**Blocker:** turn the RG35XX Pro back on and restore the authorized SSH
-connection. Then run the loader diagnostic, verify the actual resolved paths
-and hashes, and only then prepare the asset-free engine smoke test.
+### Actual loader result
+
+The owner restored device access. NextUI-20261013-0 (`39a06de`), kernel
+4.9.170 and all nine provider hashes matched again before and after the test.
+The 34,914,232-byte engine and hash-bound script were staged privately under
+`/tmp/nextui-mkxp-loader-33b159138595` (no bundled libraries). Both commands
+returned 0; the overall bounded script returned 0 and printed
+`ENGINE_LOADER_PASS`. The [sanitized log](evidence/2026-10-28-engine-loader.txt)
+shows all expected resolved paths, including SDL and samplerate from NextUI.
+Script SHA-256: `d330116653011db4b1d6da92f20403308daddc76b94507eddac8157cb0d25821`.
+
+This checks loader resolution, not lazy function binding, graphics, audio,
+Ruby embedding or gameplay. The roadmap remains **70%** until the next
+hardware milestone is actually met. Next: prepare an asset-free engine smoke
+test with an explicit human checklist for visible output and controls.

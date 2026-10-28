@@ -159,6 +159,6 @@ Remaining: initial readelf inspection found build RPATH
 the build path and leaves `$ORIGIN` as configured by `install_rpath`.
 This is expected Meson build/install behavior, not a required source patch.
 The subsequent [static provider ABI audit](H700_ENGINE_ABI.md) passes;
-the device loader check is blocked by SSH reachability. No engine device
-run is claimed.
+the subsequent device loader verify/list also pass. No engine entry-point
+execution is claimed.
 Follow [Knight Blade progress](KNIGHT_BLADE_ROADMAP.md) for the next milestone.

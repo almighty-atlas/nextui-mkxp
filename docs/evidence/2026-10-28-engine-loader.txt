@@ -1,0 +1,14 @@
+LOADER_ONLY engine_main=NOT_EXECUTED
+LOADER_verify_EXIT=0
+	linux-vdso.so.1 (ADDRESS)
+	libpthread.so.0 => /lib/aarch64-linux-gnu/libpthread.so.0 (ADDRESS)
+	libSDL2-2.0.so.0 => /mnt/SDCARD/.system/h700/lib/libSDL2-2.0.so.0 (ADDRESS)
+	libdl.so.2 => /lib/aarch64-linux-gnu/libdl.so.2 (ADDRESS)
+	librt.so.1 => /lib/aarch64-linux-gnu/librt.so.1 (ADDRESS)
+	libm.so.6 => /lib/aarch64-linux-gnu/libm.so.6 (ADDRESS)
+	libgcc_s.so.1 => /lib/aarch64-linux-gnu/libgcc_s.so.1 (ADDRESS)
+	libc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (ADDRESS)
+	/lib/ld-linux-aarch64.so.1 (ADDRESS)
+	libsamplerate.so.0 => /mnt/SDCARD/.system/h700/lib/libsamplerate.so.0 (ADDRESS)
+LOADER_list_EXIT=0
+ENGINE_LOADER_PASS
