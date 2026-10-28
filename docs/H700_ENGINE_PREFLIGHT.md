@@ -299,3 +299,39 @@ The successful native x86_64 interpreter can be considered a candidate
 unbuilt, its target glibc/libffi/libyaml/zlib/iconv closure unverified.
 No engine is linked, deployed or distributed; existing #1/#2/#3,
 license/source obligations and `DISTRIBUTION_BLOCKED` remain unchanged.
+
+
+### Owner read-only bundled Ruby-extension source audit (2026-10-28)
+
+**Owner-reported, source-only inventory of the SHA-256-verified official
+Ruby 3.1.3 archive**, not an AArch64 compilation or engine import:
+
+- `ext/psych/extconf.rb` explicitly has
+  `enable_config("bundled-libyaml", false)` and a fallback to
+  `ext/psych/yaml/*.c` and `yaml.h`. These actual C sources
+  were present. Target build selection and successful Psych linkage
+  remain untested.
+- `ext/fiddle/extconf.rb` exposes
+  `enable_config('bundled-libffi')`, an external `pkg_config("libffi")`
+  search and a bundled `libffi-3.2.1` source route. The owner found
+  `ext/fiddle/libffi-3.2.1/{configure,LICENSE}` and AArch64 source files
+  `src/aarch64/{ffi.c,ffitarget.h,sysv.S}`. Bundled Fiddle libffi
+  does **not** automatically establish a general-purpose target shared
+  libffi provider for the later engine dependency graph.
+- `ext/zlib/extconf.rb` checks for a system zlib library/header and
+  may search for a separately supplied source directory. Only the
+  Ruby extension `ext/zlib/zlib.c` was present; no bundled zlib C
+  library or additional source tar archive was found.
+- Owner's read-only target sysroot inventory found
+  `usr/include/iconv.h`, but no `ffi.h`, `yaml.h`, `zlib.h`
+  or target `libffi`, `libyaml`, `libz` in inspected library roots.
+
+Markers: `RUBY_BUNDLED_DEPENDENCIES_INVENTORY_COMPLETE`,
+`RUBY_EXTENSION_SOURCE_AUDIT_COMPLETE`, `NO_BUILDS`,
+`NO_DOWNLOADS`, `NO_TARGET_EXECUTION`.
+
+**Next bounded dependency step:** acquire a separately versioned,
+SHA-256-reviewed zlib source archive into private host cache. Audit
+cross-build config and do not mistakenly link Debian x86_64 libffi,
+libyaml or zlib into the AArch64 target. Source/license and #1/#2/#3
+gates remain `BLOCKED`, with no target Ruby runtime yet.
