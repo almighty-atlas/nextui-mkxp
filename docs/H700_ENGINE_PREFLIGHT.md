@@ -483,3 +483,39 @@ build targets and recipes **without running make**, then scope
 one limited private target compile; avoid build tests, native/target
 architecture mixing and distribution. All pre-existing
 license/source/#1/#2/#3 gates remain blocked.
+
+
+### Owner Ruby AArch64 make-target/fake-module source audit (2026-10-28)
+
+Read-only owner inspection of the generated Ruby 3.1.3 Cross V2
+Makefile and source `common.mk` (no `make` invocation):
+
+- `CROSS_COMPILING=yes`, `arch=aarch64-linux`,
+  `BASERUBY=/work/prefix/bin/ruby --disable=gems` and
+  `MINIRUBY=/work/prefix/bin/ruby --disable=gems -I/target
+  -r$(arch)-fake ...`, selecting the **native x86_64** interpreter
+  for makefile Ruby recipes.
+- The generated file `aarch64-linux-fake.rb` was **not yet present**;
+  upstream `tool/fake.rb` was present. `common.mk` contains a
+  rule for `$(arch)-fake.rb` and target dependencies referencing it.
+  Absence prior to running that rule is not by itself a missing
+  source or failed configure.
+- **Distinct from the Make variable `MINIRUBY`**, the make target
+  `miniruby$(EXEEXT)` builds a target binary. The generated
+  Makefile links it with `$(CC)` and `$(MINIOBJS)`, while
+  `common.mk` lists `config.status`, `$(ALLOBJS)` and
+  `$(ARCHFILE)` as prerequisites. Do not run any generated
+  AArch64 `miniruby` on tiny02.
+- The default `all` target depends on `main docs`;
+  `main` involves `exts` and encodings. Thus generic `make`
+  would broaden scope and invoke extension/test build machinery.
+  Owner inventory also found runtime/spec/test targets referencing
+  `$(PROGRAM)` and `$(RUNRUBY)`; no generic `make` authorization.
+
+Marker: `RUBY_TARGET_BUILD_RULES_AUDIT_COMPLETE`,
+`NO_MAKE_EXECUTED`, `NO_COMPILATION`,
+`NO_INSTALLATION`, `NO_TARGET_EXECUTION`.
+Next: inspect the precise fake-module generation and minimal core
+build dependency recipes, then run only a reviewed, narrow
+offline/private cross-build. Do not alter existing toolchain/sysroot,
+or change license/#1/#2/#3/distribution blocked state.
