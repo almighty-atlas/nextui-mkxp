@@ -324,3 +324,15 @@ This resolves the narrow COPY **size** question from the previous
 section; it does not attest live dynamic relocations, loader search,
 C++ unwinding or actual execution. **`H700_CXX_RUNTIME_NOT_TESTED`**,
 **`DISTRIBUTION_BLOCKED`** and all engine gates remain.
+
+### Owner-observed H700 runtime staging environment (2026-10-28)
+
+The owner performed a read-only shell inventory on the H700 device, reporting:
+
+- `aarch64`, Linux `4.9.170`; `/tmp` is a writable/executable-accessible 256 MiB tmpfs with approximately 262128 KiB available.
+- The mount listing shows `/tmp` as `rw,relatime,size=262144k` (no `noexec` listed); root filesystem is ext4 `rw`.
+- `/usr/bin/timeout`, BusyBox and `sleep` are present.
+- The chosen temporary test file path `/tmp/nextui-mkxp-cxx14-probe` was absent at inventory time.
+- `H700_RUNTIME_ENVIRONMENT_INVENTORY_COMPLETE`; `CXX_PROBE_NOT_EXECUTED`.
+
+The inventory establishes **staging feasibility**, not execution permission or runtime success. Keep target trial separate, explicitly approved, bounded by timeout, and requiring only the fingerprinted private probe ELF and existing stock libraries. No additional libraries or demo assets to be installed; no system/NextUI file replacement.
