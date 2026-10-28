@@ -302,3 +302,25 @@ search/order/interposition or full runtime relocation evaluation. The two
 COPY relocations specifically require a narrow follow-up check of linked
 object sizes versus the chosen stock provider exported object sizes.
 No device execution was authorized or performed by this step.
+
+
+### Owner-observed COPY relocation size audit (2026-10-28)
+
+The owner performed a **read-only host-side** audit of the two AArch64
+`R_AARCH64_COPY` relocations, using the same six SHA-256-verified private
+artifacts (linked probe plus five copied stock device DSOs). Actual
+`readelf -W -r` relocation names and `readelf -W --dyn-syms` OBJECT
+sizes were compared:
+
+| Copy-relocated symbol | Linked executable OBJECT size | Stock `libstdc++.so.6` OBJECT size | Matches |
+| --- | ---: | ---: | --- |
+| `_ZTISt11logic_error@GLIBCXX_3.4` | 24 bytes | 24 bytes | one executable and one provider definition |
+| `_ZTISt13runtime_error@GLIBCXX_3.4` | 24 bytes | 24 bytes | one executable and one provider definition |
+
+Reported result: **`H700_COPY_RELOCATION_SIZE_PASS`**. No
+unexpected/missing/ambiguous provider OBJECT was reported.
+
+This resolves the narrow COPY **size** question from the previous
+section; it does not attest live dynamic relocations, loader search,
+C++ unwinding or actual execution. **`H700_CXX_RUNTIME_NOT_TESTED`**,
+**`DISTRIBUTION_BLOCKED`** and all engine gates remain.
