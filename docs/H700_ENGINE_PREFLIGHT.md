@@ -373,3 +373,39 @@ runtime or redistributability. Next phase should inspect exact
 Ruby-3.1.3 cross-`configure` arguments and the target-toolchain
 paths using a read-only check before a private Ruby configure.
 All existing #1/#2/#3 source/licensing/distribution gates remain blocked.
+
+
+### Owner-tested Ruby cross-link CRT search correction (2026-10-28)
+
+**Owner-observed diagnostic only; Ruby cross-configure remains blocked
+until explicitly retried.** First Ruby 3.1.3 cross-configure with
+`--build=x86_64-pc-linux-gnu --host=aarch64-nextui-linux-gnu`
+and explicit glibc-2.28 sysroot failed at Autoconf's minimal C
+executable link: `crt1.o` and `crti.o` not found. Actual sysroot
+inventory revealed CRT objects at `<sysroot>/usr/lib64/`, with
+`<sysroot>/usr/lib/` absent, while GCC searched via
+`usr/lib/../lib64`. GCC's normal built-in sysroot found CRT objects,
+but replacing the separate sysroot with its default was not assumed
+safe.
+
+**Read-only isolated proof of targeted correction:** with the same
+AArch64 GCC 8.3.0 and explicit private sysroot,
+`-B<sysroot>/usr/lib64/` made `crt1.o`, `Scrt1.o`,
+`crti.o`, `crtn.o` and `libc.so` all discoverable inside
+the selected sysroot (`CRT_SEARCH_PATH_PASS`). A minimal original
+`int main(void) { return 0; }` source was compiled and linked
+privately with `-B...`, `-L<sysroot>/usr/lib64` and
+`-L<sysroot>/lib64` (`AARCH64_MINIMAL_LINK_PASS`).
+Host ELF inspection reported ELF64, `Machine: AArch64`,
+`Type: EXEC`, interpreter `/lib/ld-linux-aarch64.so.1`,
+`NEEDED libc.so.6`, and a `GLIBC_2.17` version requirement.
+This does **not** attest full target ABI closure or execution.
+The source sysroot/toolchain and handheld remain unchanged:
+`NO_TARGET_EXECUTION`, `NO_SYSROOT_CHANGES`,
+`NO_INSTALLATIONS`.
+
+Next: retry cross-`configure` only in a **fresh** private build
+workspace, with the reviewed `-B` and linker search flags. Do not
+delete the original failed `config.log`, alter the sysroot, or
+claim Ruby compilation before an actual PASS. #1/#2/#3 and
+distribution/source/license gates remain `BLOCKED`.
