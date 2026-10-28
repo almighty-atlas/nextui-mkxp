@@ -656,3 +656,33 @@ version definitions, and inspect the owner-provided glibc-2.28
 runtime closure without executing target code. No claim of
 on-device compatibility or redistributability; all #1/#2/#3 and
 licensing/distribution gates remain blocked.
+
+
+### Owner Ruby 3.1.3 provider-bound symbol version audit PASS (2026-10-28)
+
+The owner ran an offline, read-only ELF version-needs/definition
+and exact named-provider symbol-export audit of the private target
+`libruby.so.3.1.3` plus the seven AArch64 glibc-2.28
+dependency providers. The script reported:
+
+- Eight ELF libraries assessed; `libruby` had 10 distinct
+  version requirement entries and **zero direct GLIBC_PRIVATE imports**.
+- **486 strong imports** checked against named provider version
+  definitions and corresponding symbol exports, with
+  **zero provider/version issues**.
+- **89 GLIBC_PRIVATE imports** were attributed to the seven
+  glibc-internal provider ELFs (47 `libpthread`,
+  16 `librt`, 8 `libdl`, 6 `libcrypt`,
+  4 `libm`, 8 `libc`); none to `libruby`.
+- Marker `RUBY_AARCH64_VERSION_PROVIDER_AUDIT_PASS`,
+  with `DYNAMIC_LOADER_RUNTIME_NOT_TESTED`,
+  `NEXTUI_RUNTIME_NOT_VERIFIED`,
+  `NO_TARGET_EXECUTION`, `NO_CHANGES`.
+
+**Scope:** static, provider-bound ELF import and symbol-version
+matching within the private sysroot. It does **not** validate the
+actual NextUI runtime or loader execution, nor target Ruby
+extensions. The next narrow host step is to build only the Ruby
+AArch64 `program` target and audit its produced ELF, with
+no `make all`, tests, installation, release or target run.
+All #1/#2/#3/source/license/distribution gates remain blocked.
