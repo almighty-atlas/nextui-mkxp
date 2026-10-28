@@ -768,3 +768,52 @@ hashes. `$ORIGIN` alone does not solve availability or compatibility
 of the absolute ELF program interpreter or glibc providers on
 the actual NextUI firmware. Existing license/source/#1/#2/#3
 and distribution gates remain blocked.
+
+
+### Owner AArch64 Ruby $ORIGIN-relative program link PASS (2026-10-28)
+
+The owner's first isolated program relink failed with
+`cannot find -lruby`: the private probe directory contained
+`libruby.so.3.1` (SONAME symlink) and
+`libruby.so.3.1.3`, not the unversioned linker-name
+`libruby.so`. This was an input/linker-name mismatch,
+not a Ruby or ABI failure. The narrowly corrected retry
+used `-l:libruby.so.3.1` to select the exact provider.
+
+Reported owner PASS markers:
+`RUBY_ORIGIN_LINK_V2_PASS`,
+`RUBY_AARCH64_ORIGIN_PROBE_COMPLETE`,
+`ORIGINAL_RUBY_UNCHANGED`,
+`NO_INSTALLATION`, `NO_TARGET_EXECUTION`,
+`DISTRIBUTION_BLOCKED`.
+
+The newly linked private `/probe/ruby` is **ELF64 AArch64 ET_EXEC**,
+SHA-256
+`8b884d90eeacd792218d33f5cd2d407529ffe32ffeb5bffe974581c0783af14c`.
+It has `DT_RUNPATH=$ORIGIN` and `DT_NEEDED` entries for
+`libruby.so.3.1`, `libpthread.so.0`, `librt.so.1`,
+`libdl.so.2`, `libcrypt.so.1`, `libm.so.6`,
+`libc.so.6`, `ld-linux-aarch64.so.1`.
+`PT_INTERP` remains **absolute**:
+`/lib/ld-linux-aarch64.so.1`. The colocated copied
+`libruby.so.3.1.3` retains original SHA-256
+`4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793`;
+its `libruby.so.3.1` symlink is present. No original
+target files were modified.
+
+**Proof boundary:** relative `$ORIGIN` resolves the direct
+libruby dependency only, not the absolute program interpreter,
+not the libc/crypt/pthread/rt/dl providers, and not all
+transitive dependencies. Separately,
+`docs/H700_CXX_ABI.md` documents *owner-measured actual
+device* glibc provider definitions through GLIBC_2.35
+and already tested stock loader/libc/libm identities on the
+RG35XX Pro. Those previously captured five provider files
+do not include the additional Ruby-specific
+`libcrypt.so.1`, `libpthread.so.0`,
+`librt.so.1`, `libdl.so.2`, so their actual
+NextUI presence/symbol compatibility remains unverified.
+Do not mistake the build sysroot glibc 2.28 for stock
+firmware glibc or claim runtime compatibility.
+All prior prerequisite, licensing, source and release
+gates remain blocked.
