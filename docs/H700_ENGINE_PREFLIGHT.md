@@ -335,3 +335,41 @@ SHA-256-reviewed zlib source archive into private host cache. Audit
 cross-build config and do not mistakenly link Debian x86_64 libffi,
 libyaml or zlib into the AArch64 target. Source/license and #1/#2/#3
 gates remain `BLOCKED`, with no target Ruby runtime yet.
+
+
+### Owner-built private AArch64 zlib 1.3.2 (2026-10-28)
+
+**Owner-observed successful private cross-build, not CI and not an H700
+runtime validation.** Official zlib source archive
+`https://zlib.net/zlib-1.3.2.tar.gz`, size 1,502,830 bytes, SHA-256
+`bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16`,
+was acquired on tiny02, checked before and inside the isolated tool
+container, and extracted (291 archive members).
+
+- Tool image: `nextui-mkxp-tools:trixie-20261020`.
+  Source, existing cross-toolchain/sysroot bound read-only; private writable
+  prefix only; network disabled; no host package installation.
+- Cross compiler: `aarch64-nextui-linux-gnu-gcc` 8.3.0 from the existing
+  crosstool-NG toolchain; existing Linux-4.9/glibc-2.28 target sysroot.
+- CMake/Ninja configuration for **static** PIC zlib passed; 15 recorded
+  compile commands passed the owner's scripted compiler/sysroot
+  checks; build target `zlibstatic` passed.
+- ELF headers of all 15 members of private `libz.a` were reported as
+  AArch64 relocatable objects (`AARCH64_ARCHIVE_OBJECTS_PASS`).
+  `zlib.h` and generated `zconf.h` copied alongside `libz.a`
+  to private host path
+  `~/nextui-mkxp-tools-20261020/zlib-aarch64-1.3.2/prefix/`.
+- SHA-256 private `libz.a`:
+  `163a772bca39e0a8252ed14cd2c8771b71a7bf65cad0c246ed6d8fcbceff2289`.
+- End-of-run host free space approximately 32 GiB. No target binary
+  execution or upload.
+
+Markers: `ZLIB_AARCH64_PRIVATE_BUILD_COMPLETE`,
+`NO_TARGET_EXECUTION`, `DISTRIBUTION_BLOCKED`.
+
+**Limit of proof:** archive/object-architecture audit does not establish
+Ruby linking, full compiler include/lib provider closure, a target
+runtime or redistributability. Next phase should inspect exact
+Ruby-3.1.3 cross-`configure` arguments and the target-toolchain
+paths using a read-only check before a private Ruby configure.
+All existing #1/#2/#3 source/licensing/distribution gates remain blocked.
