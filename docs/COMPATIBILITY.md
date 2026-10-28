@@ -35,11 +35,18 @@ tiny02 free space still needs its own measurement. Distribution remains BLOCKED.
 | Ruby 3.1.3 interpreter + core test | PASS | Owner-reported; log/firmware version not attached | Private build, not reproducible from this repo yet |
 | `zlib.so` (deflate/inflate/CRC32) | PASS | Owner-reported | Private build |
 | `psych.so` + bundled libyaml (load/parse/syntax error) | PASS | Owner-reported | `UTF-16LE`/`UTF-16BE` encodings missing; `safe_load`/`dump` NOT_TESTED |
-| Ruby encodings (`enc/*.so`), Fiddle/libffi | NOT_TESTED | — | Not built |
+| Ruby encodings (`enc/*.so`), Fiddle/libffi | NOT_TESTED | — | Build/staging state unknown; UTF-16 encodings unavailable in reported Psych test |
 | mkxp-z engine | NOT_TESTED | — | Not built; no engine start |
 
 Details and hashes: [H700_ENGINE_PREFLIGHT.md](H700_ENGINE_PREFLIGHT.md#owner-h700-ruby-313-runtime-zlib-and-psych-trials-pass-2026-10-28).
 Private artifacts are never distributed.
+
+[Current runtime pipeline/access report](H700_RUNTIME_PIPELINE.md) records
+the actual authoring-container blockers, prioritized source dependency graph,
+ELF gate requirements and grouped hardware checklist. No new build, static
+ELF validation, test package or engine start was performed. The active task's
+free-space reserve is **25 GiB**; the historical C++ helper's 20-GiB guard is
+not sufficient for new work under this scope.
 
 ## Rules for updating
 

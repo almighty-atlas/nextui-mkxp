@@ -42,3 +42,8 @@
 | Example | H700 | RG35XX Pro / exact NextUI tag | NOT_TESTED | — |
 
 Use PASS / FAIL / BLOCKED / NOT_TESTED. Never claim PASS without corresponding actual execution.
+
+For the 2026-10-28 private Ruby extension follow-up, see the
+[grouped hardware checklist and ELF validator contract](H700_RUNTIME_PIPELINE.md).
+These are pending tests, not evidence of execution. Successful unchanged
+Ruby-core/zlib/low-level-Psych trials should not be repeated unnecessarily.

@@ -5,7 +5,7 @@
   "raw_device_log_committed": false,
   "nextui_firmware_version": null,
   "device": {"model": "RG35XX Pro", "arch": "aarch64", "kernel": "4.9.170",
-             "staging_dir": "/tmp/nextui-mkxp-ruby-3.1.3-8b884d90", "staging_fs": "tmpfs"},
+             "staging_dir": "/tmp/nextui-mkxp-ruby-3.1.3-8b884d90", "staging_fs": null},
   "builder": {"host": "tiny02", "image": "nextui-mkxp-tools:trixie-20261020",
               "image_id": "sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b",
               "network": "disabled", "cpu_limit": 2, "memory_limit_gib": 4,
@@ -25,7 +25,7 @@
      "h700": "PASS", "tests": ["interpreter_start", "ruby_core"]},
     {"name": "ruby ($ORIGIN RUNPATH probe)", "visibility": "private",
      "sha256": "8b884d90eeacd792218d33f5cd2d407529ffe32ffeb5bffe974581c0783af14c",
-     "h700": "PASS_ASSUMED_FROM_STAGING_DIR_NAME_CONFIRM_FROM_LOG"},
+     "h700": "EXACT_INTERPRETER_IDENTITY_NOT_CONFIRMED_FROM_LOG"},
     {"name": "zlib.so", "visibility": "private",
      "sha256": "fcc514925e8274c6d06819c0988ae2ed06aa68bdee3fdd92b311649f7e708752",
      "h700": "PASS", "tests": ["deflate", "inflate", "crc32"]},
@@ -35,7 +35,9 @@
      "warnings": ["UTF-16LE encoding missing", "UTF-16BE encoding missing"],
      "not_tested": ["Psych.safe_load", "Psych.dump"]}
   ],
-  "not_built": ["ruby encodings enc/*.so", "fiddle (bundled libffi 3.2.1)", "mkxp-z"],
+  "not_built": ["mkxp-z"],
+  "build_state_unknown": ["ruby encodings enc/*.so", "fiddle (bundled libffi 3.2.1 candidate)"],
+  "not_tested": ["UTF-16LE/UTF-16BE encodings", "fiddle", "Psych.safe_load", "Psych.dump"],
   "public_reproducibility": "NOT_REPRODUCIBLE_FROM_REPOSITORY",
   "distribution": "BLOCKED"
 }
