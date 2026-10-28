@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "scope": "private-cxx14-calibration",
+  "source_sha256": "30fd3a0216496f30950322bbeb4e2cb7b075022826742bead66095b7c28dd2e4",
+  "compiler_root": null,
+  "reviewed_compiler_tree_sha256": null,
+  "sysroot": null,
+  "old_sdk": null,
+  "compiler_headers": [],
+  "compiler_runtime": null,
+  "cxx_library_dir": null,
+  "includes": [],
+  "libraries": [],
+  "startups": [],
+  "startup_records": {},
+  "compiler_archive": {"path": null, "sha256": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3"},
+  "receipts": {
+    "input_lock": {"path": null, "sha256": null},
+    "sysroot": {"path": null, "sha256": null},
+    "sdl": {"path": null, "sha256": null}
+  },
+  "providers": {
+    "libstdc++.so.6.0.25": {"path": null, "sha256": "678f07e10eecaced61f0686af119680fc6d0a23487b057cc3be5718204716fa4"},
+    "libgcc_s.so.1": {"path": null, "sha256": "3e250c02603da82479e64559d926bae3964e6ea6128f1c74dc8339bfb97fe476"}
+  }
+}

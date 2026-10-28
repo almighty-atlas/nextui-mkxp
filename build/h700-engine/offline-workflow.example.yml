@@ -2,9 +2,9 @@
 name: H700 engine input preflight (offline)
 on:
   push:
-    paths: ['build/h700-engine/**', 'scripts/check_h700_engine_inputs.py', 'tests/test_h700_engine_inputs.py', '.github/workflows/h700-engine-preflight.yml', 'docs/H700_ENGINE_PREFLIGHT.md']
+    paths: ['build/h700-engine/**', 'scripts/check_h700_engine_inputs.py', 'scripts/h700_cxx_abi.py', 'spikes/h700-cxx-abi/**', 'tests/test_h700*.py', '.github/workflows/h700-engine-preflight.yml', 'docs/H700*']
   pull_request:
-    paths: ['build/h700-engine/**', 'scripts/check_h700_engine_inputs.py', 'tests/test_h700_engine_inputs.py', '.github/workflows/h700-engine-preflight.yml', 'docs/H700_ENGINE_PREFLIGHT.md']
+    paths: ['build/h700-engine/**', 'scripts/check_h700_engine_inputs.py', 'scripts/h700_cxx_abi.py', 'spikes/h700-cxx-abi/**', 'tests/test_h700*.py', '.github/workflows/h700-engine-preflight.yml', 'docs/H700*']
 permissions:
   contents: read
 jobs:
@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: Synthetic offline tests (no cross-build or artifacts)
-        run: python3 -I -B -m unittest discover -s tests -p 'test_h700_engine_inputs.py' -v
+        run: python3 -I -B -m unittest discover -s tests -p 'test_h700*.py' -v
       - name: Complete branch whitespace check
         env:
           BASE: ${{ github.event.pull_request.base.sha || github.event.before }}

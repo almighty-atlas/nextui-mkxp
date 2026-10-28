@@ -18,6 +18,16 @@ The input manifest remains **BLOCKED** by #1/#2/#3, complete dependency/license
 closure and exact current builder receipt binding. No engine/C++ cross-build,
 device changes or distribution permission result from this static checker.
 
+## C++14 calibration follow-up
+
+[C++14 report](H700_CXX_ABI.md) binds the supplied tiny02 libstdc++/libgcc hashes,
+GLIBC floors and receipt-match facts without claiming independent byte inspection.
+Original probe and native runner are prepared; **HOST_BUILD_BLOCKED** here (no
+native C++ compiler in PATH), **CROSS_BUILD_BLOCKED** (no local tiny02 raw receipts,
+observed search paths or actual link inputs). No new ELF/map, native-runtime,
+engine or H700 compatibility result. The 20-GiB floor is enforced by the runner;
+tiny02 free space still needs its own measurement. Distribution remains BLOCKED.
+
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.

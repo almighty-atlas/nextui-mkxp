@@ -2,6 +2,13 @@
 
 Recorded 2026-10-28.
 
+Follow-up: [C++14 calibration evidence and blockers](H700_CXX_ABI.md) records the
+owner-verified provider hashes/GLIBC floors and compiler/sysroot receipt agreement.
+These supersede the earlier missing **owner facts**, not the missing raw local
+files. Probe source/native runner/search/ELF audit helpers are now prepared;
+neither native C++ nor cross-link success is claimed. The following original
+static-preflight report remains historical; engine/release gates stay BLOCKED.
+
 **STATIC PREPARATION ONLY — real manifest BLOCKED; no build or release grant.**
 This independent branch starts from main `107db135b8e8ef72f6d61c78be14416330727b0d`.
 It does not merge/change [PR #30](https://github.com/almighty-atlas/nextui-mkxp/pull/30)
