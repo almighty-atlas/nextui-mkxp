@@ -2,10 +2,17 @@
   "schema": 1,
   "source": "Owner-supplied verified tiny02 results in the C++14 calibration task, 2026-10-28; not independently repeated in this session",
   "builder": {
-    "host": "tiny02", "container": "nextui-mkxp-builder", "os": "Debian",
-    "network": "disabled", "cpu_limit": 2, "memory_limit_gib": 5,
-    "target": "aarch64-nextui-linux-gnu", "gcc": "8.3.0", "gxx": "8.3.0",
-    "sysroot_glibc": "2.28", "sysroot_linux_headers": "4.9.170",
+    "host": "tiny02",
+    "container": "nextui-mkxp-builder",
+    "os": "Debian",
+    "network": "disabled",
+    "cpu_limit": 2,
+    "memory_limit_gib": 5,
+    "target": "aarch64-nextui-linux-gnu",
+    "gcc": "8.3.0",
+    "gxx": "8.3.0",
+    "sysroot_glibc": "2.28",
+    "sysroot_linux_headers": "4.9.170",
     "default_compiler_sysroot": "OLD_SDK_DO_NOT_USE",
     "free_space_on_tiny02": null
   },
@@ -17,19 +24,85 @@
     "raw_receipt_sha256_available_here": false,
     "compiler_lock_reference": "PR #27 1c04c578e3a35acc40b8669986228e3a2ae056c0 docs/build/issue-26-inputs.json",
     "compiler_archive_sha256": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
-    "expected_sysroot_receipt_fields": ["source_lock_sha256", "sysroot_tree_sha256", "target_execution", "distribution"],
-    "expected_sdl_result_fields": ["status=SDL_ONLY_HOST_LINKED", "sysroot_tree"],
+    "expected_sysroot_receipt_fields": [
+      "source_lock_sha256",
+      "sysroot_tree_sha256",
+      "target_execution",
+      "distribution"
+    ],
+    "expected_sdl_result_fields": [
+      "status=SDL_ONLY_HOST_LINKED",
+      "sysroot_tree"
+    ],
     "warning": "PR #27 field names describe the inspected recipe, not fabricated tiny02 receipts. If the real tiny02 receipt schema differs, stop and review the adapter. Do not change receipts to make a comparison pass."
   },
   "providers": [
-    {"file": "libstdc++.so.6.0.25", "architecture": "AArch64", "sha256": "678f07e10eecaced61f0686af119680fc6d0a23487b057cc3be5718204716fa4", "glibc_needs": ["GLIBC_2.17", "GLIBC_2.18"], "glibcxx_cxxabi_definitions": null},
-    {"file": "libgcc_s.so.1", "architecture": "AArch64", "sha256": "3e250c02603da82479e64559d926bae3964e6ea6128f1c74dc8339bfb97fe476", "glibc_needs": ["GLIBC_2.17"], "gcc_version_definitions": null}
+    {
+      "file": "libstdc++.so.6.0.25",
+      "architecture": "AArch64",
+      "sha256": "678f07e10eecaced61f0686af119680fc6d0a23487b057cc3be5718204716fa4",
+      "glibc_needs": [
+        "GLIBC_2.17",
+        "GLIBC_2.18"
+      ],
+      "glibcxx_cxxabi_definitions": null
+    },
+    {
+      "file": "libgcc_s.so.1",
+      "architecture": "AArch64",
+      "sha256": "3e250c02603da82479e64559d926bae3964e6ea6128f1c74dc8339bfb97fe476",
+      "glibc_needs": [
+        "GLIBC_2.17"
+      ],
+      "gcc_version_definitions": null
+    }
   ],
   "local_provider_bytes_checked": false,
   "provider_archive_membership_and_link_selection": "NOT_INDEPENDENTLY_CHECKED; filenames/hashes alone do not establish exact extracted archive member or selected linker input",
   "cross_build_status": "CROSS_BUILD_BLOCKED",
-  "blockers": ["Actual tiny02 compiler/sysroot/provider paths and raw matching receipts unavailable to this session", "Preprocess include traces, compiler/linker dry-run search and exact startup/link-input inventory unavailable", "No newly produced C++ AArch64 ELF or linker map"],
+  "blockers": [
+    "Actual tiny02 compiler/sysroot/provider paths and raw matching receipts unavailable to this session",
+    "Preprocess include traces, compiler/linker dry-run search and exact startup/link-input inventory unavailable",
+    "No newly produced C++ AArch64 ELF or linker map"
+  ],
   "engine_gates": "UNCHANGED_BLOCKED",
   "distribution": "BLOCKED",
-  "arm_execution": "NEVER"
+  "arm_execution": "NEVER",
+  "original_authoring_session_scope": "Fields cross_build_status=CROSS_BUILD_BLOCKED and arm_execution=NEVER describe the original cloud authoring session only, before separately owner-run private tiny02 cross-build and one explicitly approved H700 hardware trial. Do not interpret those historic fields as overall latest status.",
+  "owner_observed_h700_run": {
+    "date": "2026-10-28",
+    "evidence_level": "OWNER_REPORTED_PHYSICAL_H700; not an independent agent/CI execution",
+    "device": {
+      "architecture": "aarch64",
+      "kernel": "4.9.170"
+    },
+    "probe_sha256": "748974b7412b321ac81001e2516584d33015a1a880b87eb3d905eef68c9d1b73",
+    "staged_path_on_device": "/tmp/nextui-mkxp-cxx14-748974b7/probe-aarch64",
+    "authorization": "ONE_EXPLICIT_OWNER_APPROVAL_CONSUMED",
+    "invocation": "env -i PATH=/usr/bin:/bin LC_ALL=C /usr/bin/timeout -k 1 5 <verified-probe>",
+    "prelaunch_sha256_check": "ELF_HASH_PASS",
+    "timeout_tool_check": "TIMEOUT_AVAILABLE",
+    "exit_code": 0,
+    "exact_stdout": "RMXP_CXX14 native_or_target_probe_ok destructors=2",
+    "results": [
+      "H700_CXX14_RUNTIME_PASS",
+      "EXCEPTIONS_PASS",
+      "RAII_DESTRUCTORS_PASS",
+      "CXX_ALLOCATION_PASS",
+      "H700_CXX14_SINGLE_TRIAL_COMPLETE"
+    ],
+    "static_audits": [
+      "LINK_MAP_PATH_AUDIT_PASS",
+      "ELF_VERSION_POLICY_PASS",
+      "H700_STOCK_CXX_SYMBOLS_PASS",
+      "STOCK_CXX_TRANSITIVE_VERSION_PASS",
+      "H700_INTERPRETER_IDENTITY_PASS",
+      "GLIBC_PRIVATE_SYMBOL_MATCH_PASS",
+      "STOCK_DYNSYM_NAME_AUDIT_PASS",
+      "H700_COPY_RELOCATION_SIZE_PASS"
+    ],
+    "limitations": "One bounded game-free C++14 runtime trial only; no mkxp-z engine, Ruby/RGSS, SDL, audio or game runtime evidence; exact device firmware identity not supplied; no automatic second trial",
+    "distribution": "BLOCKED",
+    "engine_gates": "UNCHANGED_BLOCKED"
+  }
 }
