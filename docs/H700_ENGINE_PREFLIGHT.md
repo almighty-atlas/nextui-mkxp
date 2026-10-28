@@ -586,3 +586,43 @@ against the actual private sysroot, especially `libcrypt.so.1`
 and dynamic loader, before further linking. A linked library is not
 proof of a complete runnable Ruby runtime or NextUI compatibility.
 #1/#2/#3 and rights/distribution gates remain blocked.
+
+
+### Owner Ruby shared-library DT_NEEDED provider inventory PASS (2026-10-28)
+
+Owner performed a **read-only** isolated recursive AArch64 ELF
+provider inventory for the private `libruby.so.3.1.3`
+SHA-256 `4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793`.
+Expected SONAME `libruby.so.3.1` passed.
+
+All seven `DT_NEEDED` names resolved to AArch64 shared ELF files
+**inside the reviewed private glibc-2.28 sysroot**, including
+the transitive closure:
+
+| SONAME | Owner-observed provider |
+| --- | --- |
+| `libpthread.so.0` | `lib64/libpthread-2.28.so` |
+| `librt.so.1` | `lib64/librt-2.28.so` |
+| `libdl.so.2` | `lib64/libdl-2.28.so` |
+| `libcrypt.so.1` | `lib64/libcrypt-2.28.so` |
+| `libm.so.6` | `lib64/libm-2.28.so` |
+| `libc.so.6` | `lib64/libc-2.28.so` |
+| `ld-linux-aarch64.so.1` | `lib64/ld-2.28.so` |
+
+The loader name was resolved through a symlink rooted under
+`<sysroot>/lib/`. None of these ELF providers introduced an
+unresolved additional `DT_NEEDED` name in the owner's inventory.
+The direct version needs printed for libruby were
+`GLIBC_2.17`, `GLIBC_2.25`, `GLIBC_2.27` and
+`GLIBC_2.28` (not a complete imported-symbol-to-export proof).
+
+Owner markers: `RUBY_AARCH64_PROVIDER_INVENTORY_PASS`,
+`SYMBOL_VERSION_CLOSURE_NOT_YET_VERIFIED`,
+`NEXTUI_RUNTIME_NOT_YET_VERIFIED`,
+`NO_TARGET_EXECUTION`, `NO_CHANGES`.
+
+**Next bounded check:** match all strong undefined dynamic
+symbols and versioned imports to AArch64 exports across this
+resolved dependency graph; inspect unresolved weak imports
+separately, then distinguish sysroot-only closure from NextUI
+firmware provider closure. No execution or distribution implied.
