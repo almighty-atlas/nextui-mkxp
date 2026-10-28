@@ -519,3 +519,34 @@ Next: inspect the precise fake-module generation and minimal core
 build dependency recipes, then run only a reviewed, narrow
 offline/private cross-build. Do not alter existing toolchain/sysroot,
 or change license/#1/#2/#3/distribution blocked state.
+
+
+### Owner Ruby AArch64 fake-platform module generation PASS (2026-10-28)
+
+Owner-reported successful scoped `make -j2 V=1 aarch64-linux-fake.rb`
+under `nextui-mkxp-tools:trixie-20261020` with offline networking,
+read-only base and toolchain mounts, and a private writable target build
+directory `~/nextui-mkxp-tools-20261020/ruby-aarch64-3.1.3-v2`.
+
+- Cross mode verified `CROSS_COMPILING=yes`,
+  `HAVE_BASERUBY=yes`; verified native x86_64 Ruby 3.1.3 bootstrap
+  executed.
+- Generated `/target/aarch64-linux-fake.rb`, 1267 bytes;
+  SHA-256 `59fb5ce30840bb2e1311810c167142e9728de70b859067796d8fcd072d8db2de`.
+  Native Ruby syntax check: `Syntax OK`.
+- The generated source sets `RUBY_VERSION = "3.1.3"`,
+  `RUBY_RELEASE_DATE = "2022-11-24"`,
+  `RUBY_PLATFORM = "aarch64-linux"` and
+  `RUBY_PATCHLEVEL = 185`.
+- Owner markers: `NATIVE_BOOTSTRAP_PASS`,
+  `RUBY_AARCH64_FAKE_BUILD_PASS`,
+  `RUBY_AARCH64_FAKE_MODULE_COMPLETE`,
+  `LIBRUBY_NOT_BUILT`, `NO_INSTALLATION`,
+  `NO_INTENDED_TARGET_EXECUTION`.
+
+This proves that the selected fake-platform generation target
+completed successfully, not that core object compilation, shared
+`libruby`, extensions or H700 execution work. Next scoped test is
+`make objs` (core objects only) with output architecture audit;
+do not use generic `make all` and do not change distribution
+or issue prerequisite gates.
