@@ -212,3 +212,70 @@ next engine dependency-lock slice (native Ruby helpers and mandatory libraries);
 it still does not authorize engine code import or distribution.
 
 [PLAN]: https://github.com/almighty-atlas/nextui-mkxp/blob/91b5a27378150bb479fc8546f2bddb6c6e5b1da7/docs/H700_MINIMAL_ENGINE_PLAN.md
+
+---
+
+## Owner-observed follow-up on tiny02 and stock H700 (2026-10-28)
+
+**Evidence boundary:** This section reports subsequent commands and outputs
+supplied by the device/host owner. It is **not** the original author's
+environment, CI evidence, an independent reproduction, or an authorization
+to execute the C++ probe on the handheld. The statements above about
+`CROSS_BUILD_BLOCKED` and no ELF refer to the **original PR authoring
+session**, and do not negate the later private tiny02 observations.
+
+The owner reported:
+
+| Stage | Owner-observed result | Scope |
+| --- | --- | --- |
+| Native host C++14 compile + run | `NATIVE_HOST_PASS`; 2 destructors | Linux x86_64 on tiny02 only |
+| AArch64 C++14 compile | ET_REL SHA-256 `142242a4ccce66e7aa47ae1e9929332b71625dfe9c247f03303eae182212cb8d` | Private cross object |
+| AArch64 cross-link | ET_EXEC SHA-256 `748974b7412b321ac81001e2516584d33015a1a880b87eb3d905eef68c9d1b73` | Private linked probe; never executed on H700 |
+| Actual link-map path audit | `LINK_MAP_PATH_AUDIT_PASS`; 16 LOAD records | Verified probe object, GCC support, staged C++ providers, rebuilt glibc 2.28; no old SDK libc LOAD |
+| ELF policy against build-time providers | `ELF_VERSION_POLICY_PASS` | AArch64, interpreter `/lib/ld-linux-aarch64.so.1`, Linux ABI 4.9.0, no RPATH/RUNPATH or TEXTREL, nonexecutable stack |
+| Stock H700 C++ versions | `H700_STOCK_CXX_SYMBOLS_PASS` | Original device libstdc++ and libgcc_s contain all requested versions |
+| Stock transitive symbol-version needs | `STOCK_CXX_TRANSITIVE_VERSION_PASS` | Test ELF + five stock AArch64 DSOs; matching VERNEED vs VERDEF and NEEDED names |
+| Stock interpreter identity | `H700_INTERPRETER_IDENTITY_PASS` | Device `/lib/ld-linux-aarch64.so.1` resolves to the fingerprinted device loader |
+| Stock private glibc symbol names | `GLIBC_PRIVATE_SYMBOL_MATCH_PASS` | 20 undefined private symbol imports: 16 in libc resolved to loader; 4 in libm resolved to libc |
+| Target run | `H700_CXX_RUNTIME_NOT_TESTED` | No H700 C++ probe execution approved or performed |
+| Distribution | `DISTRIBUTION_BLOCKED` | No binary or game assets committed/released |
+
+Required versioned symbols from the linked probe:
+`GLIBC_2.17` (libc), `GCC_3.0` (libgcc_s),
+`CXXABI_1.3`, `CXXABI_1.3.9`, `GLIBCXX_3.4`,
+`GLIBCXX_3.4.21` (libstdc++). The stock libstdc++ also
+needs libc symbols through `GLIBC_2.34`; stock libgcc_s needs
+libc through `GLIBC_2.35`. Device glibc/loader/libm provide
+version definitions through `GLIBC_2.35`. The glibc 2.28 **build
+sysroot** must not be confused with the stock device runtime.
+
+Original device AArch64 library SHA-256 identities, checked again after
+copying to private tiny02 scratch:
+
+- `libstdc++.so.6` — `c4834bd79254443665af96b6d5e71d124b7f92f2eea121e61f9fff5204fc594d`
+- `libgcc_s.so.1` — `acfe23cf0f5f4ac35b4c314415bb31d6f52a9bd39df8be04dfb2818a571533fd`
+- `libc.so.6` — `dd80538bfc685542511168f4cde5dcce476c22d310e727578f17cf23eebb6822`
+- `libm.so.6` — `b24316bc659ab74096d8679a9e423c1673082649bf148b513579b5acb4e9294a`
+- `ld-linux-aarch64.so.1` — `68a35077a50da30312b60706db5ba027c892c3be4cf42f3fd167ac241e8c01a9`
+
+**Measurement correction:** An early ad-hoc script falsely printed
+`MISSING` for all stock C++ symbol versions by splitting on
+`Version definition section:` (which does not match actual GNU readelf
+headings). Re-check using this PR's `parse_readelf` function returned
+all required versions as present. This was a parsing error, not a
+device-library change.
+
+**Residual STOP gates:** Versioned and private *symbol-name* matches do
+not prove full unversioned symbol resolution, dynamic relocation, actual
+runtime loader search, exception unwinding, or C++ object behavior on the
+device. The exact on-device loader path and hash were validated; the probe
+was **not run**. Before a hardware trial, review loader search paths and
+strong undefined symbols/relocations with the same private artifacts.
+Any handheld C++ execution requires separate explicit owner permission.
+The private official `KNight-Blade – Howling of Kerberos` RPG Maker XP
+sample is reserved for a **later engine-level** compatibility test, not
+this C++ ABI calibration. No demo assets or restricted third-party library
+binaries may be added to the repository.
+
+Related owner evidence: [PR #31 evidence entry 1](https://github.com/almighty-atlas/nextui-mkxp/pull/31#issuecomment-6463223748)
+and [PR #31 evidence entry 2](https://github.com/almighty-atlas/nextui-mkxp/pull/31#issuecomment-6463496889).
