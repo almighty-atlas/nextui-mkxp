@@ -409,3 +409,48 @@ workspace, with the reviewed `-B` and linker search flags. Do not
 delete the original failed `config.log`, alter the sysroot, or
 claim Ruby compilation before an actual PASS. #1/#2/#3 and
 distribution/source/license gates remain `BLOCKED`.
+
+
+### Owner Ruby 3.1.3 AArch64 cross-configure V2 PASS (2026-10-28)
+
+**Owner-observed, isolated configure-only result; no Ruby target
+compilation or execution.** The initial cross configure failed because
+the separate glibc-2.28 sysroot had CRT startup objects in
+`usr/lib64/`, while GCC's default lookup via absent `usr/lib/`
+could not resolve them. An isolated AArch64 minimal C executable link
+passed with `-B<sysroot>/usr/lib64/` and matching target library
+search paths. Owner then used a **fresh** private directory
+`~/nextui-mkxp-tools-20261020/ruby-aarch64-3.1.3-v2`
+to run Ruby 3.1.3 configure with:
+
+- `--build=x86_64-pc-linux-gnu`,
+  `--host=aarch64-nextui-linux-gnu`,
+  `--with-baseruby=/work/prefix/bin/ruby` pointing at the
+  SHA-256-reviewed native Ruby 3.1.3,
+  `--enable-shared --disable-yjit --disable-install-doc
+  --disable-rubygems --prefix=/usr`.
+- `CC` and `CXX` based on the audited AArch64 GCC 8.3.0 toolchain,
+  explicit `--sysroot=<private glibc-2.28 sysroot>`, and
+  `-B<sysroot>/usr/lib64/`.
+- Target-only linker paths to
+  `<sysroot>/usr/lib64`, `<sysroot>/lib64`, and private
+  `/zlib/lib`, with `CPPFLAGS=-I/zlib/include`.
+  `PKG_CONFIG_LIBDIR` directed at an empty private directory to
+  avoid native package discovery.
+
+Owner output reported `CRT_SEARCH_PATH_PASS`,
+`RUBY_AARCH64_CONFIGURE_V2_PASS`,
+`MAKEFILE_PRESENT`, `TARGET_TRIPLE_RECORDED`,
+`CRT_PATH_RECORDED`, and
+`RUBY_AARCH64_CONFIGURE_V2_COMPLETE`; Makefile CC,
+AR, RANLIB, CPPFLAGS, LDFLAGS reflected these paths.
+There was **no build/install/target execution**.
+Host free space approximately 32 GiB.
+
+**Next gate:** inspect generated Makefile's
+`CROSS_COMPILING`, `BASERUBY`, `RUNRUBY`,
+`MINIRUBY`, and target execution recipes to determine
+whether an offline source build is safe. Configure success does not
+establish that an AArch64 mini-ruby will never be invoked or that
+Fiddle/Psych/zlib target modules are linked. Existing
+#1/#2/#3, license/source/distribution gates remain blocked.
