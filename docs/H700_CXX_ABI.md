@@ -357,3 +357,61 @@ under the device's `/tmp` tmpfs; the original test file is still held
 privately on tiny02. Staging is **not** H700 execution success or
 permission for a run. Any bounded runtime trial is a separate explicitly
 owner-authorized operation; PR/release/license gates remain unchanged.
+
+
+### Owner-authorized single H700 C++14 runtime trial: PASS (2026-10-28)
+
+**Actual physical-device evidence supplied by the owner, not independently
+executed by the PR author or CI.** After all static checks and the
+device-side SHA-256 staging verification, the owner **explicitly approved
+exactly one bounded C++14 H700 execution**. They then ran the original
+game-free `probe-aarch64` once on the RG35XX Pro using a sanitized
+environment and `/usr/bin/timeout -k 1 5`. The script checked the
+file's SHA-256 **again before execution**. It did not stage shared
+libraries or modify firmware/NextUI files.
+
+- Device: AArch64 RG35XX Pro, Linux `4.9.170`.
+- Target: `/tmp/nextui-mkxp-cxx14-748974b7/probe-aarch64`
+  (private `/tmp` staging; original cross-linked ELF SHA-256
+  `748974b7412b321ac81001e2516584d33015a1a880b87eb3d905eef68c9d1b73`).
+- Pre-execution checks: `ELF_HASH_PASS`, `TIMEOUT_AVAILABLE`.
+- **Actual program exit code: 0** (not a timeout).
+- **Actual stdout (exact match):**
+
+  ```text
+  RMXP_CXX14 native_or_target_probe_ok destructors=2
+  ```
+
+- Script markers:
+  `H700_CXX14_RUNTIME_PASS`,
+  `EXCEPTIONS_PASS`,
+  `RAII_DESTRUCTORS_PASS`,
+  `CXX_ALLOCATION_PASS`,
+  `DISTRIBUTION_BLOCKED`,
+  `H700_CXX14_SINGLE_TRIAL_COMPLETE`.
+
+This is evidence that **this exact compiled C++14 probe** successfully
+started using the **stock device dynamic loader/libraries** and
+exercised `std::string`, heap allocation, exception throw/catch, and
+normal/exceptional RAII lifetime cleanup (two destructors) on physical
+H700 hardware. It also demonstrates successful runtime binding for the
+symbols and relocations actually used by this probe, including its
+two COPY-relocated exception RTTI objects, in that run.
+
+**Do not extrapolate** to mkxp-z engine initialization, SDL integration,
+Ruby/RGSS, audio, filesystem/game IO, persistent operation, broader C++
+ABI/library compatibility or releases. The one-run owner permission is
+consumed; **no automatic repeat/other hardware trial is authorized**.
+No binary, third-party library or game asset has been committed.
+`DISTRIBUTION_BLOCKED`, pre-existing #1/#2/#3 prerequisite gates,
+and PR #19's source/license review are unchanged. PR #31 stays draft.
+
+**Next scope** per the pinned minimal-engine plan in PR #30: continue
+source-only/offline dependency input-contract and pinned private
+AArch64 prefix preparation for #4. Keep Ruby build helpers separate
+from AArch64 runtime, and inventory required libraries including SDL,
+Ruby, OpenAL Soft/SDL_sound, image/text/decode dependencies and legal
+notices. Do not treat this C++ probe pass as permission to compile,
+install or run mkxp-z or a game. The owner's official *KNight-Blade –
+Howling of Kerberos* RPG Maker XP sample remains for future **private**
+engine-level testing only.
