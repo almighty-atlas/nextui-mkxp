@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "updated": "2026-10-28",
+  "milestones": [
+    {"id": "foundation", "weight": 15, "done": true, "evidence": "docs/H700_RUBY_BATCH.md"},
+    {"id": "ruby-probe", "weight": 5, "done": true, "evidence": "build/h700-engine/runtime-batch-evidence.json"},
+    {"id": "source-lock", "weight": 10, "done": true, "evidence": "build/h700-engine/mkxp-z-lock.json"},
+    {"id": "configure", "weight": 5, "done": true, "evidence": "docs/MKXP_Z_SOURCE_LOCK.md"},
+    {"id": "compile", "weight": 30, "done": true, "evidence": "build/h700-engine/engine-build-evidence.json"},
+    {"id": "abi", "weight": 5, "done": false, "evidence": null},
+    {"id": "engine-smoke", "weight": 10, "done": false, "evidence": null},
+    {"id": "lifecycle", "weight": 5, "done": false, "evidence": null},
+    {"id": "game-inputs", "weight": 3, "done": false, "evidence": null},
+    {"id": "game-boot", "weight": 5, "done": false, "evidence": null},
+    {"id": "gameplay", "weight": 5, "done": false, "evidence": null},
+    {"id": "persistence", "weight": 2, "done": false, "evidence": null}
+  ],
+  "reserve": {"hard_gib": 5, "stop_gib": 6, "fresh_setup_minimum_gib": 7}
+}

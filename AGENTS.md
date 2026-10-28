@@ -4,6 +4,16 @@ Read `README.md`, `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, `docs/TEST_PLAN.md`
 
 ## Workflow
 
+### Active first-game roadmap
+
+For ongoing H700 work, maintain `docs/KNIGHT_BLADE_ROADMAP.md` and
+`build/h700-engine/knight-blade-progress.json`. Report the current weighted
+percentage; 100% means Knight Blade meets the on-device playability checklist,
+not merely a successful build. Keep the README and general roadmap percentage
+consistent. Work through unfinished tasks autonomously; report missing access,
+legally supplied game/RTP files, required hardware observations or authorization.
+Never mark hardware work complete from host-only tests.
+
 1. Work on exactly one issue and a short-lived branch from current `main`. Link the issue in the PR (`Refs #N`, or `Fixes #N` only if all acceptance criteria are met).
 2. Inventory existing code, upstream versions, hardware assumptions and tests before implementation. Prefer the smallest reviewable change; don't silently broaden scope.
 3. Provide concrete commands and their outputs. Distinguish `verified-on-H700`, `verified-in-CI`, `verified-on-host`, `upstream-reported`, `untested`, and `blocked`.
