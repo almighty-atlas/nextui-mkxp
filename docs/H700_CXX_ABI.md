@@ -279,3 +279,26 @@ binaries may be added to the repository.
 
 Related owner evidence: [PR #31 evidence entry 1](https://github.com/almighty-atlas/nextui-mkxp/pull/31#issuecomment-6463223748)
 and [PR #31 evidence entry 2](https://github.com/almighty-atlas/nextui-mkxp/pull/31#issuecomment-6463496889).
+
+
+### Owner-observed full dynamic-symbol-name audit (2026-10-28)
+
+With the same fingerprinted private cross-linked probe and five device AArch64
+DSOs, the owner ran a **read-only, host-side** `readelf -W --dyn-syms`
+symbol-name/version matching script. The reported result was:
+
+- `STOCK_DYNSYM_NAME_AUDIT_PASS`
+- 258 strong undefined dynamic-symbol imports considered; 0 unmatched
+  against the combined device-library exports
+- 29 optional weak dynamic-symbol imports, intentionally not treated as
+  missing strong symbols
+- Probe's relocation classes: `R_AARCH64_COPY` ×2,
+  `R_AARCH64_GLOB_DAT` ×1, `R_AARCH64_JUMP_SLOT` ×32
+- `DYNAMIC_RELOCATION_NOT_TESTED`,
+  `H700_CXX_RUNTIME_NOT_TESTED`, `DISTRIBUTION_BLOCKED`
+
+**Limitations:** Combined-export matching is not authoritative loader
+search/order/interposition or full runtime relocation evaluation. The two
+COPY relocations specifically require a narrow follow-up check of linked
+object sizes versus the chosen stock provider exported object sizes.
+No device execution was authorized or performed by this step.
