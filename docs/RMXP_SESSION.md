@@ -83,7 +83,8 @@ SDL button numbers in the JSON above are not evdev keycodes.
 
 **Observed on H700 (2026-10-29, NextUI-20261013-0, verified-on-H700):** a
 passive capture of `/dev/input/event1` ("ANBERNIC-keys") identified
-**Select = 310** and **Start = 311**; 314 is the Menu button. The earlier
+**Select = 310** and **Start = 311**. A second capture identified Menu = 312
+(followed by 354 on release), L1/R1 = 308/309 and L2/R2 = 314/315. The earlier
 314/315 assumption was wrong and harmlessly never triggered. With
 `/dev/input/event1`, `310`, `311` a short tap did not exit, a 2 s hold exited
 gracefully (`REASON=chord`, exit 0) and NextUI returned. Event node numbering
