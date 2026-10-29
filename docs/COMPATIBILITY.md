@@ -18,3 +18,12 @@ Binary redistribution and R36S code import are **BLOCKED** pending the
 [provenance audit](SOURCES.md) and [distribution gate](DISTRIBUTION_GATE.md).
 Neither R36S source availability nor its license inventory establishes a
 reproducible, cleared H700 package. No engine was built or tested in this audit.
+
+## H700 baseline limitation (issue #1)
+
+The [owner-supplied read-only H700 inventory](H700_BASELINE.md) confirms
+Linux aarch64 with an ELF64 AArch64 shell, existing framebuffer/SDL2/EGL/GLES
+libraries, audio/input nodes and ~973 MiB physical memory with no swap.
+**GLES context creation, graphics/audio/input functionality, loader/glibc symbol
+compatibility and standalone Pak lifecycle remain NOT_TESTED.** Cloud fixture
+and library/device-node presence do not establish gameplay compatibility.
