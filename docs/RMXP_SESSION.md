@@ -1,6 +1,6 @@
 # Input configuration and session supervisor candidate (#10)
 
-Status: **verified-on-host**, cross-compiled for AArch64, **not executed on H700**.
+Status: **verified-on-host**, cross-compiled for AArch64; supervisor and chord **verified-on-H700** (2026-10-29, see below).
 The implementation is original MIT-licensed code; no R36S port code was copied.
 It depends only on Linux/POSIX interfaces, not SDL internals or a modified mkxp-z.
 
@@ -80,6 +80,14 @@ There is deliberately **no default event node or guessed physical keycode**.
 The proposed physical combination is Start+Select, held 1.5 seconds. Confirm
 both Linux evdev codes and the input node on the installed firmware first.
 SDL button numbers in the JSON above are not evdev keycodes.
+
+**Observed on H700 (2026-10-29, NextUI-20261013-0, verified-on-H700):** a
+passive capture of `/dev/input/event1` ("ANBERNIC-keys") identified
+**Select = 310** and **Start = 311**; 314 is the Menu button. The earlier
+314/315 assumption was wrong and harmlessly never triggered. With
+`/dev/input/event1`, `310`, `311` a short tap did not exit, a 2 s hold exited
+gracefully (`REASON=chord`, exit 0) and NextUI returned. Event node numbering
+may change with firmware or connected devices; re-check after updates.
 
 ```sh
 /private/rmxp-session --input "$VERIFIED_EVENT_NODE" \
