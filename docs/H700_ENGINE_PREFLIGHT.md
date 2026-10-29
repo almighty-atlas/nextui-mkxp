@@ -826,11 +826,12 @@ or CI.** Raw device logs and the exact NextUI firmware version were not
 supplied with this update; per `AGENTS.md` these results are recorded as
 `OWNER_REPORTED_H700_PASS`, **not** as `verified-on-H700`, until a
 sanitized log plus firmware version is attached. The agent session that
-wrote this section had no network route to tiny02 or SSH credentials for
-the device and did not re-run or re-hash anything.
+wrote this section could not resolve tiny02 or authenticate to the device
+and did not re-run or re-hash anything. Routing to tiny02 itself remains
+unverified; a DNS failure is not proof of a missing network route.
 
 Device: RG35XX Pro, AArch64, Linux `4.9.170`, reached via SSH.
-Private staging directory (tmpfs, non-persistent):
+Private temporary staging directory (current mount state not inspected):
 `/tmp/nextui-mkxp-ruby-3.1.3-8b884d90`. The directory suffix matches the
 `$ORIGIN`-RUNPATH probe interpreter above (SHA-256 prefix `8b884d90`);
 the exact interpreter hash used in the run should be confirmed from the
@@ -842,20 +843,21 @@ device log.
 | `zlib.so` (static private zlib 1.3.2) | `fcc514925e8274c6d06819c0988ae2ed06aa68bdee3fdd92b311649f7e708752` | Deflate, Inflate, CRC32 PASS | — |
 | `psych.so` (bundled libyaml from Ruby 3.1.3 `ext/psych/yaml`) | `49ab079312da72116993e0cadba827fb16b87a76de0adc7622bb686035bb727f` | Extension load, YAML parse, syntax-error handling PASS | Warnings: `UTF-16LE`/`UTF-16BE` encodings missing; `Psych.safe_load`/`Psych.dump` high-level API NOT_TESTED |
 
-What this establishes: the private glibc-2.28-sysroot AArch64 Ruby
-3.1.3 interpreter and two native extensions loaded and executed on the
-stock H700 userspace in that run. Because the interpreter started, the
-`libcrypt.so.1`, `libpthread.so.0`, `librt.so.1`, `libdl.so.2` providers
-were resolvable at runtime **in that environment**; whether the run
-used only stock device libraries (expected, no `LD_LIBRARY_PATH` to
-sysroot copies) must be confirmed from the log before the earlier
-"Ruby-specific providers unverified" note is closed.
+What the owner reports: the private glibc-2.28-sysroot AArch64 Ruby
+3.1.3 runtime and two native extensions loaded and executed on H700.
+This is runtime evidence for those artifacts, not a complete stock-library
+provider audit. Confirm the exact interpreter, launch environment and
+providers from sanitized logs before closing the earlier
+"Ruby-specific providers unverified" note. In particular, do not infer
+the identities of `libcrypt.so.1`, `libpthread.so.0`, `librt.so.1` or
+`libdl.so.2` solely from successful execution.
 
 Interpretation of the UTF-16 warning: with `--enable-shared`, Ruby loads
 non-builtin encodings such as `UTF-16LE`/`UTF-16BE` from
 `<rubyarchdir>/enc/*.so` on demand. Their absence indicates that the
-encoding shared objects (`make encs`) were not built or staged; it is
-not evidence of a Psych defect.
+encoding shared objects may be absent from the build, absent from the
+stage, or inaccessible through Ruby's load path. Inspect all three before
+choosing a build target; the warning alone is not evidence of a Psych defect.
 
 **Private vs public:** every artifact above is a **private** tiny02 build
 output. None is committed, attached or published. The build commands
@@ -867,6 +869,18 @@ mkxp-z engine status (`NOT_BUILT`) are unchanged.
 Markers: `OWNER_REPORTED_H700_RUBY_CORE_PASS`,
 `OWNER_REPORTED_H700_ZLIB_PASS`, `OWNER_REPORTED_H700_PSYCH_PASS`,
 `RUBY_ENCODINGS_INCOMPLETE`, `PSYCH_HIGH_LEVEL_API_NOT_TESTED`,
-`FIDDLE_NOT_BUILT`, `MKXP_Z_NOT_BUILT`, `DISTRIBUTION_BLOCKED`.
+`FIDDLE_BUILD_STATE_UNKNOWN`, `FIDDLE_NOT_TESTED`, `MKXP_Z_NOT_BUILT`,
+`DISTRIBUTION_BLOCKED`.
 Machine-readable record:
 [ruby-runtime-evidence.json](../build/h700-engine/ruby-runtime-evidence.json).
+
+### Agent-executed private extension batch and high-level H700 trial (2026-10-28)
+
+After owner-provided SSH access and authoring-image tooling were restored,
+the [Ruby batch report](H700_RUBY_BATCH.md) records actual source/hash
+verification, separate offline builds and a new grouped physical-device
+trial. Encodings, selected stdlib, Psych `safe_load`/`dump` and Fiddle PASS
+on BaseOS 1.4.0 / NextUI-20261013-0 (39a06de), with raw sanitized output.
+This supersedes the earlier Fiddle/encoding/high-level-Psych unknowns;
+the original successful core/zlib/low-level-Psych trial was not repeated.
+Private/public and engine/distribution gates remain distinct and blocked.

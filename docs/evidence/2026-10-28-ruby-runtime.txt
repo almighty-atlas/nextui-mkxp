@@ -1,0 +1,9 @@
+RUNTIME ruby=3.1.3 platform=aarch64-linux
+PASS stdlib_stringio_date_set_shellwords
+PASS encoding_transcoder_roundtrips
+PASS psych_safe_load_dump_roundtrip
+PASS psych_rejects_objects_and_aliases
+PASS fiddle_libc_strlen_allocation_free
+LOADED_EXTENSIONS complex.so,date_core.so,encdb.so,enumerator.so,fiber.so,fiddle.so,iso_8859_1.so,japanese_sjis.so,psych.so,rational.so,single_byte.so,stringio.so,transdb.so,utf_16_32.so,utf_16be.so,utf_16le.so,utf_32be.so,utf_32le.so,windows_31j.so
+MAPPED_LIBRARIES date_core.so,encdb.so,fiddle.so,iso_8859_1.so,japanese_sjis.so,ld-linux-aarch64.so.1,libc.so.6,libcrypt.so.1,libdl.so.2,libm.so.6,libpthread.so.0,librt.so.1,libruby.so.3.1.3,psych.so,single_byte.so,stringio.so,transdb.so,utf_16_32.so,utf_16be.so,utf_16le.so,utf_32be.so,utf_32le.so,windows_31j.so
+RUBY_RUNTIME_BATCH_PASS

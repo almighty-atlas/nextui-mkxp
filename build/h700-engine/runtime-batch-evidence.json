@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "evidence_level": "verified-on-H700",
+  "scope": "New Ruby encoding, stdlib, Psych high-level and Fiddle tests; no repeated Ruby core/zlib trial and no engine execution",
+  "device": {
+    "model": "RG35XX Pro", "arch": "aarch64", "kernel": "4.9.170",
+    "baseos": "1.4.0", "nextui": "NextUI-20261013-0", "nextui_revision": "39a06de",
+    "temporary_stage": "/tmp/nextui-mkxp-runtime-8c9480cec123"
+  },
+  "build": {
+    "host": "tiny02", "image": "sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b",
+    "network": "none", "cpus": 2, "memory_gib": 4, "memory_swap_gib": 4,
+    "rootfs": "read-only", "uid": 1000, "jobs": 2,
+    "source_archive_sha256": "4ee161939826bcdfdafa757cf8e293a7f14e357f62be7144f040335cc8c7371a",
+    "native_ruby_sha256": "4363b3068689a2f238f9f93a00eda3be1c072bf69716d91bb746a8c5a35687c9",
+    "compiler_archive_sha256": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
+    "sysroot_receipt_sha256": "414a9f0581f8ec5a4bef27f60a6080042f2fe3de7ee607468249b932131d5183",
+    "sysroot_tree_sha256": "0820a086fc2e800afe1193e69b4b87bce3e755edd41ed22382f78f0fba10e688",
+    "source_files_verified": 11112, "encoding_transcoder_modules": 61,
+    "total_trial_native_modules": 66,
+    "existing_ruby_zlib_psych_bytes_unchanged": true,
+    "free_bytes_after_support_build": 31968116736,
+    "free_bytes_after_final_guarded_build": 31860514816,
+    "hard_reserve_gib": 25, "stop_guard_gib": 26,
+    "private_work_directory": "runtime-batch-20261028T131737Z",
+    "autoconf_safety": {
+      "earlier_builds": "libffi configure attempted ./conftest; rejected by host kernel with Exec format error (126); no ARM code ran",
+      "final_build": "Explicit build_alias=x86_64-pc-linux-gnu; configure log guard PASS; no target execution attempt",
+      "final_runtime_module_hashes_equal_tested_bundle": true,
+      "hardware_trial_repeated": false
+    }
+  },
+  "static_audit": {
+    "result": "STATIC_ABI_CANDIDATES_PASS", "elf_objects_including_stock": 76,
+    "relocatable_objects": 192, "archives": 3, "archive_members": 101,
+    "runtime_loader_simulation": false,
+    "private_abi_report_sha256": "0aee7cba7f8ee37ade829618419ab36d5d41f73755f5ff26d5bda55d32c4d32b"
+  },
+  "selected_artifact_sha256": {
+    "enc/utf_16le.so": "0e10d14aa5fa4abc8b3b2b7f3436a98705a68c2d83660bf8d1b476ff6a15227f",
+    "enc/utf_16be.so": "bc335724d3ddfaa9c3fa2ef630f1a8438854e8f8619023b17d3955f8dbb630c4",
+    "enc/trans/utf_16_32.so": "e6b9139ef918eba8e77041915ae2e9272ea6b038668a8a7814e7bffc9bb27fa9",
+    "fiddle.so": "be1309dee02eb4153bb8e604c5a3c156f2ca8b24f372525aff5fa5337cc71f8b",
+    "stringio.so": "6cfb1f3176e2bd364483150f284129e3d7679475d02fc17a54711c54eef10e4b",
+    "date_core.so": "890efc3a1dfb64bf68f0a919ff16a495dedc158a0ff6e0f752483fbaa4908247"
+  },
+  "stock_provider_sha256_confirmed_before_and_after_trial": {
+    "ld-linux-aarch64.so.1": "68a35077a50da30312b60706db5ba027c892c3be4cf42f3fd167ac241e8c01a9",
+    "libc.so.6": "dd80538bfc685542511168f4cde5dcce476c22d310e727578f17cf23eebb6822",
+    "libm.so.6": "b24316bc659ab74096d8679a9e423c1673082649bf148b513579b5acb4e9294a",
+    "libcrypt.so.1": "1b789587cd2e60b5dd04be7fa048080fed5bca09d1ffa79c55126a3d3bb5e81f",
+    "libpthread.so.0": "cc12f9592e8d130630b7e95a390aa238dfad6d4092615a65c516e3cf93d30aa3",
+    "librt.so.1": "1e8bb04766af2de0681c391189b908341c89c8ec1b1192d018a78c6f762a9e0b",
+    "libdl.so.2": "7f0db218d2126ed6d8df831a24abb0e1b6e96e3952813944a914051ea712440b"
+  },
+  "trial": {
+    "archive_sha256": "8c9480cec12323e926fd6f2ba87a89edd8a1cd38506497fc628fa599c3da115a",
+    "archive_size_bytes": 4723358, "manifest_files": 870,
+    "firmware_libraries_bundled": false,
+    "test_script_sha256": "51cd170698280cb3baa2729a31a646d7152bf24e77f89e2e411f90abb8a378a4",
+    "runner_sha256": "5dd78222d70ce5c2f5e24f918b6edf72c5c3cb2ecb6b4929f79d324f487aea3f",
+    "log": "docs/evidence/2026-10-28-ruby-runtime.txt",
+    "log_sha256": "8879e997d5c6c84e9c4fc6235769da79fd401b5c722f14bcf91b032f5183dbc9",
+    "outer_timeout_seconds": 50, "ruby_process_timeout_seconds": 40,
+    "per_phase_timeout_seconds": 5, "kill_after_seconds": 2,
+    "exit_code": 0, "result": "RUBY_RUNTIME_BATCH_PASS",
+    "utf16_warnings": false,
+    "passed": ["stdlib_stringio_date_set_shellwords", "encoding_transcoder_roundtrips",
+               "psych_safe_load_dump_roundtrip", "psych_rejects_objects_and_aliases",
+               "fiddle_libc_strlen_allocation_free"]
+  },
+  "private_receipt_sha256": {
+    "trial-v1.receipt.json": "0dc9d4266c11bd306ae6dba0e02d43013063c6856a1eb4c7cf1d9f77388efd84",
+    "extensions-support/build-result.json": "81971e6498a81124c767969b9cfc76c862d3adbe93d35c6c81b579bf5d83e10d",
+    "extensions-final/build-result.json": "1bcf34b9523b1e0c5e79ce93b4f7ba1b2f423726b3ab6d2bc2344e6f4f2ce4e2"
+  },
+  "engine_build": "BLOCKED",
+  "engine_start": "NOT_TESTED",
+  "all_ruby_standard_libraries": "NOT_TESTED",
+  "public_clean_room_reproducibility": "NOT_ESTABLISHED",
+  "offline_tests": {
+    "command": "python3 -m unittest discover -s tests",
+    "count": 94, "result": "PASS", "level": "verified-on-host",
+    "ci_execution": false
+  },
+  "distribution": "BLOCKED"
+}

@@ -15,7 +15,7 @@
     "issue_2": {"state": "BLOCKED", "reviewer": null, "evidence": "Standalone ADR remains proposed in unmerged PR #21; engine lifecycle/discovery not accepted."},
     "issue_3": {"state": "BLOCKED", "reviewer": null, "evidence": "PR #19 at 9d482dc981401166b40155678ad00e29daad9163: static research GO only; grants, embedded assets, combined work and source/relink obligations unresolved."},
     "dependency_closure": {"state": "BLOCKED", "reviewer": null, "evidence": "Seed inventory only, not complete engine lock: native tools, Ruby helpers, mandatory media/text libraries, nested sources, patches and embedded assets still require selection and checksums."},
-    "builder_identity": {"state": "BLOCKED", "reviewer": null, "evidence": "Owner now verifies compiler-input-lock/sysroot-receipt agreement, SDL testbuild receipt and C++ provider identities on tiny02. Raw receipt paths/digests and complete native host inventory not available here; not clean-room reproducibility. See cxx-provider-evidence.json."}
+    "builder_identity": {"state": "BLOCKED", "reviewer": null, "evidence": "Direct tiny02 access restored: tools image ID, native Ruby and compiler archive hashes, sysroot-provenance receipt and actual sysroot tree now checked. Private extension batch and H700 grouped trial pass; see runtime-batch-evidence.json. Complete engine input/helper/recipe closure and public clean-room reproducibility remain unestablished; do not promote the engine gate."}
   },
   "notes": [
     "All entries are required research candidates, not imported inputs or execution grants. No engine/build/device execution is authorized by a validator PASS.",

@@ -80,3 +80,10 @@ python3 -I -B -m unittest discover -s spikes/h700-stock-video -p 'test_*.py' -v
 
 This includes evidence-consistency checks and existing synthetic ELF/assembly
 tests. It does not inspect the tested private ELF or repeat the owner's trial.
+
+For the 2026-10-28 private Ruby extension follow-up, see the
+[grouped hardware checklist and ELF validator contract](H700_RUNTIME_PIPELINE.md).
+The historical checklist is not itself evidence of execution. The subsequent
+[private Ruby batch report](H700_RUBY_BATCH.md) links actual static checks and
+the grouped H700 encoding/Psych/Fiddle PASS with exact firmware and raw log.
+Successful unchanged trials should not be repeated unnecessarily.
