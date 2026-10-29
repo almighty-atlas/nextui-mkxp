@@ -164,6 +164,9 @@ module NextUIStringInput
     byte
   end
 
+  # Ruby 3's Marshal.load reads IO-like objects through getbyte and read.
+  alias getbyte getc
+
   def gets = text(super)
 
   def read(*args) = text(super)
@@ -184,6 +187,39 @@ end
 
 class StringInput; end
 StringInput.prepend(NextUIStringInput)
+
+# Essentials draws at its nominal size (512x384) and resized the Windows
+# window through Win32API, which does nothing here, so the game sat in the
+# top-left corner of mkxp-z's default 640x480 RGSS1 screen. Once per frame
+# the native screen follows the game's Graphics.width/height (plus any border
+# offsets); mkxp-z then scales it to the display with the fixed aspect ratio.
+module NextUIScreen
+  RESIZE = Graphics.method(:resize_screen)
+  @size = [640, 480]
+
+  def self.follow
+    size = [Graphics.width + 2 * $ResizeOffsetX.to_i, Graphics.height + 2 * $ResizeOffsetY.to_i]
+    return if size == @size || size.any? { |length| length < 1 }
+    @size = size
+    RESIZE.call(*size)
+  end
+
+  def update(*)
+    NextUIScreen.follow
+    super
+  end
+end
+Graphics.singleton_class.prepend(NextUIScreen)
+
+# Diagnostics in run.log for silent quits: who ended the scene loop or exited.
+trace_var(:$scene) { |scene| warn("NEXTUI_SCENE_NIL #{caller(1, 4).join(' < ')}") if scene.nil? }
+module NextUIExitTrace
+  def exit(*args)
+    warn("NEXTUI_EXIT #{caller(1, 4).join(' < ')}")
+    super
+  end
+end
+Kernel.prepend(NextUIExitTrace)
 
 # The launcher starts the engine with an empty environment, but Essentials
 # enters ENV["TEMP"] (e.g. for every GIF/empty picture). The per-game HOME

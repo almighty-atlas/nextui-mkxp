@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "d0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b",
+    "sha256": "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -82,11 +82,14 @@
       "899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80",
       "88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1",
       "9e6faa8fbf7a31167c7a6c8317004a6e59da6bcefb9f29e3aaa095d4a0f5d0eb",
-      "bfeb0c06d9bf23458bb2a7e53a23cd88b86c47e563e47390d2903d77a2c71af5"
+      "bfeb0c06d9bf23458bb2a7e53a23cd88b86c47e563e47390d2903d77a2c71af5",
+      "d0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b"
     ],
     "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
     "temp_env": "TEMP/TMP default to per-game HOME",
-    "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL, Thread.critical, StringInput byte semantics"
+    "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL, Thread.critical, StringInput byte semantics",
+    "screen": "native screen follows Graphics.width/height (+border offsets) once per frame",
+    "diagnostics": "NEXTUI_EXIT / NEXTUI_SCENE_NIL caller lines in run.log"
   },
   "second_owner_launch": {
     "date": "2026-10-29",
@@ -122,5 +125,13 @@
       "040:File_Mixins fgetdw: String can't be coerced into Integer (StringInput#getc returns a character in Ruby 3)"
     ],
     "remote_launch_note": "Two agent SSH launches (killing nextui.elf) were followed by full device power-off; owner menu launch did not power off. Remote launches stopped."
+  },
+  "fifth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "sage": "title and load menu shown; Down on load menu quits without logged error; new game starts; name entry letters half visible; abort after name entry",
+    "rocket": "title, load menu navigation and new game work; name entry letters half visible; abort after name entry",
+    "error": "PokeBattle_Trainer#gender: Marshal.load(StringInput) failed (no getbyte), game fell back to the StringInput",
+    "display": "game drawn 512x384 in top-left of 640x480 screen"
   }
 }

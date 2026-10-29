@@ -7,11 +7,16 @@ require 'tmpdir'
 module Graphics
   class << self
     attr_accessor :frame_count
+    attr_reader :resized
+    attr_accessor :nominal
     def update = @frame_count += 1
-    def width = 640
-    def height = 480
+    def width = @nominal[0]
+    def height = @nominal[1]
+    def resize_screen(width, height) = @resized << [width, height]
   end
   self.frame_count = 0
+  self.nominal = [640, 480]
+  @resized = []
 end
 
 # mkxp-z RGSS1 native Input: integer button codes, module functions.
@@ -230,6 +235,37 @@ class EssentialsWin32CompatTest < Minitest::Test
     assert_equal 'ok', input.read(2)
     assert_equal ["a\n", 'b'], StringInput.new("a\nb").each.to_a
     assert_equal data.force_encoding('UTF-8'), input.string
+  end
+
+  def test_screen_follows_game_size_once_per_change
+    Graphics.resized.clear
+    Graphics.update
+    assert_empty Graphics.resized
+    Graphics.nominal = [512, 384]
+    3.times { Graphics.update }
+    assert_equal [[512, 384]], Graphics.resized
+    $ResizeOffsetX, $ResizeOffsetY = 64, 48
+    Graphics.update
+    assert_equal [640, 480], Graphics.resized.last
+  ensure
+    $ResizeOffsetX = $ResizeOffsetY = nil
+    Graphics.nominal = [640, 480]
+    Graphics.update
+  end
+
+  def test_string_input_supports_marshal_load
+    data = Marshal.dump([1, 'Pok\u00e9mon', { trainer: 7 }])
+    assert_equal [1, 'Pok\u00e9mon', { trainer: 7 }], Marshal.load(StringInput.new(data))
+  end
+
+  def test_exit_and_scene_end_are_traced_in_log
+    _out, err = capture_io do
+      assert_raises(SystemExit) { exit(3) }
+      $scene = :title
+      $scene = nil
+    end
+    assert_match(/^NEXTUI_EXIT /, err)
+    assert_equal 1, err.scan(/^NEXTUI_SCENE_NIL /).size
   end
 
   def test_temp_folder_points_to_per_game_home

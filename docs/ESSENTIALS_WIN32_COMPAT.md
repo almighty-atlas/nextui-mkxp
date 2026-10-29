@@ -77,6 +77,16 @@ bytes in 1.8; a prepended module now runs the game's own methods on a binary
 copy, returns Integer bytes from `getc` and returns text in the original
 encoding.
 
+Fifth launch (owner, verified-on-H700): both games reach new game and name
+entry. They then stopped because Ruby 3's `Marshal.load` reads IO-like objects
+via `getbyte`, which `StringInput` now provides. Both games also sat in the
+top-left 512x384 of a 640x480 screen, because Essentials resizes the Windows
+window through Win32API. The shim now resizes the native screen once per frame
+to the game's `Graphics.width`/`height` plus any border offsets, and mkxp-z
+scales that to the display. Open items: Sage quits without an error when Down
+is pressed on the load menu, and name-entry letters are cut in half. For the
+quit, the shim logs `NEXTUI_EXIT`/`NEXTUI_SCENE_NIL` with callers in `run.log`.
+
 Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
 through `/tmp/next`) were each followed by a full power-off of the device; the
 owner's normal menu launch was not. Agent remote launches are stopped until
@@ -95,7 +105,7 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 14 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 17 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |
