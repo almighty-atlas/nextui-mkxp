@@ -2,11 +2,11 @@
 
 Native **RPG Maker XP** game runtime for **NextUI on Anbernic H700 handhelds**, initially targeting the **RG35XX Pro**. Based on [mkxp-z](https://github.com/mkxp-z/mkxp-z), with [mkxp-z-r36s](https://github.com/Periko21/mkxp-z-r36s) as an important research reference.
 
-> **Status: planning / feasibility. One owner-observed game-free H700 video trial passed ([limited evidence](docs/H700_VIDEO_EVIDENCE.md)). No tested mkxp-z engine or installable release exists; binary distribution remains blocked.**
+> **Status: Knight Blade and the private standalone Pak are verified on H700. No public binary release: licensing, corresponding source and clean-room reproducibility remain open.**
 
 **Knight Blade progress: 100%.** Knight Blade [is playable on the RG35XX Pro](docs/KNIGHT_BLADE_BOOT.md)
 (title, music, dialogue, battles, menu, save and load; owner-verified) from a private
-test stage. An installable RMXP.pak is the next goal. See the maintained [playability roadmap](docs/KNIGHT_BLADE_ROADMAP.md).
+test stage and the private RMXP.pak. See the maintained [playability roadmap](docs/KNIGHT_BLADE_ROADMAP.md).
 
 Private Ruby 3.1.3 runtime/extension builds now have a
 [verified H700 grouped test](docs/H700_RUBY_BATCH.md), including encodings,
@@ -14,10 +14,11 @@ Psych high-level API and Fiddle. This is not an mkxp-z engine start or a
 publicly reproducible/releasable binary; no private artifacts are distributed.
 
 A [private RMXP Pak integration candidate](docs/RMXP_PAK.md) now provides
-game registration and a source-only installer kit. Device discovery and launch
-of this candidate still require H700 verification. The separate private Knight
-Blade playability milestone reached **100%**, recorded in pending
-[PR #39](https://github.com/almighty-atlas/nextui-mkxp/pull/39).
+game registration and a source-only installer kit. Discovery, launch, controls,
+save/load, quit and reboot were tested on RG35XX Pro / NextUI-20261013-0.
+The [Menu-button overlay](docs/RMXP_PAUSE_MENU.md) provides Continue/Save/Load/Quit
+using the game's own save format, not emulator save states. Two-instance save
+isolation and in-game loading of a restored snapshot remain explicit follow-ups.
 
 ## Goals
 
@@ -49,10 +50,10 @@ Blade playability milestone reached **100%**, recorded in pending
 See [ROADMAP](docs/ROADMAP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [DEVICE-PROBE](docs/DEVICE_PROBE.md) and [TEST PLAN](docs/TEST_PLAN.md). Work is tracked in the [master roadmap issue #18](https://github.com/almighty-atlas/nextui-mkxp/issues/18) and individual [GitHub Issues](https://github.com/almighty-atlas/nextui-mkxp/issues).
 
 [Offline state tools](docs/RMXP_STATE.md) now provide private checked snapshots,
-non-overwriting recovery and privacy-safe diagnostic summaries for the pending
-Pak candidate (#40). Hardware checks are collected in one
-[test session](docs/RMXP_BATCH_TEST.md). Knight Blade's earlier private
-playability milestone remains **100%** (pending #39); Pak acceptance is separate.
+non-overwriting recovery and privacy-safe diagnostic summaries. Results and
+remaining checks are collected in one [test session](docs/RMXP_BATCH_TEST.md).
+Knight Blade's private playability milestone remains **100%**; release acceptance
+and other games are separate.
 
 ## Development workflow
 

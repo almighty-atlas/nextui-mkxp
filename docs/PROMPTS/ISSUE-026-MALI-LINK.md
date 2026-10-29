@@ -1,8 +1,8 @@
 # Zed/Codex – Issue #26, Fortsetzung von PR #27 nach `bcba27f`
 
-**Repository:** `almighty-atlas/nextui-mkxp`  
-**Bestehender PR:** [#27](https://github.com/almighty-atlas/nextui-mkxp/pull/27), Branch `build/issue-26-linux49-mali`  
-**Ausgangspunkt:** `bcba27f76a3fe4d8aecfebdd81cc613768e3c4d2` (vor dem Start auf neuen HEAD prüfen)  
+**Repository:** `almighty-atlas/nextui-mkxp`<br>
+**Bestehender PR:** [#27](https://github.com/almighty-atlas/nextui-mkxp/pull/27), Branch `build/issue-26-linux49-mali`<br>
+**Ausgangspunkt:** `bcba27f76a3fe4d8aecfebdd81cc613768e3c4d2` (vor dem Start auf neuen HEAD prüfen)<br>
 **Scope:** ausschließlich Quellen-/Host-Build-Experimente, Tests und Dokumentation. **Kein H700-Zugriff, keine Geräteausführung, keine veröffentlichten Binärdateien, keine Merges.**
 
 ## Aktueller Befund

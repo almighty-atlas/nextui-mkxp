@@ -42,6 +42,11 @@ def sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def require(condition):
+    if not condition:
+        raise ValueError('MANIFEST_INVALID')
+
+
 def glibc_key(name):
     return tuple(int(x) for x in name[6:].split('.'))
 
@@ -75,12 +80,21 @@ def elf_findings(data, target):
         sections = [struct.unpack_from('<IIQQQQIIQQ', data, shoff + 64 * i) for i in range(shnum)]
 
         def string(link, offset):
+            if not 0 <= link < len(sections):
+                raise ValueError('ELF string table index')
+            table = sections[link]
+            if table[1] != 3 or not 0 <= offset < table[5] or table[4] + table[5] > len(data):
+                raise ValueError('ELF string table bounds')
             base = sections[link][4] + offset
-            return data[base:data.index(b'\0', base)].decode('ascii', 'replace')
+            return data[base:data.index(b'\0', base, table[4] + table[5])].decode('ascii', 'replace')
 
         versions, needed = [], []
         for _, kind, _, _, offset, size, link, _, _, _ in sections:
+            if kind in (6, 0x6ffffffe) and (offset + size > len(data) or size == 0):
+                raise ValueError('ELF section bounds')
             if kind == 6:
+                if size % 16:
+                    raise ValueError('ELF dynamic section size')
                 for pos in range(offset, offset + size, 16):
                     tag, value = struct.unpack_from('<qQ', data, pos)
                     if tag == 0:
@@ -88,19 +102,31 @@ def elf_findings(data, target):
                     if tag == 1:
                         needed.append(string(link, value))
                     elif tag in (15, 29):
-                        if any(not p.startswith('$ORIGIN') for p in string(link, value).split(':')):
+                        paths = string(link, value).split(':')
+                        if any(not (p == '$ORIGIN' or p.startswith('$ORIGIN/'))
+                               or '..' in PurePosixPath(p).parts for p in paths):
                             found.append('ELF_ABSOLUTE_RPATH')
             elif kind == 0x6ffffffe:
                 pos = offset
                 while True:
+                    if pos + 16 > offset + size:
+                        raise ValueError('ELF version record bounds')
                     _, count, _, aux, following = struct.unpack_from('<HHIII', data, pos)
+                    if count > size // 16 or (count and aux < 16):
+                        raise ValueError('ELF version auxiliary bounds')
                     item = pos + aux
-                    for _ in range(count):
+                    for index in range(count):
+                        if item + 16 > offset + size:
+                            raise ValueError('ELF version auxiliary bounds')
                         _, _, _, name, step = struct.unpack_from('<IHHII', data, item)
                         versions.append(string(link, name))
+                        if index + 1 < count and step < 16:
+                            raise ValueError('ELF version auxiliary progress')
                         item += step
                     if not following:
                         break
+                    if following < 16:
+                        raise ValueError('ELF version record progress')
                     pos += following
         limit = glibc_key('GLIBC_' + target['glibc_max'])
         for version in versions:
@@ -118,6 +144,7 @@ def elf_findings(data, target):
 def member_findings(name, info):
     pure = PurePosixPath(name)
     if (name.startswith('/') or '\\' in name or ':' in name or '..' in pure.parts
+            or pure.as_posix() != name.rstrip('/')
             or not (name.startswith(PAK + '/') or name in ('Emus/', 'Emus/h700/', PAK + '/'))):
         yield 'OUTSIDE_PAK_ROOT'
     if pure.name.lower() in FORBIDDEN_NAMES or pure.suffix.lower() in FORBIDDEN_SUFFIXES:
@@ -177,14 +204,16 @@ def verify(source):
     engine_hash = None
     try:
         manifest = json.loads(files.pop(MANIFEST))
-        assert isinstance(manifest, dict) and manifest.get('schema') == 1
+        require(isinstance(manifest, dict) and manifest.get('schema') == 1)
         target = manifest['target']
-        assert target['arch'] == 'aarch64' and isinstance(target['interpreter'], str)
-        assert re.fullmatch(r'\d+\.\d+', target['glibc_max'])
-        assert all(isinstance(n, str) for n in target['allowed_needed'])
+        require(target['arch'] == 'aarch64' and isinstance(target['interpreter'], str))
+        require(re.fullmatch(r'\d+\.\d+', target['glibc_max']))
+        require(isinstance(target['allowed_needed'], list) and all(isinstance(n, str) for n in target['allowed_needed']))
+        require(isinstance(manifest['files'], list))
+        require(all(isinstance(e, dict) and isinstance(e.get('path'), str) for e in manifest['files']))
         entries = {e['path']: e for e in manifest['files']}
-        assert len(entries) == len(manifest['files'])
-    except (KeyError, TypeError, ValueError, AssertionError):
+        require(len(entries) == len(manifest['files']))
+    except (KeyError, TypeError, ValueError):
         return len(files), sorted(findings + [('MANIFEST_INVALID', MANIFEST)]), list(GATES)
     for path, role in REQUIRED.items():
         if path not in files or entries.get(path, {}).get('role') != role:
@@ -199,7 +228,7 @@ def verify(source):
             findings.append(('LISTED_FILE_MISSING', path))
             continue
         role = entry.get('role')
-        if role not in ROLES or not isinstance(entry.get('sha256'), str) or not SHA.fullmatch(entry['sha256']):
+        if not isinstance(role, str) or role not in ROLES or not isinstance(entry.get('sha256'), str) or not SHA.fullmatch(entry['sha256']):
             findings.append(('ENTRY_INVALID', path))
             continue
         if sha256(data) != entry['sha256']:
@@ -207,7 +236,7 @@ def verify(source):
         if role in ('binary', 'script', 'data', 'config') and not entry.get('license'):
             findings.append(('LICENSE_UNDECLARED', path))
         if role == 'binary':
-            if entry.get('license_file') not in files or not entry.get('source'):
+            if not isinstance(entry.get('license_file'), str) or entry['license_file'] not in files or not entry.get('source'):
                 findings.append(('BINARY_SOURCE_OR_LICENSE_TEXT_MISSING', path))
             findings += [(rule, path) for rule in elf_findings(data, target)]
             if path == PAK + '/engine':
@@ -240,6 +269,11 @@ def stage_files(stage):
 
 
 def build(stage, output):
+    # Check both outputs before writing either. A stale sidecar must not leave
+    # a newly created archive behind on an otherwise refused build.
+    sidecar = Path(str(output) + '.sha256')
+    if output.exists() or output.is_symlink() or sidecar.exists() or sidecar.is_symlink():
+        raise FileExistsError('OUTPUT_EXISTS')
     files = stage_files(stage)
     try:
         manifest = json.loads(files[MANIFEST].read_bytes())

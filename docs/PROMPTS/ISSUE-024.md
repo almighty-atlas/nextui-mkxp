@@ -1,8 +1,8 @@
 # Codex master prompt — Issue #24: H700 AArch64 toolchain and ELF gate
 
-**Repository:** [almighty-atlas/nextui-mkxp](https://github.com/almighty-atlas/nextui-mkxp)  
-**Issue:** [#24 — Verify AArch64 toolchain, sysroot and ELF ABI for H700 GLES test](https://github.com/almighty-atlas/nextui-mkxp/issues/24)  
-**Existing source:** [PR #23](https://github.com/almighty-atlas/nextui-mkxp/pull/23), source-only GLES2 triangle.  
+**Repository:** [almighty-atlas/nextui-mkxp](https://github.com/almighty-atlas/nextui-mkxp)<br>
+**Issue:** [#24 — Verify AArch64 toolchain, sysroot and ELF ABI for H700 GLES test](https://github.com/almighty-atlas/nextui-mkxp/issues/24)<br>
+**Existing source:** [PR #23](https://github.com/almighty-atlas/nextui-mkxp/pull/23), source-only GLES2 triangle.<br>
 **H700 graphics runtime:** NOT_TESTED. **Do not use or change the owner's device** for this task.
 
 ## Copy the following into Codex

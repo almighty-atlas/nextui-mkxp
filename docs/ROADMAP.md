@@ -11,11 +11,11 @@ a separate gate.
 
 This is a **planning roadmap**, not a statement of implemented features. Phase codes in issue titles are used because GitHub Milestones may not yet be configured.
 
-2026-10-27 update: the [single owner-observed H700 video trial](H700_VIDEO_EVIDENCE.md)
-passed its narrow graphics/normal-return gate. It does not complete M0, M1,
-licensing, audio/input or engine acceptance. The
-[minimal engine plan](H700_MINIMAL_ENGINE_PLAN.md) prioritizes an offline #4
-input/ABI-preflight milestone before #5 engine compilation; no device action now.
+2026-10-29 integration review: the [video trial](H700_VIDEO_EVIDENCE.md),
+[engine smoke](H700_ENGINE_SMOKE.md), Knight Blade and the private Pak have
+hardware evidence. Earlier blocker reports remain as historical evidence, not
+the current runtime status. Public reproduction and binary distribution are
+still blocked independently of the **100%** first-game playability milestone.
 
 ## M0 — Foundations (prerequisite for engineering work)
 
@@ -36,7 +36,8 @@ PASS](H700_RUBY_BATCH.md), 2026-10-28. The first private engine compile/link
 also [passes on host](MKXP_Z_SOURCE_LOCK.md), as does the
 [static provider ABI audit and H700 loader check](H700_ENGINE_ABI.md).
 The first [engine/Ruby and visible rendering test](H700_ENGINE_SMOKE.md) also
-passes on H700; audible sound, full controls and public reproducibility remain open.
+passes on H700, including audible sound and controls. Public clean-room
+reproducibility remains open.
 
 - Build and package pinned mkxp-z sources and dependencies for real H700 ABI.
 - Inspect interpreter/ELF requirements, `NEEDED` libraries, glibc and OpenGL/GLES requirements.
@@ -47,22 +48,13 @@ passes on H700; audible sound, full controls and public reproducibility remain o
 
 ## M2 — NextUI standalone Pak
 
-Issue #8 now has a [source integration candidate](RMXP_PAK.md): explicit ROM
-markers, private per-game working copies, runtime validation and offline tests.
-Hardware acceptance remains open. The earlier private Knight Blade playability
-checklist reached **100%** (pending PR #39); this is separate from Pak completion.
-
-An [offline state-maintenance candidate](RMXP_STATE.md) for #11 adds private
-snapshots, non-overwriting recovery and diagnostic export, compatible with #40.
-Hardware acceptance stays open; deferred checks share one
-[device session checklist](RMXP_BATCH_TEST.md). The separate private Knight
-Blade playability milestone remains **100%** (pending #39), not Pak completion.
-
-Issue #10 has an [offline session-supervision candidate](RMXP_SESSION.md):
-validated per-game mappings, optional passive input chord and owned-process
-termination with a timed fallback. Host tests and target cross-build pass;
-physical input/loader/teardown acceptance remains open. The earlier private
-Knight Blade playability milestone remains **100%** in pending #39.
+Issue #8's [Pak](RMXP_PAK.md) passes device discovery, launch, save/load, quit,
+upgrade preservation and reboot checks. Issue #10's [supervisor](RMXP_SESSION.md)
+and Select+Start chord also pass on H700. [State tools](RMXP_STATE.md) provide
+checked snapshots, fresh restores and privacy-safe diagnostics; these passed
+on a byte copy of the device state. Issue #11 remains open for two-instance
+save isolation and the restored-state in-game load test, explicitly tracked in
+the [device checklist](RMXP_BATCH_TEST.md).
 
 Issue #45 adds an [in-game pause menu](RMXP_PAUSE_MENU.md) on the Menu button
 (Continue/Save/Load/Quit via the game's own screens), verified on H700 with

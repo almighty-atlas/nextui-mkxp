@@ -248,6 +248,43 @@ class ReleaseArchiveTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn('STAGE_SPECIAL_FILE', result.stderr)
 
+    def test_sidecar_collision_does_not_create_archive(self):
+        self.make_stage()
+        out = self.root / 'reserved.zip'
+        sidecar = Path(str(out) + '.sha256')
+        sidecar.write_text('existing checksum')
+        result = self.cli('build', '--stage', str(self.stage), '--out', str(out))
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(out.exists())
+        self.assertEqual(sidecar.read_text(), 'existing checksum')
+
+    def test_noncanonical_paths_and_rpath_escape(self):
+        self.make_stage()
+        members = self.stage_members()
+        for path in (f'{PAK}//extra', f'{PAK}/./extra'):
+            self.assertIn('OUTSIDE_PAK_ROOT', self.rules(self.raw_zip(
+                members + [(path, b'fixture', stat.S_IFREG | 0o644)])))
+        for path in ('$ORIGIN/../outside', '$ORIGINsuffix'):
+            self.make_stage(engine=elf(runpath=path))
+            self.assertIn('ELF_ABSOLUTE_RPATH', self.rules(self.raw_zip(self.stage_members())))
+
+    def test_malformed_version_records_are_bounded(self):
+        engine = bytearray(elf())
+        shoff, = struct.unpack_from('<Q', engine, 40)
+        offset, size = struct.unpack_from('<QQ', engine, shoff + 3 * 64 + 24)
+        # A next pointer of one advances into the current record, not another
+        # valid record. Parsing must fail, rather than wander outside it.
+        struct.pack_into('<I', engine, offset + 12, 1)
+        self.make_stage(engine=bytes(engine))
+        self.assertIn('ELF_MALFORMED', self.rules(self.raw_zip(self.stage_members())))
+
+    def test_malformed_manifest_records_fail_without_traceback(self):
+        manifest = self.make_stage()
+        path = self.stage / R.MANIFEST
+        manifest['files'] = [None]
+        path.write_text(json.dumps(manifest))
+        self.assertIn('MANIFEST_INVALID', self.rules(self.raw_zip(self.stage_members())))
+
 
 if __name__ == '__main__':
     unittest.main()

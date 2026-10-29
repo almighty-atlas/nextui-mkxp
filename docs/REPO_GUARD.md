@@ -1,9 +1,10 @@
 # Repository guard (#9)
 
-Status: **verified-on-host**. GitHub Actions activation is **blocked**: the
-available credential lacks `workflow` scope, so the job ships as the inactive
-template `.github/workflow-templates/repo-guard.yml`. A maintainer activates it
-by moving the file to `.github/workflows/`.
+Status: **verified-on-host**. The integrated root test suite is also executed
+by the existing H700 probe workflows: it includes the guard's negative fixtures
+and a guard run against the repository index. The dedicated job remains an
+inactive template at `.github/workflow-templates/repo-guard.yml`; it is not
+required for those already active checks. No credential scope was expanded.
 
 `scripts/repo_guard.py` is a dependency-free Python 3 script. It reads only
 the **Git index**: tracked files plus anything staged with `git add`, exactly

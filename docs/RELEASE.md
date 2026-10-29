@@ -146,12 +146,14 @@ PASS/FAIL/BLOCKED. Nur wenn alle Punkte PASS sind, darf `h700_acceptance` auf GO
 
 ## Verification (2026-10-29)
 
-- **9 host tests PASS** (`python3 -I -m unittest discover -s tests -v`) with
+- **13 host tests PASS** (`python3 -I -m unittest discover -s tests -v`) with
   synthetic ELF64 fixtures and placeholder license text. They cover the blocked
   candidate, determinism across mtimes and permissions, exact-engine H700 binding,
   forbidden/outside paths, traversal, symlinks, case collisions, checksum and
   `SHA256SUMS` drift, required files, nine ABI rules, undeclared binaries, shell
-  syntax, no-write-on-failure and no-overwrite.
+  syntax, no-write-on-failure and no-overwrite. Integration review adds malformed
+  version-record bounds, noncanonical paths, `$ORIGIN` prefix/parent escapes,
+  malformed manifest records and existing checksum-sidecar preservation.
 - **ELF parser cross-check (verified-on-host):** run read-only in the
   network-disabled tools container against the private staged engine
   (`33b15913…73f3`, identical to the #40 pin) and #42 supervisor

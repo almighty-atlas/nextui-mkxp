@@ -5,10 +5,22 @@
 | Application | Version | Runtime/Essentials | H700/NextUI result | Evidence | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Minimal legal test project | TBD | TBD | NOT_TESTED | — | Required before fangame tests |
+| Knight Blade | Owner-supplied English build; see inventory | RMXP / RGSS1, mkxp-z 37a04d1 | PLAYABLE on RG35XX Pro / NextUI-20261013-0 | [Boot](KNIGHT_BLADE_BOOT.md), [Pak tests](RMXP_BATCH_TEST.md), [pause menu](RMXP_PAUSE_MENU.md) | Private engine; full playthrough and public release not covered |
 | Pokémon Infinite Fusion | TBD (6.8.x reported on R36S only) | RPG Maker XP/mkxp-z variant TBD | NOT_TESTED | — | R36S success is not H700 evidence |
 | Pokémon Decay | TBD | Confirm upstream game package / Essentials version | NOT_TESTED | — | Scripts/plugins and native dependency audit needed |
 
-## H700 runtime preflight (2026-10-27)
+## Current integration status (2026-10-29)
+
+Knight Blade's first-game checklist is **100%**, with owner-confirmed image,
+sound, controls, save/load, quit and NextUI return. The private Pak and Menu
+overlay work on the tested firmware. Save isolation across two instances and
+loading a restored snapshot in-game remain unverified. Infinite Fusion and
+Decay are not tested. Licensing/source/relink and clean-room reproduction
+remain release blockers. The sections below preserve each earlier trial's
+scope and unknowns; their NOT_TESTED statements are historical, not a reversal
+of the later hardware results.
+
+## Historical H700 runtime preflight (2026-10-27)
 
 Linux 4.9.170 is owner-reported. PR #27's Linux-4.9 sysroot and SDL-only link
 are HOST evidence only: direct GLIBC_2.17 does not remove SDL's transitive
