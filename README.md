@@ -22,6 +22,9 @@ isolation and in-game loading of a restored snapshot remain explicit follow-ups.
 
 ## Goals
 
+For the already-reviewed private runtime, use the [install/recovery guide](docs/INSTALL.md).
+It is not a public binary release or a download of game/RTP files.
+
 1. A reproducible, native **aarch64/H700** engine build compatible with the real NextUI environment.
 2. An installable **RMXP.pak** with intuitive launch, input, audio, exit, save and diagnostic behavior.
 3. Hardware-tested support for **Pokémon Infinite Fusion** and **Pokémon Decay**, without bundling game files.
