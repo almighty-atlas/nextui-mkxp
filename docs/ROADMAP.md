@@ -64,6 +64,10 @@ termination with a timed fallback. Host tests and target cross-build pass;
 physical input/loader/teardown acceptance remains open. The earlier private
 Knight Blade playability milestone remains **100%** in pending #39.
 
+Issue #45 adds an [in-game pause menu](RMXP_PAUSE_MENU.md) on the Menu button
+(Continue/Save/Load/Quit via the game's own screens), verified on H700 with
+Knight Blade. No save states or game switcher.
+
 - Implement layout and valid launch entry point compatible with NextUI's Pak and ROM discovery conventions.
 - Game-per-directory discovery with paths containing spaces; absence and error handling.
 - Map handheld input, maintain usable exit chord and handle audio/display cleanup.

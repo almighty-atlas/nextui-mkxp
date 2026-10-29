@@ -170,3 +170,11 @@ version references, `NEEDED` and `RPATH` statically. It cannot detect `dlopen`
 dependencies, missing Mali/GLES symbols or runtime behaviour on the H700.
 Upgrade and rollback swap only the Pak directory. A newer engine's saves may
 not load in an older one. No archive is published while the #3 gate is BLOCKED.
+
+## Pause menu (#45)
+
+The [Menu-button overlay](RMXP_PAUSE_MENU.md) works with Knight Blade on H700.
+It needs standard RMXP scene classes and offers the game's own save/load
+screens, not emulator save states. Customised games and Pokémon Essentials
+are untested and need an adapter. Button codes were observed on
+NextUI-20261013-0 and may change with firmware.
