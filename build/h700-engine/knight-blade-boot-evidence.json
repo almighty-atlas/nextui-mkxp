@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "issue": 38,
+  "status": "PASS; KNIGHT_BLADE_PLAYABLE_ON_H700",
+  "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+  "engine_stage": {
+    "path": "/tmp/nextui-mkxp-kb-boot-v1",
+    "archive_sha256": "83d2073c2fab1defd699892afff4c58929607e03e78df54e202c4dac5413341c",
+    "archive_bytes": 14358828,
+    "private_receipt_sha256": "83eb0968144fd1c4d14d7dbcf43249482441a1d4a72ffc170895142a3c1c50b7",
+    "device_manifest": "PASS"
+  },
+  "game_inputs_stage": {
+    "path": "/mnt/SDCARD/.userdata/h700/nextui-mkxp-test",
+    "filesystem": "vfat",
+    "files": 1640,
+    "manifest_sha256": "db19db9f1cb01e7fdc880a33dd83051366aa6f5ff17db24ea7fe389669538011",
+    "device_manifest": "PASS",
+    "contents": "games/KN_E (owner-provided), rtp/Standard (Graphics+Audio extracted from owner-designated RTP installer), soundfonts/TimGM6mb.sf2 with copyright",
+    "fat_invalid_names": 0,
+    "case_insensitive_collisions": 0
+  },
+  "soundfont": {
+    "name": "TimGM6mb",
+    "package": "timgm6mb-soundfont 1.3-5 (Debian snapshot 20261020T213255Z, apt-verified)",
+    "deb_sha256": "034abdfb296d9353433513dad5dbdcab46425ee6008fc02fe7039b46e75edc54",
+    "sf2_sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+    "sf2_bytes": 5969788,
+    "license": "GPL-2",
+    "reason": "small (6 MB) to limit RAM on a 1 GB device; quality is secondary for a boot test"
+  },
+  "controls": {
+    "source": "tests/hardware/knight-blade-boot/keybindings.json",
+    "generated_sha256": "cc11f43b8f75d7de64c79ffa56a1a02528ef0483b0d811f1fc0bc77618425b6b",
+    "summary": "physical A (SDL B) = C confirm, physical B (SDL A) = B cancel, Start = B menu, X/Y = A/X, L/R, stick clicks Y/Z, D-pad and left stick move",
+    "status": "PASS; owner reports controls work as configured"
+  },
+  "fixture_sha256": {
+    "mkxp.json": "203fa486a22caeba10e2b366e1954cdf703bb517b55081d0fa7566e87cf7a9f3",
+    "run.sh": "9630d40d8f6f16c7f879b7f56cdee8b058d29aaf7d2ac663b485b80278022f74",
+    "launch.sh": "79625f26dfafe82d67f23d166b4b25864c9d2360ad6a5e8d9f9f866110c97a56",
+    "keybindings.json": "33ea70803b001162d9d42a1cb5979adb9c85d4b88c2d9bfeca06794a8c7cd264"
+  },
+  "tool_entry": "Tools/h700/Knight Blade Boot Test.pak/launch.sh",
+  "watchdog_seconds": 1800,
+  "cleanup_before_staging": "Removed own superseded /tmp stages smoke v1, smoke v2 and loader after archiving their logs privately (archive sha256 138291d7b80e0c7342d52b9391701273da80eeb247d1941de58c7c6e3d05858a); v3 smoke stage kept",
+  "title_screen": "PASS",
+  "music": "PASS; MIDI via TimGM6mb plus OGG/WAV effects audible",
+  "new_game": "PASS",
+  "first_map": "PASS; movement works",
+  "exit": "PASS; two in-game shutdowns, exit 0 and BOOT_RUNNER_EXIT_OK each; owner confirmed normal NextUI return",
+  "engine_main_executed_by_agent": false,
+  "level": "verified-on-H700 (owner observation + logs), NextUI-20261013-0 (39a06de)",
+  "user_observation": "Owner: title screen shown, music and sound effects audible, everything works flawlessly with no restriction so far; saving worked; movement and battles work; main menu works",
+  "battle": "PASS; owner fought battles",
+  "main_menu": "PASS",
+  "save": "PASS; Save1.rxdata (126258 bytes) written into the private game copy",
+  "load_after_cold_start": "PASS; fresh engine launch, Continue loaded Save1, dialogue, play, in-game shutdown, NextUI returned (owner); no device reboot in between",
+  "run": {
+    "id": "run-ljOadD",
+    "duration_seconds_approx": 441,
+    "peak_vmrss_kb": 209752,
+    "samples": 89,
+    "raw_log_sha256": "4029197ff6e8165c1cee23af344dff2ce51894c36aa0a96b9d7b56eb29812c68",
+    "mem_log_sha256": "0ae7ff30cc853fbb1cef2f6c20c97d15dcee862c0c5a278cfe7b8a7c5b0229c1",
+    "private_log_archive_sha256": "4f7784353be23e12818bb1e8180f166e68579a8d0451c3986df0d1f3b306186a",
+    "log_excerpt": "docs/evidence/2026-10-29-knight-blade-boot.txt",
+    "warnings": "16x Primary font not found: Arial/Arial Black (embedded fallback font used, owner found text fine); 9x fluidsynth stub messages for fluid_file_test/fluid_stat (vendored build without file helpers; soundfont loaded and music played); 1 instrument substitution bank1 prog9 -> bank0"
+  },
+  "dialogue": "PASS; owner confirmed NPC dialogue in second run",
+  "user_observation_run2": "Owner: everything named (fresh start, load Save1, play, dialogue, shutdown, NextUI return) works perfectly",
+  "run2": {
+    "id": "run-KJnpKo",
+    "duration_seconds_approx": 165,
+    "peak_vmrss_kb": 167788,
+    "samples": 34,
+    "raw_log_sha256": "a5a66b99f409ecce937f9dcdb4a373bdab2ecdead4cd6f06a2ab7e46ff78f8b7",
+    "mem_log_sha256": "e275efb7c0b39f0a53c5b89291e7d772f7aeb7f2ad99dd70f4ba73394394fd66",
+    "private_log_archive_sha256": "4e57c0a7d4d88efd1ae8223097094818c48613da1809d49baf260737eeb99ef0",
+    "save_rewritten": "Save1.rxdata 81930 bytes at end of run 2"
+  },
+  "not_covered": "Full playthrough, device reboot between sessions, long-session thermal/battery behaviour, installable Pak integration"
+}
