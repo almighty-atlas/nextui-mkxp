@@ -11,3 +11,11 @@
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.
+
+## Release archive tooling (#16)
+
+The [release verifier](RELEASE.md) checks ELF headers, interpreter, GLIBC
+version references, `NEEDED` and `RPATH` statically. It cannot detect `dlopen`
+dependencies, missing Mali/GLES symbols or runtime behaviour on the H700.
+Upgrade and rollback swap only the Pak directory. A newer engine's saves may
+not load in an older one. No archive is published while the #3 gate is BLOCKED.

@@ -58,4 +58,9 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 - Install, upgrade, uninstall, troubleshooting and known limitations guide.
 - Publish only when distribution obligations and basic safety criteria are met.
 
+Issue #16 has an [offline archive builder/verifier](RELEASE.md): deterministic
+zip, manifest checksums, path allowlist, static AArch64 ELF ABI checks and a
+release gate that stays BLOCKED without human license review and H700 evidence
+bound to the exact engine hash. Host tests pass. No release is approved.
+
 **Exit gate:** signed-off release candidate; no game content in archives.

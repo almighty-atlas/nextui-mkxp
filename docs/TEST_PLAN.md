@@ -35,6 +35,12 @@
 - Repeat cold boot 3 times and play an extended session with memory/FPS/thermal sampling; record failures and crash signal.
 - Document specific scenes where slowdown happens rather than a single average FPS.
 
+## M5: Release archive
+
+- `python3 scripts/release_archive.py verify <zip>` must report `STRUCTURE=PASS`; see [RELEASE.md](RELEASE.md).
+- `RELEASE_GATE=GO` additionally requires the human gates and the German H700 checklist R1–R7, bound to the archived engine hash.
+- Exit 3 (structure PASS, gate BLOCKED) is a review candidate, never a publishable release.
+
 ## Test result template
 
 | Test | Evidence level | Device/firmware | Result | Evidence file / command |
