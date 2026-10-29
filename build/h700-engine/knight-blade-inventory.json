@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "issue": 36,
+  "status": "INVENTORY_PASS; RTP_AND_MIDI_SOUNDFONT_REQUIRED",
+  "level": "verified-on-host (private tiny02 build host); no device or engine execution",
+  "provenance": {
+    "designated_by": "device owner, as free official downloads",
+    "game": {
+      "url": "https://rpgmakerweb.tkool.jp/knight-blade-howling-of-kerberos.zip",
+      "bytes": 17949792,
+      "sha256": "a47c9cf1eaa466fc0fcd5e4fff0143881d318a71424fe1fab823aa95acaac58c",
+      "reproduced_on_second_host": true
+    },
+    "rtp": {
+      "url": "https://assets.rpgmakerweb.com/xp_rtp104e.exe",
+      "bytes": 22994937,
+      "sha256": "b3bd20ad7f413b40ac233aafd2e061de1dc429c2eadb59d0b3157ba3c47f16b2",
+      "installer": "Inno Setup setup data 5.2.3, \"RGSS-RTP Standard\", not passworded",
+      "executed": false,
+      "reproduced_on_second_host": true
+    },
+    "storage": "private owner-input directory on build host, mode 700; never committed, staged publicly or distributed"
+  },
+  "game": {
+    "folder": "KN_E",
+    "title": "KNight-Blade Howling of Kerberos",
+    "library": "RGSS102E.dll (not shipped; replaced by mkxp-z)",
+    "rtp1": "Standard",
+    "zip_entries": 757,
+    "unsafe_zip_paths": 0,
+    "symlinks": 0,
+    "encrypted_archive": false,
+    "unpacked_bytes": 22783480,
+    "tree_sha256": "dfdf45bf82081d3aaa8a7172661cf06227d033a56c3670399fc0e802b3a4bd47",
+    "data_files_excluding_scripts": 192,
+    "native_binaries": [
+      "Game.exe (Windows RGSS player, unused)"
+    ]
+  },
+  "rtp_extraction": {
+    "tool": "innoextract 1.9-0.1+b1 from pinned Debian snapshot 20261020T213255Z in private derived image",
+    "image_dockerfile_sha256": "7a3f8c0b4d4b8c20e13873a44871bf316e3c6fc68ddb77b7488339c2c4238d78",
+    "container": "--network=none --read-only --cap-drop=ALL, installer mounted read-only",
+    "included": [
+      "app/Graphics",
+      "app/Audio"
+    ],
+    "excluded": "six RGSS10x DLLs and Game.ico",
+    "files": 881,
+    "dll_or_exe": 0,
+    "symlinks": 0,
+    "bytes": 21310413,
+    "tree_sha256": "193260f7d7ac6395cc3303e6e238b8b938205927d499b0300dfda278e93f7c2d"
+  },
+  "inventory": {
+    "tool": "scripts/rgss_inventory.py",
+    "tool_sha256": "05fd4343f6afa656e52cae9a9ef034b6bf8956035771e9656860d3e0c0a05043",
+    "private_report_sha256": "2f2fcb6450bd737a149e2d5c17f0d62a71fbb2c9eb5104571966415d38fe2b95",
+    "references": 583,
+    "resolved": {
+      "game": 520,
+      "rtp": 62,
+      "missing": 1,
+      "case_mismatch": 0
+    },
+    "rtp_by_category": {
+      "Audio/BGM": 15,
+      "Audio/BGS": 2,
+      "Audio/ME": 2,
+      "Audio/SE": 32,
+      "Graphics/Animations": 6,
+      "Graphics/Panoramas": 1,
+      "Graphics/Transitions": 4
+    },
+    "resolved_extensions": {
+      ".jpg": 24,
+      ".mid": 28,
+      ".ogg": 37,
+      ".png": 449,
+      ".wav": 44
+    },
+    "midi_references": {
+      "game_bgm": 11,
+      "rtp_bgm": 15,
+      "rtp_me": 2
+    },
+    "missing": [
+      {
+        "category": "Graphics/Pictures",
+        "name": "kn_fortcity",
+        "source": "CommonEvents.rxdata",
+        "note": "absent from game and RTP; pre-existing game data gap, impact only if that common event runs"
+      }
+    ]
+  },
+  "scripts": {
+    "count": 91,
+    "source_bytes": 600042,
+    "win32api": 0,
+    "shell_calls": 0,
+    "resize_screen": 0,
+    "font_default_name": 0,
+    "file_writes": "standard Scene_Save only",
+    "saves": "Save1-4.rxdata relative to the working directory (game folder)",
+    "source_committed": false
+  },
+  "requirements_for_game_boot": [
+    "Mount extracted Standard RTP (Graphics/Audio) via mkxp-z RTP config; never copy into the repo",
+    "Configure midiSoundFont: 28 BGM/ME references are MIDI; engine log already warns 'No soundfont specified'",
+    "Keep mkxp-z pathCache enabled for games (smoke fixture disabled it); no case mismatches found",
+    "Decide save location: RGSS writes Save*.rxdata into the working directory",
+    "Text uses default font; engine reported 'Primary font not found: Arial' in smoke runs"
+  ],
+  "game_or_rtp_bytes_in_repository": false
+}

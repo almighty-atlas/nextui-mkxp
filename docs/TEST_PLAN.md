@@ -7,6 +7,14 @@
 - **H700:** actual RG35XX Pro running a documented NextUI version, with sanitized logs.
 - **OTHER DEVICE:** ArkOS/R36S reports, for context only, **never** substitute for H700.
 
+## Repository guard (STATIC)
+
+Run `python3 scripts/repo_guard.py` before every commit, and
+`python3 -m unittest discover -s tests -v` for its fixtures. See
+[REPO_GUARD.md](REPO_GUARD.md). A PASS only means the Git index contains no
+detected game data, binaries, archives, secrets, broken relative links, invalid
+JSON or shell syntax errors. It says nothing about H700 runtime compatibility.
+
 ## M1: Engine
 
 - Pinned reproducible input revisions; failed network/downloads are explicit.
@@ -17,6 +25,10 @@
 - Controller input (d-pad, A/B, START/SELECT, MENU) mapped on hardware.
 
 ## M2: Pak
+
+Before the full Pak, use the [asset-free engine smoke checklist](H700_ENGINE_SMOKE.md)
+for original procedural graphics/tone, physical inputs and clean NextUI return.
+The fixture being prepared or staged is not hardware execution evidence.
 
 - Detects missing `Game.ini`/missing data with actionable message; no partial state damage.
 - ROM path with spaces / Unicode; multiple games, isolated saves and config.
@@ -34,6 +46,12 @@
 - Decay: scripted events, scripted battles and installed Essentials extensions.
 - Repeat cold boot 3 times and play an extended session with memory/FPS/thermal sampling; record failures and crash signal.
 - Document specific scenes where slowdown happens rather than a single average FPS.
+
+## M5: Release archive
+
+- `python3 scripts/release_archive.py verify <zip>` must report `STRUCTURE=PASS`; see [RELEASE.md](RELEASE.md).
+- `RELEASE_GATE=GO` additionally requires the human gates and the German H700 checklist R1–R7, bound to the archived engine hash.
+- Exit 3 (structure PASS, gate BLOCKED) is a review candidate, never a publishable release.
 
 ## Test result template
 
@@ -61,3 +79,29 @@ Fixture outputs are HOST evidence. The owner has since supplied redacted real
 device inventory, summarized in [H700 baseline](H700_BASELINE.md); it is
 **H700 inventory** evidence only. Actual EGL/SDL/audio/input/Pak functionality,
 UI release confirmation and engine/game behavior remain **NOT_TESTED**.
+
+## Recorded narrow video result and next host gate
+
+[Issue #22 / PR #30 evidence](H700_VIDEO_EVIDENCE.md) records one owner-run H700
+video PASS separately from supplied host build facts and physical observation.
+Do not promote this to M1 engine/audio/input acceptance. Exact NextUI release,
+orientation and process audit remain incomplete; a log's cleanup/exit code alone
+does not establish a responsive UI. No further hardware test is requested now.
+
+The [next implementation milestone](H700_MINIMAL_ENGINE_PLAN.md) defines offline
+lockfile/cache rejection tests, C++ ABI calibration and engine-stage acceptance.
+Current offline regression commands (no ARM execution):
+
+```sh
+python3 -I -B -m unittest discover -s spikes/h700-stock-video -p 'test_*.py' -v
+```
+
+This includes evidence-consistency checks and existing synthetic ELF/assembly
+tests. It does not inspect the tested private ELF or repeat the owner's trial.
+
+For the 2026-10-28 private Ruby extension follow-up, see the
+[grouped hardware checklist and ELF validator contract](H700_RUNTIME_PIPELINE.md).
+The historical checklist is not itself evidence of execution. The subsequent
+[private Ruby batch report](H700_RUBY_BATCH.md) links actual static checks and
+the grouped H700 encoding/Psych/Fiddle PASS with exact firmware and raw log.
+Successful unchanged trials should not be repeated unnecessarily.

@@ -1,0 +1,428 @@
+{
+  "commit": "37a04d14413454551a7b6aadbb4e93e67168accb",
+  "distribution": "BLOCKED",
+  "engine": "mkxp-z",
+  "excluded_wraps": [
+    "angle",
+    "dbus",
+    "expat",
+    "glib",
+    "ibus",
+    "jack1",
+    "libdecor",
+    "libdrm",
+    "libinotify",
+    "libx11",
+    "libxau",
+    "libxcb",
+    "libxcursor",
+    "libxext",
+    "libxfixes",
+    "libxi",
+    "libxkbcommon",
+    "libxrandr",
+    "libxrender",
+    "openssl",
+    "pipewire",
+    "pulseaudio",
+    "sdl2",
+    "spirv-headers",
+    "spirv-tools",
+    "steamshim",
+    "systemd",
+    "volk",
+    "vulkan-headers",
+    "vulkan-memory-allocator",
+    "wayland",
+    "xcb-proto",
+    "xorgproto",
+    "xxhash"
+  ],
+  "issues": [],
+  "license_review": "NOT_PERFORMED",
+  "schema": 1,
+  "status": "LOCK_COMPLETE",
+  "wraps": {
+    "alsa-lib": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "alsa-lib-1.2.15.3",
+      "filename": "alsa-lib-1.2.15.3.tar.bz2",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "86d07b370340a929431aa53336b07a86c9306c625638b689b281da13970f5cb4",
+      "sha256": "7b079d614d582cade7ab8db2364e65271d0877a37df8757ac4ac0c8970be861e",
+      "urls": [
+        "https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.15.3.tar.bz2",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/a/alsa-lib/alsa-lib_1.2.15.3.orig.tar.bz2"
+      ],
+      "wrap_sha256": "aef5ea8616da73ec04ba12210c01eb870eff5ac50422cc0c8bc151ff9510c04f"
+    },
+    "fluidsynth": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "fluidsynth-2.5.0",
+      "filename": "fluidsynth-2.5.0.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "e4ae831ce02f38b5594ab4dacb11c1a4067ca65ea183523655ebdc9c1b2b92a1",
+      "urls": [
+        "https://github.com/FluidSynth/fluidsynth/archive/refs/tags/v2.5.0.tar.gz"
+      ],
+      "wrap_sha256": "6df0596e5e4ef12270685728174c604e99638c882f8e5ae44b81e39b5393643c"
+    },
+    "fmt": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "fmt-12.1.0",
+      "filename": "fmt-12.1.0.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "ea7de4299689e12b6dddd392f9896f08fb0777ac7168897a244a6d6085043fea",
+      "urls": [
+        "https://github.com/fmtlib/fmt/archive/refs/tags/12.1.0.tar.gz"
+      ],
+      "wrap_sha256": "5a3e585abc0120b007c8deae8f263cbb5dc045cc985e81855860c76d0bfd290c"
+    },
+    "freetype": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "freetype-version.patch": "79c58aec0aa6271598ee7020e3e160e1389634a3395a828abe6112c7e95b8a59"
+      },
+      "directory": "freetype-VER-2-14-3",
+      "filename": "freetype-VER-2-14-3.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "dc49de6b01a266eef4876a4dd34d9842c475d3e28ff2eff63bd2fb760ab56261",
+      "urls": [
+        "https://gitlab.freedesktop.org/freetype/freetype/-/archive/VER-2-14-3/freetype-VER-2-14-3.tar.gz",
+        "https://github.com/freetype/freetype/archive/refs/tags/VER-2-14-3.tar.gz"
+      ],
+      "wrap_sha256": "64c3d8107ab6f57a037938758b60c91bc36786f05a99e337ee6b417804050a2a"
+    },
+    "gcem": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "gcem-1.18.0",
+      "filename": "gcem-1.18.0.tar.gz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "09a362206fd2fe9bded6856157f6a70c5a4e8a25f2e64fab53377c927247352a",
+      "sha256": "0ad5125246f5e926749a491886d33662c165d5a7708910f81133c4c2144ee64e",
+      "urls": [
+        "https://archive.ubuntu.com/ubuntu/pool/universe/g/gcem/gcem_1.18.0.orig.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/universe/g/gcem/gcem_1.18.0.orig.tar.gz"
+      ],
+      "wrap_sha256": "ae7c1d1c5bd999a67099d0583dd9a4b7f730cb4abb5d5a7d12399ff0888ecc5d"
+    },
+    "libffi": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "libffi-cc-basename.patch": "b6a4a779f79cc4c6b815d5182c75ca13c83cb3c98a8b381bc3986fcdbd8d8b40"
+      },
+      "directory": "libffi-3.5.2",
+      "filename": "libffi-3.5.2.tar.gz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "3585626f9565c31500f5a57fa6a58751997af9158107ca4698a2e1c176001ef6",
+      "sha256": "f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc",
+      "urls": [
+        "https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz"
+      ],
+      "wrap_sha256": "a02f36425c9aeac78e14540eea767e71ad3ab91764c3aa558126dcedefe193fa"
+    },
+    "libiconv": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "libiconv-1.18",
+      "filename": "libiconv-1.18.tar.gz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "6f59d8834e2e6ed24622417d3561b926c9acdea06aa340d96c552ae32dde67ad",
+      "sha256": "3b08f5f4f9b4eb82f151a7040bfd6fe6c6fb922efe4b1659c66ea933276965e8",
+      "urls": [
+        "https://ftpmirror.gnu.org/libiconv/libiconv-1.18.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/gnu/libiconv/libiconv-1.18.tar.gz"
+      ],
+      "wrap_sha256": "fce77ad94890532e85110a92aa41df80b7d81c8ff9647ca8273543ef251a4066"
+    },
+    "libyaml": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "libyaml-0.2.5",
+      "filename": "libyaml-0.2.5.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "fa240dbf262be053f3898006d502d514936c818e422afdcf33921c63bed9bf2e",
+      "urls": [
+        "https://github.com/yaml/libyaml/archive/refs/tags/0.2.5.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/liby/libyaml/libyaml_0.2.5.orig.tar.gz"
+      ],
+      "wrap_sha256": "2905f2cb8575fa7faa27be865cab6f23b815f695139977351481d1442e422173"
+    },
+    "mesa": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "mesa-26.0.3",
+      "filename": "mesa-26.0.3.tar.xz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "f37352195fa665f98c0202b028ad915aff705fd181a6dc3a605a2b409fb617ea",
+      "sha256": "ddb7443d328e89aa45b4b6b80f077bf937f099daeca8ba48cabe32aab769e134",
+      "urls": [
+        "https://archive.ubuntu.com/ubuntu/pool/main/m/mesa/mesa_26.0.3.orig.tar.xz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/m/mesa/mesa_26.0.3.orig.tar.xz"
+      ],
+      "wrap_sha256": "520b79e5621c726509705cec1b060e11c6efbfa66246396b02334521f7875477"
+    },
+    "ogg": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "libogg-1.3.6",
+      "filename": "libogg-1.3.6.tar.xz",
+      "kind": "wrap-file",
+      "sha256": "5c8253428e181840cd20d41f3ca16557a9cc04bad4a3d04cce84808677fa1061",
+      "urls": [
+        "https://github.com/xiph/ogg/releases/download/v1.3.6/libogg-1.3.6.tar.xz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/libo/libogg/libogg_1.3.6.orig.tar.xz"
+      ],
+      "wrap_sha256": "57a084b0cadc7238207e02f5af489290f85ac86f05fd2ee9b970667acb9bf6ce"
+    },
+    "openal-soft": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "openal-soft-bsd.patch": "8337d5cc966db369dd171078e43fbe9b2fcade563b9b5e04a5446ce1928aacb3",
+        "openal-soft-cpp-standard.patch": "553ba170b8f5ff680ce220e79dc193773472d4d3f0cf5be8044c5a124954333c",
+        "openal-soft-info.patch": "e4211a4cc483b5b55cb9851af876467724d18bfb9337c190e8985c8f772fd530",
+        "openal-soft-partial-dependency.patch": "d0fb11277dc54a11d2dec1efffbe73775d4300044f14f10c6e67c835b9955de7",
+        "openal-soft-simd.patch": "52088145d5e31a0f5535ccd10bd3f5a0d1b496db82e44b4a9cb04e6e5b7c608f"
+      },
+      "directory": "openal-soft-1.24.3",
+      "filename": "openal-soft-1.24.3.tar.gz",
+      "kind": "wrap-file",
+      "patch_archive": {
+        "filename": "openal-soft_1.24.3-2_patch.zip",
+        "sha256": "6642f3f3321f3d00633547e3abc06657ca4e22124b6593da7bddd4d9593ccc2b",
+        "urls": [
+          "https://wrapdb.mesonbuild.com/v2/openal-soft_1.24.3-2/get_patch"
+        ]
+      },
+      "sha256": "7e1fecdeb45e7f78722b776c5cf30bd33934b961d7fd2a11e0494e064cc631ce",
+      "urls": [
+        "https://github.com/kcat/openal-soft/archive/refs/tags/1.24.3.tar.gz",
+        "https://github.com/mesonbuild/wrapdb/releases/download/openal-soft_1.24.3-2/openal-soft-1.24.3.tar.gz"
+      ],
+      "wrap_sha256": "295945fb0292a43f5b0eab8e5e0ba8e625c1e311f9975ad9b8f59c008e96329a"
+    },
+    "physfs": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "icculus-physfs-eb3383b",
+      "filename": "physfs-3.2.0.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "c0e718a1f5ba464570a383c12771879aeddb5dabcc3385acc5f14a4c26b93301",
+      "urls": [
+        "https://archive.ubuntu.com/ubuntu/pool/universe/libp/libphysfs/libphysfs_3.2.0.orig.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/universe/libp/libphysfs/libphysfs_3.2.0.orig.tar.gz"
+      ],
+      "wrap_sha256": "47d90276c652376702242aaaa6075f2cc72c6e8ca348c21a43811fabd0d2386a"
+    },
+    "pixman": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "pixman-0.46.4",
+      "filename": "pixman-0.46.4.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "d09c44ebc3bd5bee7021c79f922fe8fb2fb57f7320f55e97ff9914d2346a591c",
+      "urls": [
+        "https://cairographics.org/releases/pixman-0.46.4.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/p/pixman/pixman_0.46.4.orig.tar.gz"
+      ],
+      "wrap_sha256": "0af369c26c5127df923947345a58c7cd4b33e62cd44d3a0c560abd2241ae7b83"
+    },
+    "ruby-3.1": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "ruby-3.1-alignof.patch": "697a0384b1bb2ee9fd309d0021e901330d756455ec8c6e6b7b252c25a9f28731",
+        "ruby-3.1-bison.patch": "23d3bfb5680f87db789d37bb6a89718268663cc41a3918ce3eaba2fe99cc359b",
+        "ruby-3.1-bsd.patch": "b420cbb37218ad7377624339919265eda08b0a893cd1c29f8f5152773cba8d91",
+        "ruby-3.1-bundle.patch": "114cbc2f04c5e13679c94c356f76bf76debd7203be338a5d910b8e084c339a0e",
+        "ruby-3.1-ccache.patch": "a2af153ca6e96c864136d7b3b554808b4b02ff3526820f4276c5dc1dcdeeb18c",
+        "ruby-3.1-clock-gettime.patch": "092302a64163ae3c63133ffd67a409f0b5f9e9d297ad578f08ac98cb744dd330",
+        "ruby-3.1-darwin-in6.patch": "2b95523fba581ec7b05f7154e6aada5cb2a96614255721f01a8914a63a406662",
+        "ruby-3.1-deps.patch": "875790a7e5e465ebd2e1c184e394ad7689d9ad7d7f7481de426c97915404c80f",
+        "ruby-3.1-disable-lto-for-link-tests.patch": "579eb6432756ad7f5d1909f30c79f7b44b7c4e6924bedc4b6c32d52ce6314329",
+        "ruby-3.1-dllexport.patch": "e08edf1f8ff3510fdfb169b843eac4da810b5b5d879c63d37c45101932b7df41",
+        "ruby-3.1-exp.patch": "66d3a9c89950eba05453713bcbcbc0c31b561938c7422784bdf4e546435a9169",
+        "ruby-3.1-extmk.patch": "e51dd34319f595ea8d7d13f7092b5cc8f20d79e0df5ff03c6fa8c92541628334",
+        "ruby-3.1-fake.patch": "849800714a947ab6014497fa2e069ac0dd1ac320d081fc8bd9d6727a9511da91",
+        "ruby-3.1-init.patch": "9d55b8475065e407b821f8ce153e59a18961fba4772d84c1462ef69c65475a61",
+        "ruby-3.1-libruby-static.patch": "cbbb0372533445a263199d0eedb4421a107e1205d800af1a3b2e0d26c6a3bde7",
+        "ruby-3.1-libs.patch": "54a38d03bc8f1c10d2837e571340e47327b3fc3b9046ecd3a9a1f3ca190d0106",
+        "ruby-3.1-mkxp-z-patches-windows-libs.patch": "2d011e3c56407ca8ef8c05afe60a39d90c468b47b66c77242c2d8047865298ff",
+        "ruby-3.1-mkxp-z-patches.patch": "bf3a240de684793460db2cf3dfe5f18e2b82d174d6a4d2564dbef88980bdd281",
+        "ruby-3.1-pkg-config.patch": "d1b59e063502b6218dadbed21bfdc8bef652de538c9886678df4a720ebc1b290",
+        "ruby-3.1-program.patch": "cc2f41b2b6e46448571e950d122219a8e461e34f3d6c4fa1d8e7d22e317e707c",
+        "ruby-3.1-random.patch": "a81a456b6dcebfd431425ae3f36d5e739c38d8168818af8e7554d24af4ed51e7",
+        "ruby-3.1-rbinstall.patch": "8ea4be64d87717b2e9b51ba68f96ce3e4e69d1476ea9451dafb1babe1904f9f6",
+        "ruby-3.1-reconfig.patch": "f9a4470c2ae09fb2bf4d981ffdac9c4e0a53590bd6e42f5e8b5fd51fbf6da4c9",
+        "ruby-3.1-round.patch": "cce370cee4539a2089873bbbe6e0529b4a2be4d7f59eec2fbae674b92c579fc9",
+        "ruby-3.1-verbose.patch": "85eff4d819e1fa35b3f7bb35aba6877a69d17e8898553608e1643c5b36f5f161",
+        "ruby-3.1-win32-winnt.patch": "d168f5dac0f4ac2e7e435c9ddd0dc1a2d44b95f505d0f8be26c49f87fc5f51e4",
+        "ruby-3.1-windows-arm64.patch": "d74f745a7e700248ee6d66bf4d8d075baf5c4be69feef755f3b3f0e26adbbd68",
+        "ruby-3.1-windows-builtin-setjmp.patch": "e28114237af2488739d6185a25e42c40cc408f35dddbd94ca849e9a559def2d0"
+      },
+      "directory": "ruby-3_1_3",
+      "filename": "ruby-3_1_3.tar.gz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "6dbc87c8b152b62f620725386fbd81f732d90654ba0a1a21d7f86d6e22a139c1",
+      "sha256": "c87fc4789233ad90cb1b865e547a257d3c15b3e8e6918b153197e1ed4e47226b",
+      "urls": [
+        "https://github.com/ruby/ruby/archive/refs/tags/v3_1_3.tar.gz"
+      ],
+      "wrap_sha256": "635dcc24728367c739d7825ecf109ca4134b928625a3f5cecd4d743f4367b4f8"
+    },
+    "sdl2_image": {
+      "commit": "d3c6d5963dbe438bcae0e2b6f3d7cfea23d02829",
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "sdl2_image-deps.patch": "2b1efc26cff25320418bc1dd26446780e22c201337f135625598421d211b9b0f",
+        "sdl2_image-highway-exit.patch": "6f3d0118f2d4e2ad296f23f47d114a93f058feae0aace5a6e9d10d6f999b9f55",
+        "sdl2_image-highway-rvv.patch": "a6ad01cf764f83edf85325b19422cd66396f293a51c525fa9bfc06e155ab2e7f",
+        "sdl2_image-libjxl-enc.patch": "b733e7349ff574795bdfa3d3aea72ef14dc34b76fa2ab6d3118ce2200fc9925e",
+        "sdl2_image-libjxl-examples-tools.patch": "acb795ca7ccd9567957e24b7ee332b8850ac24252bdae3d31e9d8ef4970a1df9",
+        "sdl2_image-libjxl-static.patch": "2f3ae9869ebbd5d3bdc97d5f987b889ef674fcebb8551401d9bf1360c9dd5b93",
+        "sdl2_image-zlib-windres.patch": "3b49d5932977c51fe06fdfbd0a8380518d7ad482e2fb9164ba374444171a54ec"
+      },
+      "directory": "sdl2_image",
+      "kind": "wrap-git",
+      "recursive": true,
+      "revision": "release-2.6.3",
+      "submodules": {
+        "external/dav1d": "52d0c1f44eff76c3773636a9805f69ec26633037",
+        "external/jpeg": "bc27d050625f126dcba73ae5b731272de1a89dc1",
+        "external/libavif": "a3e9315474deb60e39b6e3aad88798eee26dadea",
+        "external/libjxl": "d456eedef27d3587191f35f918c3ca2821c5a6c4",
+        "external/libjxl/third_party/brotli": "2ae7ff838d1a7ba9726ef0f9b3e42d9eadc5d252",
+        "external/libjxl/third_party/brotli/research/esaxx": "ca7cb332011ec37a8436487f210f396b84bd8273",
+        "external/libjxl/third_party/brotli/research/libdivsufsort": "5f60d6f026c30fb4ac296f696b3c8b0eb71bd428",
+        "external/libjxl/third_party/googletest": "0ea2d8f8fa1601abb9ce713b7414e7b86f90bc61",
+        "external/libjxl/third_party/highway": "a2104044ca0717cc571e4a7570b6e8900d4f8c13",
+        "external/libjxl/third_party/lcms": "65c63bf549d78253c14b30b3d62cb668bbbe612c",
+        "external/libjxl/third_party/lodepng": "48e5364ef48ec2408f44c727657ac1b6703185f8",
+        "external/libjxl/third_party/sjpeg": "868ab558fad70fcbe8863ba4e85179eeb81cc840",
+        "external/libjxl/third_party/skcms": "64374756e03700d649f897dbd98c95e78c30c7da",
+        "external/libpng": "999173059e2651fab2a0102eeba18748c4bd9827",
+        "external/libtiff": "dad25b3f71cfd7f4fcb089a5881a31e65ae92c0a",
+        "external/libwebp": "12cf7b315fb7a9df56fa6b8ee30e36312659d63c",
+        "external/zlib": "aeb146673f65fe6755d9aae05579c944d6572d20"
+      },
+      "url": "https://github.com/libsdl-org/SDL_image",
+      "wrap_sha256": "2c000824e8b1a1a57211eb3d2e1b9694adb47aad313881f649560171d2761483"
+    },
+    "sdl2_sound": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "sdl2_sound-deps.patch": "98f042cc57d5350c1ca0627444e933bd13997e5646e511c2bcc05412463a0b05"
+      },
+      "directory": "SDL2_sound-2.0.4",
+      "filename": "SDL2_sound-2.0.4.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "f73f6720dba2e677c0bf70d0c76ca3c96d865d04025e49a8b161711685961931",
+      "urls": [
+        "https://github.com/icculus/SDL_sound/releases/download/v2.0.4/SDL2_sound-2.0.4.tar.gz"
+      ],
+      "wrap_sha256": "560e2d626c5a14a16536847bf28a23d6e82e53f0b1838267ae2aef0cfcc2c732"
+    },
+    "sdl2_ttf": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "sdl2_ttf-deps.patch": "858f4e49f19d70e970e8d5ce5f4dddd77d54fd40394616137f6ef705cee3c280"
+      },
+      "directory": "SDL_ttf-release-2.0.18",
+      "filename": "SDL_ttf-release-2.0.18.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "6b61544441b72bdfa1ced89034c6396fe80228eff201eb72c5f78e500bb80bd0",
+      "urls": [
+        "https://github.com/libsdl-org/SDL_ttf/archive/refs/tags/release-2.0.18.tar.gz"
+      ],
+      "wrap_sha256": "1a12ee7756a9420e3f85257737e0d39bbdcfcd06a20e73d9e8e42922ae1606dc"
+    },
+    "theora": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "libtheora-1.2.0",
+      "filename": "libtheora-1.2.0.tar.gz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "b3372176685207ffb70190ef625bc3cd386b5725b2b2bea981125be274fddecf",
+      "sha256": "92a32e9c1d79984e6fc6abe325da05bf4ec97ee38d1a4d49d338545ed050a28f",
+      "urls": [
+        "https://archive.ubuntu.com/ubuntu/pool/main/libt/libtheora/libtheora_1.2.0+dfsg.orig.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/libt/libtheora/libtheora_1.2.0+dfsg.orig.tar.gz"
+      ],
+      "wrap_sha256": "cc4a3c7956db2e45ac695b4578127d8117ce0052e17ec858b883b511a880742c"
+    },
+    "theoraplay": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "theoraplay-ec1aad1ee43592f216946cdc03b1ee4c4e1e2e59",
+      "filename": "theoraplay-ec1aad1ee43592f216946cdc03b1ee4c4e1e2e59.tar.gz",
+      "kind": "wrap-file",
+      "patch_directory_tree_sha256": "ca3a11413e949a3d43f5abf35ce4419521b6b6312459e1fbb437e6f528f46798",
+      "sha256": "f1f29e5cb8b0bc08c95be843832294c38a1efa1dddb31ec214d23982db2fcddb",
+      "urls": [
+        "https://github.com/icculus/theoraplay/archive/ec1aad1ee43592f216946cdc03b1ee4c4e1e2e59.tar.gz"
+      ],
+      "wrap_sha256": "ca70c249d2afafbc3c5266539249fdf0f53e2dd91c5593e2e70120c6c6f872c7"
+    },
+    "uchardet": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812"
+      },
+      "directory": "uchardet-0.0.8",
+      "filename": "uchardet-0.0.8.tar.xz",
+      "kind": "wrap-file",
+      "sha256": "e97a60cfc00a1c147a674b097bb1422abd9fa78a2d9ce3f3fdcc2e78a34ac5f0",
+      "urls": [
+        "https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.8.tar.xz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/u/uchardet/uchardet_0.0.8.orig.tar.xz"
+      ],
+      "wrap_sha256": "480672bfc53add730ff0674d981dcb82c708e6ea47f505762bad2512fcc310f4"
+    },
+    "vorbis": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "vorbis-deps.patch": "66cdf4c5199d92b8b0ee469f941881c003bacc6c0fe8f51e8b16cc461567f8e0"
+      },
+      "directory": "libvorbis-1.3.7",
+      "filename": "libvorbis-1.3.7.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "0e982409a9c3fc82ee06e08205b1355e5c6aa4c36bca58146ef399621b0ce5ab",
+      "urls": [
+        "https://github.com/xiph/vorbis/releases/download/v1.3.7/libvorbis-1.3.7.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/libv/libvorbis/libvorbis_1.3.7.orig.tar.gz"
+      ],
+      "wrap_sha256": "f4cd20bd016ee90fcc0778c1a806411f52f87c31c6d001cc78979880b5fdde55"
+    },
+    "zlib": {
+      "diff_files": {
+        "end-of-diff-files.patch": "8171e854d4cf5bed4aebbd934e0fcdb23a28c84d209624bfa482bde9483ee812",
+        "zlib-target-name.patch": "fde6caf183a31c981ec9f2db692f21d3250ba752a3f4e2d384d3778f7caaf7ab",
+        "zlib-version.patch": "52c2588c02f30c932bafb68ad97ef0e04765f85f3af2ddf97aa0e92fd5d6c46c",
+        "zlib-windres.patch": "2ae0f36cc502403941f55d4e6caba639bd21c83bfd6e9e872ea38c0e80b886f7"
+      },
+      "directory": "zlib-1.3.1",
+      "filename": "zlib-1.3.1.tar.gz",
+      "kind": "wrap-file",
+      "sha256": "60dd315c07f616887caa029408308a018ace66e3d142726a97db164b3b8f69fb",
+      "urls": [
+        "https://archive.ubuntu.com/ubuntu/pool/main/z/zlib/zlib_1.3.dfsg+really1.3.1.orig.tar.gz",
+        "https://mirrors.ocf.berkeley.edu/ubuntu/pool/main/z/zlib/zlib_1.3.dfsg+really1.3.1.orig.tar.gz"
+      ],
+      "wrap_sha256": "f60ff8c55134cfe35ba5fefc802ba3d25082bc2b7a405a010f8bc6d2fa302067"
+    }
+  }
+}

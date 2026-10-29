@@ -1,7 +1,7 @@
 # Codex-Master-Prompt — Issue #26: Linux-4.9-Sysroot und H700-Mali-Linkage
 
-**Projekt:** [almighty-atlas/nextui-mkxp](https://github.com/almighty-atlas/nextui-mkxp)  
-**Aufgabe:** [Issue #26](https://github.com/almighty-atlas/nextui-mkxp/issues/26)  
+**Projekt:** [almighty-atlas/nextui-mkxp](https://github.com/almighty-atlas/nextui-mkxp)<br>
+**Aufgabe:** [Issue #26](https://github.com/almighty-atlas/nextui-mkxp/issues/26)<br>
 **Zulässige Arbeit:** isolierte Quellen-, Host-Build- und ELF-Prüfung. **Keine Ausführung, Installation oder Änderung auf dem Handheld.**
 
 ## Codex-Auftrag

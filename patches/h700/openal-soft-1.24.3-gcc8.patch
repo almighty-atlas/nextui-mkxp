@@ -1,0 +1,160 @@
+# nextui-mkxp H700-specific patch for OpenAL Soft 1.24.3 (mkxp-z wrap), not upstream.
+# The pinned NextUI cross compiler is GCC 8.3 (glibc 2.28 compatibility), which rejects
+# throw/logging calls inside constexpr functions and lacks std::reduce. The 12 enum-mapping
+# helpers are only called at run time, so constexpr -> inline keeps behaviour; std::reduce
+# over a small float array becomes the sequential std::accumulate. GCC 8 also keeps
+# std::filesystem in libstdc++fs, so the overlay's openal_dep links it when present.
+# License: OpenAL Soft LGPL-2.1-or-later.
+
+--- a/al/auxeffectslot.cpp
++++ b/al/auxeffectslot.cpp
+@@ -220,7 +220,7 @@
+ 
+ 
+ [[nodiscard]]
+-constexpr auto EffectSlotTypeFromEnum(ALenum type) noexcept -> EffectSlotType
++inline auto EffectSlotTypeFromEnum(ALenum type) noexcept -> EffectSlotType
+ {
+     switch(type)
+     {
+--- a/al/buffer.cpp
++++ b/al/buffer.cpp
+@@ -81,7 +81,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr auto EnumFromAmbiLayout(AmbiLayout layout) -> ALenum
++inline auto EnumFromAmbiLayout(AmbiLayout layout) -> ALenum
+ {
+     switch(layout)
+     {
+@@ -102,7 +102,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr auto EnumFromAmbiScaling(AmbiScaling scale) -> ALenum
++inline auto EnumFromAmbiScaling(AmbiScaling scale) -> ALenum
+ {
+     switch(scale)
+     {
+--- a/al/debug.cpp
++++ b/al/debug.cpp
+@@ -100,7 +100,7 @@
+ }
+ 
+ 
+-constexpr auto GetDebugSourceEnum(DebugSource source) -> ALenum
++inline auto GetDebugSourceEnum(DebugSource source) -> ALenum
+ {
+     switch(source)
+     {
+@@ -114,7 +114,7 @@
+         int{al::to_underlying(source)})};
+ }
+ 
+-constexpr auto GetDebugTypeEnum(DebugType type) -> ALenum
++inline auto GetDebugTypeEnum(DebugType type) -> ALenum
+ {
+     switch(type)
+     {
+@@ -132,7 +132,7 @@
+         int{al::to_underlying(type)})};
+ }
+ 
+-constexpr auto GetDebugSeverityEnum(DebugSeverity severity) -> ALenum
++inline auto GetDebugSeverityEnum(DebugSeverity severity) -> ALenum
+ {
+     switch(severity)
+     {
+--- a/al/effects/chorus.cpp
++++ b/al/effects/chorus.cpp
+@@ -37,7 +37,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr ALenum EnumFromWaveform(ChorusWaveform type)
++inline ALenum EnumFromWaveform(ChorusWaveform type)
+ {
+     switch(type)
+     {
+--- a/al/effects/fshifter.cpp
++++ b/al/effects/fshifter.cpp
+@@ -32,7 +32,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr ALenum EnumFromDirection(FShifterDirection dir)
++inline ALenum EnumFromDirection(FShifterDirection dir)
+ {
+     switch(dir)
+     {
+--- a/al/effects/modulator.cpp
++++ b/al/effects/modulator.cpp
+@@ -32,7 +32,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr ALenum EnumFromWaveform(ModulatorWaveform type)
++inline ALenum EnumFromWaveform(ModulatorWaveform type)
+ {
+     switch(type)
+     {
+--- a/al/effects/vmorpher.cpp
++++ b/al/effects/vmorpher.cpp
+@@ -61,7 +61,7 @@
+     return std::nullopt;
+ #undef HANDLE_PHENOME
+ }
+-constexpr ALenum EnumFromPhenome(VMorpherPhenome phenome)
++inline ALenum EnumFromPhenome(VMorpherPhenome phenome)
+ {
+ #define HANDLE_PHENOME(x) case VMorpherPhenome::x: return AL_VOCAL_MORPHER_PHONEME_ ## x
+     switch(phenome)
+@@ -111,7 +111,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr ALenum EnumFromWaveform(VMorpherWaveform type)
++inline ALenum EnumFromWaveform(VMorpherWaveform type)
+ {
+     switch(type)
+     {
+--- a/al/state.cpp
++++ b/al/state.cpp
+@@ -135,7 +135,7 @@
+     }
+     return std::nullopt;
+ }
+-constexpr auto ALenumFromDistanceModel(DistanceModel model) -> ALenum
++inline auto ALenumFromDistanceModel(DistanceModel model) -> ALenum
+ {
+     switch(model)
+     {
+--- a/alc/effects/reverb.cpp
++++ b/alc/effects/reverb.cpp
+@@ -931,7 +931,7 @@
+     /* Calculate the gain (coefficient) for the secondary reflections based on
+      * the average delay and decay time.
+      */
+-    const auto length = std::reduce(EARLY_LINE_LENGTHS.begin(), EARLY_LINE_LENGTHS.end(), 0.0f)
++    const auto length = std::accumulate(EARLY_LINE_LENGTHS.begin(), EARLY_LINE_LENGTHS.end(), 0.0f)
+         / float{EARLY_LINE_LENGTHS.size()} * density_mult;
+     Coeff = CalcDecayCoeff(length, decayTime);
+ 
+--- a/meson.build
++++ b/meson.build
+@@ -528,10 +528,13 @@
+   install: true,
+ )
+ 
++# nextui-mkxp: GCC 8 keeps std::filesystem (used via ghc::filesystem) in libstdc++fs.
++stdcxxfs_dep = cpp.find_library('stdc++fs', required: false)
++
+ openal_dep = declare_dependency(
+   link_with: openal_lib,
+   include_directories: openal_inc,
+-  dependencies: [atomic_dep, fmt_dep],
++  dependencies: [atomic_dep, fmt_dep, stdcxxfs_dep],
+   compile_args: get_option('default_library') == 'static' ? '-DAL_LIBTYPE_STATIC' : [],
+ )
+ 

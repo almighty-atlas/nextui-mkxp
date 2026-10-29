@@ -8,6 +8,16 @@ Roms/
 *.rgssad
 *.rgss2a
 *.rgss3a
+*.rvdata
+*.rvdata2
+*.srm
+*.gba
+*.gbc
+*.nds
+*.iso
+*.chd
+saves/
+RTP/
 Game.exe
 Game.ini
 *.sav
@@ -40,6 +50,10 @@ core.[0-9]*
 # Local configuration / caches
 .env
 .env.*
+*.pem
+*.key
+id_rsa
+id_ed25519
 !.env.example
 .cache/
 __pycache__/

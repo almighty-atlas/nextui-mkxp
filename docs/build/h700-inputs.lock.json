@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "status": "LOCAL_BUILD_ONLY_DISTRIBUTION_BLOCKED",
+  "project_base": "bcb666b4a09349e25abd689f4e4f919598c821d6",
+  "compiler": {
+    "name": "gcc-8.3.0-aarch64-nextui-linux-gnu-x86_64-host.tar.xz",
+    "url": "https://github.com/LoveRetro/gcc-arm-8.3-aarch64-tg5040/releases/download/v8.3.0-20260204-190602-d37268f5/gcc-8.3.0-aarch64-nextui-linux-gnu-x86_64-host.tar.xz",
+    "bytes": 231900984,
+    "sha256": "d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
+    "upstream_digest": "sha256:d4ac4ef1968668f93f625f2b226c69d74739ae58ff640d2ce3aaae6b4d1b93d3",
+    "retrieved_utc": "2026-10-25T23:58:35.195664+00:00",
+    "release_commit": "d37268f5160ec6cd4da541524c8111797e060c36",
+    "host": "x86_64-linux",
+    "target": "aarch64-nextui-linux-gnu",
+    "license_evidence": "Extracted share/licenses; GCC GPL, glibc LGPL; tool use is distinct from redistribution; no toolchain redistributed"
+  },
+  "sdk": {
+    "name": "SDK_usr_tg5040_a133p.tgz",
+    "url": "https://github.com/trimui/toolchain_sdk_smartpro/releases/download/20231018/SDK_usr_tg5040_a133p.tgz",
+    "bytes": 185049621,
+    "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+    "upstream_digest": null,
+    "retrieved_utc": "2026-10-25T23:58:33.476080+00:00",
+    "selected_prefixes": [
+      "usr/include/SDL2",
+      "usr/include/EGL",
+      "usr/include/GLES2",
+      "usr/include/KHR",
+      "usr/lib/libEGL.so.1",
+      "usr/lib/libGLESv2.so.2",
+      "usr/lib/libSDL2-2.0.so.0.2600.1",
+      "usr/lib/libEGL.so",
+      "usr/lib/libSDL2-2.0.so.0",
+      "usr/lib/libGLESv2.so",
+      "usr/lib/libSDL2.so",
+      "usr/lib/libIMGegl.so",
+      "usr/lib/libsrv_um.so",
+      "usr/lib/libusc.so",
+      "usr/lib/libglslcompiler.so"
+    ],
+    "digest_kind": "independently computed observation; no upstream digest published",
+    "license": "UNKNOWN package/vendor binary redistribution terms; header notices inspected, no SDK redistribution permitted by this audit"
+  },
+  "triangle": {
+    "repository": "https://github.com/almighty-atlas/nextui-mkxp",
+    "commit": "60721c1a81a9f54e507650f313a479ecaa9b6d2a",
+    "path": "spikes/h700-video/triangle.c",
+    "sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42",
+    "license": "MIT original source only"
+  },
+  "sysroot": {
+    "origin": "compiler archive bundled libc, not full SDK overlay",
+    "glibc_headers": "2.28",
+    "configured_minimum_kernel": "4.19",
+    "manifest_entries": 2265,
+    "manifest_sha256": "b52f3262713f7b1d2b65e74705a18d719de434899d1e4133ec75512a83dc3b5d",
+    "manifest_recipe": "sorted relative path records [path,sha256] for regular files or [path,link,target] for symlinks; compact JSON separators without newline"
+  },
+  "container": {
+    "used": false,
+    "base_digest": null,
+    "reason": "No container invoked; no floating image used as evidence"
+  },
+  "host_tools": {
+    "python": "Python 3.12.14",
+    "readelf": "GNU readelf (GNU Binutils for Debian) 2.44"
+  },
+  "source_refs": {
+    "h700_toolchain": "04faa348c112617fc6b99be62308099ee6d43581",
+    "nextui": "5291344b3aceae5fa197437a70824afb41e2d338",
+    "mali_sdl": "d4a7d7503524cc469fe775242f3f925d4dd56c88",
+    "trimui_sdk_repository": "3eb83e4959279520c595a2e5eef45f770e8e92b0"
+  },
+  "installed_h700_runtime": {
+    "libc_sha256": null,
+    "sdl_sha256": null,
+    "egl_gles_sha256": null,
+    "symbol_floor": null,
+    "ion_access": null
+  }
+}

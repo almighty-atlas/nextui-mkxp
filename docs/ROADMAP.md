@@ -1,6 +1,21 @@
 # Milestones and issue breakdown
 
+## Active first-game target: Knight Blade — 100%
+
+The [maintained Knight Blade checklist](KNIGHT_BLADE_ROADMAP.md) defines
+weighted progress and the 100% acceptance gate. Continue its first unfinished
+milestone autonomously, update progress/evidence together, and report missing
+access, legally supplied game/RTP files or required human device observations.
+This private playability target precedes Pokémon testing; public release remains
+a separate gate.
+
 This is a **planning roadmap**, not a statement of implemented features. Phase codes in issue titles are used because GitHub Milestones may not yet be configured.
+
+2026-10-29 integration review: the [video trial](H700_VIDEO_EVIDENCE.md),
+[engine smoke](H700_ENGINE_SMOKE.md), Knight Blade and the private Pak have
+hardware evidence. Earlier blocker reports remain as historical evidence, not
+the current runtime status. Public reproduction and binary distribution are
+still blocked independently of the **100%** first-game playability milestone.
 
 ## M0 — Foundations (prerequisite for engineering work)
 
@@ -16,6 +31,14 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 
 ## M1 — Native engine
 
+Private Ruby prerequisite progress: [offline extension batch and grouped H700
+PASS](H700_RUBY_BATCH.md), 2026-10-28. The first private engine compile/link
+also [passes on host](MKXP_Z_SOURCE_LOCK.md), as does the
+[static provider ABI audit and H700 loader check](H700_ENGINE_ABI.md).
+The first [engine/Ruby and visible rendering test](H700_ENGINE_SMOKE.md) also
+passes on H700, including audible sound and controls. Public clean-room
+reproducibility remains open.
+
 - Build and package pinned mkxp-z sources and dependencies for real H700 ABI.
 - Inspect interpreter/ELF requirements, `NEEDED` libraries, glibc and OpenGL/GLES requirements.
 - Minimal game-free engine smoke test, with defined outcomes and logs.
@@ -24,6 +47,18 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 **Exit gate:** reproducible build and H700 hardware engine smoke test (or an explicitly documented blocker).
 
 ## M2 — NextUI standalone Pak
+
+Issue #8's [Pak](RMXP_PAK.md) passes device discovery, launch, save/load, quit,
+upgrade preservation and reboot checks. Issue #10's [supervisor](RMXP_SESSION.md)
+and Select+Start chord also pass on H700. [State tools](RMXP_STATE.md) provide
+checked snapshots, fresh restores and privacy-safe diagnostics; these passed
+on a byte copy of the device state. Issue #11 remains open for two-instance
+save isolation and the restored-state in-game load test, explicitly tracked in
+the [device checklist](RMXP_BATCH_TEST.md).
+
+Issue #45 adds an [in-game pause menu](RMXP_PAUSE_MENU.md) on the Menu button
+(Continue/Save/Load/Quit via the game's own screens), verified on H700 with
+Knight Blade. No save states or game switcher.
 
 - Implement layout and valid launch entry point compatible with NextUI's Pak and ROM discovery conventions.
 - Game-per-directory discovery with paths containing spaces; absence and error handling.
@@ -57,5 +92,10 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 - Automated archive structure/static validation plus hands-on H700 acceptance tests.
 - Install, upgrade, uninstall, troubleshooting and known limitations guide.
 - Publish only when distribution obligations and basic safety criteria are met.
+
+Issue #16 has an [offline archive builder/verifier](RELEASE.md): deterministic
+zip, manifest checksums, path allowlist, static AArch64 ELF ABI checks and a
+release gate that stays BLOCKED without human license review and H700 evidence
+bound to the exact engine hash. Host tests pass. No release is approved.
 
 **Exit gate:** signed-off release candidate; no game content in archives.

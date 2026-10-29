@@ -1,0 +1,3370 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "evidence": "HOST, never H700",
+  "base_main": "201dd309a6fd311f3e53acba330bc9d58a364f4f",
+  "host": {
+    "native_gcc": "Debian 14.2.0-19",
+    "native_readelf": "GNU Binutils 2.44",
+    "bootstrap_python": "3.13.5",
+    "cpu_quota": 2,
+    "memory_gib": 8
+  },
+  "baseline": {
+    "crt1": {
+      "sha256": "5149f7930f2ce896583dc744fe6a7812172fcf1d369245949a4ad1c51967e544",
+      "machine": 183,
+      "type": 1,
+      "interpreter": null,
+      "gnu_linux_abi": "4.19.0",
+      "needed": [],
+      "rpaths": [],
+      "required_versions": []
+    },
+    "linux_version_code": 267008,
+    "glibc_version": "2.28",
+    "minimum_kernel": "4.19"
+  },
+  "retargeted": {
+    "minimum_kernel": "4.9.0",
+    "uapi_headers": "4.9.170",
+    "linux_version_code": 264618,
+    "sysroot_tree_sha256": "4e6ca6fa486743c3259a3dc92fe47830d030ac8bb443223fce52bad82a5622a8",
+    "config_h_sha256": "583cda54a7a32d2904904d167bf333a1a256d5edd6ef9310a7b1a35603b35e08",
+    "config_make_sha256": "3a96ddfb2a94c577f74f1e555af69137a418f084c603db2eb3fa2b1fea18c690",
+    "files": {
+      "usr/lib64/crt1.o": {
+        "sha256": "7a6d309652867f29b40f5dab2945a8d72578796144451196848a71d05339f839",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": "4.9.0",
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "usr/lib64/crti.o": {
+        "sha256": "a7e941657a9cebe9df2211a9ad00cc87a28f0f24c5520777b9c48c54a252c77a",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "usr/lib64/crtn.o": {
+        "sha256": "036b7488c7c433a64c2200d75fabb92b74ff65d3372c8e80cf365b85da8977bc",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "lib64/libc-2.28.so": {
+        "sha256": "64e092c961f0c9230adf4063d137ae906a5850a19cba17ca7f43874925753f22",
+        "machine": 183,
+        "type": 3,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "gnu_linux_abi": "4.9.0",
+        "needed": [
+          "ld-linux-aarch64.so.1"
+        ],
+        "rpaths": [],
+        "required_versions": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "lib64/ld-2.28.so": {
+        "sha256": "f38ea6ce5e0fc2d562636e8b56683c156253265bd7cc603baa75c7256963dc26",
+        "machine": 183,
+        "type": 3,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "usr/lib64/libc_nonshared.a": {
+        "sha256": "73c8750224b7b1446e0e6ab13c9af1adba0fe7054b7c316ea754aecca273107c"
+      }
+    }
+  },
+  "initial_build_stages": {
+    "m4-1.4.20-configure": {
+      "argv": [
+        "/usr/bin/sh",
+        "$BUILD/source/m4-1.4.20/m4-1.4.20/configure",
+        "--prefix=$BUILD/native",
+        "--disable-nls"
+      ],
+      "cwd": "$BUILD/build-m4-1.4.20",
+      "exit_code": 0,
+      "elapsed_seconds": 38.939,
+      "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+      "log_sha256": "45e15ae5ef12647afad5133cd121f516ab6647d6df699514a9f5cbb78fb19161",
+      "log_bytes": 30968,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "m4-1.4.20-make": {
+      "argv": [
+        "/usr/bin/make",
+        "-j2"
+      ],
+      "cwd": "$BUILD/build-m4-1.4.20",
+      "exit_code": 0,
+      "elapsed_seconds": 9.214,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "5a9c49183723d35e625e1f96fb09baa4d6cce52b9c78f64f3db10eeee54d544f",
+      "log_bytes": 11029,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "m4-1.4.20-install": {
+      "argv": [
+        "/usr/bin/make",
+        "install"
+      ],
+      "cwd": "$BUILD/build-m4-1.4.20",
+      "exit_code": 0,
+      "elapsed_seconds": 0.416,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "f12316173f042074703e6de65806cda080210f2ceebb7a78c957bcce20fde48a",
+      "log_bytes": 5622,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "bison-3.8.2-configure": {
+      "argv": [
+        "/usr/bin/sh",
+        "$BUILD/source/bison-3.8.2/bison-3.8.2/configure",
+        "--prefix=$BUILD/native",
+        "--disable-nls"
+      ],
+      "cwd": "$BUILD/build-bison-3.8.2",
+      "exit_code": 0,
+      "elapsed_seconds": 24.999,
+      "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+      "log_sha256": "7dcc22bdf387f7ae1543e71fc8228b0400527062c810d7ae38b615dbe7a58ec3",
+      "log_bytes": 25097,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "bison-3.8.2-make": {
+      "argv": [
+        "/usr/bin/make",
+        "-j2"
+      ],
+      "cwd": "$BUILD/build-bison-3.8.2",
+      "exit_code": 0,
+      "elapsed_seconds": 11.456,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "c815f9eb1cf56641f48c041daade46a01d78852255d98d999a42d7c8974e7c17",
+      "log_bytes": 9782,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "bison-3.8.2-install": {
+      "argv": [
+        "/usr/bin/make",
+        "install"
+      ],
+      "cwd": "$BUILD/build-bison-3.8.2",
+      "exit_code": 0,
+      "elapsed_seconds": 0.868,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "b890c79288755c740844f02e80b8ba1e9e85bfb1d9baa0927658f38babfcf153",
+      "log_bytes": 17754,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "gawk-5.3.2-configure": {
+      "argv": [
+        "/usr/bin/sh",
+        "$BUILD/source/gawk-5.3.2/gawk-5.3.2/configure",
+        "--prefix=$BUILD/native",
+        "--disable-nls",
+        "--without-readline",
+        "--without-libsigsegv"
+      ],
+      "cwd": "$BUILD/build-gawk-5.3.2",
+      "exit_code": 0,
+      "elapsed_seconds": 11.558,
+      "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+      "log_sha256": "49aec781ec88bceaa560fdd43a35d0ee47241f9b43cb7a4103d4833bb3125bc7",
+      "log_bytes": 15828,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "gawk-5.3.2-make": {
+      "argv": [
+        "/usr/bin/make",
+        "-j2"
+      ],
+      "cwd": "$BUILD/build-gawk-5.3.2",
+      "exit_code": 0,
+      "elapsed_seconds": 18.093,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "8de9c7a5c5a570768f03ef013f64ec857ed0b911c9a1a24540bf0e8b07292083",
+      "log_bytes": 44476,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "gawk-5.3.2-install": {
+      "argv": [
+        "/usr/bin/make",
+        "install"
+      ],
+      "cwd": "$BUILD/build-gawk-5.3.2",
+      "exit_code": 0,
+      "elapsed_seconds": 1.167,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "9f9c5fcd693c57b146d8d9f5839284faf6d7bacd07b58717e2b9f44ad6180c3f",
+      "log_bytes": 16277,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "make-4.3-configure": {
+      "argv": [
+        "/usr/bin/sh",
+        "$BUILD/source/make-4.3/make-4.3/configure",
+        "--prefix=$BUILD/native-make",
+        "--disable-nls"
+      ],
+      "cwd": "$BUILD/build-make-4.3",
+      "exit_code": 0,
+      "elapsed_seconds": 9.724,
+      "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+      "log_sha256": "5d5d62cefb2750d7ce767c7ba3d268165f1edea02a7ef8f9918f082898d3687b",
+      "log_bytes": 10497,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "make-4.3-make": {
+      "argv": [
+        "/usr/bin/make",
+        "-j2"
+      ],
+      "cwd": "$BUILD/build-make-4.3",
+      "exit_code": 0,
+      "elapsed_seconds": 3.292,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "77720dd9f7a2fd8a4dc79e770745587defcc9b4892cfd33e143509d383868abe",
+      "log_bytes": 46778,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "make-4.3-install": {
+      "argv": [
+        "/usr/bin/make",
+        "install"
+      ],
+      "cwd": "$BUILD/build-make-4.3",
+      "exit_code": 0,
+      "elapsed_seconds": 0.165,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "c3b4ddb7e7329d56a0cb7d89c5ab9af0f371e243bae8ed8b2ddd0d486bbe2664",
+      "log_bytes": 3341,
+      "environment_ref": "environment_1",
+      "evidence_level": "HOST"
+    },
+    "linux-headers": {
+      "argv": [
+        "/usr/bin/make",
+        "-C",
+        "$BUILD/source/linux-4.9.170/linux-4.9.170",
+        "O=$BUILD/build-linux",
+        "ARCH=arm64",
+        "HOSTCC=/usr/bin/gcc",
+        "CC=$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "INSTALL_HDR_PATH=$BUILD/kernel-headers",
+        "headers_install"
+      ],
+      "cwd": "$BUILD/build-linux",
+      "exit_code": 0,
+      "elapsed_seconds": 8.225,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "b47659e670152501f92d4e21f3e8efeb388ccaa9b3c5ec26df06e153787f5b6f",
+      "log_bytes": 4456,
+      "environment_ref": "environment_2",
+      "evidence_level": "HOST"
+    },
+    "glibc-configure": {
+      "argv": [
+        "/usr/bin/sh",
+        "$BUILD/source/glibc-2.28/glibc-2.28/configure",
+        "--build=x86_64-pc-linux-gnu",
+        "--host=aarch64-nextui-linux-gnu",
+        "--prefix=/usr",
+        "--with-headers=$BUILD/kernel-headers/include",
+        "--enable-kernel=4.9.0",
+        "--disable-werror",
+        "--disable-nscd"
+      ],
+      "cwd": "$BUILD/build-glibc",
+      "exit_code": 0,
+      "elapsed_seconds": 2.974,
+      "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+      "log_sha256": "a38fbba60a32e46afdfd3d03b1bdf31b310ca2aa19905b34bfba7cf1691823ad",
+      "log_bytes": 7152,
+      "environment_ref": "environment_2",
+      "evidence_level": "HOST"
+    },
+    "glibc-make": {
+      "argv": [
+        "/usr/bin/make",
+        "-j2"
+      ],
+      "cwd": "$BUILD/build-glibc",
+      "exit_code": 2,
+      "elapsed_seconds": 565.212,
+      "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+      "log_sha256": "519e536691df8304c48dfe3258e854071b38cdc5b8e36529df626fbb050c9d89",
+      "log_bytes": 9962581,
+      "environment_ref": "environment_2",
+      "evidence_level": "HOST"
+    },
+    "glibc-make43": {
+      "argv": [
+        "$BUILD/native-make/bin/make",
+        "-j2"
+      ],
+      "cwd": "$BUILD/build-glibc",
+      "exit_code": 0,
+      "elapsed_seconds": 38.335,
+      "initial_executable_sha256": "086b503c48008bbd7d610d6bf7a9461c1880ddebe90142605fdc51992596214b",
+      "log_sha256": "c13fed339d8db78d6a6c1d392c7e2c5734a1d63c6dbe48ee2c44ca8994bcbe4d",
+      "log_bytes": 911657,
+      "environment_ref": "environment_2",
+      "evidence_level": "HOST"
+    },
+    "glibc-install": {
+      "argv": [
+        "$BUILD/native-make/bin/make",
+        "install_root=$BUILD/sysroot",
+        "install"
+      ],
+      "cwd": "$BUILD/build-glibc",
+      "exit_code": 0,
+      "elapsed_seconds": 22.885,
+      "initial_executable_sha256": "086b503c48008bbd7d610d6bf7a9461c1880ddebe90142605fdc51992596214b",
+      "log_sha256": "77c2b17cd788cce48c381704e9bd2b08510674d5b2ab1c5e5d962e1a29c351e5",
+      "log_bytes": 470085,
+      "environment_ref": "environment_2",
+      "evidence_level": "HOST"
+    }
+  },
+  "crosscheck_stages": {
+    "include-search": {
+      "argv": [
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=$BUILD/sysroot",
+        "-B$BUILD/sysroot/usr/lib64/",
+        "-static-libgcc",
+        "-nostdinc",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "-isystem",
+        "$BUILD/sysroot/usr/include",
+        "-L$BUILD/sysroot/lib64",
+        "-L$BUILD/sysroot/usr/lib64",
+        "-Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "-I$CHECK/include",
+        "-I$BUILD/api",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fno-ident",
+        "-E",
+        "-v",
+        "$PR23/spikes/h700-video/triangle.c",
+        "-o",
+        "/dev/null"
+      ],
+      "cwd": "$CHECK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.064,
+      "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+      "log_sha256": "1315729324022c5e7a30dc9eff49c9e08b9dd542f3a758a0fe62ba7836064273",
+      "log_bytes": 5293,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    },
+    "libc-probe-a": {
+      "argv": [
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=$BUILD/sysroot",
+        "-B$BUILD/sysroot/usr/lib64/",
+        "-static-libgcc",
+        "-nostdinc",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "-isystem",
+        "$BUILD/sysroot/usr/include",
+        "-L$BUILD/sysroot/lib64",
+        "-L$BUILD/sysroot/usr/lib64",
+        "-Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "$CHECK/libc-probe.o",
+        "-Wl,-Map=$CHECK/probe-a.map",
+        "-o",
+        "$CHECK/probe-a"
+      ],
+      "cwd": "$CHECK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.016,
+      "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_bytes": 0,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    },
+    "libc-probe-b": {
+      "argv": [
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=$BUILD/sysroot",
+        "-B$BUILD/sysroot/usr/lib64/",
+        "-static-libgcc",
+        "-nostdinc",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "-isystem",
+        "$BUILD/sysroot/usr/include",
+        "-L$BUILD/sysroot/lib64",
+        "-L$BUILD/sysroot/usr/lib64",
+        "-Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "$CHECK/libc-probe.o",
+        "-Wl,-Map=$CHECK/probe-b.map",
+        "-o",
+        "$CHECK/probe-b"
+      ],
+      "cwd": "$CHECK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.016,
+      "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_bytes": 0,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    },
+    "libc-probe-object": {
+      "argv": [
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=$BUILD/sysroot",
+        "-B$BUILD/sysroot/usr/lib64/",
+        "-static-libgcc",
+        "-nostdinc",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "-isystem",
+        "$BUILD/sysroot/usr/include",
+        "-L$BUILD/sysroot/lib64",
+        "-L$BUILD/sysroot/usr/lib64",
+        "-Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "-std=c11",
+        "-O2",
+        "-fno-ident",
+        "-c",
+        "$CHECK/libc-probe.c",
+        "-o",
+        "$CHECK/libc-probe.o"
+      ],
+      "cwd": "$CHECK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.032,
+      "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_bytes": 0,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    },
+    "sdl-configure": {
+      "argv": [
+        "/usr/bin/sh",
+        "$BUILD/source/sdl/configure",
+        "--build=x86_64-pc-linux-gnu",
+        "--host=aarch64-nextui-linux-gnu",
+        "--prefix=/usr",
+        "--enable-video-mali",
+        "--enable-video-opengles",
+        "--disable-video-opengl",
+        "--disable-video-x11",
+        "--disable-video-wayland",
+        "--disable-video-kmsdrm",
+        "--disable-audio",
+        "--disable-dbus",
+        "--disable-ibus",
+        "--disable-fcitx",
+        "--disable-hidapi",
+        "--disable-libudev",
+        "--disable-power",
+        "--disable-sensor",
+        "--disable-locale",
+        "--disable-render",
+        "--disable-joystick",
+        "--disable-haptic",
+        "--disable-shared",
+        "--enable-static",
+        "--disable-sdl2-config",
+        "CFLAGS=--sysroot=$BUILD/sysroot -B$BUILD/sysroot/usr/lib64/ -static-libgcc -nostdinc -isystem $COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include -isystem $COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed -isystem $BUILD/sysroot/usr/include -L$BUILD/sysroot/lib64 -L$BUILD/sysroot/usr/lib64 -Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "CPPFLAGS=-I$BUILD/api"
+      ],
+      "cwd": "$CHECK/build-sdl",
+      "exit_code": 0,
+      "elapsed_seconds": 11.706,
+      "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+      "log_sha256": "c30ba384634faf5d26d29e2ed4c0c3d08c6adc3a3ad7b44f426c3980d4200fab",
+      "log_bytes": 15590,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    },
+    "triangle-link": {
+      "argv": [
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=$BUILD/sysroot",
+        "-B$BUILD/sysroot/usr/lib64/",
+        "-static-libgcc",
+        "-nostdinc",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "-isystem",
+        "$BUILD/sysroot/usr/include",
+        "-L$BUILD/sysroot/lib64",
+        "-L$BUILD/sysroot/usr/lib64",
+        "-Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "$CHECK/triangle.o",
+        "-lSDL2",
+        "-lGLESv2",
+        "-lEGL",
+        "-Wl,-Map=$CHECK/triangle.map",
+        "-o",
+        "$CHECK/triangle"
+      ],
+      "cwd": "$CHECK",
+      "exit_code": 1,
+      "elapsed_seconds": 0.017,
+      "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+      "log_sha256": "c62c4f0ae767297b73c1a8a73b3607d354ed612f2b1ecbb4e90bea6b3f00209e",
+      "log_bytes": 590,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    },
+    "triangle-object": {
+      "argv": [
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "--sysroot=$BUILD/sysroot",
+        "-B$BUILD/sysroot/usr/lib64/",
+        "-static-libgcc",
+        "-nostdinc",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "-isystem",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "-isystem",
+        "$BUILD/sysroot/usr/include",
+        "-L$BUILD/sysroot/lib64",
+        "-L$BUILD/sysroot/usr/lib64",
+        "-Wl,-rpath-link,$BUILD/sysroot/lib64",
+        "-I$CHECK/include",
+        "-I$BUILD/api",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fno-ident",
+        "-MD",
+        "-MF",
+        "$CHECK/triangle.d",
+        "-c",
+        "$PR23/spikes/h700-video/triangle.c",
+        "-o",
+        "$CHECK/triangle.o"
+      ],
+      "cwd": "$CHECK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.215,
+      "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_bytes": 0,
+      "environment_ref": "environment_3",
+      "evidence_level": "HOST"
+    }
+  },
+  "crosscheck": {
+    "compiler_files_verified": 3890,
+    "probe": {
+      "sha256": "0b7909ef3f6635ce5d4a8431cb765ded6a3146f24f10bcdceb497eed07cedffa",
+      "machine": 183,
+      "type": 2,
+      "interpreter": "/lib/ld-linux-aarch64.so.1",
+      "gnu_linux_abi": "4.9.0",
+      "needed": [
+        "libc.so.6"
+      ],
+      "rpaths": [],
+      "required_versions": [
+        "GLIBC_2.17"
+      ]
+    },
+    "same_workspace_probe_bytes_identical": true,
+    "triangle_object": {
+      "sha256": "d9ab0308cfdf5fb8ae60146fd5edf7a6217d3490234c4db0604b3ce459e1f948",
+      "machine": 183,
+      "type": 1,
+      "interpreter": null,
+      "gnu_linux_abi": null,
+      "needed": [],
+      "rpaths": [],
+      "required_versions": []
+    },
+    "include_search_paths": [
+      "$CHECK/include",
+      "$BUILD/api",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+      "$BUILD/sysroot/usr/include"
+    ],
+    "dependencies": [
+      "$PR23/spikes/h700-video/triangle.c",
+      "$CHECK/include/SDL2/SDL.h",
+      "$CHECK/include/SDL2/SDL_main.h",
+      "$CHECK/include/SDL2/SDL_stdinc.h",
+      "$CHECK/include/SDL2/SDL_config.h",
+      "$CHECK/include/SDL2/SDL_platform.h",
+      "$CHECK/include/SDL2/begin_code.h",
+      "$CHECK/include/SDL2/close_code.h",
+      "$BUILD/sysroot/usr/include/sys/types.h",
+      "$BUILD/sysroot/usr/include/features.h",
+      "$BUILD/sysroot/usr/include/stdc-predef.h",
+      "$BUILD/sysroot/usr/include/sys/cdefs.h",
+      "$BUILD/sysroot/usr/include/bits/wordsize.h",
+      "$BUILD/sysroot/usr/include/bits/long-double.h",
+      "$BUILD/sysroot/usr/include/gnu/stubs.h",
+      "$BUILD/sysroot/usr/include/gnu/stubs-lp64.h",
+      "$BUILD/sysroot/usr/include/bits/types.h",
+      "$BUILD/sysroot/usr/include/bits/typesizes.h",
+      "$BUILD/sysroot/usr/include/bits/types/clock_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/clockid_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/time_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/timer_t.h",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stddef.h",
+      "$BUILD/sysroot/usr/include/bits/stdint-intn.h",
+      "$BUILD/sysroot/usr/include/bits/pthreadtypes.h",
+      "$BUILD/sysroot/usr/include/bits/thread-shared-types.h",
+      "$BUILD/sysroot/usr/include/bits/pthreadtypes-arch.h",
+      "$BUILD/sysroot/usr/include/endian.h",
+      "$BUILD/sysroot/usr/include/bits/endian.h",
+      "$BUILD/sysroot/usr/include/stdio.h",
+      "$BUILD/sysroot/usr/include/bits/libc-header-start.h",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stdarg.h",
+      "$BUILD/sysroot/usr/include/bits/types/__fpos_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/__mbstate_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/__fpos64_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/__FILE.h",
+      "$BUILD/sysroot/usr/include/bits/types/FILE.h",
+      "$BUILD/sysroot/usr/include/bits/types/struct_FILE.h",
+      "$BUILD/sysroot/usr/include/bits/stdio_lim.h",
+      "$BUILD/sysroot/usr/include/bits/sys_errlist.h",
+      "$BUILD/sysroot/usr/include/bits/stdio.h",
+      "$BUILD/sysroot/usr/include/stdlib.h",
+      "$BUILD/sysroot/usr/include/bits/waitflags.h",
+      "$BUILD/sysroot/usr/include/bits/waitstatus.h",
+      "$BUILD/sysroot/usr/include/bits/floatn.h",
+      "$BUILD/sysroot/usr/include/bits/floatn-common.h",
+      "$BUILD/sysroot/usr/include/bits/stdlib-bsearch.h",
+      "$BUILD/sysroot/usr/include/bits/stdlib-float.h",
+      "$BUILD/sysroot/usr/include/string.h",
+      "$BUILD/sysroot/usr/include/bits/types/locale_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/__locale_t.h",
+      "$BUILD/sysroot/usr/include/strings.h",
+      "$BUILD/sysroot/usr/include/wchar.h",
+      "$BUILD/sysroot/usr/include/bits/wchar.h",
+      "$BUILD/sysroot/usr/include/bits/types/wint_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/mbstate_t.h",
+      "$BUILD/sysroot/usr/include/inttypes.h",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stdint.h",
+      "$BUILD/sysroot/usr/include/stdint.h",
+      "$BUILD/sysroot/usr/include/bits/stdint-uintn.h",
+      "$BUILD/sysroot/usr/include/ctype.h",
+      "$BUILD/sysroot/usr/include/math.h",
+      "$BUILD/sysroot/usr/include/bits/math-vector.h",
+      "$BUILD/sysroot/usr/include/bits/libm-simd-decl-stubs.h",
+      "$BUILD/sysroot/usr/include/bits/flt-eval-method.h",
+      "$BUILD/sysroot/usr/include/bits/fp-logb.h",
+      "$BUILD/sysroot/usr/include/bits/fp-fast.h",
+      "$BUILD/sysroot/usr/include/bits/mathcalls-helper-functions.h",
+      "$BUILD/sysroot/usr/include/bits/mathcalls.h",
+      "$BUILD/sysroot/usr/include/bits/mathinline.h",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/float.h",
+      "$BUILD/sysroot/usr/include/alloca.h",
+      "$CHECK/include/SDL2/SDL_assert.h",
+      "$BUILD/sysroot/usr/include/signal.h",
+      "$BUILD/sysroot/usr/include/bits/signum.h",
+      "$BUILD/sysroot/usr/include/bits/signum-generic.h",
+      "$BUILD/sysroot/usr/include/bits/types/sig_atomic_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/sigset_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/__sigset_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/struct_timespec.h",
+      "$BUILD/sysroot/usr/include/bits/types/siginfo_t.h",
+      "$BUILD/sysroot/usr/include/bits/types/__sigval_t.h",
+      "$BUILD/sysroot/usr/include/bits/siginfo-arch.h",
+      "$BUILD/sysroot/usr/include/bits/siginfo-consts.h",
+      "$BUILD/sysroot/usr/include/bits/types/sigevent_t.h",
+      "$BUILD/sysroot/usr/include/bits/sigevent-consts.h",
+      "$BUILD/sysroot/usr/include/bits/sigaction.h",
+      "$BUILD/sysroot/usr/include/bits/types/stack_t.h",
+      "$BUILD/sysroot/usr/include/sys/ucontext.h",
+      "$BUILD/sysroot/usr/include/bits/sigthread.h",
+      "$CHECK/include/SDL2/SDL_atomic.h",
+      "$CHECK/include/SDL2/SDL_audio.h",
+      "$CHECK/include/SDL2/SDL_error.h",
+      "$CHECK/include/SDL2/SDL_endian.h",
+      "$CHECK/include/SDL2/SDL_mutex.h",
+      "$CHECK/include/SDL2/SDL_thread.h",
+      "$CHECK/include/SDL2/SDL_rwops.h",
+      "$CHECK/include/SDL2/SDL_clipboard.h",
+      "$CHECK/include/SDL2/SDL_cpuinfo.h",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/arm_neon.h",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/arm_fp16.h",
+      "$CHECK/include/SDL2/SDL_events.h",
+      "$CHECK/include/SDL2/SDL_video.h",
+      "$CHECK/include/SDL2/SDL_pixels.h",
+      "$CHECK/include/SDL2/SDL_rect.h",
+      "$CHECK/include/SDL2/SDL_surface.h",
+      "$CHECK/include/SDL2/SDL_blendmode.h",
+      "$CHECK/include/SDL2/SDL_keyboard.h",
+      "$CHECK/include/SDL2/SDL_keycode.h",
+      "$CHECK/include/SDL2/SDL_scancode.h",
+      "$CHECK/include/SDL2/SDL_mouse.h",
+      "$CHECK/include/SDL2/SDL_joystick.h",
+      "$CHECK/include/SDL2/SDL_guid.h",
+      "$CHECK/include/SDL2/SDL_gamecontroller.h",
+      "$CHECK/include/SDL2/SDL_sensor.h",
+      "$CHECK/include/SDL2/SDL_quit.h",
+      "$CHECK/include/SDL2/SDL_gesture.h",
+      "$CHECK/include/SDL2/SDL_touch.h",
+      "$CHECK/include/SDL2/SDL_filesystem.h",
+      "$CHECK/include/SDL2/SDL_haptic.h",
+      "$CHECK/include/SDL2/SDL_hidapi.h",
+      "$CHECK/include/SDL2/SDL_hints.h",
+      "$CHECK/include/SDL2/SDL_loadso.h",
+      "$CHECK/include/SDL2/SDL_log.h",
+      "$CHECK/include/SDL2/SDL_messagebox.h",
+      "$CHECK/include/SDL2/SDL_metal.h",
+      "$CHECK/include/SDL2/SDL_power.h",
+      "$CHECK/include/SDL2/SDL_render.h",
+      "$CHECK/include/SDL2/SDL_shape.h",
+      "$CHECK/include/SDL2/SDL_system.h",
+      "$CHECK/include/SDL2/SDL_timer.h",
+      "$CHECK/include/SDL2/SDL_version.h",
+      "$CHECK/include/SDL2/SDL_locale.h",
+      "$CHECK/include/SDL2/SDL_misc.h",
+      "$BUILD/api/GLES2/gl2.h",
+      "$BUILD/api/GLES2/gl2platform.h",
+      "$BUILD/api/KHR/khrplatform.h",
+      "$BUILD/api/EGL/egl.h",
+      "$BUILD/api/EGL/eglplatform.h"
+    ],
+    "probe_load_inputs": [
+      "$BUILD/sysroot/usr/lib64/crt1.o",
+      "$BUILD/sysroot/usr/lib64/crti.o",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o",
+      "$CHECK/libc-probe.o",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+      "$BUILD/sysroot/usr/lib64/libc.so",
+      "$BUILD/sysroot/lib64/libc.so.6",
+      "$BUILD/sysroot/usr/lib64/libc_nonshared.a",
+      "$BUILD/sysroot/lib/ld-linux-aarch64.so.1",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+      "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o",
+      "$BUILD/sysroot/usr/lib64/crtn.o"
+    ],
+    "sdl_generated_config_sha256": "8d394da3a897c0b329bd36e313b9529e8c4d010e22d82bc6fcd01883c6712261",
+    "graphics_status": "LINK_BLOCKED",
+    "missing_link_inputs": [
+      "-lSDL2",
+      "-lGLESv2",
+      "-lEGL"
+    ],
+    "target_execution": "NEVER",
+    "distribution": "BLOCKED"
+  },
+  "target_execution": "NEVER",
+  "graphics": "LINK_BLOCKED",
+  "distribution": "BLOCKED",
+  "reproducibility": "two source builds on same host/compiler; duplicate probe links within each workspace; no clean-room/cross-host claim",
+  "consolidated_rebuild": {
+    "evidence": "HOST, same host/compiler; fresh source build directory",
+    "source_build_stages": {
+      "bison-3.8.2-configure": {
+        "argv": [
+          "/usr/bin/sh",
+          "$REPLAY/source/bison-3.8.2/bison-3.8.2/configure",
+          "--prefix=$REPLAY/native",
+          "--disable-nls"
+        ],
+        "cwd": "$REPLAY/build-bison-3.8.2",
+        "exit_code": 0,
+        "elapsed_seconds": 26.125,
+        "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+        "log_sha256": "fb0d980855c93e77594e3a0503e1485520f79bac323482e669c5e3633eeaf7bb",
+        "log_bytes": 25240,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "bison-3.8.2-install": {
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "$REPLAY/build-bison-3.8.2",
+        "exit_code": 0,
+        "elapsed_seconds": 0.77,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "c62bbea8c5f4837df8f48db2e5bf510f0592672a0e3cafdd2b03f6b3c6fe6a44",
+        "log_bytes": 21030,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "bison-3.8.2-make": {
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "$REPLAY/build-bison-3.8.2",
+        "exit_code": 0,
+        "elapsed_seconds": 10.236,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "6c2d338b026cabb1eabfd52357f424163625090cbca6c41a407e0d1c8c5ce7c3",
+        "log_bytes": 10029,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "gawk-5.3.2-configure": {
+        "argv": [
+          "/usr/bin/sh",
+          "$REPLAY/source/gawk-5.3.2/gawk-5.3.2/configure",
+          "--prefix=$REPLAY/native",
+          "--disable-nls",
+          "--without-readline",
+          "--without-libsigsegv"
+        ],
+        "cwd": "$REPLAY/build-gawk-5.3.2",
+        "exit_code": 0,
+        "elapsed_seconds": 11.021,
+        "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+        "log_sha256": "068166b6f073b98910e5dcaa269e8c424ef8af60358a374cc85cfe40afa5612d",
+        "log_bytes": 16192,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "gawk-5.3.2-install": {
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "$REPLAY/build-gawk-5.3.2",
+        "exit_code": 0,
+        "elapsed_seconds": 1.12,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "3262d873b1da555f15d7116036db27fbf33d219add831975bd0dbef0d19cd5f8",
+        "log_bytes": 18617,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "gawk-5.3.2-make": {
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "$REPLAY/build-gawk-5.3.2",
+        "exit_code": 0,
+        "elapsed_seconds": 17.31,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "4496b7e5c90af37594cab2b5493c914dbb2859fd1aa7cae1e0f1239147b5d734",
+        "log_bytes": 48831,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "glibc-configure": {
+        "argv": [
+          "/usr/bin/sh",
+          "$REPLAY/source/glibc-2.28/glibc-2.28/configure",
+          "--build=x86_64-pc-linux-gnu",
+          "--host=aarch64-nextui-linux-gnu",
+          "--prefix=/usr",
+          "--with-headers=$REPLAY/kernel-headers/include",
+          "--enable-kernel=4.9.0",
+          "--disable-werror",
+          "--disable-nscd"
+        ],
+        "cwd": "$REPLAY/build-glibc",
+        "exit_code": 0,
+        "elapsed_seconds": 2.827,
+        "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+        "log_sha256": "f8dff3af5d0e32d8b814ac3995d77fc4322c31931b77e61f90718299c667b404",
+        "log_bytes": 7215,
+        "environment_ref": "environment_5",
+        "evidence_level": "HOST"
+      },
+      "glibc-install": {
+        "argv": [
+          "$REPLAY/native/bin/make",
+          "install_root=$REPLAY/sysroot",
+          "install"
+        ],
+        "cwd": "$REPLAY/build-glibc",
+        "exit_code": 0,
+        "elapsed_seconds": 38.474,
+        "initial_executable_sha256": "8bc6a6ec600a59c479a99c6923133b1d1f86278a50fb97bd27090f05aa000ca1",
+        "log_sha256": "5d73be49d3feef8d8911ba01e9759d0ed1d8591921c211b732341fab37d6bf74",
+        "log_bytes": 542389,
+        "environment_ref": "environment_5",
+        "evidence_level": "HOST"
+      },
+      "glibc-make": {
+        "argv": [
+          "$REPLAY/native/bin/make",
+          "-j2"
+        ],
+        "cwd": "$REPLAY/build-glibc",
+        "exit_code": 0,
+        "elapsed_seconds": 274.374,
+        "initial_executable_sha256": "8bc6a6ec600a59c479a99c6923133b1d1f86278a50fb97bd27090f05aa000ca1",
+        "log_sha256": "1b053d30069a75d524101b24a131d47351d5ae8c04ae258d86521ca97a8c4e27",
+        "log_bytes": 11608553,
+        "environment_ref": "environment_5",
+        "evidence_level": "HOST"
+      },
+      "linux-headers": {
+        "argv": [
+          "$REPLAY/native/bin/make",
+          "-C",
+          "$REPLAY/source/linux-4.9.170/linux-4.9.170",
+          "O=$REPLAY/build-linux",
+          "ARCH=arm64",
+          "HOSTCC=/usr/bin/gcc",
+          "CC=$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "INSTALL_HDR_PATH=$REPLAY/kernel-headers",
+          "headers_install"
+        ],
+        "cwd": "$REPLAY/build-linux",
+        "exit_code": 0,
+        "elapsed_seconds": 7.144,
+        "initial_executable_sha256": "8bc6a6ec600a59c479a99c6923133b1d1f86278a50fb97bd27090f05aa000ca1",
+        "log_sha256": "2a935276763267d89c6e1c65e9d4d56a913cf9f4ae1bd7b7f11fa6df9d94b06d",
+        "log_bytes": 4645,
+        "environment_ref": "environment_5",
+        "evidence_level": "HOST"
+      },
+      "m4-1.4.20-configure": {
+        "argv": [
+          "/usr/bin/sh",
+          "$REPLAY/source/m4-1.4.20/m4-1.4.20/configure",
+          "--prefix=$REPLAY/native",
+          "--disable-nls"
+        ],
+        "cwd": "$REPLAY/build-m4-1.4.20",
+        "exit_code": 0,
+        "elapsed_seconds": 39.875,
+        "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+        "log_sha256": "c6359bb237f219d2397a824eaa471ae8bf0efd85d6f197c08d37c2323637cecc",
+        "log_bytes": 31098,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "m4-1.4.20-install": {
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "$REPLAY/build-m4-1.4.20",
+        "exit_code": 0,
+        "elapsed_seconds": 0.465,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "7a14162d6b5840d1e1efe5ac4db3f796cde95d2514c78ca85578e7f3476c31d0",
+        "log_bytes": 6428,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "m4-1.4.20-make": {
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "$REPLAY/build-m4-1.4.20",
+        "exit_code": 0,
+        "elapsed_seconds": 8.596,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "0535e3f3ee51f3f8d9890023af32b36bbe3e90090c82e17bcfb4618d23637f27",
+        "log_bytes": 11367,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "make-4.3-configure": {
+        "argv": [
+          "/usr/bin/sh",
+          "$REPLAY/source/make-4.3/make-4.3/configure",
+          "--prefix=$REPLAY/native",
+          "--disable-nls"
+        ],
+        "cwd": "$REPLAY/build-make-4.3",
+        "exit_code": 0,
+        "elapsed_seconds": 9.625,
+        "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+        "log_sha256": "56710ba87508a4af6592adb6c00619e1db57dbc8b16358053ee8bc0dbeba7f0d",
+        "log_bytes": 10588,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "make-4.3-install": {
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "$REPLAY/build-make-4.3",
+        "exit_code": 0,
+        "elapsed_seconds": 0.165,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "b4339722d2aae6162ab0ef569fa24b91fc1b5de09fa8361e17870e8f4987f70f",
+        "log_bytes": 3871,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      },
+      "make-4.3-make": {
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "$REPLAY/build-make-4.3",
+        "exit_code": 0,
+        "elapsed_seconds": 4.43,
+        "initial_executable_sha256": "8a229baf64671988cfb5af43ba3070c6ce7214cf32bcf96155115559d1466fa7",
+        "log_sha256": "7dca5c836bd0ee973e27155675f3105463f36d650f2b1a80b9d3f60be9219fe6",
+        "log_bytes": 49606,
+        "environment_ref": "environment_4",
+        "evidence_level": "HOST"
+      }
+    },
+    "provenance": {
+      "source_lock_sha256": "7937c0a75d86a7ff9f18e44a9080c9b053f72a9767a874f47433dcadd37a17dc",
+      "sysroot_tree_sha256": "c827745c89115705c1c09df7d9eee9f14e0576411091d93ef7064f34bac8fe6f",
+      "target_execution": "NEVER",
+      "distribution": "BLOCKED"
+    },
+    "elf_files": {
+      "usr/lib64/crt1.o": {
+        "sha256": "d2a32bb4ac575ff49426a486632d077eadc6c11a18e473e29628b6d2c6a52fc8",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": "4.9.0",
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "usr/lib64/crti.o": {
+        "sha256": "4bcd964e43173ff43043fa9c6ec6cbc667707f8c5eeab0676a71f8bdd19ac159",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "usr/lib64/crtn.o": {
+        "sha256": "d728dfe689ba092d0fe5e95c26cf1ab774534d32d3ac6f18be3e04a74facb1e1",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "lib64/libc-2.28.so": {
+        "sha256": "fc4320bc034fcbcb112a9c56f10ea9274e718da588b1fb1f5b5c859e82176d52",
+        "machine": 183,
+        "type": 3,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "gnu_linux_abi": "4.9.0",
+        "needed": [
+          "ld-linux-aarch64.so.1"
+        ],
+        "rpaths": [],
+        "required_versions": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "lib64/ld-2.28.so": {
+        "sha256": "cd71ffa61d4180b310f60d2cadf1c78e2a6a68c8e7f936811776ffe5713fe0d1",
+        "machine": 183,
+        "type": 3,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      }
+    },
+    "crosscheck_stages": {
+      "include-search": {
+        "argv": [
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=$REPLAY/sysroot",
+          "-B$REPLAY/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "$REPLAY/sysroot/usr/include",
+          "-L$REPLAY/sysroot/lib64",
+          "-L$REPLAY/sysroot/usr/lib64",
+          "-Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "-I$REPLAY_CHECK/include",
+          "-I$BUILD/api",
+          "-std=c11",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-fno-ident",
+          "-E",
+          "-v",
+          "$PR23/spikes/h700-video/triangle.c",
+          "-o",
+          "/dev/null"
+        ],
+        "cwd": "$REPLAY_CHECK",
+        "exit_code": 0,
+        "elapsed_seconds": 0.064,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e7b6fde673010ec2b685aab2d5a86f4c950546de474646406a56d411a796d0b5",
+        "log_bytes": 5496,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      },
+      "libc-probe-a": {
+        "argv": [
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=$REPLAY/sysroot",
+          "-B$REPLAY/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "$REPLAY/sysroot/usr/include",
+          "-L$REPLAY/sysroot/lib64",
+          "-L$REPLAY/sysroot/usr/lib64",
+          "-Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "$REPLAY_CHECK/libc-probe.o",
+          "-Wl,-Map=$REPLAY_CHECK/probe-a.map",
+          "-o",
+          "$REPLAY_CHECK/probe-a"
+        ],
+        "cwd": "$REPLAY_CHECK",
+        "exit_code": 0,
+        "elapsed_seconds": 0.032,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "log_bytes": 0,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      },
+      "libc-probe-b": {
+        "argv": [
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=$REPLAY/sysroot",
+          "-B$REPLAY/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "$REPLAY/sysroot/usr/include",
+          "-L$REPLAY/sysroot/lib64",
+          "-L$REPLAY/sysroot/usr/lib64",
+          "-Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "$REPLAY_CHECK/libc-probe.o",
+          "-Wl,-Map=$REPLAY_CHECK/probe-b.map",
+          "-o",
+          "$REPLAY_CHECK/probe-b"
+        ],
+        "cwd": "$REPLAY_CHECK",
+        "exit_code": 0,
+        "elapsed_seconds": 0.016,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "log_bytes": 0,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      },
+      "libc-probe-object": {
+        "argv": [
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=$REPLAY/sysroot",
+          "-B$REPLAY/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "$REPLAY/sysroot/usr/include",
+          "-L$REPLAY/sysroot/lib64",
+          "-L$REPLAY/sysroot/usr/lib64",
+          "-Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "-std=c11",
+          "-O2",
+          "-fno-ident",
+          "-c",
+          "$REPLAY_CHECK/libc-probe.c",
+          "-o",
+          "$REPLAY_CHECK/libc-probe.o"
+        ],
+        "cwd": "$REPLAY_CHECK",
+        "exit_code": 0,
+        "elapsed_seconds": 0.068,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "log_bytes": 0,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      },
+      "sdl-configure": {
+        "argv": [
+          "/usr/bin/sh",
+          "$BUILD/source/sdl/configure",
+          "--build=x86_64-pc-linux-gnu",
+          "--host=aarch64-nextui-linux-gnu",
+          "--prefix=/usr",
+          "--enable-video-mali",
+          "--enable-video-opengles",
+          "--disable-video-opengl",
+          "--disable-video-x11",
+          "--disable-video-wayland",
+          "--disable-video-kmsdrm",
+          "--disable-audio",
+          "--disable-dbus",
+          "--disable-ibus",
+          "--disable-fcitx",
+          "--disable-hidapi",
+          "--disable-libudev",
+          "--disable-power",
+          "--disable-sensor",
+          "--disable-locale",
+          "--disable-render",
+          "--disable-joystick",
+          "--disable-haptic",
+          "--disable-shared",
+          "--enable-static",
+          "--disable-sdl2-config",
+          "CFLAGS=--sysroot=$REPLAY/sysroot -B$REPLAY/sysroot/usr/lib64/ -static-libgcc -nostdinc -isystem $COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include -isystem $COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed -isystem $REPLAY/sysroot/usr/include -L$REPLAY/sysroot/lib64 -L$REPLAY/sysroot/usr/lib64 -Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "CPPFLAGS=-I$BUILD/api"
+        ],
+        "cwd": "$REPLAY_CHECK/build-sdl",
+        "exit_code": 0,
+        "elapsed_seconds": 10.676,
+        "initial_executable_sha256": "a6f559e00b69a4aa4d8cb607be18d9386c5aee55c509e2c075549dcf00e00fc7",
+        "log_sha256": "fe0e4b4db59a3fda083878c51e755c2d20840edbe81e27c823e435e53c3f413e",
+        "log_bytes": 15612,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      },
+      "triangle-link": {
+        "argv": [
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=$REPLAY/sysroot",
+          "-B$REPLAY/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "$REPLAY/sysroot/usr/include",
+          "-L$REPLAY/sysroot/lib64",
+          "-L$REPLAY/sysroot/usr/lib64",
+          "-Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "$REPLAY_CHECK/triangle.o",
+          "-lSDL2",
+          "-lGLESv2",
+          "-lEGL",
+          "-Wl,-Map=$REPLAY_CHECK/triangle.map",
+          "-o",
+          "$REPLAY_CHECK/triangle"
+        ],
+        "cwd": "$REPLAY_CHECK",
+        "exit_code": 1,
+        "elapsed_seconds": 0.016,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "c62c4f0ae767297b73c1a8a73b3607d354ed612f2b1ecbb4e90bea6b3f00209e",
+        "log_bytes": 590,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      },
+      "triangle-object": {
+        "argv": [
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=$REPLAY/sysroot",
+          "-B$REPLAY/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "$REPLAY/sysroot/usr/include",
+          "-L$REPLAY/sysroot/lib64",
+          "-L$REPLAY/sysroot/usr/lib64",
+          "-Wl,-rpath-link,$REPLAY/sysroot/lib64",
+          "-I$REPLAY_CHECK/include",
+          "-I$BUILD/api",
+          "-std=c11",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-fno-ident",
+          "-MD",
+          "-MF",
+          "$REPLAY_CHECK/triangle.d",
+          "-c",
+          "$PR23/spikes/h700-video/triangle.c",
+          "-o",
+          "$REPLAY_CHECK/triangle.o"
+        ],
+        "cwd": "$REPLAY_CHECK",
+        "exit_code": 0,
+        "elapsed_seconds": 0.215,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "log_bytes": 0,
+        "environment_ref": "environment_6",
+        "evidence_level": "HOST"
+      }
+    },
+    "crosscheck": {
+      "compiler_files_verified": 3890,
+      "probe": {
+        "sha256": "d118b3813f3cb9afe495e74727c2a3ba75256620f5a173d8f3810270fe359f6f",
+        "machine": 183,
+        "type": 2,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "gnu_linux_abi": "4.9.0",
+        "needed": [
+          "libc.so.6"
+        ],
+        "rpaths": [],
+        "required_versions": [
+          "GLIBC_2.17"
+        ]
+      },
+      "same_workspace_probe_bytes_identical": true,
+      "triangle_object": {
+        "sha256": "d9ab0308cfdf5fb8ae60146fd5edf7a6217d3490234c4db0604b3ce459e1f948",
+        "machine": 183,
+        "type": 1,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [],
+        "rpaths": [],
+        "required_versions": []
+      },
+      "include_search_paths": [
+        "$REPLAY_CHECK/include",
+        "$BUILD/api",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+        "$REPLAY/sysroot/usr/include"
+      ],
+      "dependencies": [
+        "$PR23/spikes/h700-video/triangle.c",
+        "$REPLAY_CHECK/include/SDL2/SDL.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_main.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_stdinc.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_config.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_platform.h",
+        "$REPLAY_CHECK/include/SDL2/begin_code.h",
+        "$REPLAY_CHECK/include/SDL2/close_code.h",
+        "$REPLAY/sysroot/usr/include/sys/types.h",
+        "$REPLAY/sysroot/usr/include/features.h",
+        "$REPLAY/sysroot/usr/include/stdc-predef.h",
+        "$REPLAY/sysroot/usr/include/sys/cdefs.h",
+        "$REPLAY/sysroot/usr/include/bits/wordsize.h",
+        "$REPLAY/sysroot/usr/include/bits/long-double.h",
+        "$REPLAY/sysroot/usr/include/gnu/stubs.h",
+        "$REPLAY/sysroot/usr/include/gnu/stubs-lp64.h",
+        "$REPLAY/sysroot/usr/include/bits/types.h",
+        "$REPLAY/sysroot/usr/include/bits/typesizes.h",
+        "$REPLAY/sysroot/usr/include/bits/types/clock_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/clockid_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/time_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/timer_t.h",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stddef.h",
+        "$REPLAY/sysroot/usr/include/bits/stdint-intn.h",
+        "$REPLAY/sysroot/usr/include/bits/pthreadtypes.h",
+        "$REPLAY/sysroot/usr/include/bits/thread-shared-types.h",
+        "$REPLAY/sysroot/usr/include/bits/pthreadtypes-arch.h",
+        "$REPLAY/sysroot/usr/include/endian.h",
+        "$REPLAY/sysroot/usr/include/bits/endian.h",
+        "$REPLAY/sysroot/usr/include/stdio.h",
+        "$REPLAY/sysroot/usr/include/bits/libc-header-start.h",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stdarg.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__fpos_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__mbstate_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__fpos64_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__FILE.h",
+        "$REPLAY/sysroot/usr/include/bits/types/FILE.h",
+        "$REPLAY/sysroot/usr/include/bits/types/struct_FILE.h",
+        "$REPLAY/sysroot/usr/include/bits/stdio_lim.h",
+        "$REPLAY/sysroot/usr/include/bits/sys_errlist.h",
+        "$REPLAY/sysroot/usr/include/bits/stdio.h",
+        "$REPLAY/sysroot/usr/include/stdlib.h",
+        "$REPLAY/sysroot/usr/include/bits/waitflags.h",
+        "$REPLAY/sysroot/usr/include/bits/waitstatus.h",
+        "$REPLAY/sysroot/usr/include/bits/floatn.h",
+        "$REPLAY/sysroot/usr/include/bits/floatn-common.h",
+        "$REPLAY/sysroot/usr/include/bits/stdlib-bsearch.h",
+        "$REPLAY/sysroot/usr/include/bits/stdlib-float.h",
+        "$REPLAY/sysroot/usr/include/string.h",
+        "$REPLAY/sysroot/usr/include/bits/types/locale_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__locale_t.h",
+        "$REPLAY/sysroot/usr/include/strings.h",
+        "$REPLAY/sysroot/usr/include/wchar.h",
+        "$REPLAY/sysroot/usr/include/bits/wchar.h",
+        "$REPLAY/sysroot/usr/include/bits/types/wint_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/mbstate_t.h",
+        "$REPLAY/sysroot/usr/include/inttypes.h",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stdint.h",
+        "$REPLAY/sysroot/usr/include/stdint.h",
+        "$REPLAY/sysroot/usr/include/bits/stdint-uintn.h",
+        "$REPLAY/sysroot/usr/include/ctype.h",
+        "$REPLAY/sysroot/usr/include/math.h",
+        "$REPLAY/sysroot/usr/include/bits/math-vector.h",
+        "$REPLAY/sysroot/usr/include/bits/libm-simd-decl-stubs.h",
+        "$REPLAY/sysroot/usr/include/bits/flt-eval-method.h",
+        "$REPLAY/sysroot/usr/include/bits/fp-logb.h",
+        "$REPLAY/sysroot/usr/include/bits/fp-fast.h",
+        "$REPLAY/sysroot/usr/include/bits/mathcalls-helper-functions.h",
+        "$REPLAY/sysroot/usr/include/bits/mathcalls.h",
+        "$REPLAY/sysroot/usr/include/bits/mathinline.h",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/float.h",
+        "$REPLAY/sysroot/usr/include/alloca.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_assert.h",
+        "$REPLAY/sysroot/usr/include/signal.h",
+        "$REPLAY/sysroot/usr/include/bits/signum.h",
+        "$REPLAY/sysroot/usr/include/bits/signum-generic.h",
+        "$REPLAY/sysroot/usr/include/bits/types/sig_atomic_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/sigset_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__sigset_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/struct_timespec.h",
+        "$REPLAY/sysroot/usr/include/bits/types/siginfo_t.h",
+        "$REPLAY/sysroot/usr/include/bits/types/__sigval_t.h",
+        "$REPLAY/sysroot/usr/include/bits/siginfo-arch.h",
+        "$REPLAY/sysroot/usr/include/bits/siginfo-consts.h",
+        "$REPLAY/sysroot/usr/include/bits/types/sigevent_t.h",
+        "$REPLAY/sysroot/usr/include/bits/sigevent-consts.h",
+        "$REPLAY/sysroot/usr/include/bits/sigaction.h",
+        "$REPLAY/sysroot/usr/include/bits/types/stack_t.h",
+        "$REPLAY/sysroot/usr/include/sys/ucontext.h",
+        "$REPLAY/sysroot/usr/include/bits/sigthread.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_atomic.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_audio.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_error.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_endian.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_mutex.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_thread.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_rwops.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_clipboard.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_cpuinfo.h",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/arm_neon.h",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/arm_fp16.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_events.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_video.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_pixels.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_rect.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_surface.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_blendmode.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_keyboard.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_keycode.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_scancode.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_mouse.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_joystick.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_guid.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_gamecontroller.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_sensor.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_quit.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_gesture.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_touch.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_filesystem.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_haptic.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_hidapi.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_hints.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_loadso.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_log.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_messagebox.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_metal.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_power.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_render.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_shape.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_system.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_timer.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_version.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_locale.h",
+        "$REPLAY_CHECK/include/SDL2/SDL_misc.h",
+        "$BUILD/api/GLES2/gl2.h",
+        "$BUILD/api/GLES2/gl2platform.h",
+        "$BUILD/api/KHR/khrplatform.h",
+        "$BUILD/api/EGL/egl.h",
+        "$BUILD/api/EGL/eglplatform.h"
+      ],
+      "probe_load_inputs": [
+        "$REPLAY/sysroot/usr/lib64/crt1.o",
+        "$REPLAY/sysroot/usr/lib64/crti.o",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o",
+        "$REPLAY_CHECK/libc-probe.o",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+        "$REPLAY/sysroot/usr/lib64/libc.so",
+        "$REPLAY/sysroot/lib64/libc.so.6",
+        "$REPLAY/sysroot/usr/lib64/libc_nonshared.a",
+        "$REPLAY/sysroot/lib/ld-linux-aarch64.so.1",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+        "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o",
+        "$REPLAY/sysroot/usr/lib64/crtn.o"
+      ],
+      "sdl_generated_config_sha256": "8d394da3a897c0b329bd36e313b9529e8c4d010e22d82bc6fcd01883c6712261",
+      "graphics_status": "LINK_BLOCKED",
+      "missing_link_inputs": [
+        "-lSDL2",
+        "-lGLESv2",
+        "-lEGL"
+      ],
+      "target_execution": "NEVER",
+      "distribution": "BLOCKED"
+    },
+    "raw_sysroot_tree_identical_to_initial": false,
+    "raw_probe_identical_to_initial": false,
+    "raw_triangle_object_identical_to_initial": true
+  },
+  "offline_tests": {
+    "commands": [
+      "python3 -I -B scripts/issue_26_test.py",
+      "python3 -I -B -m unittest discover -s scripts/issue_26_tests -v"
+    ],
+    "passed": 45,
+    "new_boundary_tests": 32,
+    "retained_scanner_tests": 13,
+    "target_execution": "NEVER"
+  },
+  "script_snapshots": {
+    "issue_26_sandbox.py": "d355c77346651ef464be39c4298fe580f9966aa2cd3382f16c1007232d85e20a",
+    "issue_26_crosscheck.py": "b884e8fdc58d25b9763dd985c54db76f39775ca06f41130d0b3a7b4a48f67fb1",
+    "issue_26_gate.py": "fd6e61ed7cadcbed634ebf7da05a7df3b239a1ad302c6e09cdb778f4c53bed2d",
+    "issue_26_sysroot.py": "f7adbc02b6624fb1600ca305ba345b98cdb3772c6780a16c4cfd7ca7ec61a677",
+    "issue_26_test.py": "5e02649f3cf67df0cd2b0c294ec0446aea5424669bffcf61dcf6653d0d78a095",
+    "issue_26_tests/test_gate.py": "5991f6dd51445e6e54872ee5ecae48cd7f8aa1dafb56ca4b5ab8407708349728"
+  },
+  "fresh_child_environments": {
+    "environment_1": {
+      "PATH": "$BUILD/tools",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TMPDIR": "$BUILD/tmp",
+      "CONFIG_SITE": "/dev/null",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SOURCE_DATE_EPOCH": "1533081600"
+    },
+    "environment_2": {
+      "PATH": "$BUILD/tools",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TMPDIR": "$BUILD/tmp",
+      "CONFIG_SITE": "/dev/null",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SOURCE_DATE_EPOCH": "1533081600",
+      "CC": "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+      "BUILD_CC": "/usr/bin/gcc"
+    },
+    "environment_3": {
+      "PATH": "$CHECK/tools",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TMPDIR": "$CHECK/tmp",
+      "CONFIG_SITE": "/dev/null",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SOURCE_DATE_EPOCH": "1533081600",
+      "CC": "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+      "BUILD_CC": "/usr/bin/gcc",
+      "PKG_CONFIG_LIBDIR": "$CHECK/empty-pkgconfig",
+      "PKG_CONFIG_SYSROOT_DIR": "$BUILD/sysroot"
+    },
+    "environment_4": {
+      "PATH": "$REPLAY/tools",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TMPDIR": "$REPLAY/tmp",
+      "CONFIG_SITE": "/dev/null",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SOURCE_DATE_EPOCH": "1533081600"
+    },
+    "environment_5": {
+      "PATH": "$REPLAY/tools",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TMPDIR": "$REPLAY/tmp",
+      "CONFIG_SITE": "/dev/null",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SOURCE_DATE_EPOCH": "1533081600",
+      "CC": "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+      "BUILD_CC": "/usr/bin/gcc"
+    },
+    "environment_6": {
+      "PATH": "$REPLAY_CHECK/tools",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TMPDIR": "$REPLAY_CHECK/tmp",
+      "CONFIG_SITE": "/dev/null",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SOURCE_DATE_EPOCH": "1533081600",
+      "CC": "$COMPILER_PARENT/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+      "BUILD_CC": "/usr/bin/gcc",
+      "PKG_CONFIG_LIBDIR": "$REPLAY_CHECK/empty-pkgconfig",
+      "PKG_CONFIG_SYSROOT_DIR": "$REPLAY/sysroot"
+    }
+  },
+  "mali_followup": {
+    "date": "2026-10-26",
+    "parent_head": "d678597ab6c9522594c1669a1f4eb3196fd63911",
+    "levels": {
+      "libc": "LIBC49_BUILT (prior HOST evidence preserved; no new complete rebuild)",
+      "sdl": "SDL_BUILD_BLOCKED (no completed prior sysroot locally; native m4 bootstrap failure)",
+      "development_interface": "LINK_BLOCKED",
+      "triangle": "NOT_LINKED",
+      "elf_policy": "ELF_POLICY_HOST_ONLY",
+      "hardware": "H700_RUNTIME_NOT_TESTED",
+      "rights": "LICENSE_DISTRIBUTION_BLOCKED"
+    },
+    "source_symbol_matrix": {
+      "SDL2": [
+        {
+          "symbol": "SDL_ClearError",
+          "triangle_lines": [
+            160
+          ],
+          "declaration_lines": [
+            148
+          ]
+        },
+        {
+          "symbol": "SDL_CreateWindow",
+          "triangle_lines": [
+            100
+          ],
+          "declaration_lines": [
+            551
+          ]
+        },
+        {
+          "symbol": "SDL_Delay",
+          "triangle_lines": [
+            164
+          ],
+          "declaration_lines": [
+            524
+          ]
+        },
+        {
+          "symbol": "SDL_DestroyWindow",
+          "triangle_lines": [
+            179
+          ],
+          "declaration_lines": [
+            586
+          ]
+        },
+        {
+          "symbol": "SDL_GL_CreateContext",
+          "triangle_lines": [
+            103
+          ],
+          "declaration_lines": [
+            596
+          ]
+        },
+        {
+          "symbol": "SDL_GL_DeleteContext",
+          "triangle_lines": [
+            177
+          ],
+          "declaration_lines": [
+            604
+          ]
+        },
+        {
+          "symbol": "SDL_GL_GetDrawableSize",
+          "triangle_lines": [
+            140
+          ],
+          "declaration_lines": [
+            600
+          ]
+        },
+        {
+          "symbol": "SDL_GL_MakeCurrent",
+          "triangle_lines": [
+            105
+          ],
+          "declaration_lines": [
+            597
+          ]
+        },
+        {
+          "symbol": "SDL_GL_SetAttribute",
+          "triangle_lines": [
+            96,
+            97,
+            98,
+            99
+          ],
+          "declaration_lines": [
+            594
+          ]
+        },
+        {
+          "symbol": "SDL_GL_SetSwapInterval",
+          "triangle_lines": [
+            120
+          ],
+          "declaration_lines": [
+            601
+          ]
+        },
+        {
+          "symbol": "SDL_GL_SwapWindow",
+          "triangle_lines": [
+            161
+          ],
+          "declaration_lines": [
+            603
+          ]
+        },
+        {
+          "symbol": "SDL_GetCurrentVideoDriver",
+          "triangle_lines": [
+            91
+          ],
+          "declaration_lines": [
+            538
+          ]
+        },
+        {
+          "symbol": "SDL_GetError",
+          "triangle_lines": [
+            162
+          ],
+          "declaration_lines": [
+            147
+          ]
+        },
+        {
+          "symbol": "SDL_GetTicks",
+          "triangle_lines": [
+            144,
+            149,
+            166
+          ],
+          "declaration_lines": [
+            521
+          ]
+        },
+        {
+          "symbol": "SDL_GetVersion",
+          "triangle_lines": [
+            79
+          ],
+          "declaration_lines": [
+            531
+          ]
+        },
+        {
+          "symbol": "SDL_Init",
+          "triangle_lines": [
+            87
+          ],
+          "declaration_lines": [
+            88
+          ]
+        },
+        {
+          "symbol": "SDL_PollEvent",
+          "triangle_lines": [
+            148
+          ],
+          "declaration_lines": [
+            156
+          ]
+        },
+        {
+          "symbol": "SDL_Quit",
+          "triangle_lines": [
+            181
+          ],
+          "declaration_lines": [
+            92
+          ]
+        },
+        {
+          "symbol": "SDL_getenv",
+          "triangle_lines": [
+            73,
+            74,
+            75,
+            85
+          ],
+          "declaration_lines": [
+            418
+          ]
+        }
+      ],
+      "EGL": [
+        {
+          "symbol": "eglGetCurrentDisplay",
+          "triangle_lines": [
+            115
+          ],
+          "declaration_lines": [
+            141
+          ]
+        },
+        {
+          "symbol": "eglQueryString",
+          "triangle_lines": [
+            117,
+            118
+          ],
+          "declaration_lines": [
+            149
+          ]
+        }
+      ],
+      "GLESv2": [
+        {
+          "symbol": "glAttachShader",
+          "triangle_lines": [
+            126
+          ],
+          "declaration_lines": [
+            508
+          ]
+        },
+        {
+          "symbol": "glBindAttribLocation",
+          "triangle_lines": [
+            127
+          ],
+          "declaration_lines": [
+            509
+          ]
+        },
+        {
+          "symbol": "glBindBuffer",
+          "triangle_lines": [
+            134
+          ],
+          "declaration_lines": [
+            510
+          ]
+        },
+        {
+          "symbol": "glBufferData",
+          "triangle_lines": [
+            135
+          ],
+          "declaration_lines": [
+            519
+          ]
+        },
+        {
+          "symbol": "glClear",
+          "triangle_lines": [
+            157
+          ],
+          "declaration_lines": [
+            522
+          ]
+        },
+        {
+          "symbol": "glClearColor",
+          "triangle_lines": [
+            157
+          ],
+          "declaration_lines": [
+            523
+          ]
+        },
+        {
+          "symbol": "glCompileShader",
+          "triangle_lines": [
+            38
+          ],
+          "declaration_lines": [
+            527
+          ]
+        },
+        {
+          "symbol": "glCreateProgram",
+          "triangle_lines": [
+            124
+          ],
+          "declaration_lines": [
+            532
+          ]
+        },
+        {
+          "symbol": "glCreateShader",
+          "triangle_lines": [
+            34
+          ],
+          "declaration_lines": [
+            533
+          ]
+        },
+        {
+          "symbol": "glDeleteBuffers",
+          "triangle_lines": [
+            173
+          ],
+          "declaration_lines": [
+            535
+          ]
+        },
+        {
+          "symbol": "glDeleteProgram",
+          "triangle_lines": [
+            174
+          ],
+          "declaration_lines": [
+            537
+          ]
+        },
+        {
+          "symbol": "glDeleteShader",
+          "triangle_lines": [
+            40,
+            175,
+            176
+          ],
+          "declaration_lines": [
+            539
+          ]
+        },
+        {
+          "symbol": "glDrawArrays",
+          "triangle_lines": [
+            158
+          ],
+          "declaration_lines": [
+            547
+          ]
+        },
+        {
+          "symbol": "glEnableVertexAttribArray",
+          "triangle_lines": [
+            139
+          ],
+          "declaration_lines": [
+            550
+          ]
+        },
+        {
+          "symbol": "glGenBuffers",
+          "triangle_lines": [
+            132
+          ],
+          "declaration_lines": [
+            556
+          ]
+        },
+        {
+          "symbol": "glGetError",
+          "triangle_lines": [
+            141,
+            159
+          ],
+          "declaration_lines": [
+            567
+          ]
+        },
+        {
+          "symbol": "glGetProgramiv",
+          "triangle_lines": [
+            128
+          ],
+          "declaration_lines": [
+            571
+          ]
+        },
+        {
+          "symbol": "glGetShaderiv",
+          "triangle_lines": [
+            39
+          ],
+          "declaration_lines": [
+            574
+          ]
+        },
+        {
+          "symbol": "glGetString",
+          "triangle_lines": [
+            107,
+            108,
+            111,
+            112,
+            113,
+            114
+          ],
+          "declaration_lines": [
+            578
+          ]
+        },
+        {
+          "symbol": "glGetUniformLocation",
+          "triangle_lines": [
+            130
+          ],
+          "declaration_lines": [
+            583
+          ]
+        },
+        {
+          "symbol": "glLinkProgram",
+          "triangle_lines": [
+            128
+          ],
+          "declaration_lines": [
+            596
+          ]
+        },
+        {
+          "symbol": "glShaderSource",
+          "triangle_lines": [
+            37
+          ],
+          "declaration_lines": [
+            605
+          ]
+        },
+        {
+          "symbol": "glUniform1f",
+          "triangle_lines": [
+            155
+          ],
+          "declaration_lines": [
+            618
+          ]
+        },
+        {
+          "symbol": "glUseProgram",
+          "triangle_lines": [
+            136
+          ],
+          "declaration_lines": [
+            637
+          ]
+        },
+        {
+          "symbol": "glVertexAttribPointer",
+          "triangle_lines": [
+            137,
+            138
+          ],
+          "declaration_lines": [
+            647
+          ]
+        },
+        {
+          "symbol": "glViewport",
+          "triangle_lines": [
+            142
+          ],
+          "declaration_lines": [
+            648
+          ]
+        }
+      ]
+    },
+    "sdl_version_macro": "SDL_VERSION is a header macro, not an ELF export",
+    "runtime_only": {
+      "objects": [
+        "libEGL.so",
+        "libGLESv2.so"
+      ],
+      "vendor_symbols": [
+        "egl_create_pixmap_ID_mapping",
+        "egl_destroy_pixmap_ID_mapping"
+      ],
+      "device_nodes": [
+        "/dev/fb0",
+        "/dev/ion"
+      ],
+      "closure": "Additional SDL blitter EGL/GLES function tables, extension/context ABI and vendor NEEDED closure remain unverified"
+    },
+    "baseos_metadata": {
+      "harvest": {
+        "optional_omissions": [],
+        "sha256": "e113df176e27f9b0d2f8686bed5d57f571edab4eb7b24a62d1a96a764308a5fe",
+        "size": 108533760
+      },
+      "origin": "RG35XXPRO-V1.0.5-BASE-20260522-mod-v3.9.9.img",
+      "reason_not_eligible": "stockmod-image runtime harvest; no reviewed vendor development grant, per-library source/build identity or symbol/SONAME attestations"
+    },
+    "local_dependency_attempt": {
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/issue_26_sysroot.py",
+        "--workspace",
+        "<MALI_PRIVATE>/libc-build",
+        "--archives",
+        "<MALI_PRIVATE>/archives",
+        "--compiler",
+        "<PRIOR_PRIVATE>/compiler",
+        "--compiler-archive",
+        "<PRIOR_PRIVATE>/inputs/compiler.tar.xz"
+      ],
+      "reason": "Restore dependency for SDL only; previous complete private sysroot is not available on this host",
+      "stages": [
+        {
+          "argv": [
+            "/usr/bin/sh",
+            "<MALI_PRIVATE>/libc-build/source/m4-1.4.20/m4-1.4.20/configure",
+            "--prefix=<MALI_PRIVATE>/libc-build/native",
+            "--disable-nls"
+          ],
+          "cwd": "<MALI_PRIVATE>/libc-build/build-m4-1.4.20",
+          "exit_code": 0,
+          "elapsed_seconds": 22.447,
+          "environment": {
+            "PATH": "<MALI_PRIVATE>/libc-build/tools",
+            "LC_ALL": "C",
+            "LANG": "C",
+            "TMPDIR": "<MALI_PRIVATE>/libc-build/tmp",
+            "CONFIG_SITE": "/dev/null",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "SOURCE_DATE_EPOCH": "1533081600"
+          },
+          "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29"
+        },
+        {
+          "argv": [
+            "/usr/bin/make",
+            "-j2"
+          ],
+          "cwd": "<MALI_PRIVATE>/libc-build/build-m4-1.4.20",
+          "exit_code": 2,
+          "elapsed_seconds": 0.214,
+          "environment": {
+            "PATH": "<MALI_PRIVATE>/libc-build/tools",
+            "LC_ALL": "C",
+            "LANG": "C",
+            "TMPDIR": "<MALI_PRIVATE>/libc-build/tmp",
+            "CONFIG_SITE": "/dev/null",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "SOURCE_DATE_EPOCH": "1533081600"
+          },
+          "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51"
+        }
+      ],
+      "first_errors": [
+        "./stdlib.h:827:20: error: expected identifier or '(' before '_Generic'",
+        "./stdlib.h:827:20: error: expected identifier or '(' before '_Generic'",
+        "./string.h:777:20: error: expected identifier or '(' before '_Generic'"
+      ],
+      "native_cc": "gcc (GCC) 16.2.1 20260810",
+      "native_default_c_standard": "__STDC_VERSION__ 202311L",
+      "outcome": "Stopped after first native bootstrap failure; no SDL configure/make or fresh target link performed",
+      "logs": {
+        "m4-1.4.20-configure.log": "f33fb032093c0d293a7f0165988a8774fcc7df30bf67e9354c6ab39dd96be0b5",
+        "m4-1.4.20-make.log": "87c6d453de26af11a7063dc92e00b068373721a14d27872819819b788126f29e"
+      },
+      "selected_native_tool_observations": {
+        "sh": {
+          "path": "/usr/bin/bash",
+          "sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "make": {
+          "path": "/usr/bin/make",
+          "sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "gcc": {
+          "path": "/usr/bin/gcc",
+          "sha256": "585673b6f1d2b1f58bf33174ddea5ac9be0cfbf043f1bf6b41c160f2e0943a45",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "cc": {
+          "path": "/usr/bin/gcc",
+          "sha256": "585673b6f1d2b1f58bf33174ddea5ac9be0cfbf043f1bf6b41c160f2e0943a45",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "as": {
+          "path": "/usr/bin/as",
+          "sha256": "e6a1297b03cf3318b6a0f889bdecbdd9d41201fc888b11e05e8acd2f7aa145fd",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        },
+        "ld": {
+          "path": "/usr/bin/ld",
+          "sha256": "239eadb638b144619992d527efbd85cb545977807cee349606b8ade9bc0a47aa",
+          "role": "native bootstrap tool observed on this host after failure",
+          "format": "ELF64-x86_64"
+        }
+      }
+    },
+    "offline_tests": {
+      "boundary": 32,
+      "scanner_ci_and_mali": 22,
+      "result": "PASS on host"
+    },
+    "limits": [
+      "No new DSO exports/SONAME/GLIBC/kernel-note measurements exist",
+      "No patched SDL build, target link/map or target execution in this followup",
+      "BaseOS harvest paths are manifest claims, not installed-library identity",
+      "No proprietary/runtime library bytes acquired or uploaded"
+    ],
+    "interface_gate": {
+      "status": "LINK_BLOCKED",
+      "errors": [
+        "missing development input: SDL2",
+        "missing development input: EGL",
+        "missing development input: GLESv2"
+      ],
+      "reason": "No approved library input; no linker invocation authorized by this gate"
+    }
+  },
+  "m4_proc_followup": {
+    "base_head": "bcba27f76a3fe4d8aecfebdd81cc613768e3c4d2",
+    "date": "2026-10-26",
+    "status": [
+      "M4_NATIVE_FIXED",
+      "GLIBC49_HOST_BUILT",
+      "SDL_SOURCE_BUILT",
+      "SDL_ONLY_HOST_LINKED",
+      "H700_RUNTIME_NOT_TESTED",
+      "DISTRIBUTION_BLOCKED"
+    ],
+    "native_host_glibc": "2.44",
+    "native_host_gcc": "16.2.1 20260810 (C23 default)",
+    "m4_announcement_sha256": "2c0f32548c78fe6bbd5da8be4e9a004f00d49839a6678318c03535597d9ad890",
+    "m4_smoke_output": "42\n",
+    "source_lock_snapshot_sha256": "16356d998a6abce7a6f6b00ab908ce402354f8f0ecd367b5aa97e4a8134fe614",
+    "fresh_environments": [
+      {
+        "PATH": "<PROC_PRIVATE>/sysroot-build/tools",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TMPDIR": "<PROC_PRIVATE>/sysroot-build/tmp",
+        "CONFIG_SITE": "/dev/null",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SOURCE_DATE_EPOCH": "1533081600"
+      },
+      {
+        "PATH": "<PROC_PRIVATE>/sysroot-build/tools",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TMPDIR": "<PROC_PRIVATE>/sysroot-build/tmp",
+        "CONFIG_SITE": "/dev/null",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SOURCE_DATE_EPOCH": "1533081600",
+        "CC": "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "BUILD_CC": "/usr/bin/gcc"
+      },
+      {
+        "PATH": "<PROC_PRIVATE>/sdl-link-4/tools",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TMPDIR": "<PROC_PRIVATE>/sdl-link-4/tmp",
+        "CONFIG_SITE": "/dev/null",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SOURCE_DATE_EPOCH": "1533081600",
+        "CC": "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+        "BUILD_CC": "/usr/bin/gcc",
+        "PKG_CONFIG_LIBDIR": "<PROC_PRIVATE>/sdl-link-4/empty-pkgconfig",
+        "PKG_CONFIG_SYSROOT_DIR": "<PROC_PRIVATE>/sysroot-build/sysroot"
+      }
+    ],
+    "source_build_stages": [
+      {
+        "stage": "bison-3.8.2-configure",
+        "argv": [
+          "/usr/bin/sh",
+          "<PROC_PRIVATE>/sysroot-build/source/bison-3.8.2/bison-3.8.2/configure",
+          "--prefix=<PROC_PRIVATE>/sysroot-build/native",
+          "--disable-nls"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-bison-3.8.2",
+        "exit_code": 0,
+        "elapsed_seconds": 11.832,
+        "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+        "log_sha256": "08fc03369768217ccb141c331c21b1395f5a925b38c189bb7248a9631f00e61c",
+        "environment_index": 0
+      },
+      {
+        "stage": "bison-3.8.2-install",
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-bison-3.8.2",
+        "exit_code": 0,
+        "elapsed_seconds": 0.364,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "2b68357e4b724739552ba3eea7fdd3212cf1b395aeab08d9c49d80e58ba13d77",
+        "environment_index": 0
+      },
+      {
+        "stage": "bison-3.8.2-make",
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-bison-3.8.2",
+        "exit_code": 0,
+        "elapsed_seconds": 4.821,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "4ead18ebfb1a2da4f8e015cc3f36cfdcb9dd5fa230e865180fd44cb9217db593",
+        "environment_index": 0
+      },
+      {
+        "stage": "gawk-5.3.2-configure",
+        "argv": [
+          "/usr/bin/sh",
+          "<PROC_PRIVATE>/sysroot-build/source/gawk-5.3.2/gawk-5.3.2/configure",
+          "--prefix=<PROC_PRIVATE>/sysroot-build/native",
+          "--disable-nls",
+          "--without-readline",
+          "--without-libsigsegv"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-gawk-5.3.2",
+        "exit_code": 0,
+        "elapsed_seconds": 5.221,
+        "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+        "log_sha256": "47bc5e89e1d8cad9fc7f21f1ab3f6bdb0ebddd7dcdd3d190180bb6ad47038f6e",
+        "environment_index": 0
+      },
+      {
+        "stage": "gawk-5.3.2-install",
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-gawk-5.3.2",
+        "exit_code": 0,
+        "elapsed_seconds": 0.464,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "6ca149583cf5f53bbd5ad912fb1d7149162a2a605729f227305267d361209f8c",
+        "environment_index": 0
+      },
+      {
+        "stage": "gawk-5.3.2-make",
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-gawk-5.3.2",
+        "exit_code": 0,
+        "elapsed_seconds": 7.024,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "d65df8d47f82ac9f49af51862158627e7217a4f313f00e3e2c4429c88f50cf95",
+        "environment_index": 0
+      },
+      {
+        "stage": "glibc-configure",
+        "argv": [
+          "/usr/bin/sh",
+          "<PROC_PRIVATE>/sysroot-build/source/glibc-2.28/glibc-2.28/configure",
+          "--build=x86_64-pc-linux-gnu",
+          "--host=aarch64-nextui-linux-gnu",
+          "--prefix=/usr",
+          "--with-headers=<PROC_PRIVATE>/sysroot-build/kernel-headers/include",
+          "--enable-kernel=4.9.0",
+          "--disable-werror",
+          "--disable-nscd"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-glibc",
+        "exit_code": 0,
+        "elapsed_seconds": 1.165,
+        "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+        "log_sha256": "5ad2498b26052c92ce4a42ff92bfc670fddf7396ca65e76799ba248854c28c76",
+        "environment_index": 1
+      },
+      {
+        "stage": "glibc-install",
+        "argv": [
+          "<PROC_PRIVATE>/sysroot-build/native/bin/make",
+          "install_root=<PROC_PRIVATE>/sysroot-build/sysroot",
+          "install"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-glibc",
+        "exit_code": 0,
+        "elapsed_seconds": 12.931,
+        "initial_executable_sha256": "5ad8d514d2deedf1f3d50e7940d66621f0be2129c2586085323e775abc8d6b7a",
+        "log_sha256": "bd6316481f57af02fc766be7608c53d5ce8736ff4d69e78220d94ae990858ec6",
+        "environment_index": 1
+      },
+      {
+        "stage": "glibc-make",
+        "argv": [
+          "<PROC_PRIVATE>/sysroot-build/native/bin/make",
+          "-j2"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-glibc",
+        "exit_code": 0,
+        "elapsed_seconds": 106.327,
+        "initial_executable_sha256": "5ad8d514d2deedf1f3d50e7940d66621f0be2129c2586085323e775abc8d6b7a",
+        "log_sha256": "4106f9f1e41115ad15020c2ba9e03ae87d86755b7ec246fcd3b26bbb31eac4ac",
+        "environment_index": 1
+      },
+      {
+        "stage": "linux-headers",
+        "argv": [
+          "<PROC_PRIVATE>/sysroot-build/native/bin/make",
+          "-C",
+          "<PROC_PRIVATE>/sysroot-build/source/linux-4.9.170/linux-4.9.170",
+          "O=<PROC_PRIVATE>/sysroot-build/build-linux",
+          "ARCH=arm64",
+          "HOSTCC=/usr/bin/gcc",
+          "CC=<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "INSTALL_HDR_PATH=<PROC_PRIVATE>/sysroot-build/kernel-headers",
+          "headers_install"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-linux",
+        "exit_code": 0,
+        "elapsed_seconds": 2.267,
+        "initial_executable_sha256": "5ad8d514d2deedf1f3d50e7940d66621f0be2129c2586085323e775abc8d6b7a",
+        "log_sha256": "4280b1a0ee77eebf0bbf952d815570fd25636669f3e4d287a61f117dc3df359b",
+        "environment_index": 1
+      },
+      {
+        "stage": "m4-1.4.21-configure",
+        "argv": [
+          "/usr/bin/sh",
+          "<PROC_PRIVATE>/sysroot-build/source/m4-1.4.21/m4-1.4.21/configure",
+          "--prefix=<PROC_PRIVATE>/sysroot-build/native",
+          "--disable-nls"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-m4-1.4.21",
+        "exit_code": 0,
+        "elapsed_seconds": 20.947,
+        "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+        "log_sha256": "2f6247c83c56df64cc0e9ae79e3301fa51e1eeebbd52afa1182c3e2a8d75a670",
+        "environment_index": 0
+      },
+      {
+        "stage": "m4-1.4.21-install",
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-m4-1.4.21",
+        "exit_code": 0,
+        "elapsed_seconds": 0.214,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "f884156724d27b9d4840ea6ebbebee4f9c3dccb39effcccc374c8ce78c0e46e6",
+        "environment_index": 0
+      },
+      {
+        "stage": "m4-1.4.21-make",
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-m4-1.4.21",
+        "exit_code": 0,
+        "elapsed_seconds": 3.82,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "eba98a1a90e42b27c227db0327dafc46beac697e1a8bcda40f5e62568a711db3",
+        "environment_index": 0
+      },
+      {
+        "stage": "m4-smoke",
+        "argv": [
+          "<PROC_PRIVATE>/sysroot-build/native/bin/m4",
+          "<PROC_PRIVATE>/sysroot-build/m4-smoke.m4"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-m4-1.4.21",
+        "exit_code": 0,
+        "elapsed_seconds": 0.001,
+        "initial_executable_sha256": "359c368c041d58f252f0c679d6fdb32f5c00c5d6d13647800d3172d876e1c4c9",
+        "log_sha256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0",
+        "environment_index": 0
+      },
+      {
+        "stage": "m4-version",
+        "argv": [
+          "<PROC_PRIVATE>/sysroot-build/native/bin/m4",
+          "--version"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-m4-1.4.21",
+        "exit_code": 0,
+        "elapsed_seconds": 0.001,
+        "initial_executable_sha256": "359c368c041d58f252f0c679d6fdb32f5c00c5d6d13647800d3172d876e1c4c9",
+        "log_sha256": "91abd8c9f3ef6125f0ca4821fcdacf71640201ff862075c56cb12f05272ca298",
+        "environment_index": 0
+      },
+      {
+        "stage": "make-4.3-configure",
+        "argv": [
+          "/usr/bin/sh",
+          "<PROC_PRIVATE>/sysroot-build/source/make-4.3/make-4.3/configure",
+          "--prefix=<PROC_PRIVATE>/sysroot-build/native",
+          "--disable-nls"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-make-4.3",
+        "exit_code": 0,
+        "elapsed_seconds": 4.671,
+        "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+        "log_sha256": "b482de31927cfe01128eae059aaa1385cb6ea13117bf7565faf689eff6a8d388",
+        "environment_index": 0
+      },
+      {
+        "stage": "make-4.3-install",
+        "argv": [
+          "/usr/bin/make",
+          "install"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-make-4.3",
+        "exit_code": 0,
+        "elapsed_seconds": 0.114,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "9e96c2b131069d0578c155b0001f1a642535220269225009c8d13574570ade54",
+        "environment_index": 0
+      },
+      {
+        "stage": "make-4.3-make",
+        "argv": [
+          "/usr/bin/make",
+          "-j2"
+        ],
+        "cwd": "<PROC_PRIVATE>/sysroot-build/build-make-4.3",
+        "exit_code": 0,
+        "elapsed_seconds": 1.616,
+        "initial_executable_sha256": "0052cc9e1280ad0874744623d7241afa01f689be9c0d627056876bb254af5c51",
+        "log_sha256": "bfbe5a97fe3864c8b8ef89e9cf2dd16b01d4566956bdcdc4cbd845c47705c2e2",
+        "environment_index": 0
+      }
+    ],
+    "sdl_and_variant_stages": [
+      {
+        "stage": "h700-patch",
+        "argv": [
+          "/usr/bin/patch",
+          "-p1",
+          "--input=<PRIOR_PRIVATE>/h700-toolchain/support/sdl2-h700.patch"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4/sdl-source",
+        "exit_code": 0,
+        "elapsed_seconds": 0.001,
+        "initial_executable_sha256": "595fb54121f1f7de2aa9a6fdc1d785b00b4f2f5bcc95f589d2b7a652296a797c",
+        "log_sha256": "e3b12215101a448903339ed188aae110cfe8dc01b9e8c8f9d532a1a18333a03d",
+        "environment_index": 2
+      },
+      {
+        "stage": "sdl-configure",
+        "argv": [
+          "/usr/bin/sh",
+          "<PROC_PRIVATE>/sdl-link-4/sdl-source/configure",
+          "--build=x86_64-pc-linux-gnu",
+          "--host=aarch64-nextui-linux-gnu",
+          "--prefix=/usr",
+          "--enable-video-mali",
+          "--enable-video-opengles",
+          "--disable-video-opengl",
+          "--disable-video-x11",
+          "--disable-video-wayland",
+          "--disable-video-kmsdrm",
+          "--disable-audio",
+          "--disable-dbus",
+          "--disable-ibus",
+          "--disable-fcitx",
+          "--disable-hidapi",
+          "--disable-libudev",
+          "--disable-power",
+          "--disable-sensor",
+          "--disable-locale",
+          "--enable-filesystem",
+          "--enable-loadso",
+          "--enable-shared",
+          "--disable-static",
+          "CFLAGS=--sysroot=<PROC_PRIVATE>/sysroot-build/sysroot -B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/ -static-libgcc -nostdinc -isystem <PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include -isystem <PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed -isystem <PROC_PRIVATE>/sysroot-build/sysroot/usr/include -L<PROC_PRIVATE>/sysroot-build/sysroot/lib64 -L<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64 -Wl,-rpath-link,<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "CPPFLAGS=-I<MALI_PRIVATE>/api",
+          "LDFLAGS=--sysroot=<PROC_PRIVATE>/sysroot-build/sysroot -B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/ -static-libgcc -nostdinc -isystem <PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include -isystem <PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed -isystem <PROC_PRIVATE>/sysroot-build/sysroot/usr/include -L<PROC_PRIVATE>/sysroot-build/sysroot/lib64 -L<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64 -Wl,-rpath-link,<PROC_PRIVATE>/sysroot-build/sysroot/lib64 -Wl,-z,defs -Wl,-Map=<PROC_PRIVATE>/sdl-link-4/sdl.map"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4/sdl-build",
+        "exit_code": 0,
+        "elapsed_seconds": 4.671,
+        "initial_executable_sha256": "c157074818b094c84aaf31b8c80a1e149f234bb1c8c84a25e9a53e96afa30a29",
+        "log_sha256": "6a29f91832e4c3e63d1301d10dc84ad635afae08bfb7e76ea79826911ddc85bd",
+        "environment_index": 2
+      },
+      {
+        "stage": "sdl-make",
+        "argv": [
+          "<PROC_PRIVATE>/sysroot-build/native/bin/make",
+          "-j2",
+          "LDFLAGS=--sysroot=<PROC_PRIVATE>/sysroot-build/sysroot -B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/ -static-libgcc -nostdinc -isystem <PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include -isystem <PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed -isystem <PROC_PRIVATE>/sysroot-build/sysroot/usr/include -L<PROC_PRIVATE>/sysroot-build/sysroot/lib64 -L<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64 -Wl,-rpath-link,<PROC_PRIVATE>/sysroot-build/sysroot/lib64 -Wl,-z,defs -Wl,-Map=<PROC_PRIVATE>/sdl-link-4/sdl.map -Wc,-B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/,-static-libgcc"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4/sdl-build",
+        "exit_code": 0,
+        "elapsed_seconds": 6.574,
+        "initial_executable_sha256": "5ad8d514d2deedf1f3d50e7940d66621f0be2129c2586085323e775abc8d6b7a",
+        "log_sha256": "97c42824a0f9d51fac28bea9372ef69aff023e7bdb926e4a7b310ee82fd15382",
+        "environment_index": 2
+      },
+      {
+        "stage": "sdl-symbols",
+        "argv": [
+          "/usr/bin/readelf",
+          "--wide",
+          "--dynamic",
+          "--dyn-syms",
+          "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/libSDL2-2.0.so.0.2800.5"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4",
+        "exit_code": 0,
+        "elapsed_seconds": 0.015,
+        "initial_executable_sha256": "76bf1b2996e4374b48174efffa7a3905d67f235aeda560e945bc7bde4f0ba967",
+        "log_sha256": "33db274887072aeeee70e04258aabe6bb3261122ed389c264e24807cf015a00e",
+        "environment_index": 2
+      },
+      {
+        "stage": "variant-link-repeat",
+        "argv": [
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=<PROC_PRIVATE>/sysroot-build/sysroot",
+          "-B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include",
+          "-L<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "-L<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64",
+          "-Wl,-rpath-link,<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "<PROC_PRIVATE>/sdl-link-4/variant.o",
+          "-L<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs",
+          "-Wl,-rpath-link,<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs",
+          "-Wl,-Map=<PROC_PRIVATE>/sdl-link-4/variant-repeat.map",
+          "-lSDL2",
+          "-o",
+          "<PROC_PRIVATE>/sdl-link-4/triangle-proc-repeat"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4",
+        "exit_code": 0,
+        "elapsed_seconds": 0.016,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "environment_index": 2
+      },
+      {
+        "stage": "variant-link",
+        "argv": [
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=<PROC_PRIVATE>/sysroot-build/sysroot",
+          "-B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include",
+          "-L<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "-L<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64",
+          "-Wl,-rpath-link,<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "<PROC_PRIVATE>/sdl-link-4/variant.o",
+          "-L<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs",
+          "-Wl,-rpath-link,<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs",
+          "-Wl,-Map=<PROC_PRIVATE>/sdl-link-4/variant.map",
+          "-lSDL2",
+          "-o",
+          "<PROC_PRIVATE>/sdl-link-4/triangle-proc"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4",
+        "exit_code": 0,
+        "elapsed_seconds": 0.016,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "environment_index": 2
+      },
+      {
+        "stage": "variant-object",
+        "argv": [
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-linux-gnu-gcc",
+          "--sysroot=<PROC_PRIVATE>/sysroot-build/sysroot",
+          "-B<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/",
+          "-static-libgcc",
+          "-nostdinc",
+          "-isystem",
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include",
+          "-isystem",
+          "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include-fixed",
+          "-isystem",
+          "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include",
+          "-L<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "-L<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64",
+          "-Wl,-rpath-link,<PROC_PRIVATE>/sysroot-build/sysroot/lib64",
+          "-I<PROC_PRIVATE>/sdl-link-4/include",
+          "-I<MALI_PRIVATE>/api",
+          "-std=c99",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-MD",
+          "-MF",
+          "<PROC_PRIVATE>/sdl-link-4/variant.d",
+          "-c",
+          "<PROC_PRIVATE>/sdl-link-4/triangle-proc.c",
+          "-o",
+          "<PROC_PRIVATE>/sdl-link-4/variant.o"
+        ],
+        "cwd": "<PROC_PRIVATE>/sdl-link-4",
+        "exit_code": 0,
+        "elapsed_seconds": 0.114,
+        "initial_executable_sha256": "8be8cecfcf9f002099eef8bc97c83c8dbaa79bbad85c418ad85e1471cb05045f",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "environment_index": 2
+      }
+    ],
+    "result": {
+      "status": "SDL_ONLY_HOST_LINKED",
+      "variant_sha256": "9b95b0bf6cddfebb6f2946b39896b69fea61614157b80ccc52d698d81e48f19d",
+      "original_sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42",
+      "patched_source_tree": "98fcf63848fb5d7677fdcc30a51fd44d88c0ad4f709094a0741aa90b381a110d",
+      "sysroot_tree": "3620c3e25a4aed39dd8b79a7f85692e0c654a573dd786154b504ac850c00f4d9",
+      "variant": {
+        "sha256": "8552510fc511dec981ffd7f0689cb88cd5c35b28ffcd9b0725eecf57d50bc5a7",
+        "machine": 183,
+        "type": 2,
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "gnu_linux_abi": "4.9.0",
+        "needed": [
+          "libSDL2-2.0.so.0",
+          "libc.so.6"
+        ],
+        "rpaths": [],
+        "required_versions": [
+          "GLIBC_2.17"
+        ]
+      },
+      "sdl": {
+        "sha256": "23dcb139996219fcbc16f287d4165f2406cd9bb674e0f3382cb8424c09fbd3dd",
+        "machine": 183,
+        "type": 3,
+        "interpreter": null,
+        "gnu_linux_abi": null,
+        "needed": [
+          "libc.so.6",
+          "libdl.so.2",
+          "libm.so.6",
+          "libpthread.so.0"
+        ],
+        "rpaths": [],
+        "required_versions": [
+          "GLIBC_2.17",
+          "GLIBC_2.27"
+        ],
+        "soname": "libSDL2-2.0.so.0"
+      },
+      "library_private_path": "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/libSDL2-2.0.so.0.2800.5",
+      "sdl_load_inputs": [
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/crti.o",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbeginS.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/libSDL2.la.lnkscript",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_assert.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_dataqueue.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_error.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_guid.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_hints.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_list.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_log.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_utils.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_atomic.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_spinlock.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_audio.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_audiocvt.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_audiodev.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_audiotypecvt.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_mixer.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_wave.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_cpuinfo.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_dynapi.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_clipboardevents.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_displayevents.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_dropevents.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_events.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_gesture.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_keyboard.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_keysym_to_scancode.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_mouse.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_quit.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_scancode_tables.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_touch.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_windowevents.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/imKStoUCS.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_rwops.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_haptic.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_hidapi.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_gamecontroller.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_joystick.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/controller_type.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_atan2.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_exp.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_fmod.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_log.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_log10.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_pow.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_rem_pio2.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/e_sqrt.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/k_cos.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/k_rem_pio2.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/k_sin.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/k_tan.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_atan.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_copysign.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_cos.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_fabs.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_floor.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_scalbn.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_sin.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/s_tan.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_url.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_power.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_d3dmath.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_yuv_sw.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_d3d.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_shaders_d3d.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_d3d11.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_shaders_d3d11.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_d3d12.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_shaders_d3d12.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_gl.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_shaders_gl.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_gles.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_gles2.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_shaders_gles2.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_ps2.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_psp.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blendfillrect.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blendline.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blendpoint.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_drawline.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_drawpoint.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_sw.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_rotate.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_triangle.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_vita_gxm.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_vita_gxm_memory.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_render_vita_gxm_tools.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sensor.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_crc16.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_crc32.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_getenv.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_iconv.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_malloc.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_mslibc.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_qsort.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_stdlib.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_string.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_strtokr.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_thread.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_timer.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_RLEaccel.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_0.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_1.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_A.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_N.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_auto.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_copy.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_blit_slow.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_bmp.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_clipboard.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_egl.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_fillrect.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_pixels.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_rect.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_shape.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_stretch.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_surface.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_video.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_vulkan_utils.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_yuv.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/yuv_rgb.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_locale.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_nullevents.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_nullframebuffer.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_nullvideo.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_offscreenevents.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_offscreenframebuffer.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_offscreenopengles.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_offscreenvideo.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_offscreenwindow.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sysloadso.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_ime.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_systhread.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_syssem.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sysmutex.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_syscond.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_systls.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_maliblitter.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_maliopengles.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_malivideo.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sysurl.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sysjoystick.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_steamcontroller.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_syshaptic.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sysfilesystem.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_systimer.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_evdev.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_evdev_kbd.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_evdev_kbd_freebsd.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_evdev_capabilities.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_threadprio.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_sandbox.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_poll.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_virtualjoystick.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_dummyaudio.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_syslocale.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/SDL_dummysensor.o",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libm.so",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libdl.so",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libpthread.so",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libc.so",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/lib64/libc.so.6",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libc_nonshared.a",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/lib/ld-linux-aarch64.so.1",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtendS.o",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/crtn.o"
+      ],
+      "variant_load_inputs": [
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/crt1.o",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/crti.o",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o",
+        "<PROC_PRIVATE>/sdl-link-4/variant.o",
+        "<PROC_PRIVATE>/sdl-link-4/sdl-build/build/.libs/libSDL2.so",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libc.so",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/lib64/libc.so.6",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/libc_nonshared.a",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/lib/ld-linux-aarch64.so.1",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc_eh.a",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/lib64/crtn.o"
+      ],
+      "dependencies": [
+        "<PROC_PRIVATE>/sdl-link-4/triangle-proc.c",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_main.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_stdinc.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_config.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_platform.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/begin_code.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/close_code.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/sys/types.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/features.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/stdc-predef.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/sys/cdefs.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/wordsize.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/long-double.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/gnu/stubs.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/gnu/stubs-lp64.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/typesizes.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/clock_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/clockid_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/time_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/timer_t.h",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stddef.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/stdint-intn.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/pthreadtypes.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/thread-shared-types.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/pthreadtypes-arch.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/endian.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/endian.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/stdio.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/libc-header-start.h",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stdarg.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__fpos_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__mbstate_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__fpos64_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__FILE.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/FILE.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/struct_FILE.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/stdio_lim.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/sys_errlist.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/stdio.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/stdlib.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/waitflags.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/waitstatus.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/floatn.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/floatn-common.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/stdlib-bsearch.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/stdlib-float.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/string.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/locale_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__locale_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/strings.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/wchar.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/wchar.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/wint_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/mbstate_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/inttypes.h",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/stdint.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/stdint.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/stdint-uintn.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/ctype.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/math.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/math-vector.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/libm-simd-decl-stubs.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/flt-eval-method.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/fp-logb.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/fp-fast.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/mathcalls-helper-functions.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/mathcalls.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/mathinline.h",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/float.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/alloca.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_assert.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/signal.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/signum.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/signum-generic.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/sig_atomic_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/sigset_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__sigset_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/struct_timespec.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/siginfo_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/__sigval_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/siginfo-arch.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/siginfo-consts.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/sigevent_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/sigevent-consts.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/sigaction.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/types/stack_t.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/sys/ucontext.h",
+        "<PROC_PRIVATE>/sysroot-build/sysroot/usr/include/bits/sigthread.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_atomic.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_audio.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_error.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_endian.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_mutex.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_thread.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_rwops.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_clipboard.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_cpuinfo.h",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/arm_neon.h",
+        "<PRIOR_PRIVATE>/compiler/x86_64-aarch64-nextui-linux-gnu/lib/gcc/aarch64-nextui-linux-gnu/8.3.0/include/arm_fp16.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_events.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_video.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_pixels.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_rect.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_surface.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_blendmode.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_keyboard.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_keycode.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_scancode.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_mouse.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_joystick.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_guid.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_gamecontroller.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_sensor.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_quit.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_gesture.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_touch.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_filesystem.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_haptic.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_hidapi.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_hints.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_loadso.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_log.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_messagebox.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_metal.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_power.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_render.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_shape.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_system.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_timer.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_version.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_locale.h",
+        "<PROC_PRIVATE>/sdl-link-4/include/SDL2/SDL_misc.h",
+        "<MALI_PRIVATE>/api/GLES2/gl2.h",
+        "<MALI_PRIVATE>/api/GLES2/gl2platform.h",
+        "<MALI_PRIVATE>/api/KHR/khrplatform.h"
+      ],
+      "h700_runtime": "NOT_TESTED",
+      "distribution": "BLOCKED",
+      "verified_sdl_exports": [
+        "SDL_ClearError",
+        "SDL_CreateWindow",
+        "SDL_Delay",
+        "SDL_DestroyWindow",
+        "SDL_GL_CreateContext",
+        "SDL_GL_DeleteContext",
+        "SDL_GL_GetAttribute",
+        "SDL_GL_GetDrawableSize",
+        "SDL_GL_GetProcAddress",
+        "SDL_GL_MakeCurrent",
+        "SDL_GL_SetAttribute",
+        "SDL_GL_SetSwapInterval",
+        "SDL_GL_SwapWindow",
+        "SDL_GetCurrentVideoDriver",
+        "SDL_GetError",
+        "SDL_GetTicks",
+        "SDL_GetVersion",
+        "SDL_Init",
+        "SDL_PollEvent",
+        "SDL_Quit",
+        "SDL_getenv"
+      ],
+      "same_workspace_repeat_link_identical": true,
+      "rebuilt_glibc_closure": {
+        "libc.so.6": {
+          "path": "<PROC_PRIVATE>/sysroot-build/sysroot/lib64/libc.so.6",
+          "facts": {
+            "sha256": "ab41da9ad67d2ccbd1c4b73056bd6c1467ada0a172389fb6f02d1e80e582d1a0",
+            "machine": 183,
+            "type": 3,
+            "interpreter": "/lib/ld-linux-aarch64.so.1",
+            "gnu_linux_abi": "4.9.0",
+            "needed": [
+              "ld-linux-aarch64.so.1"
+            ],
+            "rpaths": [],
+            "required_versions": [
+              "GLIBC_2.17",
+              "GLIBC_PRIVATE"
+            ]
+          }
+        },
+        "libm.so.6": {
+          "path": "<PROC_PRIVATE>/sysroot-build/sysroot/lib64/libm.so.6",
+          "facts": {
+            "sha256": "3e62f7c0bb13f637ee3114efd90bb4256cfd0e0b66f054be13d65dc3e7c50ae9",
+            "machine": 183,
+            "type": 3,
+            "interpreter": null,
+            "gnu_linux_abi": "4.9.0",
+            "needed": [
+              "libc.so.6"
+            ],
+            "rpaths": [],
+            "required_versions": [
+              "GLIBC_2.17",
+              "GLIBC_PRIVATE"
+            ]
+          }
+        },
+        "libdl.so.2": {
+          "path": "<PROC_PRIVATE>/sysroot-build/sysroot/lib64/libdl.so.2",
+          "facts": {
+            "sha256": "379b8212d2237a54e85a83982f5c9b87847925ebc1c3e8c4c585be3044370e08",
+            "machine": 183,
+            "type": 3,
+            "interpreter": null,
+            "gnu_linux_abi": "4.9.0",
+            "needed": [
+              "ld-linux-aarch64.so.1",
+              "libc.so.6"
+            ],
+            "rpaths": [],
+            "required_versions": [
+              "GLIBC_2.17",
+              "GLIBC_PRIVATE"
+            ]
+          }
+        },
+        "libpthread.so.0": {
+          "path": "<PROC_PRIVATE>/sysroot-build/sysroot/lib64/libpthread.so.0",
+          "facts": {
+            "sha256": "40a8adee7fac21b4e852554809d06cb6abf8572f06af525bc5a36158a9951296",
+            "machine": 183,
+            "type": 3,
+            "interpreter": "/lib/ld-linux-aarch64.so.1",
+            "gnu_linux_abi": "4.9.0",
+            "needed": [
+              "ld-linux-aarch64.so.1",
+              "libc.so.6"
+            ],
+            "rpaths": [],
+            "required_versions": [
+              "GLIBC_2.17",
+              "GLIBC_PRIVATE"
+            ]
+          }
+        },
+        "ld-linux-aarch64.so.1": {
+          "path": "<PROC_PRIVATE>/sysroot-build/sysroot/lib/ld-linux-aarch64.so.1",
+          "facts": {
+            "sha256": "927f2e2ef696904b42b7b8b55b2cfed784542e59c904ca3d0b0edb036174719f",
+            "machine": 183,
+            "type": 3,
+            "interpreter": null,
+            "gnu_linux_abi": null,
+            "needed": [],
+            "rpaths": [],
+            "required_versions": []
+          }
+        }
+      },
+      "libtool_script_retention": {
+        "before_sha256": "5255cc0860c3d4f91aba7ccd0b745a25d4cc954e5617afd7bdaf44d84c5bf7cc",
+        "after_sha256": "4fa7c2ef4ef4afa2a5beae575eb214be4c84f9f593dbd938f0d973070f568e45",
+        "change": "omit cleanup registration for GNU ld INPUT script only"
+      }
+    },
+    "private_driver_argv": [
+      "python3",
+      "-I",
+      "-B",
+      "scripts/issue_26_sdl_proc.py",
+      "--workspace",
+      "<PROC_PRIVATE>/sdl-link-4",
+      "--compiler",
+      "<PRIOR_PRIVATE>/compiler",
+      "--compiler-archive",
+      "<PRIOR_PRIVATE>/inputs/compiler.tar.xz",
+      "--records",
+      "<PROC_PRIVATE>/sysroot-build/host-tools.json",
+      "--sysroot",
+      "<PROC_PRIVATE>/sysroot-build/sysroot",
+      "--sysroot-tree-sha256",
+      "3620c3e25a4aed39dd8b79a7f85692e0c654a573dd786154b504ac850c00f4d9",
+      "--sdl",
+      "<PRIOR_PRIVATE>/sdl",
+      "--patch",
+      "<PRIOR_PRIVATE>/h700-toolchain/support/sdl2-h700.patch",
+      "--api",
+      "<MALI_PRIVATE>/api",
+      "--triangle",
+      "<MALI_PRIVATE>/triangle.c"
+    ],
+    "map": {
+      "path": "docs/build/issue-26-proc-link-map.txt",
+      "raw_sha256": "fb5885a48c36e81e2c9b71fbed607cc5cee32fa84c4be570d7e068457d5ddf34",
+      "sanitized_sha256": "6a7c5d3317f5949eb58069a50914d5429eee970bea53d5667d8cb77d5e9fe646",
+      "normalization": "replace three documented private research roots; strip trailing whitespace; final newline"
+    },
+    "initial_attempts": [
+      {
+        "workspace": "sdl-link",
+        "sdl_make": 0,
+        "outcome": "driver interpreted relative LOAD paths from repository instead of SDL build cwd; corrected path normalization"
+      },
+      {
+        "workspace": "sdl-link-2",
+        "sdl_make": 0,
+        "outcome": "removed libtool INPUT script prevented audit; map also revealed old libc inputs because SDL Make link omits CFLAGS"
+      },
+      {
+        "workspace": "sdl-link-3",
+        "sdl_make": 2,
+        "outcome": "cannot find crti.o; verbose link proves libtool drops bare -B and -static-libgcc; corrected with documented -Wc compiler-driver escape"
+      }
+    ],
+    "variant_delta": {
+      "original_sha256": "8a08fe77d8675eb93368c15bd5fd3ddc1b00d9dd9229b8eda595e0a0e1432c42",
+      "generated_source_sha256": "9b95b0bf6cddfebb6f2946b39896b69fea61614157b80ccc52d698d81e48f19d",
+      "gl_functions": 26,
+      "new_sdl_calls": [
+        "SDL_GL_GetProcAddress",
+        "SDL_GL_GetAttribute"
+      ],
+      "removed_direct_egl_calls": [
+        "eglGetCurrentDisplay",
+        "eglQueryString"
+      ],
+      "preserved": "shader compilation/link checks, actual buffer/draw/swap, movement, cooperative deadline, cleanup, metadata bound, backend/SSH/signal guards",
+      "new_failure_codes": {
+        "32": "null GL proc lookup before GL calls",
+        "33": "ES profile query/check failed"
+      }
+    },
+    "offline_tests": {
+      "boundary": 32,
+      "scanner_ci_mali_proc": 27,
+      "result": "HOST PASS (mock compilation is native only)"
+    },
+    "limits": [
+      "video/timer SDL build with audio explicitly disabled; not installed SDL identity",
+      "SDL has no GNU Linux ABI note; no note was inserted",
+      "App direct GLIBC_2.17 does not remove SDL transitive GLIBC_2.27",
+      "EGL/GLES/pixmap/ION vendor closure remains UNKNOWN and unexecuted",
+      "No target execution, Pak, vendor download/copy, binary upload, merge or release approval",
+      "Same-workspace repeat link only; no cross-root or cross-host byte identity claimed"
+    ]
+  }
+}

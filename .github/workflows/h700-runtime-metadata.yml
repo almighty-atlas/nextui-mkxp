@@ -1,0 +1,28 @@
+name: H700 runtime metadata probe — offline source tests
+on:
+  pull_request:
+    paths:
+      - 'tools/probe-h700-runtime.sh'
+      - 'tests/test_h700_runtime_probe.py'
+      - 'docs/H700_RUNTIME_METADATA.md'
+      - '.github/workflows/h700-runtime-metadata.yml'
+  push:
+    paths:
+      - 'tools/probe-h700-runtime.sh'
+      - 'tests/test_h700_runtime_probe.py'
+      - 'docs/H700_RUNTIME_METADATA.md'
+      - '.github/workflows/h700-runtime-metadata.yml'
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: POSIX shell syntax
+        run: sh -n tools/probe-h700-runtime.sh
+      - name: Synthetic host fixtures only — no H700 access
+        run: python3 -I -B -m unittest discover -s tests -v

@@ -1,0 +1,528 @@
+Archive member included to satisfy reference by file (symbol)
+
+<RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+                              <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o (__libc_csu_init)
+
+Discarded input sections
+
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/triangle-1.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+LOAD <RESEARCH>/rebuild/triangle-1.o
+LOAD <RESEARCH>/rebuild/sdk/usr/lib/libSDL2.so
+LOAD <RESEARCH>/rebuild/sdk/usr/lib/libGLESv2.so
+LOAD <RESEARCH>/rebuild/sdk/usr/lib/libEGL.so
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/../../../../aarch64-nextui-linux-gnu/lib/../lib64/libgcc_s.so
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/libc.so
+START GROUP
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/lib64/libc.so.6
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/lib/ld-linux-aarch64.so.1
+END GROUP
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/libgcc.a
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/../../../../aarch64-nextui-linux-gnu/lib/../lib64/libgcc_s.so
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+LOAD <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+                [!provide]                        PROVIDE (__executable_start = SEGMENT_START ("text-segment", 0x400000))
+                0x0000000000400238                . = (SEGMENT_START ("text-segment", 0x400000) + SIZEOF_HEADERS)
+
+.interp         0x0000000000400238       0x1b
+ *(.interp)
+ .interp        0x0000000000400238       0x1b <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.note.ABI-tag   0x0000000000400254       0x20
+ .note.ABI-tag  0x0000000000400254       0x20 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash           0x0000000000400278      0x1a8
+ *(.hash)
+ .hash          0x0000000000400278      0x1a8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.gnu.hash       0x0000000000400420       0x44
+ *(.gnu.hash)
+ .gnu.hash      0x0000000000400420       0x44 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.dynsym         0x0000000000400468      0x648
+ *(.dynsym)
+ .dynsym        0x0000000000400468      0x648 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.dynstr         0x0000000000400ab0      0x3f8
+ *(.dynstr)
+ .dynstr        0x0000000000400ab0      0x3f8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.gnu.version    0x0000000000400ea8       0x86
+ *(.gnu.version)
+ .gnu.version   0x0000000000400ea8       0x86 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.gnu.version_d  0x0000000000400f30        0x0
+ *(.gnu.version_d)
+ .gnu.version_d
+                0x0000000000400f30        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.gnu.version_r  0x0000000000400f30       0x20
+ *(.gnu.version_r)
+ .gnu.version_r
+                0x0000000000400f30       0x20 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.rela.dyn       0x0000000000400f50       0x30
+ *(.rela.init)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ .rela.text.startup
+                0x0000000000400f50        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .rela.text     0x0000000000400f50        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ *(.rela.fini)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ .rela.rodata.cst8
+                0x0000000000400f50        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ .rela.data.rel.ro
+                0x0000000000400f50        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rela.ctors)
+ *(.rela.dtors)
+ *(.rela.got)
+ .rela.got      0x0000000000400f50       0x18 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+ .rela.bss      0x0000000000400f68       0x18 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ *(.rela.ifunc)
+
+.rela.plt       0x0000000000400f80      0x540
+ *(.rela.plt)
+ .rela.plt      0x0000000000400f80      0x540 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                [!provide]                        PROVIDE (__rela_iplt_start = .)
+ *(.rela.iplt)
+ .rela.iplt     0x00000000004014c0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                [!provide]                        PROVIDE (__rela_iplt_end = .)
+
+.init           0x00000000004014c0       0x14
+ *(SORT_NONE(.init))
+ .init          0x00000000004014c0        0xc <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+                0x00000000004014c0                _init
+ .init          0x00000000004014cc        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.plt            0x00000000004014e0      0x3a0
+ *(.plt)
+ .plt           0x00000000004014e0      0x3a0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x0000000000401500                glGenBuffers
+                0x0000000000401510                SDL_DestroyWindow
+                0x0000000000401520                eglQueryString
+                0x0000000000401530                glDrawArrays
+                0x0000000000401540                glUniform1f
+                0x0000000000401550                glClear
+                0x0000000000401560                glBufferData
+                0x0000000000401570                setvbuf@@GLIBC_2.17
+                0x0000000000401580                SDL_GL_MakeCurrent
+                0x0000000000401590                glGetShaderiv
+                0x00000000004015a0                glUseProgram
+                0x00000000004015b0                sigemptyset@@GLIBC_2.17
+                0x00000000004015c0                strncmp@@GLIBC_2.17
+                0x00000000004015d0                __libc_start_main@@GLIBC_2.17
+                0x00000000004015e0                SDL_Init
+                0x00000000004015f0                glShaderSource
+                0x0000000000401600                SDL_GL_GetDrawableSize
+                0x0000000000401610                glCreateProgram
+                0x0000000000401620                glGetProgramiv
+                0x0000000000401630                glBindBuffer
+                0x0000000000401640                glGetUniformLocation
+                0x0000000000401650                glVertexAttribPointer
+                0x0000000000401660                SDL_getenv
+                0x0000000000401670                SDL_GL_SetAttribute
+                0x0000000000401680                glDeleteShader
+                0x0000000000401690                SDL_GetTicks
+                0x00000000004016a0                sigaction@@GLIBC_2.17
+                0x00000000004016b0                glClearColor
+                0x00000000004016d0                abort@@GLIBC_2.17
+                0x00000000004016e0                glGetError
+                0x00000000004016f0                glCompileShader
+                0x0000000000401700                SDL_GL_DeleteContext
+                0x0000000000401710                strcmp@@GLIBC_2.17
+                0x0000000000401720                glGetString
+                0x0000000000401730                SDL_GetCurrentVideoDriver
+                0x0000000000401740                SDL_GL_SetSwapInterval
+                0x0000000000401750                SDL_Quit
+                0x0000000000401760                SDL_GetVersion
+                0x0000000000401770                SDL_CreateWindow
+                0x0000000000401780                glDeleteBuffers
+                0x0000000000401790                glBindAttribLocation
+                0x00000000004017a0                eglGetCurrentDisplay
+                0x00000000004017b0                SDL_PollEvent
+                0x00000000004017c0                glEnableVertexAttribArray
+                0x00000000004017d0                SDL_GL_CreateContext
+                0x00000000004017e0                glAttachShader
+                0x00000000004017f0                SDL_Delay
+                0x0000000000401800                SDL_GL_SwapWindow
+                0x0000000000401810                SDL_GetError
+                0x0000000000401820                glLinkProgram
+                0x0000000000401830                SDL_ClearError
+                0x0000000000401840                glCreateShader
+                0x0000000000401850                printf@@GLIBC_2.17
+                0x0000000000401860                glViewport
+                0x0000000000401870                glDeleteProgram
+ *(.iplt)
+ .iplt          0x0000000000401880        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.text           0x0000000000401880      0xc64
+ *(.text.unlikely .text.*_unlikely .text.unlikely.*)
+ *(.text.exit .text.exit.*)
+ *(.text.startup .text.startup.*)
+ .text.startup  0x0000000000401880      0x9cc <RESEARCH>/rebuild/triangle-1.o
+                0x0000000000401880                main
+ *(.text.hot .text.hot.*)
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x000000000040224c       0x50 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x000000000040224c                _start
+ .text          0x000000000040229c       0x14 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .text          0x00000000004022b0       0xa4 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ *fill*         0x0000000000402354        0xc 1f2003d5
+ .text          0x0000000000402360      0x100 <RESEARCH>/rebuild/triangle-1.o
+ .text          0x0000000000402460       0x84 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+                0x0000000000402460                __libc_csu_init
+                0x00000000004024e0                __libc_csu_fini
+ .text          0x00000000004024e4        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+ .text          0x00000000004024e4        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+ *(.gnu.warning)
+
+.fini           0x00000000004024e4       0x10
+ *(SORT_NONE(.fini))
+ .fini          0x00000000004024e4        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+                0x00000000004024e4                _fini
+ .fini          0x00000000004024ec        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+                [!provide]                        PROVIDE (__etext = .)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (etext = .)
+
+.rodata         0x00000000004024f8      0x468
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.cst4   0x00000000004024f8        0x4 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x00000000004024f8                _IO_stdin_used
+ *fill*         0x00000000004024fc        0x4
+ .rodata.cst8   0x0000000000402500       0x10 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ .rodata        0x0000000000402510      0x13c <RESEARCH>/rebuild/triangle-1.o
+ *fill*         0x000000000040264c        0x4
+ .rodata.str1.8
+                0x0000000000402650      0x310 <RESEARCH>/rebuild/triangle-1.o
+                                        0x309 (size before relaxing)
+
+.rodata1
+ *(.rodata1)
+
+.eh_frame_hdr   0x0000000000402960       0x5c
+ *(.eh_frame_hdr)
+ .eh_frame_hdr  0x0000000000402960       0x5c <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+                0x0000000000402960                __GNU_EH_FRAME_HDR
+ *(.eh_frame_entry .eh_frame_entry.*)
+
+.eh_frame       0x00000000004029c0      0x1ec
+ *(.eh_frame)
+ .eh_frame      0x00000000004029c0       0x78 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ .eh_frame      0x0000000000402a38      0x128 <RESEARCH>/rebuild/triangle-1.o
+                                        0x138 (size before relaxing)
+ .eh_frame      0x0000000000402b60       0x48 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+                                         0x60 (size before relaxing)
+ .eh_frame      0x0000000000402ba8        0x4 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+ *(.eh_frame.*)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.gnu_extab
+ *(.gnu_extab*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+                0x0000000000412db8                . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE))
+
+.eh_frame
+ *(.eh_frame)
+ *(.eh_frame.*)
+
+.gnu_extab
+ *(.gnu_extab)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+
+.tdata          0x0000000000412db8        0x0
+                [!provide]                        PROVIDE (__tdata_start = .)
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x0000000000412db8        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0000000000412db8        0x8
+                0x0000000000412db8                PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+ .init_array    0x0000000000412db8        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+                0x0000000000412dc0                PROVIDE (__init_array_end = .)
+
+.fini_array     0x0000000000412dc0        0x8
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+ .fini_array    0x0000000000412dc0        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro    0x0000000000412dc8        0x0
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+ .data.rel.ro   0x0000000000412dc8        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.dynamic        0x0000000000412dc8      0x210
+ *(.dynamic)
+ .dynamic       0x0000000000412dc8      0x210 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x0000000000412dc8                _DYNAMIC
+
+.got            0x0000000000412fd8       0x10
+ *(.got)
+ .got           0x0000000000412fd8       0x10 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x0000000000412fd8                _GLOBAL_OFFSET_TABLE_
+ *(.igot)
+                0x0000000000412fe8                . = DATA_SEGMENT_RELRO_END (., 0x18)
+
+.got.plt        0x0000000000412fe8      0x1d8
+ *(.got.plt)
+ .got.plt       0x0000000000412fe8      0x1d8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ *(.igot.plt)
+ .igot.plt      0x00000000004131c0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+
+.data           0x00000000004131c0       0x10
+                [!provide]                        PROVIDE (__data_start = .)
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x00000000004131c0        0x4 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x00000000004131c0                data_start
+                0x00000000004131c0                __data_start
+ .data          0x00000000004131c4        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ *fill*         0x00000000004131c4        0x4
+ .data          0x00000000004131c8        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+                0x00000000004131c8                __dso_handle
+ .data          0x00000000004131d0        0x0 <RESEARCH>/rebuild/triangle-1.o
+ .data          0x00000000004131d0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .data          0x00000000004131d0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+ .data          0x00000000004131d0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.tm_clone_table
+                0x00000000004131d0        0x0
+ .tm_clone_table
+                0x00000000004131d0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ .tm_clone_table
+                0x00000000004131d0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+
+.data1
+ *(.data1)
+                0x00000000004131d0                _edata = .
+                [!provide]                        PROVIDE (edata = .)
+                0x00000000004131d0                . = .
+                0x00000000004131d0                __bss_start = .
+                0x00000000004131d0                __bss_start__ = .
+
+.bss            0x00000000004131d0       0x10
+ *(.dynbss)
+ .dynbss        0x00000000004131d0        0x8 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                0x00000000004131d0                stdout@@GLIBC_2.17
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x00000000004131d8        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .bss           0x00000000004131d8        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .bss           0x00000000004131d8        0x1 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ *fill*         0x00000000004131d9        0x3
+ .bss           0x00000000004131dc        0x4 <RESEARCH>/rebuild/triangle-1.o
+ .bss           0x00000000004131e0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .bss           0x00000000004131e0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+ .bss           0x00000000004131e0        0x0 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+ *(COMMON)
+                0x00000000004131e0                . = ALIGN ((. != 0x0)?0x8:0x1)
+                0x00000000004131e0                _bss_end__ = .
+                0x00000000004131e0                __bss_end__ = .
+                0x00000000004131e0                . = ALIGN (0x8)
+                0x00000000004131e0                . = SEGMENT_START ("ldata-segment", .)
+                0x00000000004131e0                . = ALIGN (0x8)
+                0x00000000004131e0                __end__ = .
+                0x00000000004131e0                _end = .
+                [!provide]                        PROVIDE (end = .)
+                0x00000000004131e0                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x21
+ *(.comment)
+ .comment       0x0000000000000000       0x21 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                                         0x44 (size before relaxing)
+ .comment       0x0000000000000021       0x22 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtbegin.o
+ .comment       0x0000000000000021       0x22 <RESEARCH>/rebuild/triangle-1.o
+ .comment       0x0000000000000021       0x22 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .comment       0x0000000000000021       0x22 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/bin/../lib/gcc/aarch64-nextui-linux-gnu/8.3.0/crtend.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x110
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x50 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .debug_aranges
+                0x0000000000000050       0x50 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .debug_aranges
+                0x00000000000000a0       0x30 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_aranges
+                0x00000000000000d0       0x40 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000      0x294
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000       0x6e <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .debug_info    0x000000000000006e       0x22 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .debug_info    0x0000000000000090      0x1e2 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_info    0x0000000000000272       0x22 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.debug_abbrev   0x0000000000000000      0x19e
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x49 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .debug_abbrev  0x0000000000000049       0x12 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .debug_abbrev  0x000000000000005b      0x131 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_abbrev  0x000000000000018c       0x12 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.debug_line     0x0000000000000000      0x283
+ *(.debug_line .debug_line.* .debug_line_end)
+ .debug_line    0x0000000000000000       0x81 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+ .debug_line    0x0000000000000081       0x7c <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .debug_line    0x00000000000000fd      0x124 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+ .debug_line    0x0000000000000221       0x62 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str      0x0000000000000000      0x315
+ *(.debug_str)
+ .debug_str     0x0000000000000000      0x133 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crt1.o
+                                        0x253 (size before relaxing)
+ .debug_str     0x0000000000000133       0x1a <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+                                         0x55 (size before relaxing)
+ .debug_str     0x000000000000014d      0x1ae <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+                                        0x1f7 (size before relaxing)
+ .debug_str     0x00000000000002fb       0x1a <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+                                         0x55 (size before relaxing)
+
+.debug_loc      0x0000000000000000      0x182
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000      0x182 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib64/libc_nonshared.a(elf-init.oS)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges   0x0000000000000000       0x90
+ *(.debug_ranges)
+ .debug_ranges  0x0000000000000000       0x50 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crti.o
+ .debug_ranges  0x0000000000000050       0x40 <RESEARCH>/rebuild/compiler/x86_64-aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc/usr/lib/../lib64/crtn.o
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_addr
+ *(.debug_addr)
+
+.ARM.attributes
+ *(.ARM.attributes)
+ *(.gnu.attributes)
+
+.note.gnu.arm.ident
+ *(.note.gnu.arm.ident)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+OUTPUT(<RESEARCH>/rebuild/triangle-1 elf64-littleaarch64)

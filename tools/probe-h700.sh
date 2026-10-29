@@ -84,7 +84,7 @@ else unknown; fi
 printf '%s\n' '/bin/sh requested interpreter (if dynamic and readelf available):'
 if have readelf && have awk && [ -f /bin/sh ] && [ -r /bin/sh ]; then
     readelf -l /bin/sh 2>/dev/null | awk '
-      /Requesting program interpreter:/ { gsub(/[^A-Za-z0-9 /:._\[\]-]/,"?"); print; n++ }
+      /Requesting program interpreter:/ { gsub(/[^A-Za-z0-9 \/:._\[\]-]/,"?"); print; n++ }
       END { if (!n) print "UNKNOWN (no PT_INTERP reported; static or unavailable)" }'
 else unknown; fi
 section 'MEMORY / SWAP (no backing filenames)'

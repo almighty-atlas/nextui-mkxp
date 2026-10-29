@@ -1,7 +1,7 @@
 # Codex task — Issue #22: game-free H700 Mali-fbdev graphics smoke test
 
-**Repo:** `almighty-atlas/nextui-mkxp`  
-**Task:** [Issue #22](https://github.com/almighty-atlas/nextui-mkxp/issues/22)  
+**Repo:** `almighty-atlas/nextui-mkxp`<br>
+**Task:** [Issue #22](https://github.com/almighty-atlas/nextui-mkxp/issues/22)<br>
 **Status:** pre-engine feasibility spike; research in [PR #21](https://github.com/almighty-atlas/nextui-mkxp/pull/21) is **PROPOSED**, not validated on hardware.
 
 ## Codex master prompt (copy into Codex)

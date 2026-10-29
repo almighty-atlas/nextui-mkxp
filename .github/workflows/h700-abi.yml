@@ -1,0 +1,19 @@
+name: H700 archive and ELF gate tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 2
+      - name: Offline fixtures only, no SDK or target build
+        run: python3 -m unittest discover -s scripts/tests -v
+      - name: Check new files only
+        run: git diff --check HEAD^ HEAD -- scripts/h700_build_gate.py scripts/h700_triangle_crosscheck.py scripts/tests docs/build .github/workflows/h700-abi.yml
