@@ -101,7 +101,7 @@ Synthetic event injection exists only in a test build compiled with
 ## Actual verification (2026-10-29)
 
 - Local harness initially lacked `linux/input.h`; no host packages were installed.
-- **13 host tests PASS** inside the existing network-disabled, read-only-source,
+- **14 host tests PASS** (with #40/#41 integration) inside the existing network-disabled, read-only-source,
   unprivileged Debian tools container on the build host, GCC 14.2.0.
 - Both production and test builds compile with `-Wall -Wextra -Werror`.
 - Tests cover mapping compatibility/overrides, essential controls, existing-file
@@ -145,8 +145,13 @@ C=/build/toolchains/gcc-8.3/x86_64-aarch64-nextui-linux-gnu/bin/aarch64-nextui-l
 
 ## Deferred acceptance
 
-Package integration must use the reviewed target helper, retain runtime hash
-checks and pass explicit verified per-game input settings. Before enabling the
+The updated #40 preparation tool supports `install --session` for the reviewed
+target helper, includes it in runtime hash checks, and parses optional per-game
+`session.conf` as three data lines (event node, first code, second code). The
+native metadata is preserved through bounded logging and understood by #41's
+exporter. Their combined host integration distinguishes explicit exit 143 from
+signal 15 without exposing raw logs. This is not target verification.
+Before enabling the
 chord, verify loader execution, actual keycodes, hold/release behavior, menu
 side effects, save preservation, audio silence and NextUI return on H700.
 Test forced-exit fallback only with disposable synthetic content first.
