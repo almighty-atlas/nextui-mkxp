@@ -8,9 +8,9 @@
 | Knight Blade | Owner-supplied English build; see inventory | RMXP / RGSS1, mkxp-z 37a04d1 | PLAYABLE on RG35XX Pro / NextUI-20261013-0 | [Boot](KNIGHT_BLADE_BOOT.md), [Pak tests](RMXP_BATCH_TEST.md), [pause menu](RMXP_PAUSE_MENU.md) | Private engine; full playthrough and public release not covered |
 | Pokémon Infinite Fusion | TBD (6.8.x reported on R36S only) | RPG Maker XP/mkxp-z variant TBD | NOT_TESTED | — | R36S success is not H700 evidence |
 | Pokémon Decay | TBD | Confirm upstream game package / Essentials version | NOT_TESTED | — | Scripts/plugins and native dependency audit needed |
-| Pokémon Sage | 2.0.6.1 (hosting-page claim only) | Unknown until private files inspected | NOT_TESTED | [Intake](FANGAME_INTAKE.md) | Owner-selected ZIP not supplied; no engine/native-call audit |
-| Pokémon Reborn | 19.5 (developer page) | Actual bundle/Essentials/API profile unknown | NOT_TESTED | [Intake](FANGAME_INTAKE.md) | Provisional Windows data input; upstream requires 4 GB RAM+ versus H700 ~973 MiB |
-| Pokémon Team Rocket Edition (LucksackGames) | Unknown | Unknown | NOT_TESTED | [Intake](FANGAME_INTAKE.md) | Creator page HTTP 403; no private payload, do not confuse with GBA ROM hacks |
+| Pokémon Sage | Owner-supplied 2.0.6.1 archive; title says 2.0 | RGSSAD v1; 209 script entries | NOT_TESTED | [Host inventory](FANGAME_HOST_INVENTORY.md) | Untested private candidate prepared; Windows/Flash/GIF paths need review |
+| Pokémon Reborn | Owner-supplied 19.5.0 Windows | Loose loader + 193 external Ruby files | NOT_TESTED | [Host inventory](FANGAME_HOST_INVENTORY.md) | Input/config/network review pending; upstream requires 4 GB RAM+ versus H700 ~973 MiB |
+| Pokémon Team Rocket Edition (LucksackGames) | Exact release unknown; supplied RAR/EXE/CAB hashed | RGSSAD v1; 211 script entries | NOT_TESTED | [Host inventory](FANGAME_HOST_INVENTORY.md) | Wrapper unpacked without running it; untested candidate prepared; Windows/GIF paths need review |
 
 ## Current integration status (2026-10-29)
 

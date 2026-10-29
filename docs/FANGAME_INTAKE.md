@@ -1,9 +1,10 @@
 # Sage, Reborn and Team Rocket Edition intake (#52)
 
-Status: **source-page triage only**, observed 2026-10-29. No archive was downloaded,
-no game files were inspected, and nothing was ported, registered or executed on
-H700 in this step. Project rules forbid scraping/automatically downloading
-fangame bundles; the owner supplies legally obtained private game files.
+Update: the owner has now supplied all three archives. [Actual host inspection](FANGAME_HOST_INVENTORY.md)
+records private extraction, data-only script inventory and two untested staged
+candidates. The H700 connection is currently unavailable; no game has run there.
+No bundle was downloaded by the agent. The sections below retain the original
+**source-page-only triage**, before those private files were supplied.
 
 [Machine-readable source observations](../build/h700-engine/fangame-intake.json)
 use public landing-page URLs, not scraped temporary signed download links.

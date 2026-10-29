@@ -40,3 +40,27 @@ class FangameIntake(unittest.TestCase):
         self.assertNotIn('dkey=', text)
         for game in self.data['games']:
             self.assertTrue(game['source_page'].startswith('https://'))
+
+    def test_supplied_payload_evidence_does_not_promote_host_inventory_to_playability(self):
+        report = json.loads((ROOT / 'build/h700-engine/fangame-host-inventory.json').read_text())
+        self.assertEqual(report['level'], 'verified-on-host')
+        self.assertFalse(report['game_bundle_downloaded_by_agent'])
+        self.assertFalse(report['game_or_installer_executed'])
+        self.assertEqual(report['device_connection'], 'SSH_TIMEOUT')
+        for game in report['games']:
+            self.assertRegex(game['archive_sha256'], r'^[a-f0-9]{64}$')
+            self.assertGreater(game['archive_bytes'], 0)
+            self.assertEqual(game['h700_result'], 'NOT_TESTED')
+            self.assertEqual(game['pause_menu'], 'DISABLED_PENDING_ADAPTER')
+        rocket = next(g for g in report['games'] if g['id'] == 'team-rocket-lucksack')
+        self.assertEqual(rocket['cab_offset'] + rocket['cab_bytes'], rocket['wrapper_bytes'])
+        self.assertEqual(rocket['cab_entries'], 1005)
+
+    def test_extractor_tools_are_pinned_and_not_target_dependencies(self):
+        report = json.loads((ROOT / 'build/h700-engine/private-extractor-tool-evidence.json').read_text())
+        self.assertFalse(report['host_package_installation'])
+        self.assertFalse(report['game_bundle_downloads'])
+        self.assertFalse(report['tool_binary_distribution'])
+        for package in report['packages']:
+            self.assertRegex(package['sha256'], r'^[a-f0-9]{64}$')
+            self.assertEqual(package['arch'], 'amd64')
