@@ -227,9 +227,60 @@ class << Graphics
   alias_method :nextui_native_update, :update
   def update(*args)
     NextUIScreen.follow
+    NextUIProfile.frame
     nextui_native_update(*args)
   end
 end
+
+# Opt-in profiler for stutter reports: only active while the file
+# $HOME/nextui-profile exists (HOME is the launcher's per-game directory).
+# Every 10 s it appends one line to $HOME/nextui-profile.log: frames, frames
+# over 50 ms, the longest frame, GC time, and the most frequent game frames
+# seen when Ruby's scheduler preempted the main thread.
+module NextUIProfile
+  FLAG = ENV['HOME'] ? File.join(ENV['HOME'], 'nextui-profile') : nil
+
+  def self.start
+    return unless FLAG && File.file?(FLAG)
+    @main, @samples, @frames, @slow, @longest = Thread.current, Hash.new(0), 0, 0, 0.0
+    @last = @report = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    @gc = GC.respond_to?(:total_time) ? GC.total_time : 0
+    Thread.new { loop { sleep 0.01; sample } }
+  end
+
+  def self.sample
+    return unless @main
+    location = @main.backtrace_locations(0, 12)&.find { |frame| !frame.path.to_s.include?('/compat/') }
+    @samples["#{frame_label(location)}"] += 1 if location
+  end
+
+  def self.frame_label(location) = "#{location.path}:#{location.lineno}:#{location.label}"
+
+  def self.frame
+    return unless @main
+    now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    length = (now - @last) * 1000
+    @last = now
+    @frames += 1
+    @slow += 1 if length > 50
+    @longest = length if length > @longest
+    report(now) if now - @report >= 10
+  end
+
+  def self.report(now)
+    gc = GC.respond_to?(:total_time) ? GC.total_time : 0
+    top = @samples.sort_by { |_, count| -count }.first(6).map { |label, count| "#{count}x #{label}" }
+    File.open(File.join(ENV['HOME'], 'nextui-profile.log'), 'a') do |log|
+      log.puts(format('frames=%d slow=%d longest_ms=%.0f gc_ms=%.0f major_gc=%d top=%s', @frames, @slow,
+                      @longest, (gc - @gc) / 1e6, GC.stat(:major_gc_count), top.join(' | ')))
+    end
+    @report, @gc, @frames, @slow, @longest = now, gc, 0, 0, 0.0
+    @samples.clear
+  rescue SystemCallError
+    @main = nil
+  end
+end
+NextUIProfile.start
 
 # Diagnostics in run.log for silent quits: who ended the scene loop or exited.
 trace_var(:$scene) { |scene| warn("NEXTUI_SCENE_NIL #{caller(1, 4).join(' < ')}") if scene.nil? }

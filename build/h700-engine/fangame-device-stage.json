@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289",
+    "sha256": "5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -85,7 +85,8 @@
       "bfeb0c06d9bf23458bb2a7e53a23cd88b86c47e563e47390d2903d77a2c71af5",
       "d0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b",
       "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4",
-      "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d"
+      "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d",
+      "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289"
     ],
     "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
     "temp_env": "TEMP/TMP default to per-game HOME",
@@ -94,7 +95,8 @@
     "diagnostics": "NEXTUI_EXIT / NEXTUI_SCENE_NIL caller lines in run.log",
     "mkxp_config": {
       "fontHeightReporting": 1
-    }
+    },
+    "profiler": "opt-in via $HOME/nextui-profile; writes $HOME/nextui-profile.log"
   },
   "second_owner_launch": {
     "date": "2026-10-29",
@@ -158,5 +160,12 @@
     "game": "rocket",
     "result": "name entry text complete; continued, saved (Game.rxdata in private copy), abort when talking to a character",
     "error": "116:PField_FieldMoves:779 unexpected return (LocalJumpError) in Events.onAction proc"
+  },
+  "ninth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "rocket",
+    "result": "talking to many characters works; occasional frame drops while walking",
+    "cpu_sample": "5 s /proc sample during play: rgss thread 67% of one core, mali 5%, OpenAL mixer 2.6%; governor performance at 1.512 GHz"
   }
 }

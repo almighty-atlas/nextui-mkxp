@@ -296,6 +296,20 @@ class EssentialsWin32CompatTest < Minitest::Test
     assert_raises(ZeroDivisionError) { proc { 1 / 0 }.call }
   end
 
+  def test_profiler_is_opt_in_and_writes_one_line_per_report
+    Graphics.update
+    refute File.exist?(File.join($HOME, 'nextui-profile.log'))
+    File.write(File.join($HOME, 'nextui-profile'), '')
+    NextUIProfile.start
+    3.times { NextUIProfile.frame }
+    NextUIProfile.report(Process.clock_gettime(Process::CLOCK_MONOTONIC))
+    line = File.read(File.join($HOME, 'nextui-profile.log'))
+    assert_match(/\Aframes=3 slow=\d+ longest_ms=\d+ gc_ms=\d+ major_gc=\d+ top=/, line)
+  ensure
+    NextUIProfile.instance_variable_set(:@main, nil)
+    File.delete(File.join($HOME, 'nextui-profile')) rescue nil
+  end
+
   def test_temp_folder_points_to_per_game_home
     assert_equal $HOME, ENV['TEMP']
     assert_equal $HOME, ENV['TMP']

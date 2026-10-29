@@ -112,6 +112,15 @@ lambda, so `return` just left the handler. In Ruby 3 it raises
 `Proc#call` now ends only the called proc with the jump's value, as a 1.8
 lambda did.
 
+Ninth launch (owner, Rocket, verified-on-H700): talking to characters works.
+The owner saw occasional frame drops while walking. A read-only `/proc`
+sample showed the Ruby (`rgss`) thread at about 67% of one core, while the GPU
+driver and audio threads were negligible. For a targeted diagnosis, the shim
+has an opt-in profiler. It is active only while `$HOME/nextui-profile`
+exists in the game's per-game home. Every 10 s it appends frame counts, frames
+over 50 ms, GC time and the most frequently sampled game code locations to
+`$HOME/nextui-profile.log`.
+
 Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
 through `/tmp/next`) were each followed by a full power-off of the device; the
 owner's normal menu launch was not. Agent remote launches are stopped until
@@ -130,7 +139,7 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 18 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 19 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |
