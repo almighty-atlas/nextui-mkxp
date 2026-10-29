@@ -1,0 +1,31 @@
+name: H700 probe static and fixture checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Shell syntax
+        run: sh -n tools/probe-h700.sh
+      - name: Optional ShellCheck (no package installation)
+        run: |
+          if command -v shellcheck >/dev/null 2>&1; then
+            shellcheck --shell=sh tools/probe-h700.sh
+          else
+            echo 'NOT_TESTED: shellcheck unavailable'
+          fi
+      - name: Optional BusyBox syntax (no package installation)
+        run: |
+          if command -v busybox >/dev/null 2>&1; then
+            busybox sh -n tools/probe-h700.sh
+          else
+            echo 'NOT_TESTED: busybox unavailable'
+          fi
+      - name: Offline fixtures and safety contract
+        run: python3 -m unittest discover -s tests -v
+      - name: Whitespace
+        run: git show --check --oneline HEAD

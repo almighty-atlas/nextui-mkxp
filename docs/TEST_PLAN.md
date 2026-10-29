@@ -50,3 +50,14 @@ Run `python3 scripts/check_provenance.py` and `git diff --check`. The pinned
 checks automatically; it does not validate legal rights, retrieve dependencies,
 or test H700. Review [SOURCES](SOURCES.md) and the
 [distribution gate](DISTRIBUTION_GATE.md) for unresolved evidence.
+
+## M0: Read-only H700 inventory
+
+Run `sh -n tools/probe-h700.sh`, `python3 -m unittest discover -s tests -v`
+and `git diff --check`. Use ShellCheck/BusyBox syntax checks if already available;
+do not install packages on the handheld. The
+[probe workflow](../.github/workflows/h700-probe.yml) runs offline checks.
+Fixture outputs are HOST evidence. The owner has since supplied redacted real
+device inventory, summarized in [H700 baseline](H700_BASELINE.md); it is
+**H700 inventory** evidence only. Actual EGL/SDL/audio/input/Pak functionality,
+UI release confirmation and engine/game behavior remain **NOT_TESTED**.
