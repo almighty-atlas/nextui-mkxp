@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "scope": "minimal-h700-engine-candidate",
+  "commit": "37a04d14413454551a7b6aadbb4e93e67168accb",
+  "notes": [
+    "Candidate selection for a first private engine build, not a license approval or build grant.",
+    "SDL comes from the existing private Mali-fbdev SDL prefix (sdl_system=enabled); the vendored SDL 2.28.1 wrap and its X11/Wayland/ANGLE/udev/D-Bus/IBus/DRM branch are excluded.",
+    "Ruby uses the engine's vendored, patched static Ruby 3.1.3 wrap (ruby_system=disabled): the mkxp-z patch relaxes method visibility, superclass mismatch and sprintf argument checks that RGSS scripts rely on.",
+    "mesa is a headers-only subproject in this engine revision (packagefiles/mesa/meson.build); no Mesa library is built.",
+    "alsa-lib is a candidate for the OpenAL Soft ALSA backend; on-device ALSA configuration compatibility is unverified.",
+    "Local H700 patches (local_patches) are appended to the staged wrap diff_files before end-of-diff-files.patch; the committed lock describes the unmodified upstream wraps."
+  ],
+  "meson_options": {
+    "default_system": "disabled",
+    "sdl_system": "enabled",
+    "ruby_system": "disabled",
+    "gfx_backend": "gles",
+    "angle": "disabled",
+    "openssl": "disabled",
+    "extra_shaders": "disabled",
+    "use_miniffi": false,
+    "cjk_fallback_font": false,
+    "jack": "disabled",
+    "pulseaudio": "disabled",
+    "pipewire": "disabled",
+    "oss": "disabled"
+  },
+  "wraps": [
+    "alsa-lib",
+    "fluidsynth",
+    "fmt",
+    "freetype",
+    "gcem",
+    "libffi",
+    "libiconv",
+    "libyaml",
+    "mesa",
+    "ogg",
+    "openal-soft",
+    "physfs",
+    "pixman",
+    "ruby-3.1",
+    "sdl2_image",
+    "sdl2_sound",
+    "sdl2_ttf",
+    "theora",
+    "theoraplay",
+    "uchardet",
+    "vorbis",
+    "zlib"
+  ],
+  "excluded_wraps": [
+    "angle",
+    "dbus",
+    "expat",
+    "glib",
+    "ibus",
+    "jack1",
+    "libdecor",
+    "libdrm",
+    "libinotify",
+    "libx11",
+    "libxau",
+    "libxcb",
+    "libxcursor",
+    "libxext",
+    "libxfixes",
+    "libxi",
+    "libxkbcommon",
+    "libxrandr",
+    "libxrender",
+    "openssl",
+    "pipewire",
+    "pulseaudio",
+    "sdl2",
+    "spirv-headers",
+    "spirv-tools",
+    "steamshim",
+    "systemd",
+    "volk",
+    "vulkan-headers",
+    "vulkan-memory-allocator",
+    "wayland",
+    "xcb-proto",
+    "xorgproto",
+    "xxhash"
+  ],
+  "git_pins": {
+    "sdl2_image": {
+      "commit": "d3c6d5963dbe438bcae0e2b6f3d7cfea23d02829",
+      "evidence": "git ls-remote https://github.com/libsdl-org/SDL_image refs/tags/release-2.6.3 on 2026-10-28 (lightweight tag)",
+      "submodules": {
+        "external/dav1d": "52d0c1f44eff76c3773636a9805f69ec26633037",
+        "external/jpeg": "bc27d050625f126dcba73ae5b731272de1a89dc1",
+        "external/libavif": "a3e9315474deb60e39b6e3aad88798eee26dadea",
+        "external/libjxl": "d456eedef27d3587191f35f918c3ca2821c5a6c4",
+        "external/libjxl/third_party/brotli": "2ae7ff838d1a7ba9726ef0f9b3e42d9eadc5d252",
+        "external/libjxl/third_party/brotli/research/esaxx": "ca7cb332011ec37a8436487f210f396b84bd8273",
+        "external/libjxl/third_party/brotli/research/libdivsufsort": "5f60d6f026c30fb4ac296f696b3c8b0eb71bd428",
+        "external/libjxl/third_party/googletest": "0ea2d8f8fa1601abb9ce713b7414e7b86f90bc61",
+        "external/libjxl/third_party/highway": "a2104044ca0717cc571e4a7570b6e8900d4f8c13",
+        "external/libjxl/third_party/lcms": "65c63bf549d78253c14b30b3d62cb668bbbe612c",
+        "external/libjxl/third_party/lodepng": "48e5364ef48ec2408f44c727657ac1b6703185f8",
+        "external/libjxl/third_party/sjpeg": "868ab558fad70fcbe8863ba4e85179eeb81cc840",
+        "external/libjxl/third_party/skcms": "64374756e03700d649f897dbd98c95e78c30c7da",
+        "external/libpng": "999173059e2651fab2a0102eeba18748c4bd9827",
+        "external/libtiff": "dad25b3f71cfd7f4fcb089a5881a31e65ae92c0a",
+        "external/libwebp": "12cf7b315fb7a9df56fa6b8ee30e36312659d63c",
+        "external/zlib": "aeb146673f65fe6755d9aae05579c944d6572d20"
+      },
+      "submodules_evidence": "git submodule status --recursive after shallow recursive clone of the pinned commit on tiny02, 2026-10-28; gitlinks are fixed by the superproject commit"
+    }
+  },
+  "local_patches": {
+    "openal-soft": [
+      {
+        "file": "patches/h700/openal-soft-1.24.3-gcc8.patch",
+        "sha256": "557455144d9b0325c8ab2292fc7451be90d09380c01f4e9e7e052d5a77e69aa7",
+        "reason": "GCC 8.3 rejects throw/log calls in constexpr functions and lacks std::reduce; runtime-only helpers made inline, std::reduce -> std::accumulate; link libstdc++fs for std::filesystem (GCC 8)"
+      }
+    ]
+  }
+}

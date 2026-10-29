@@ -86,7 +86,7 @@ now pass. New Ruby batch builds ran separately with 2 CPUs / 4 GiB and a
 | Psych high-level `safe_load`/`dump`, object/alias rejection | PASS | verified-on-H700, [batch report](H700_RUBY_BATCH.md) | BaseOS 1.4.0 / NextUI-20261013-0 (39a06de); not every Psych API |
 | Ruby encodings/transcoders, StringIO/Date/Set/Shellwords | PASS | verified-on-H700, [runtime log](evidence/2026-10-28-ruby-runtime.txt) | Selected roundtrips and stdlib tests only; not all 61 built encoding modules exercised |
 | Fiddle + bundled libffi 3.2.1 | PASS | verified-on-H700, [batch report](H700_RUBY_BATCH.md) | Stock libc `strlen`, allocation/free; callbacks and broader FFI NOT_TESTED |
-| mkxp-z engine | NOT_TESTED | — | Not built; no engine start |
+| mkxp-z engine | NOT_TESTED | — | Not built; no engine start. Source/wrap lock complete ([lock](MKXP_Z_SOURCE_LOCK.md)); the engine uses its own patched static Ruby, so earlier stock-Ruby device PASS results do not carry over to engine Ruby behaviour |
 
 Details and hashes: [H700_ENGINE_PREFLIGHT.md](H700_ENGINE_PREFLIGHT.md#owner-h700-ruby-313-runtime-zlib-and-psych-trials-pass-2026-10-28).
 Private artifacts are never distributed.

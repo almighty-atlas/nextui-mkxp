@@ -147,6 +147,10 @@ The [PR #30 minimal-engine plan][plan] remains useful historical context.
 
 **Critical profile decisions (not yet implemented):**
 
+> **Superseded for Ruby (2026-10-28):** the engine's Ruby wrap carries
+> semantic interpreter patches and builds static Ruby, so the selected
+> profile uses `ruby_system=disabled`; see [MKXP_Z_SOURCE_LOCK.md](MKXP_Z_SOURCE_LOCK.md).
+
 - Use the private target prefix via `ruby_system=enabled` and
   `sdl_system=enabled`; "system" must never mean Debian host libraries.
   The external Ruby branch avoids the engine's separately patched vendored

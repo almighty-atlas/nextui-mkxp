@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "level": "verified-on-host",
+  "engine_commit": "37a04d14413454551a7b6aadbb4e93e67168accb",
+  "status": "MESON_COMPILE_PASS",
+  "private_job": "engine-build-20261028T172043Z",
+  "seconds": 463,
+  "steps": "684/684",
+  "artifact": {"name": "mkxp-z.aarch64", "bytes": 34914232, "sha256": "245e5cb379f305660c12afe41cc9047da5ceec3bff67dd156f92ae100770558c"},
+  "private_receipt_sha256": "ef2d2bff731e64f25f3c174badf6726f19590631427aa79bc50f22c642b7db9c",
+  "target_execution_attempts_in_logs": [],
+  "job_bytes": 1192040132,
+  "free_bytes": 29875982336,
+  "initial_elf_observation": {
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "stack": "RW",
+    "rpath": "/job/sdl-prefix/lib:$ORIGIN",
+    "needed": ["libpthread.so.0", "libSDL2-2.0.so.0", "libdl.so.2", "librt.so.1", "libm.so.6", "libgcc_s.so.1", "libc.so.6", "ld-linux-aarch64.so.1"]
+  },
+  "private_staging": {
+    "command": "meson install -C /job/build --no-rebuild --destdir /job/staged --tags mkxp-z",
+    "exit_code": 0,
+    "artifact_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+    "rpath": "$ORIGIN",
+    "system_install": false,
+    "device_transfer": false
+  },
+  "abi": "NOT_YET_VALIDATED; upstream install staging removes build RPATH",
+  "preliminary_provider_audit": {
+    "status": "INCOMPLETE",
+    "device_sdl_sha256": "76de58c80f9a6d901fc5563711b9edc869a759c9446c5a6cd798f4c6774f7577",
+    "device_libgcc_sha256": "acfe23cf0f5f4ac35b4c314415bb31d6f52a9bd39df8be04dfb2818a571533fd",
+    "strong_imports_examined": 918,
+    "remaining": [
+      "Include stock SDL dependency libsamplerate.so.0 and its versioned symbols.",
+      "Review exact $ORIGIN DT_RPATH policy without generally allowing arbitrary RPATH.",
+      "Audit COPY relocation symbol sizes before accepting runtime ABI."
+    ]
+  },
+  "device_execution": "NOT_TESTED",
+  "distribution": "BLOCKED"
+}
