@@ -47,6 +47,11 @@ passes on H700; audible sound, full controls and public reproducibility remain o
 
 ## M2 — NextUI standalone Pak
 
+Issue #8 now has a [source integration candidate](RMXP_PAK.md): explicit ROM
+markers, private per-game working copies, runtime validation and offline tests.
+Hardware acceptance remains open. The earlier private Knight Blade playability
+checklist reached **100%** (pending PR #39); this is separate from Pak completion.
+
 - Implement layout and valid launch entry point compatible with NextUI's Pak and ROM discovery conventions.
 - Game-per-directory discovery with paths containing spaces; absence and error handling.
 - Map handheld input, maintain usable exit chord and handle audio/display cleanup.

@@ -13,6 +13,12 @@ Private Ruby 3.1.3 runtime/extension builds now have a
 Psych high-level API and Fiddle. This is not an mkxp-z engine start or a
 publicly reproducible/releasable binary; no private artifacts are distributed.
 
+A [private RMXP Pak integration candidate](docs/RMXP_PAK.md) now provides
+game registration and a source-only installer kit. Device discovery and launch
+of this candidate still require H700 verification. The separate private Knight
+Blade playability milestone reached **100%**, recorded in pending
+[PR #39](https://github.com/almighty-atlas/nextui-mkxp/pull/39).
+
 ## Goals
 
 1. A reproducible, native **aarch64/H700** engine build compatible with the real NextUI environment.

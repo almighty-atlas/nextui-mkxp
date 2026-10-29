@@ -128,3 +128,14 @@ libraries, audio/input nodes and ~973 MiB physical memory with no swap.
 **GLES context creation, graphics/audio/input functionality, loader/glibc symbol
 compatibility and standalone Pak lifecycle remain NOT_TESTED.** Cloud fixture
 and library/device-node presence do not establish gameplay compatibility.
+
+## RMXP Pak integration candidate
+
+The [Issue #8 launcher](RMXP_PAK.md) is host-tested with synthetic engines only.
+H700 discovery, visible errors, launch and return are untested. It requires the
+private hash-pinned H700 engine and Python 3.11+ on the preparation computer.
+Registration duplicates each game once; saves then stay in that private copy.
+Automatic game updates, source moves, stale-lock recovery and migration are not
+implemented. Exit currently relies on the game's Shutdown menu (#10 remains).
+Games needing RTP/MIDI require private `Bios/RMXP` inputs. This is not a public
+engine release and does not provide MinArch integration or instant resume.
