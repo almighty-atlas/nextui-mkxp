@@ -36,6 +36,13 @@ The standard Knight Blade pause overlay is disabled in both candidate configs.
 Use the game's own menu; the native Select+Start hold remains an independent
 escape path while game-specific menu/save adapters are being assessed.
 
+## First owner launch
+
+Both games aborted before the title screen with a missing-`Win32API` error
+(engine built without MiniFFI). A reviewed per-game
+[Win32API shim](ESSENTIALS_WIN32_COMPAT.md) is now installed for both. Repeat
+the checklist below.
+
 ## Erste Prüfung durch den Besitzer
 
 Bitte zunächst **nur Pokemon Sage**, danach **Pokemon Team Rocket** auswählen.

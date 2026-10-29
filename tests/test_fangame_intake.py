@@ -77,6 +77,12 @@ class FangameIntake(unittest.TestCase):
             self.assertEqual(game['h700_game_result'], 'NOT_TESTED')
             self.assertEqual(game['preload_scripts'], [])
             self.assertEqual(game['game_id'], hashlib.sha256(game['source'].encode()).hexdigest())
+        launch = report['first_owner_launch']
+        self.assertEqual(launch['result'], 'BOTH_ABORTED_BEFORE_TITLE')
+        adapter = report['compat_adapter']
+        self.assertEqual(adapter['h700_game_result'], 'NOT_TESTED')
+        shim = ROOT / adapter['script']
+        self.assertEqual(hashlib.sha256(shim.read_bytes()).hexdigest(), adapter['sha256'])
         resume = report['sage_resume']
         self.assertEqual(resume['already_verified_files'] + resume['resent_files'],
                          report['games'][0]['manifest_files'])

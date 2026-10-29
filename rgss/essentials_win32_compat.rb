@@ -1,0 +1,115 @@
+# SPDX-License-Identifier: MIT
+# Win32API stand-in for Pokemon Essentials (v17-era) RGSS1 games under the
+# H700 mkxp-z build, loaded per game through mkxp.json "preloadScript".
+# Original implementation.
+#
+# The engine is built without MiniFFI and no Windows libraries exist on the
+# device, so Essentials' `Win32API.new(dll, function, ...)` calls hit a missing
+# constructor and the game aborts before its title screen. Every emulated call
+# answers like an unavailable Windows API, except:
+#   * window/thread identity probes, so the game finds "its" window, and
+#   * GetAsyncKeyState/GetKeyState, which report the engine's own RGSS button
+#     state (and therefore the reviewed gamepad bindings) for one virtual key
+#     per button from Essentials' default Input.buttonToKey lists.
+# No native code is loaded and nothing outside the game's own folder is written.
+module NextUIWin32
+  WINDOW = 1
+  THREAD = 1
+  ERROR_FILE_NOT_FOUND = 2
+  E_FAIL = -2147467259
+  MCIERR_INVALID_DEVICE_NAME = 263
+  LANG_ENGLISH_US = 0x0409
+
+  # Windows virtual-key code => native RGSS1 buttons (captured before game
+  # scripts redefine the Input constants). Exactly one key per button: the
+  # game polls its key list lazily, so reporting C, Enter and Space together
+  # would trigger the same press again on the following frames.
+  KEYS = {
+    0x28 => [Input::DOWN], 0x25 => [Input::LEFT], 0x27 => [Input::RIGHT], 0x26 => [Input::UP],
+    0x0D => [Input::C],                 # Enter
+    0x1B => [Input::B],                 # Esc
+    0x5A => [Input::A],                 # Z (run)
+    0x21 => [Input::L], 0x22 => [Input::R],  # Page Up/Down
+    0x74 => [Input::F5, Input::X],      # F5: registered item, also on RGSS X
+    0x10 => [Input::SHIFT], 0x11 => [Input::CTRL], 0x12 => [Input::ALT],
+    0x75 => [Input::F6], 0x76 => [Input::F7], 0x77 => [Input::F8], 0x78 => [Input::F9]
+  }.freeze
+
+  # Functions whose Windows success value is non-zero (or a fixed answer).
+  FIXED = {
+    'GetCurrentThreadId' => THREAD, 'GetWindowThreadProcessId' => THREAD,
+    'GetForegroundWindow' => WINDOW, 'GetUserDefaultLangID' => LANG_ENGLISH_US,
+    'RegOpenKeyExA' => ERROR_FILE_NOT_FOUND, 'RegQueryValueExA' => ERROR_FILE_NOT_FOUND,
+    'SHGetKnownFolderPath' => E_FAIL, 'SHGetSpecialFolderLocation' => E_FAIL,
+    'mciSendString' => MCIERR_INVALID_DEVICE_NAME
+  }.freeze
+
+  class << Input
+    alias_method :nextui_native_update, :update
+    alias_method :nextui_native_press?, :press?
+  end
+
+  @frame = nil
+
+  class << self
+    def pressed?(key)
+      buttons = KEYS[key]
+      return false unless buttons
+      # Game scripts replace Input.update, so refresh native state once a frame.
+      frame = Graphics.frame_count
+      unless frame == @frame
+        @frame = frame
+        Input.nextui_native_update
+      end
+      buttons.any? { |button| Input.nextui_native_press?(button) }
+    end
+
+    def call(function, args)
+      case function
+      when 'GetAsyncKeyState', 'GetKeyState'
+        pressed?(args[0]) ? 0x8000 : 0
+      when 'FindWindowEx'
+        args[1] == 0 ? WINDOW : 0
+      when 'GetClientRect', 'GetWindowRect'
+        fill(args[1], [0, 0, Graphics.width, Graphics.height].pack('l4'))
+      when 'GetSystemMetrics'
+        { 0 => Graphics.width, 1 => Graphics.height }.fetch(args[0], 0)
+      else
+        FIXED.fetch(function, 0)
+      end
+    end
+
+    # Writes a native-style result into the caller's packed buffer.
+    def fill(buffer, bytes)
+      return 0 unless buffer.is_a?(String) && buffer.bytesize >= bytes.bytesize
+      bytes.each_byte.with_index { |byte, index| buffer.setbyte(index, byte) }
+      1
+    end
+
+    # Replaces a game-defined module function as soon as the game defines it.
+    def replace_when_defined(mod, name, &body)
+      mod.define_singleton_method(:singleton_method_added) do |added|
+        next unless added == name && !@nextui_replacing
+        @nextui_replacing = true
+        define_singleton_method(name, &body)
+        @nextui_replacing = false
+      end
+    end
+  end
+end
+
+class Win32API
+  def initialize(_dll, function, *_signature)
+    @function = function.to_s
+  end
+
+  def call(*args)
+    NextUIWin32.call(@function, args)
+  end
+  alias Call call
+end
+
+# mkxp-z registers the game's Fonts/ folder itself; copying into a Windows
+# font directory can only fail here and would prompt on every start.
+module FontInstaller; end
+NextUIWin32.replace_when_defined(FontInstaller, :install) { nil }
