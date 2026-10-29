@@ -190,7 +190,8 @@ def diagnostics(state):
     """Allowlisted summary only: never emit raw text, paths, IDs or file names."""
     state = validate_state(state)
     report = {'schema': 1, 'locked': (state / 'lock').exists(), 'outcome': 'no_log',
-              'exit_code': None, 'scan_truncated': False, 'categories': []}
+              'exit_code': None, 'scan_truncated': False, 'categories': [],
+              'process_result': None, 'stop_reason': None}
     log = state / 'run.log'
     require(not log.is_symlink(), 'LOG_SYMLINK')
     if not log.exists():
@@ -217,6 +218,19 @@ def diagnostics(state):
         report['exit_code'] = code
         report['outcome'] = ('returned_zero' if code == 0 else
                              'signal_or_high_exit' if code >= 128 else 'failed')
+        lines = tail.splitlines()
+        detail = re.fullmatch(rb'RMXP_RESULT=(exit CODE|signal SIGNAL)=([0-9]{1,3}) REASON=(natural|chord|supervisor_signal)',
+                              lines[-2]) if len(lines) >= 2 else None
+        if detail:
+            value = int(detail[2])
+            if detail[1] == b'exit CODE' and value == code:
+                report['process_result'] = 'exit'
+                report['outcome'] = 'returned_zero' if code == 0 else 'failed'
+            elif detail[1] == b'signal SIGNAL' and 1 <= value <= 64 and 128 + value == code:
+                report['process_result'] = 'signal'
+                report['outcome'] = 'signaled'
+            if report['process_result'] is not None:
+                report['stop_reason'] = detail[3].decode('ascii')
     else:
         report['outcome'] = 'incomplete_or_unrecognized'
     return report

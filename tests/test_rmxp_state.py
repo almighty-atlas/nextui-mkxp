@@ -197,6 +197,18 @@ class StateTests(unittest.TestCase):
         self.assertNotIn('PRIVATE_SECRET', result.stdout)
         self.assertEqual(json.loads(result.stdout)['code'], 'INCOMPLETE_BACKUP')
 
+    def test_supervisor_metadata_resolves_high_exit_ambiguity(self):
+        log = self.state / 'run.log'
+        cases = [('exit CODE=143 REASON=natural', 'failed', 'exit', 'natural'),
+                 ('signal SIGNAL=15 REASON=chord', 'signaled', 'signal', 'chord'),
+                 ('signal SIGNAL=9 REASON=chord', 'signal_or_high_exit', None, None),
+                 ('exit CODE=143 REASON=PRIVATE', 'signal_or_high_exit', None, None)]
+        for record, outcome, kind, reason in cases:
+            log.write_text('RMXP_RESULT=' + record + '\nRMXP_EXIT=143\n')
+            result = S.diagnostics(self.state)
+            self.assertEqual((result['outcome'], result['process_result'], result['stop_reason']),
+                             (outcome, kind, reason))
+
 
 if __name__ == '__main__':
     unittest.main()

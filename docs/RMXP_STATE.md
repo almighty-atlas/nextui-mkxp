@@ -102,19 +102,27 @@ analysis. Unknown or localized messages are not copied into the report.
 | `returned_zero` | Final launcher marker says exit 0; not proof of successful gameplay or owner-selected Shutdown |
 | `failed` | Final launcher marker says exit 1–127 |
 | `signal_or_high_exit` | Exit 128–255; shell logs alone cannot distinguish a signal from an explicitly returned high exit code |
+| `signaled` | Valid matching native supervisor record explicitly reports signal termination |
 | `incomplete_or_unrecognized` | No valid final marker; interrupted or unfamiliar log |
 | `locked_or_running` | Lock exists; may be a live launch or an interrupted maintenance operation |
 | `no_log` | No run log available |
 
 The #8 launcher still retains bounded **private raw** logs locally. This tool
 makes their exported summary privacy-safe; it does not change runtime logging
-defaults. A future runtime supervisor must record the actual wait status to
-distinguish signals unambiguously. That remains open with #10/#11.
+defaults. With the optional [#42 supervisor](https://github.com/almighty-atlas/nextui-mkxp/pull/42)
+and updated #40 launcher, the final native result is retained even when ordinary
+log lines are truncated. If it agrees with the shell marker, `process_result`
+and `stop_reason` distinguish an actual signal from explicit exit 143. Missing
+or inconsistent metadata retains the conservative shell-only classification.
+These summaries are diagnostics for trusted local logs, not authenticated
+forensic evidence. Target behavior remains unverified.
 
 ## Offline verification
 
-2026-10-29: **16 tests PASS, verified-on-host**, including the optional
-integration test against #40 at `a5c64a5`. `git diff --check`: PASS.
+2026-10-29: **17 tests PASS, verified-on-host**, including the optional
+restart/upgrade integration against #40. The combined #40/#41/#42 suites pass
+41 tests, including the real host supervisor's exit/signal records through the
+bounded launcher log and diagnostic exporter. `git diff --check`: PASS.
 Hardware and CI results remain untested/blocked as described below.
 
 ```sh
