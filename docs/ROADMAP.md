@@ -25,6 +25,10 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 
 ## M2 — NextUI standalone Pak
 
+Issue #45 adds an [in-game pause menu](RMXP_PAUSE_MENU.md) on the Menu button
+(Continue/Save/Load/Quit via the game's own screens), verified on H700 with
+Knight Blade. No save states or game switcher.
+
 - Implement layout and valid launch entry point compatible with NextUI's Pak and ROM discovery conventions.
 - Game-per-directory discovery with paths containing spaces; absence and error handling.
 - Map handheld input, maintain usable exit chord and handle audio/display cleanup.
