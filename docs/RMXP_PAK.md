@@ -78,6 +78,16 @@ power loss, verify no engine is running before manually removing the empty
 `<ID>/lock` directory. No automatic stale-lock or save recovery is claimed.
 Writable games are not a security sandbox for untrusted RGSS code.
 
+## H700 results (2026-10-29)
+
+On RG35XX Pro / NextUI-20261013-0 with Knight Blade (private): discovery, launch,
+graphics/audio/controls, save/load, in-game quit with NextUI return, the
+missing-`Game.ini` message, Pak replacement preserving saves and a reboot all
+passed (**verified-on-H700**). The first run (6eaeac4) failed: mkxp-z changes to
+its own directory unless `SRCDIR` is set, so `mkxp.json` was ignored. Fixed in
+b7dcb8f; the host mock engine now reproduces that lookup. Separate saves for two
+instances remain to be observed. Details: `docs/RMXP_BATCH_TEST.md` (#41).
+
 ## Source archive and uninstall
 
 ```sh
