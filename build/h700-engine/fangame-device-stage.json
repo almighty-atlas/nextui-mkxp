@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80",
+    "sha256": "88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -77,6 +77,26 @@
     "previous_config_kept": "mkxp.json.pre-compat",
     "existing_saves_after": "UNCHANGED",
     "shared_runtime_after": "UNCHANGED",
-    "h700_game_result": "NOT_TESTED"
+    "h700_game_result": "NOT_TESTED",
+    "previous_sha256": [
+      "899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80"
+    ],
+    "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile"
+  },
+  "second_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "result": "BOTH_ABORTED_BEFORE_TITLE",
+    "win32api": "shim loaded; no Win32API error",
+    "errors": {
+      "sage": [
+        "046:AudioUtilities:919 `when 0:` (Ruby 1.8 syntax)",
+        "171:PSystem_Utilities:199 invalid multibyte escape \\x7f-\\x9f",
+        "184:_SAGE_Battle_MoveEffects:401 end-of-input (`=0.` before end/elsif)"
+      ],
+      "rocket": [
+        "190:PSystem_Utilities:300 invalid multibyte escape \\x7f-\\x9f"
+      ]
+    }
   }
 }

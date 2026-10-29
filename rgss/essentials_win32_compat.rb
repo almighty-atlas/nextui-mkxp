@@ -11,7 +11,9 @@
 #   * GetAsyncKeyState/GetKeyState, which report the engine's own RGSS button
 #     state (and therefore the reviewed gamepad bindings) for one virtual key
 #     per button from Essentials' default Input.buttonToKey lists.
-# No native code is loaded and nothing outside the game's own folder is written.
+# It also repairs, in memory only, three Ruby 1.8 constructs that Ruby 3.1
+# rejects as syntax errors (see NextUIRuby18). No native code is loaded and
+# nothing outside the game's own folder is written.
 module NextUIWin32
   WINDOW = 1
   THREAD = 1
@@ -113,3 +115,42 @@ end
 # font directory can only fail here and would prompt on every start.
 module FontInstaller; end
 NextUIWin32.replace_when_defined(FontInstaller, :install) { nil }
+
+# Ruby 1.8 source that RGSS1 accepted but Ruby 3.1 refuses to parse. mkxp-z
+# runs preloads after decoding $RGSS_SCRIPTS, so the decoded text (entry 3)
+# can be rewritten before evaluation. Line numbers are preserved, and a
+# rewrite is kept only if the script then compiles.
+module NextUIRuby18
+  FIXES = [
+    # `when 0: # comment` => `when 0 then # comment`
+    [/^([ \t]*when[ \t][^\n#]*[^:\s]):(?=[ \t]*(?:#[^\n]*)?\r?$)/, ' then'],
+    # Byte escapes above 0x7F are invalid in a UTF-8 regexp.
+    ['\\x7f-\\x9f]', '\\x7f\\u0080-\\u009f]'],
+    # `x=0.` + newline turns the next keyword into a method call.
+    [/(=[ \t]*\d+)\.(?=[ \t]*\r?\n[ \t]*(?:end|elsif|else|when)\b)/, '']
+  ].freeze
+
+  def self.repair(source)
+    # Scripts with invalid UTF-8 (in comments or strings) still parse as is.
+    return source unless source.valid_encoding?
+    fixed = FIXES.reduce(source) { |text, (pattern, replacement)| text.gsub(pattern) { $1 ? $1 + replacement : replacement } }
+    return source if fixed == source
+    RubyVM::InstructionSequence.compile(fixed)
+    fixed
+  rescue SyntaxError
+    source
+  end
+
+  def self.repair_scripts(scripts)
+    count = 0
+    scripts.each do |script|
+      next unless script.is_a?(Array) && script[3].is_a?(String)
+      fixed = repair(script[3])
+      next if fixed.equal?(script[3])
+      script[3] = fixed
+      count += 1
+    end
+    count
+  end
+end
+NextUIRuby18.repair_scripts($RGSS_SCRIPTS) if $RGSS_SCRIPTS.is_a?(Array)

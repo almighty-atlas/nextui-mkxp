@@ -47,9 +47,26 @@ class EnableCompat(unittest.TestCase):
         self.write_config([])
         E.enable(self.sd, GAME_ID)
         before = (self.state / 'mkxp.json').read_bytes()
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(ValueError, 'known earlier version'):
             E.enable(self.sd, GAME_ID)
         self.assertEqual((self.state / 'mkxp.json').read_bytes(), before)
+
+    def test_upgrades_only_a_known_earlier_shim_in_place(self):
+        E.enable(self.sd, GAME_ID)
+        before = (self.state / 'mkxp.json').read_bytes()
+        shim = self.state / 'compat/essentials_win32_compat.rb'
+        shim.write_bytes(b'tampered')
+        with self.assertRaisesRegex(ValueError, 'known earlier version'):
+            E.enable(self.sd, GAME_ID)
+        self.assertEqual(shim.read_bytes(), b'tampered')
+        old = E.P.digest(shim)
+        original = E.PREVIOUS_SHA256
+        E.PREVIOUS_SHA256 = {old}
+        self.addCleanup(setattr, E, 'PREVIOUS_SHA256', original)
+        self.assertEqual(E.enable(self.sd, GAME_ID)['status'], 'COMPAT_UPGRADED')
+        self.assertEqual(shim.read_bytes(), E.SHIM.read_bytes())
+        self.assertEqual((self.state / 'mkxp.json').read_bytes(), before)
+        self.assertEqual(sorted(p.name for p in shim.parent.iterdir()), [shim.name])
 
     def test_rejects_invalid_ids_unregistered_games_and_rgss_mismatch(self):
         for game_id in ('../x', 'A' * 64, 'a' * 63):

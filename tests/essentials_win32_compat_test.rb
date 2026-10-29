@@ -30,6 +30,18 @@ module Input
   self.native_updates = 0
 end
 
+# Synthetic Ruby 1.8-style sections, decoded like mkxp-z's $RGSS_SCRIPTS.
+$RGSS_SCRIPTS = [
+  [1, 'Tones', '', "def tone(t)\r\n  case t\r\n  when 0: # low\r\n    :low\r\n  when 1, 2:\r\n    :high\r\n  when :x then :sym\r\n  end\r\nend\r\n"],
+  [2, 'Json', '', "def plain?(s) = s[/\"[^\"\\\\\\x00-\\x1f\\x7f-\\x9f]*\"/]\n"],
+  [3, 'Weather', '', "def clear(w)\n  if w == 1\n    @d=0.\n  elsif w == 2\n    @d=5.\n  end\n  @d\nend\n"],
+  [4, 'Valid', '', "x = 1\n"],
+  [5, 'Broken', '', "when 0:\n  def\n"],
+  [6, 'Bytes', '', "# \xFF\nwhen_ok = 1\n".b.force_encoding('UTF-8')],
+  [7, 'Folder', '', 0]
+]
+$ORIGINAL_SOURCES = $RGSS_SCRIPTS.map { |script| script[3].dup }
+
 Dir.chdir(Dir.mktmpdir('nextui-win32')) do
   load File.expand_path('../rgss/essentials_win32_compat.rb', __dir__)
   $written = Dir.children('.')
@@ -138,6 +150,23 @@ class EssentialsWin32CompatTest < Minitest::Test
   def test_font_installer_neutralized_without_touching_other_methods
     assert_nil FontInstaller.install
     assert_equal :kept, FontInstaller.kept
+  end
+
+  def test_ruby18_sections_repaired_in_memory_with_same_line_numbers
+    sources = $RGSS_SCRIPTS.map { |script| script[3] }
+    sources[0..2].each_with_index do |source, index|
+      refute_equal $ORIGINAL_SOURCES[index], source
+      assert_equal $ORIGINAL_SOURCES[index].lines.size, source.lines.size
+      eval(source, TOPLEVEL_BINDING) # rubocop:disable Security/Eval
+    end
+    assert_equal %i[low high high sym], [0, 1, 2, :x].map { |t| tone(t) }
+    assert_includes sources[0], 'when 0 then # low'
+    assert_equal '"ok"', plain?('"ok"')
+    assert_equal [0, 5], [1, 2].map { |w| clear(w) }
+  end
+
+  def test_valid_unrepairable_and_non_utf8_sections_left_untouched
+    assert_equal $ORIGINAL_SOURCES[3..6], $RGSS_SCRIPTS[3..6].map { |script| script[3] }
   end
 
   def test_loading_writes_no_files

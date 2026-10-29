@@ -41,8 +41,28 @@ playing"), no GIF conversion, no screenshot DLL, no CD/MCI/wave recording, no
 online/socket features. Saves resolve to `./Game.rxdata` in the game's private
 copy, because the known-folder lookup fails.
 
+## Ruby 1.8 syntax repair
+
+Second owner launch (verified-on-H700): the shim loaded, but both games then
+stopped on parse errors. RGSS1 is Ruby 1.8, and the engine runs Ruby 3.1:
+
+| Game | Section:line | Construct |
+| --- | --- | --- |
+| Sage | 046 AudioUtilities:919 | `when 0:` (colon instead of `then`) |
+| Sage | 171 PSystem_Utilities:199, Rocket 190:300 | `\x7f-\x9f` in a regexp (invalid in UTF-8) |
+| Sage | 184 SAGE Battle MoveEffects:401 | `x=0.` before `elsif`/`end` |
+
+mkxp-z decodes `$RGSS_SCRIPTS` before running preloads, so the shim rewrites
+the decoded text of a section **in memory** before it is evaluated. Game files
+are never changed. Three narrow rules exist, one for each construct above. They
+keep line numbers, skip sections with invalid UTF-8, and a rewritten section is
+kept only if it then compiles. Private host harness: all 209 Sage and 211
+Rocket sections compile after the repair. Only the lines listed above change.
+Ruby 1.8 behaviour at runtime (as opposed to syntax) is not emulated.
+
 `scripts/enable_rmxp_compat.py` copies the hash-pinned shim into
-`.userdata/h700/nextui-mkxp/<id>/compat/` and sets the preload. It refuses
+`.userdata/h700/nextui-mkxp/<id>/compat/` and sets the preload. An earlier
+reviewed shim version is upgraded in place. It refuses other
 existing preloads (e.g. the Knight Blade pause menu) and never touches the
 shared Pak. Knight Blade is unaffected.
 
@@ -50,9 +70,12 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 9 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 11 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
+| verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |
+| verified-on-H700 | Second launch with first shim | Win32API error gone; Ruby 1.8 parse errors above |
+| verified-on-H700 | Repaired shim `88380c8d…` upgraded in place for both games | checksums PASS; saves and shared runtime unchanged |
 | untested | Title screen, audio, controls, new game, save/load on H700 | needs owner launch |
 
 Rollback per game: restore `mkxp.json.pre-compat` over `mkxp.json`, then remove

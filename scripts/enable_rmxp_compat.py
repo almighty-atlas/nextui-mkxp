@@ -4,8 +4,9 @@
 
 Works on an SD-shaped tree (mounted card or private staging copy). Copies
 rgss/essentials_win32_compat.rb into that game's own state directory and adds
-it as the only preloadScript. Refuses games with any existing preload (for
-example the Knight Blade pause menu); the shared Pak is never modified.
+it as the only preloadScript. Refuses games with any other preload (for
+example the Knight Blade pause menu); an earlier reviewed shim version is
+upgraded in place. The shared Pak is never modified.
 """
 import argparse
 import json
@@ -17,7 +18,9 @@ import rmxp_pak as P
 
 ROOT = Path(__file__).resolve().parents[1]
 SHIM = ROOT / 'rgss/essentials_win32_compat.rb'
-SHIM_SHA256 = '899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80'
+SHIM_SHA256 = '88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1'
+# Earlier reviewed shims that may be replaced in place by the current one.
+PREVIOUS_SHA256 = {'899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80'}
 STATE_ROOT = '.userdata/h700/nextui-mkxp'
 
 
@@ -32,12 +35,24 @@ def enable(sd, game_id, device_root='/mnt/SDCARD'):
     P.require(state.is_dir() and config_path.is_file() and not config_path.is_symlink(), 'Game not registered')
     config = json.loads(config_path.read_text())
     P.require(config.get('rgssVersion') == 1, 'RGSS1 game required')
+    preload = [device_root + '/' + target.relative_to(sd).as_posix()]
+    if config.get('preloadScript') == preload:
+        P.require(target.is_file() and not target.is_symlink() and not target.parent.is_symlink(),
+                  'Installed shim missing')
+        P.require(P.digest(target) in PREVIOUS_SHA256, 'Installed shim is not a known earlier version')
+        replacement = target.with_name(target.name + '.tmp')
+        P.require(not replacement.exists(), 'Stale temporary shim')
+        replacement.write_bytes(SHIM.read_bytes())
+        P.require(P.digest(replacement) == SHIM_SHA256, 'Shim changed while copying')
+        os.replace(replacement, target)
+        return {'status': 'COMPAT_UPGRADED', 'game_id': game_id, 'shim_sha256': SHIM_SHA256,
+                'preload': preload, 'h700_result': 'NOT_TESTED'}
     P.require(config.get('preloadScript') == [], 'Existing preload; refusing to combine scripts')
     P.require(not target.parent.exists(), 'Compatibility directory already exists')
     target.parent.mkdir()
     target.write_bytes(SHIM.read_bytes())
     P.require(P.digest(target) == SHIM_SHA256, 'Shim changed while copying')
-    config['preloadScript'] = [device_root + '/' + target.relative_to(sd).as_posix()]
+    config['preloadScript'] = preload
     temporary = config_path.with_name('mkxp.json.tmp')
     P.require(not temporary.exists(), 'Stale temporary config')
     temporary.write_text(json.dumps(config, ensure_ascii=True, indent=2) + '\n')
