@@ -13,6 +13,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE_SHA256 = '33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3'
 SESSION_SHA256 = '3e1aa386ec7fbf08e3d4f97610604e5d97ddfbe09fee31168232a26288f1396d'
+PAUSE_MENU_SHA256 = '9bd6370fbfb2829e69a0a670123b722aedc876f0cd0c139ad3e9962ef739fb1e'
 KIT_FILES = ('pak/RMXP.pak/launch.sh', 'scripts/rmxp_pak.py', 'docs/RMXP_PAK.md')
 
 
@@ -57,7 +58,7 @@ def bindings():
     return struct.pack('<III', 3, 1, len(records)) + b''.join(struct.pack('<IIII', *r) for r in records)
 
 
-def install(sd, runtime, session=None):
+def install(sd, runtime, session=None, pause_menu=None):
     """Import only the known private runtime; never distribute it in the source kit."""
     target = sd / 'Emus/h700/RMXP.pak'
     writable_destination(sd, target)
@@ -66,6 +67,9 @@ def install(sd, runtime, session=None):
     if session is not None:
         require(session.is_file() and not session.is_symlink() and digest(session) == SESSION_SHA256,
                 'Unverified session helper')
+    if pause_menu is not None:
+        require(pause_menu.is_file() and not pause_menu.is_symlink() and digest(pause_menu) == PAUSE_MENU_SHA256,
+                'Unverified pause menu')
     files = [runtime / 'engine', runtime / 'LICENSE.txt'] + sorted((runtime / 'stdlib').rglob('*.rb'))
     require(len(files) > 2, 'Ruby stdlib missing')
     for path in files:
@@ -86,6 +90,10 @@ def install(sd, runtime, session=None):
         shutil.copyfile(session, target / 'rmxp-session')
         (target / 'rmxp-session').chmod(0o755)
         require(digest(target / 'rmxp-session') == SESSION_SHA256, 'Session changed while copying')
+    if pause_menu is not None:
+        (target / 'rgss').mkdir()
+        shutil.copyfile(pause_menu, target / 'rgss/pause_menu.rb')
+        require(digest(target / 'rgss/pause_menu.rb') == PAUSE_MENU_SHA256, 'Pause menu changed while copying')
     require(digest(target / 'engine') == ENGINE_SHA256, 'Engine changed while copying')
     manifest = ''.join(f'{digest(p)}  {p.relative_to(target).as_posix()}\n'
                        for p in sorted(target.rglob('*')) if p.is_file())
@@ -93,7 +101,7 @@ def install(sd, runtime, session=None):
     return target
 
 
-def register(sd, game, name, device_root='/mnt/SDCARD'):
+def register(sd, game, name, device_root='/mnt/SDCARD', pause_menu=True):
     sd = sd.resolve(strict=True)
     safe_path(game)
     require(not any(p.is_symlink() for p in (game, *game.parents)), 'Game directory symlink')
@@ -124,6 +132,9 @@ def register(sd, game, name, device_root='/mnt/SDCARD'):
     shutil.copytree(game, state / 'game')
     device_state = device_root + '/' + state.relative_to(sd).as_posix()
     pak = device_root + '/Emus/h700/RMXP.pak'
+    # Opt-out: enabled only when the reviewed #45 script is installed in the Pak.
+    menu = sd / 'Emus/h700/RMXP.pak/rgss/pause_menu.rb'
+    preload = [pak + '/rgss/pause_menu.rb'] if pause_menu and menu.is_file() and not menu.is_symlink() else []
     config = dict(rgssVersion=1, gameFolder=device_state + '/game',
                   RTP=[device_root + '/Bios/RMXP/Standard'],
                   midiSoundFont=device_root + '/Bios/RMXP/TimGM6mb.sf2',
@@ -133,7 +144,7 @@ def register(sd, game, name, device_root='/mnt/SDCARD'):
                   winResizable=False, smoothScaling=0, vsync=False, enableBlitting=False,
                   enableSettings=False, enableReset=False, JITEnable=False, YJITEnable=False,
                   midiChorus=False, midiReverb=False, pathCache=True, allowSymlinks=False,
-                  preloadScript=[], patches=[])
+                  preloadScript=preload, patches=[])
     (state / 'mkxp.json').write_text(json.dumps(config, ensure_ascii=True, indent=2) + '\n')
     (state / 'source.path').write_text(relative + '\n', encoding='utf-8')
     marker.parent.mkdir(parents=True, exist_ok=True)
@@ -158,19 +169,22 @@ def main():
     p.add_argument('--sd-root', type=Path, required=True)
     p.add_argument('--runtime', type=Path, required=True)
     p.add_argument('--session', type=Path, help='Optional reviewed private AArch64 supervisor from PR #42')
+    p.add_argument('--pause-menu', type=Path, help='Optional reviewed rgss/pause_menu.rb from PR #46')
     p = sub.add_parser('register')
     p.add_argument('--sd-root', type=Path, required=True)
     p.add_argument('--game', type=Path, required=True)
     p.add_argument('--name', required=True)
+    p.add_argument('--no-pause-menu', action='store_true', help='Do not enable the Menu-button overlay')
     p = sub.add_parser('kit')
     p.add_argument('archive', type=Path)
     p = sub.add_parser('validate')
     p.add_argument('archive', type=Path)
     args = parser.parse_args()
     if args.action == 'install':
-        print(install(args.sd_root.resolve(strict=True), args.runtime.resolve(strict=True), args.session))
+        print(install(args.sd_root.resolve(strict=True), args.runtime.resolve(strict=True), args.session,
+                      args.pause_menu))
     elif args.action == 'register':
-        print(register(args.sd_root, args.game, args.name))
+        print(register(args.sd_root, args.game, args.name, pause_menu=not args.no_pause_menu))
     elif args.action == 'kit':
         with zipfile.ZipFile(args.archive, 'x', compression=zipfile.ZIP_DEFLATED) as archive:
             for name in KIT_FILES:

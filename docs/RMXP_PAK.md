@@ -51,6 +51,14 @@ node or guessed code. The helper validates capabilities and uses a 1.5-second
 hold / 3-second grace. Invalid settings fail before engine execution. Leave
 this configuration absent until physical input is checked.
 
+The Menu-button pause menu from [PR #46](https://github.com/almighty-atlas/nextui-mkxp/pull/46)
+can be included at installation with `--pause-menu /path/to/rgss/pause_menu.rb`.
+Only the reviewed hash `9bd6370fbfb2829e69a0a670123b722aedc876f0cd0c139ad3e9962ef739fb1e`
+is accepted, and the script is covered by `SHA256SUMS`. Games registered
+afterwards get it as `preloadScript` by default. Use `register --no-pause-menu`
+for games with customised scene scripts (for example Pokémon Essentials).
+Existing registrations are not changed.
+
 The original game requires `Game.ini`, `Data/`, `Graphics/`, `Audio/`.
 Registration copies it once into `.userdata/h700/nextui-mkxp/<ID>/game/` and
 writes a JSON configuration alongside it. Existing saves are copied initially;

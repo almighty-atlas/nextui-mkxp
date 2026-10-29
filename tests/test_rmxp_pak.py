@@ -33,7 +33,7 @@ class PakTests(unittest.TestCase):
 
     def runtime(self, session=None):
         runtime = Path(self.temp.name) / 'runtime'
-        (runtime / 'stdlib').mkdir(parents=True)
+        (runtime / 'stdlib').mkdir(parents=True, exist_ok=True)
         (runtime / 'stdlib/test.rb').write_text('# synthetic')
         (runtime / 'LICENSE.txt').write_text('synthetic test fixture')
         (runtime / 'engine').write_text(
@@ -166,6 +166,30 @@ class PakTests(unittest.TestCase):
         self.assertFalse((state / 'BAD').exists())
         (state / 'session.conf').write_text('/dev/input/event0\n314\n315\ntrailing-data')
         self.assertIn('Extra session config data', self.launch(pak, marker).stderr)
+
+    def test_pause_menu_is_hash_pinned_and_enabled_by_default(self):
+        menu = Path(self.temp.name) / 'pause_menu.rb'
+        menu.write_text('# synthetic preload')
+        plain = P.register(self.sd, self.game('Before'), 'Before', str(self.sd))
+        with self.assertRaisesRegex(ValueError, 'Unverified pause menu'):
+            with patch.object(P, 'PAUSE_MENU_SHA256', '0' * 64):
+                self.runtime_with_menu(menu)
+        self.assertFalse((self.sd / 'Emus/h700/RMXP.pak').exists())
+        with patch.object(P, 'PAUSE_MENU_SHA256', P.digest(menu)):
+            pak = self.runtime_with_menu(menu)
+        self.assertIn('  rgss/pause_menu.rb', (pak / 'SHA256SUMS').read_text())
+        root = self.sd / '.userdata/h700/nextui-mkxp'
+        def preload(marker):
+            return json.loads((root / marker.read_text().strip() / 'mkxp.json').read_text())['preloadScript']
+        self.assertEqual(preload(plain), [])  # registered before the menu existed
+        self.assertEqual(preload(P.register(self.sd, self.game('On'), 'On', str(self.sd))),
+                         [str(self.sd) + '/Emus/h700/RMXP.pak/rgss/pause_menu.rb'])
+        self.assertEqual(preload(P.register(self.sd, self.game('Off'), 'Off', str(self.sd), pause_menu=False)), [])
+
+    def runtime_with_menu(self, menu):
+        original = P.install
+        with patch.object(P, 'install', lambda sd, runtime, session=None: original(sd, runtime, session, menu)):
+            return self.runtime()
 
     def test_quit_configuration_requires_helper(self):
         marker = P.register(self.sd, self.game(), 'Test', str(self.sd))
