@@ -61,6 +61,11 @@ hartem Stromverlust behaupten. Kein unangekündigtes Ausschalten während eines 
 
 ## Rückmeldung
 
+Für die letzte offene Runde steht nun ein [separater Recovery-Eintrag](RMXP_RECOVERY_CHECK.md)
+bereit. Er prüft Wiederherstellen ohne Überschreiben und erspart mit einer
+ausdrücklich als Kopie gekennzeichneten Save1-Saat die zweite Einleitung.
+Die visuellen D4/D6/D8-Prüfungen bleiben bis zur Rückmeldung offen.
+
 Offen: getrennte Spielstände zweier Instanzen (D4/D6) und In-Game-Laden eines wiederhergestellten Stands (D8).
 
 Für D1–D16 jeweils PASS/FAIL/BLOCKED mit kurzer Beobachtung dokumentieren.
