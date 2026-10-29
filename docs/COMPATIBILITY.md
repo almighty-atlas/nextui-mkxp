@@ -139,3 +139,15 @@ Automatic game updates, source moves, stale-lock recovery and migration are not
 implemented. Exit currently relies on the game's Shutdown menu (#10 remains).
 Games needing RTP/MIDI require private `Bios/RMXP` inputs. This is not a public
 engine release and does not provide MinArch integration or instant resume.
+
+## Offline state maintenance candidate (#11)
+
+[Private state tools](RMXP_STATE.md) support checked snapshots, fresh-destination
+restoration and allowlisted diagnostic export for PR #40's layout. They require
+Python 3.11+ on the preparation computer and a stopped game. They preserve save
+bytes without interpreting RGSS data, but do not repair already-corrupt saves.
+Full snapshots include private game content and must never be distributed.
+Real-device recovery, physical restart/upgrade behavior and FAT32 power-loss
+semantics are untested. Raw runtime logs remain private; the exported summary
+does not expose their text. A shell exit code alone cannot prove crash versus
+explicit high-numbered exit. See the [grouped test plan](RMXP_BATCH_TEST.md).

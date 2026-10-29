@@ -48,6 +48,12 @@ Blade playability milestone reached **100%**, recorded in pending
 
 See [ROADMAP](docs/ROADMAP.md), [ARCHITECTURE](docs/ARCHITECTURE.md), [DEVICE-PROBE](docs/DEVICE_PROBE.md) and [TEST PLAN](docs/TEST_PLAN.md). Work is tracked in the [master roadmap issue #18](https://github.com/almighty-atlas/nextui-mkxp/issues/18) and individual [GitHub Issues](https://github.com/almighty-atlas/nextui-mkxp/issues).
 
+[Offline state tools](docs/RMXP_STATE.md) now provide private checked snapshots,
+non-overwriting recovery and privacy-safe diagnostic summaries for the pending
+Pak candidate (#40). Hardware checks are collected in one
+[test session](docs/RMXP_BATCH_TEST.md). Knight Blade's earlier private
+playability milestone remains **100%** (pending #39); Pak acceptance is separate.
+
 ## Development workflow
 
 - Take **one issue at a time** and follow the repository's [AGENTS.md](AGENTS.md).
