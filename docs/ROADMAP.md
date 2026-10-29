@@ -25,6 +25,12 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 
 ## M2 — NextUI standalone Pak
 
+An [offline state-maintenance candidate](RMXP_STATE.md) for #11 adds private
+snapshots, non-overwriting recovery and diagnostic export, compatible with #40.
+Hardware acceptance stays open; deferred checks share one
+[device session checklist](RMXP_BATCH_TEST.md). The separate private Knight
+Blade playability milestone remains **100%** (pending #39), not Pak completion.
+
 - Implement layout and valid launch entry point compatible with NextUI's Pak and ROM discovery conventions.
 - Game-per-directory discovery with paths containing spaces; absence and error handling.
 - Map handheld input, maintain usable exit chord and handle audio/display cleanup.

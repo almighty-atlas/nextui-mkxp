@@ -11,3 +11,15 @@
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.
+
+## Offline state maintenance candidate (#11)
+
+[Private state tools](RMXP_STATE.md) support checked snapshots, fresh-destination
+restoration and allowlisted diagnostic export for PR #40's layout. They require
+Python 3.11+ on the preparation computer and a stopped game. They preserve save
+bytes without interpreting RGSS data, but do not repair already-corrupt saves.
+Full snapshots include private game content and must never be distributed.
+Real-device recovery, physical restart/upgrade behavior and FAT32 power-loss
+semantics are untested. Raw runtime logs remain private; the exported summary
+does not expose their text. A shell exit code alone cannot prove crash versus
+explicit high-numbered exit. See the [grouped test plan](RMXP_BATCH_TEST.md).
