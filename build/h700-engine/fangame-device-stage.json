@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1",
+    "sha256": "9e6faa8fbf7a31167c7a6c8317004a6e59da6bcefb9f29e3aaa095d4a0f5d0eb",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -79,9 +79,12 @@
     "shared_runtime_after": "UNCHANGED",
     "h700_game_result": "NOT_TESTED",
     "previous_sha256": [
-      "899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80"
+      "899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80",
+      "88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1"
     ],
-    "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile"
+    "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
+    "temp_env": "TEMP/TMP default to per-game HOME",
+    "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL"
   },
   "second_owner_launch": {
     "date": "2026-10-29",
@@ -98,5 +101,13 @@
         "190:PSystem_Utilities:300 invalid multibyte escape \\x7f-\\x9f"
       ]
     }
+  },
+  "third_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "result": "BOTH_ABORTED_IN_INTRO",
+    "progress": "all script sections parsed; intro scene reached",
+    "error": "SpriteWindow Dir.chdir(ENV[\"TEMP\"]): no implicit conversion of nil into String (TypeError)",
+    "cause": "launcher env -i leaves TEMP unset; Windows always sets it"
   }
 }

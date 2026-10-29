@@ -58,7 +58,20 @@ are never changed. Three narrow rules exist, one for each construct above. They
 keep line numbers, skip sections with invalid UTF-8, and a rewritten section is
 kept only if it then compiles. Private host harness: all 209 Sage and 211
 Rocket sections compile after the repair. Only the lines listed above change.
-Ruby 1.8 behaviour at runtime (as opposed to syntax) is not emulated.
+
+## Runtime environment and Ruby 1.8 core methods
+
+Third owner launch (verified-on-H700): all sections parsed and the intro
+started, then both games stopped in `Dir.chdir(ENV["TEMP"])`. Windows always
+sets `TEMP`, but the launcher starts the engine with an empty environment.
+The shim now defaults `TEMP`/`TMP` to the launcher's per-game `HOME`.
+
+It also restores the Ruby 1.8 core methods these games call, unless a game
+defines them itself: `Array#nitems` (party and box counts), `Hash#index`,
+`Object#id`/`#type` and `TRUE`/`FALSE`/`NIL`. This is an original
+implementation of the idea in mkxp-z's CC0 `ruby_classic_wrap.rb`.
+Known remaining 1.8 difference: `String#[]` returns a character, not a byte,
+so byte checks such as GIF/BOM detection quietly evaluate to false.
 
 `scripts/enable_rmxp_compat.py` copies the hash-pinned shim into
 `.userdata/h700/nextui-mkxp/<id>/compat/` and sets the preload. An earlier
@@ -70,12 +83,14 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 11 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 13 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |
 | verified-on-H700 | Second launch with first shim | Win32API error gone; Ruby 1.8 parse errors above |
 | verified-on-H700 | Repaired shim `88380c8d…` upgraded in place for both games | checksums PASS; saves and shared runtime unchanged |
+| verified-on-H700 | Third launch | all sections parsed; intro reached; `ENV["TEMP"]` nil abort |
+| verified-on-H700 | Shim `9e6faa8f…` (TEMP, Ruby 1.8 core methods) upgraded in place | checksums PASS; saves and shared runtime unchanged |
 | untested | Title screen, audio, controls, new game, save/load on H700 | needs owner launch |
 
 Rollback per game: restore `mkxp.json.pre-compat` over `mkxp.json`, then remove

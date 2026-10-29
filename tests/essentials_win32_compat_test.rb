@@ -42,6 +42,9 @@ $RGSS_SCRIPTS = [
 ]
 $ORIGINAL_SOURCES = $RGSS_SCRIPTS.map { |script| script[3].dup }
 
+ENV.delete('TEMP')
+ENV.delete('TMP')
+$HOME = ENV['HOME'] = Dir.mktmpdir('nextui-home')
 Dir.chdir(Dir.mktmpdir('nextui-win32')) do
   load File.expand_path('../rgss/essentials_win32_compat.rb', __dir__)
   $written = Dir.children('.')
@@ -167,6 +170,21 @@ class EssentialsWin32CompatTest < Minitest::Test
 
   def test_valid_unrepairable_and_non_utf8_sections_left_untouched
     assert_equal $ORIGINAL_SOURCES[3..6], $RGSS_SCRIPTS[3..6].map { |script| script[3] }
+  end
+
+  def test_ruby18_core_methods_restored
+    assert_equal 2, [1, nil, false, nil].nitems
+    assert_equal :b, { a: 1, b: 2 }.index(2)
+    assert_equal String, 'x'.type
+    object = Object.new
+    assert_equal object.object_id, object.id
+    assert_equal [true, false, nil], [TRUE, FALSE, NIL]
+  end
+
+  def test_temp_folder_points_to_per_game_home
+    assert_equal $HOME, ENV['TEMP']
+    assert_equal $HOME, ENV['TMP']
+    Dir.chdir(ENV['TEMP']) { assert_equal File.realpath($HOME), File.realpath('.') }
   end
 
   def test_loading_writes_no_files

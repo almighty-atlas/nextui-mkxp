@@ -111,6 +111,32 @@ class Win32API
   alias Call call
 end
 
+# Ruby 1.8 core methods that RGSS1 games call and Ruby 3.1 removed (same idea
+# as mkxp-z's CC0 ruby_classic_wrap.rb, plus Array#nitems). Game-defined
+# methods of the same name still take precedence.
+class Array
+  def nitems = count { |item| !item.nil? } unless method_defined?(:nitems)
+end
+
+class Hash
+  alias_method :index, :key unless method_defined?(:index)
+end
+
+class Object
+  TRUE = true unless const_defined?(:TRUE)
+  FALSE = false unless const_defined?(:FALSE)
+  NIL = nil unless const_defined?(:NIL)
+  alias_method :id, :object_id unless method_defined?(:id)
+  alias_method :type, :class unless method_defined?(:type)
+end
+
+# The launcher starts the engine with an empty environment, but Essentials
+# enters ENV["TEMP"] (e.g. for every GIF/empty picture). The per-game HOME
+# from the launcher is the closest writable equivalent.
+temp = ENV['HOME'] && File.directory?(ENV['HOME']) ? ENV['HOME'] : '.'
+ENV['TEMP'] ||= temp
+ENV['TMP'] ||= temp
+
 # mkxp-z registers the game's Fonts/ folder itself; copying into a Windows
 # font directory can only fail here and would prompt on every start.
 module FontInstaller; end

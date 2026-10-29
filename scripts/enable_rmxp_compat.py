@@ -18,9 +18,10 @@ import rmxp_pak as P
 
 ROOT = Path(__file__).resolve().parents[1]
 SHIM = ROOT / 'rgss/essentials_win32_compat.rb'
-SHIM_SHA256 = '88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1'
+SHIM_SHA256 = '9e6faa8fbf7a31167c7a6c8317004a6e59da6bcefb9f29e3aaa095d4a0f5d0eb'
 # Earlier reviewed shims that may be replaced in place by the current one.
-PREVIOUS_SHA256 = {'899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80'}
+PREVIOUS_SHA256 = {'899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80',
+                   '88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1'}
 STATE_ROOT = '.userdata/h700/nextui-mkxp'
 
 
