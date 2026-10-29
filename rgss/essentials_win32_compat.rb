@@ -232,6 +232,48 @@ class << Graphics
   end
 end
 
+# Essentials leaves many bitmaps to the garbage collector instead of disposing
+# them. Ruby only sees small wrapper objects, so it rarely collects while the
+# textures behind them fill the H700's ~1 GB (the kernel OOM-killed Rocket
+# at ~640 MB of GPU mappings). Count pixel bytes of bitmaps created and not
+# yet disposed, and collect once that exceeds LIMIT.
+module NextUIBitmapBudget
+  LIMIT = 48 * 1024 * 1024
+  @pending = 0
+  @collections = 0
+
+  class << self
+    attr_reader :pending, :collections
+
+    def created(bitmap)
+      @pending += bytes(bitmap)
+      return if @pending < LIMIT
+      @pending = 0
+      @collections += 1
+      GC.start
+    end
+
+    def disposed(bitmap) = @pending = [@pending - bytes(bitmap), 0].max
+
+    def bytes(bitmap) = bitmap.width * bitmap.height * 4
+  end
+end
+
+class Bitmap
+  alias_method :nextui_native_initialize, :initialize
+  alias_method :nextui_native_dispose, :dispose
+
+  def initialize(*args)
+    nextui_native_initialize(*args)
+    NextUIBitmapBudget.created(self)
+  end
+
+  def dispose
+    NextUIBitmapBudget.disposed(self) unless disposed?
+    nextui_native_dispose
+  end
+end
+
 # Opt-in profiler for stutter reports: only active while the file
 # $HOME/nextui-profile exists (HOME is the launcher's per-game directory).
 # Every 10 s it appends one line to $HOME/nextui-profile.log: frames, frames
@@ -254,6 +296,8 @@ module NextUIProfile
     @samples["#{frame_label(location)}"] += 1 if location
   end
 
+  def self.rss_mb = File.read('/proc/self/statm').split[1].to_i * 4096 / 1048576
+
   def self.frame_label(location) = "#{location.path}:#{location.lineno}:#{location.label}"
 
   def self.frame
@@ -271,8 +315,9 @@ module NextUIProfile
     gc = GC.respond_to?(:total_time) ? GC.total_time : 0
     top = @samples.sort_by { |_, count| -count }.first(6).map { |label, count| "#{count}x #{label}" }
     File.open(File.join(ENV['HOME'], 'nextui-profile.log'), 'a') do |log|
-      log.puts(format('frames=%d slow=%d longest_ms=%.0f gc_ms=%.0f major_gc=%d top=%s', @frames, @slow,
-                      @longest, (gc - @gc) / 1e6, GC.stat(:major_gc_count), top.join(' | ')))
+      log.puts(format('frames=%d slow=%d longest_ms=%.0f gc_ms=%.0f major_gc=%d rss_mb=%d bitmap_gc=%d top=%s',
+                      @frames, @slow, @longest, (gc - @gc) / 1e6, GC.stat(:major_gc_count), rss_mb,
+                      NextUIBitmapBudget.collections, top.join(' | ')))
     end
     @report, @gc, @frames, @slow, @longest = now, gc, 0, 0, 0.0
     @samples.clear

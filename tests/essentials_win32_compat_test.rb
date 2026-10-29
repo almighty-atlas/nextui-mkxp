@@ -4,6 +4,14 @@
 require 'minitest/autorun'
 require 'tmpdir'
 
+# mkxp-z native Bitmap stand-in (size and dispose only).
+class Bitmap
+  attr_reader :width, :height
+  def initialize(width, height) = (@width, @height, @disposed = width, height, false)
+  def dispose = @disposed = true
+  def disposed? = @disposed
+end
+
 module Graphics
   class << self
     attr_accessor :frame_count
@@ -304,10 +312,24 @@ class EssentialsWin32CompatTest < Minitest::Test
     3.times { NextUIProfile.frame }
     NextUIProfile.report(Process.clock_gettime(Process::CLOCK_MONOTONIC))
     line = File.read(File.join($HOME, 'nextui-profile.log'))
-    assert_match(/\Aframes=3 slow=\d+ longest_ms=\d+ gc_ms=\d+ major_gc=\d+ top=/, line)
+    assert_match(/\Aframes=3 slow=\d+ longest_ms=\d+ gc_ms=\d+ major_gc=\d+ rss_mb=\d+ bitmap_gc=\d+ top=/, line)
   ensure
     NextUIProfile.instance_variable_set(:@main, nil)
     File.delete(File.join($HOME, 'nextui-profile')) rescue nil
+  end
+
+  def test_undisposed_bitmaps_trigger_collection
+    start = NextUIBitmapBudget.collections
+    Bitmap.new(1024, 1024).dispose
+    11.times { Bitmap.new(1024, 1024) } # 44 MB left to the GC
+    assert_equal start, NextUIBitmapBudget.collections
+    Bitmap.new(1024, 1024)
+    assert_equal start + 1, NextUIBitmapBudget.collections
+    assert_equal 0, NextUIBitmapBudget.pending
+    bitmap = Bitmap.new(10, 10)
+    bitmap.dispose
+    bitmap.dispose
+    assert_equal 0, NextUIBitmapBudget.pending
   end
 
   def test_temp_folder_points_to_per_game_home

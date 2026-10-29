@@ -121,6 +121,15 @@ exists in the game's per-game home. Every 10 s it appends frame counts, frames
 over 50 ms, GC time and the most frequently sampled game code locations to
 `$HOME/nextui-profile.log`.
 
+Tenth launch (owner, Rocket, verified-on-H700): after a long session with
+several saves, the kernel OOM-killed the engine (exit 137): anon-rss 236 MB,
+file-rss 640 MB of mostly GPU mappings. Essentials leaves many bitmaps to the
+garbage collector instead of disposing them. Ruby only sees the small wrapper
+objects and rarely collects, while the textures fill memory. The shim counts
+the pixel bytes of created bitmaps that have not been disposed, and runs
+`GC.start` every 48 MiB. The profiler line now also reports RSS and these
+collections. The save from that session was intact.
+
 Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
 through `/tmp/next`) were each followed by a full power-off of the device; the
 owner's normal menu launch was not. Agent remote launches are stopped until
@@ -139,7 +148,7 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 19 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 20 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |

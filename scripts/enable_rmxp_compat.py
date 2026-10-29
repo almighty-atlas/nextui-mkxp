@@ -18,7 +18,7 @@ import rmxp_pak as P
 
 ROOT = Path(__file__).resolve().parents[1]
 SHIM = ROOT / 'rgss/essentials_win32_compat.rb'
-SHIM_SHA256 = '5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e'
+SHIM_SHA256 = 'e3ef586e115f944c1590dc4417bf8aeba8f5751bb62f226a8a154cfaae0103c6'
 # Earlier reviewed shims that may be replaced in place by the current one.
 PREVIOUS_SHA256 = {'899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80',
                    '88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1',
@@ -27,7 +27,8 @@ PREVIOUS_SHA256 = {'899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db8390541
                    'd0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b',
                    'a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4',
                    '1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d',
-                   '18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289'}
+                   '18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289',
+                   '5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e'}
 STATE_ROOT = '.userdata/h700/nextui-mkxp'
 # mkxp-z options for Essentials. With the default nominal text height
 # (TTF_FontHeight) the bundled Pokemon fonts render taller than reported and

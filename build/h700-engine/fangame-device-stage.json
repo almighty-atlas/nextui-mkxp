@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e",
+    "sha256": "e3ef586e115f944c1590dc4417bf8aeba8f5751bb62f226a8a154cfaae0103c6",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -86,7 +86,8 @@
       "d0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b",
       "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4",
       "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d",
-      "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289"
+      "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289",
+      "5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e"
     ],
     "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
     "temp_env": "TEMP/TMP default to per-game HOME",
@@ -96,7 +97,12 @@
     "mkxp_config": {
       "fontHeightReporting": 1
     },
-    "profiler": "opt-in via $HOME/nextui-profile; writes $HOME/nextui-profile.log"
+    "profiler": "opt-in via $HOME/nextui-profile; writes $HOME/nextui-profile.log",
+    "bitmap_budget": "GC.start after 48 MiB of created-but-undisposed bitmap pixels",
+    "profiler_enabled_on_device": [
+      "sage",
+      "team-rocket-lucksack"
+    ]
   },
   "second_owner_launch": {
     "date": "2026-10-29",
@@ -167,5 +173,13 @@
     "game": "rocket",
     "result": "talking to many characters works; occasional frame drops while walking",
     "cpu_sample": "5 s /proc sample during play: rgss thread 67% of one core, mali 5%, OpenAL mixer 2.6%; governor performance at 1.512 GHz"
+  },
+  "tenth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "rocket",
+    "result": "played and saved repeatedly; engine OOM-killed (SIGKILL, exit 137) after an overworld Pokemon appeared",
+    "kernel": "Out of memory: Kill process engine total-vm 1756732kB anon-rss 235900kB file-rss 639636kB",
+    "save": "Game.rxdata in private copy written 23:49, intact"
   }
 }
