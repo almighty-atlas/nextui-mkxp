@@ -4,8 +4,8 @@ Native **RPG Maker XP** game runtime for **NextUI on Anbernic H700 handhelds**, 
 
 > **Status: planning / feasibility. One owner-observed game-free H700 video trial passed ([limited evidence](docs/H700_VIDEO_EVIDENCE.md)). No tested mkxp-z engine or installable release exists; binary distribution remains blocked.**
 
-**Knight Blade progress: 85%.** Asset-free engine smoke passes on H700: Ruby,
-GLES rendering, audible sound, core RGSS controls and NextUI return. Game boot pending. See the maintained [playability roadmap](docs/KNIGHT_BLADE_ROADMAP.md).
+**Knight Blade progress: 88%.** Asset-free engine smoke passes on H700; the game/RTP
+[inventory](docs/KNIGHT_BLADE_INVENTORY.md) is complete. Game boot pending. See the maintained [playability roadmap](docs/KNIGHT_BLADE_ROADMAP.md).
 
 Private Ruby 3.1.3 runtime/extension builds now have a
 [verified H700 grouped test](docs/H700_RUBY_BATCH.md), including encodings,

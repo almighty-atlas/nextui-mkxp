@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 85% — asset-free engine smoke passes on H700; Knight Blade files needed next.**
+**Current progress: 88% — engine smoke passes on H700; game/RTP inventory complete; game boot next.**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -20,7 +20,7 @@ reduces progress. Hard blockers can still exist at 99%.
 | Yes | 5% | Remove build RPATH; audit architecture, interpreter and exact symbol/version/provider closure |
 | Yes | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
 | Yes | 5% | Audio, controls, bounded exit and clean NextUI return |
-| No | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
+| Yes | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
 | No | 5% | Title screen, new game, first playable map |
 | No | 5% | Movement, dialogue, representative battle/event, music/effects |
 | No | 2% | Save/load, repeated cold start, safe exit and final evidence |
@@ -65,8 +65,13 @@ No game assets or RTP may be committed or distributed here.
   names differ from Anbernic labels (physical A acted as Cancel). A Pak needs
   an explicit, documented mapping (physical A = Confirm, B = Cancel, Start =
   menu) plus a deliberate quit path; this belongs to game inputs / Pak work.
-- **Next:** inventory owner-provided Knight Blade files and RTP requirements
-  (3%). Needs the owner to legally supply the game; nothing is downloaded.
+- [Inventory](KNIGHT_BLADE_INVENTORY.md) done (verified-on-host): owner-designated
+  official game and RTP downloads, hash-recorded and kept private. 583
+  references: 520 game, 62 RTP, 1 pre-existing gap; no Win32API. RTP and a
+  MIDI soundfont (28 MIDI tracks) are required.
+- **Next:** first game boot (5%): private device stage with RTP, soundfont,
+  `pathCache` on and a deliberate save location; owner checks title screen,
+  new game and first map. Soundfont choice needs a documented license.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 
