@@ -36,6 +36,11 @@ No game assets or RTP may be committed or distributed here.
 
 ## Evidence and next action
 
+- 2026-10-29: [fresh engine rebuild](H700_ENGINE_REBUILD.md) reproduces the build
+  and installed ELF plus all 844 private Pak runtime files byte-for-byte.
+  Upstream gemspec dates differ; tool bootstrap/public-release gates stay open.
+  This is host-only evidence and does not change the **100%** playability score.
+
 - [Engine build evidence](../build/h700-engine/engine-build-evidence.json):
   `MESON_COMPILE_PASS`, 684/684 steps, 463 seconds, 34,914,232-byte AArch64
   candidate. No target-execution attempts found in logs. **Host evidence only.**
