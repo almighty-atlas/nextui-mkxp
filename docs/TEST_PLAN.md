@@ -42,3 +42,11 @@
 | Example | H700 | RG35XX Pro / exact NextUI tag | NOT_TESTED | — |
 
 Use PASS / FAIL / BLOCKED / NOT_TESTED. Never claim PASS without corresponding actual execution.
+
+## M0 provenance static validation
+
+Run `python3 scripts/check_provenance.py` and `git diff --check`. The pinned
+[provenance workflow](../.github/workflows/provenance.yml) runs these structural
+checks automatically; it does not validate legal rights, retrieve dependencies,
+or test H700. Review [SOURCES](SOURCES.md) and the
+[distribution gate](DISTRIBUTION_GATE.md) for unresolved evidence.

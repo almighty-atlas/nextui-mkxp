@@ -11,3 +11,10 @@
 ## Rules for updating
 
 Always include exact game build, mkxp-z commit, NextUI version, hardware model, distribution hash if allowed, feature checklist, exit status, FPS/memory measurements and links to sanitized evidence. Test with the user's own games, **never upload or distribute game assets**. Separate upstream-reported performance from direct H700 results.
+
+## Distribution limitation (M0 / issue #3)
+
+Binary redistribution and R36S code import are **BLOCKED** pending the
+[provenance audit](SOURCES.md) and [distribution gate](DISTRIBUTION_GATE.md).
+Neither R36S source availability nor its license inventory establishes a
+reproducible, cleared H700 package. No engine was built or tested in this audit.
