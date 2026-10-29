@@ -162,3 +162,11 @@ The controller fixture matches the prior Knight Blade mapping; that is not an
 all-buttons/all-games compatibility claim. Forced termination can interrupt a
 save and cannot stop kernel-uninterruptible tasks immediately. No R36S code,
 game content or native binary is distributed in this candidate.
+
+## Release archive tooling (#16)
+
+The [release verifier](RELEASE.md) checks ELF headers, interpreter, GLIBC
+version references, `NEEDED` and `RPATH` statically. It cannot detect `dlopen`
+dependencies, missing Mali/GLES symbols or runtime behaviour on the H700.
+Upgrade and rollback swap only the Pak directory. A newer engine's saves may
+not load in an older one. No archive is published while the #3 gate is BLOCKED.
