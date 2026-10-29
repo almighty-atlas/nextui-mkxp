@@ -7,6 +7,14 @@
 - **H700:** actual RG35XX Pro running a documented NextUI version, with sanitized logs.
 - **OTHER DEVICE:** ArkOS/R36S reports, for context only, **never** substitute for H700.
 
+## Repository guard (STATIC)
+
+Run `python3 scripts/repo_guard.py` before every commit, and
+`python3 -m unittest discover -s tests -v` for its fixtures. See
+[REPO_GUARD.md](REPO_GUARD.md). A PASS only means the Git index contains no
+detected game data, binaries, archives, secrets, broken relative links, invalid
+JSON or shell syntax errors. It says nothing about H700 runtime compatibility.
+
 ## M1: Engine
 
 - Pinned reproducible input revisions; failed network/downloads are explicit.
