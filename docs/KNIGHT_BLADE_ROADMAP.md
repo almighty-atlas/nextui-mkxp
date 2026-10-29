@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 65% — engine linked, not yet started on H700.**
+**Current progress: 70% — static ABI and device loader pass; engine start pending.**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -17,7 +17,7 @@ reduces progress. Hard blockers can still exist at 99%.
 | Yes | 10% | Engine sources and selected dependency inputs pinned |
 | Yes | 5% | Offline cross configuration |
 | Yes | 30% | Dependencies, patched Ruby and engine compiled and linked |
-| No | 5% | Remove build RPATH; audit architecture, interpreter and exact symbol/version/provider closure |
+| Yes | 5% | Remove build RPATH; audit architecture, interpreter and exact symbol/version/provider closure |
 | No | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
 | No | 5% | Audio, controls, bounded exit and clean NextUI return |
 | No | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
@@ -44,12 +44,15 @@ No game assets or RTP may be committed or distributed here.
   correctly changes this to `$ORIGIN` in a private staging directory. Staged
   engine hash: `33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3`.
   No system installation/device transfer occurred. **Next:** audit that staged
-  executable against exact device providers. ABI milestone remains incomplete.
-- Preliminary audit examined 918 strong imports using device SDL
-  (`76de58c8…`) and a byte-matched device libgcc snapshot (`acfe23cf…`).
-  Still needed: SDL's `libsamplerate.so.0` closure, COPY relocation size checks
-  and a reviewed exact `$ORIGIN` RPATH policy. The strict validator currently
-  rejects these cases; do not weaken it just to obtain PASS.
+  executable against exact device providers; this static milestone now passes.
+- [Final static ABI audit](H700_ENGINE_ABI.md): 926 strong imports across ten
+  objects, including actual device SDL, samplerate and libgcc. Both COPY
+  relocation sizes match. The narrow opt-in `$ORIGIN` policy does not permit
+  arbitrary RPATH/COPY bypasses. This does **not** prove runtime binding.
+- Device access restored: [loader-only test](H700_ENGINE_ABI.md) now PASS
+  (`--verify` and `--list`, both exit 0; provider hashes matched before/after).
+  Engine was transferred to a private `/tmp` stage but **not started**.
+  **Next:** asset-free engine smoke; visible output needs human confirmation.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

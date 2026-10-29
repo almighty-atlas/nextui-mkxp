@@ -46,7 +46,7 @@ def parse(text):
     facts = {'needed': [], 'soname': None, 'interpreter': [], 'rpath': [],
              'runpath': [], 'needs': {}, 'definitions': [], 'imports': [],
              'exports': [], 'stack_rw': False, 'textrel': False,
-             'copy_relocations': False, 'kernel_notes': []}
+             'copy_relocations': False, 'copies': [], 'kernel_notes': []}
     section, provider = None, None
     for line in text.splitlines():
         if line.startswith('Version '):
@@ -88,16 +88,22 @@ def parse(text):
             facts['textrel'] = True
         if re.search(r'R_\S+_COPY\b', line):
             facts['copy_relocations'] = True
+            m = re.match(r'\s*([0-9a-f]+)\s+[0-9a-f]+\s+R_AARCH64_COPY\s+'
+                         r'[0-9a-f]+\s+(\S+)\s+\+\s+0\s*$', line)
+            require(m is not None, 'UNPARSED_COPY_RELOCATION')
+            facts['copies'].append({'address': int(m[1], 16), 'symbol': m[2]})
         # readelf --dyn-syms only; do not mix in the static .symtab.
-        m = re.match(r'\s*\d+:\s+[0-9a-f]+\s+\d+\s+\S+\s+'
+        m = re.match(r'\s*\d+:\s+([0-9a-f]+)\s+(0x[0-9a-f]+|\d+)\s+(\S+)\s+'
                      r'(GLOBAL|WEAK|UNIQUE)\s+(DEFAULT|PROTECTED|HIDDEN|INTERNAL)'
                      r'\s+(\S+)\s+(\S+)', line)
         if m:
-            bind, visibility, ndx, decorated = m.groups()
+            value, size, kind, bind, visibility, ndx, decorated = m.groups()
             name, separator, version = decorated.partition('@')
             symbol = {'name': name, 'version': version.lstrip('@') or None,
                       'default': not separator or version.startswith('@'),
-                      'weak': bind == 'WEAK'}
+                      'weak': bind == 'WEAK', 'kind': kind,
+                      'size': int(size, 16 if size.startswith('0x') else 10),
+                      'value': int(value, 16)}
             if ndx == 'UND':
                 facts['imports'].append(symbol)
             elif visibility in ('DEFAULT', 'PROTECTED'):
@@ -124,7 +130,12 @@ def inspect(path, readelf):
     return facts
 
 
-def new_policy(facts, role):
+def new_policy(facts, role, policy=None):
+    policy = policy or {}
+    require(set(policy) <= {'rpath', 'copy_relocations'}, 'UNKNOWN_OBJECT_POLICY')
+    if 'rpath' in policy:
+        require(role == 'program' and policy['rpath'] == 'origin-only',
+                'INVALID_RPATH_POLICY')
     issues = []
     expected = ['/lib/ld-linux-aarch64.so.1'] if role == 'program' else []
     if facts['interpreter'] != expected:
@@ -139,7 +150,9 @@ def new_policy(facts, role):
             issues.append('KERNEL_ABOVE_4_9_170')
     if not facts['stack_rw'] or facts['textrel']:
         issues.append('STACK_OR_TEXTREL')
-    if facts['rpath'] or any(p != '$ORIGIN' for p in facts['runpath']):
+    reviewed_origin = (policy.get('rpath') == 'origin-only' and
+                       facts['rpath'] == ['$ORIGIN'] and not facts['runpath'])
+    if (facts['rpath'] and not reviewed_origin) or any(p != '$ORIGIN' for p in facts['runpath']):
         issues.append('UNREVIEWED_RPATH_RUNPATH')
     if facts['copy_relocations']:
         issues.append('COPY_RELOCATION_REQUIRES_SIZE_AUDIT')
@@ -153,6 +166,43 @@ def new_policy(facts, role):
             if m and tuple(int(x or 0) for x in m.groups()) > (2, 28, 0):
                 issues.append('GLIBC_ABOVE_2_28:' + version)
     return issues
+
+
+def copy_audit(name, objects, providers, scope, approved):
+    """Exact, opt-in COPY OBJECT name/version/address/size audit, not loader emulation."""
+    facts = objects[name]
+    copies = facts['copies']
+    require(len({c['symbol'] for c in copies}) == len(copies), 'DUPLICATE_COPY')
+    require(isinstance(approved, dict) and set(approved) == {c['symbol'] for c in copies},
+            'COPY_ALLOWLIST_MISMATCH')
+    report = []
+    for copy in copies:
+        label = copy['symbol']
+        symbol_name, _, version = label.partition('@')
+        version = version.lstrip('@') or None
+        record = approved[label]
+        require(set(record) == {'provider', 'size'} and type(record['size']) is int and
+                record['size'] > 0, 'INVALID_COPY_APPROVAL')
+        provider = record['provider']
+        require(provider in providers and providers[provider] in scope and
+                providers[provider] != name, 'COPY_PROVIDER_NOT_REACHABLE')
+        if version:
+            require(version in facts['needs'].get(provider, []), 'COPY_VERSION_PROVIDER')
+        def matches(s):
+            return s['name'] == symbol_name and s['version'] == version
+        local = [s for s in facts['exports'] if matches(s)]
+        candidates = [(owner, s) for owner in scope if owner != name
+                      for s in objects[owner]['exports'] if matches(s)]
+        require(len(local) == 1 and len(candidates) == 1 and
+                candidates[0][0] == providers[provider], 'COPY_DEFINITION_AMBIGUOUS_OR_MISSING')
+        target, source = local[0], candidates[0][1]
+        require(target['kind'] == source['kind'] == 'OBJECT' and
+                not target['weak'] and not source['weak'], 'COPY_NOT_STRONG_OBJECT')
+        require(target['value'] == copy['address'], 'COPY_ADDRESS_MISMATCH')
+        require(target['size'] == source['size'] == record['size'], 'COPY_SIZE_MISMATCH')
+        report.append({'symbol': label, 'bytes': record['size'], 'provider': provider,
+                       'provider_sha256': objects[providers[provider]]['sha256']})
+    return report
 
 
 def graph_check(roots, objects, providers):
@@ -231,7 +281,11 @@ def audit(plan):
         entry = {key: facts[key] for key in ('sha256', 'needed', 'soname', 'interpreter',
                                             'rpath', 'runpath', 'needs', 'kernel_notes')}
         entry['role'] = role
-        entry['issues'] = [] if role == 'stock' else new_policy(facts, role)
+        policy = item.get('policy', {})
+        require(not policy or role == 'program', 'POLICY_REQUIRES_PROGRAM')
+        entry['issues'] = [] if role == 'stock' else new_policy(facts, role, policy)
+        if policy:
+            entry['reviewed_policy'] = policy
         if role != 'stock':
             hosts = item.get('hosts', [])
             require(all(h in objects and roles[h] == 'program' for h in hosts),
@@ -239,6 +293,11 @@ def audit(plan):
             closure = graph_check([*hosts, name], objects, providers)
             entry['issues'] += closure.pop('issues')
             entry.update(closure)
+            if 'copy_relocations' in policy:
+                entry['copy_audit'] = copy_audit(name, objects, providers, entry['scope'],
+                                                policy['copy_relocations'])
+                if facts['copy_relocations']:
+                    entry['issues'].remove('COPY_RELOCATION_REQUIRES_SIZE_AUDIT')
         if entry['issues']:
             result['status'] = 'STATIC_ABI_FAIL'
         result['objects'][name] = entry

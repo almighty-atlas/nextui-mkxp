@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: MIT
 """Roadmap consistency checks, not proof of gameplay or hardware execution."""
 import json
+import hashlib
 from pathlib import Path
 import re
+import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +39,32 @@ class KnightBladeProgress(unittest.TestCase):
         self.assertEqual(build['device_execution'], 'NOT_TESTED')
         self.assertEqual(build['distribution'], 'BLOCKED')
         self.assertRegex(build['artifact']['sha256'], r'^[a-f0-9]{64}$')
+
+    def test_static_abi_evidence_does_not_claim_engine_execution(self):
+        evidence = json.loads((ROOT / 'build/h700-engine/engine-abi-evidence.json').read_text())
+        self.assertEqual(evidence['status'], 'STATIC_ABI_CANDIDATES_PASS')
+        self.assertEqual(evidence['unresolved_strong_imports'], 0)
+        self.assertEqual(len(evidence['provider_sha256']), evidence['objects'] - 1)
+        self.assertEqual(evidence['engine_start'], 'NOT_TESTED')
+        self.assertEqual(evidence['loader_test']['status'], 'ENGINE_LOADER_PASS')
+        self.assertEqual(evidence['loader_test']['verify_exit'], 0)
+        self.assertEqual(evidence['loader_test']['list_exit'], 0)
+        self.assertEqual(hashlib.sha256((ROOT / evidence['loader_test']['script']).read_bytes()).hexdigest(),
+                         evidence['loader_test']['script_sha256'])
+        log = (ROOT / evidence['loader_test']['log']).read_text()
+        self.assertTrue(log.endswith('ENGINE_LOADER_PASS\n'))
+        self.assertNotRegex(log, r'0x[0-9a-fA-F]+')
+        self.assertFalse(evidence['loader_test']['engine_main_executed'])
+        for item in evidence['copy_relocations']:
+            self.assertEqual(item['bytes'], 8)
+            self.assertEqual(item['provider'], 'libc.so.6')
+
+    def test_loader_script_refuses_non_device_staging_path(self):
+        script = ROOT / 'scripts/h700_engine_loader.sh'
+        subprocess.run(['sh', '-n', str(script)], check=True, timeout=5)
+        result = subprocess.run(['sh', str(script)], capture_output=True, text=True, timeout=5)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(result.stdout.strip(), 'INVALID_STAGING_DIRECTORY')
 
 
 if __name__ == '__main__':
