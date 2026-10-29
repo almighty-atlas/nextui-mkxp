@@ -111,6 +111,16 @@ class StringInput
   end
 end
 
+# Top-level handler procs with `return`, like Essentials' Events.onAction.
+# mkxp-z evaluates each section with a nil binding from C, so the section's
+# frame is gone when the handler runs; a method frame reproduces that here.
+HANDLERS = []
+def evaluate_section(code) = eval(code, nil, '116:PField_FieldMoves') # rubocop:disable Security/Eval
+evaluate_section(<<~'RUBY')
+  HANDLERS << proc { |value| return :skipped if value.nil?; :handled }
+  HANDLERS << proc { |value| [1, 2].each { |item| break :from_block if item == value }; :done }
+RUBY
+
 # Games chain Graphics.update and Kernel#exit with alias (Essentials, RMFlash).
 class << Graphics
   alias game_update update
@@ -277,6 +287,13 @@ class EssentialsWin32CompatTest < Minitest::Test
     end
     assert_match(/^NEXTUI_EXIT /, err)
     assert_equal 1, err.scan(/^NEXTUI_SCENE_NIL /).size
+  end
+
+  def test_orphan_return_in_proc_ends_only_that_proc
+    assert_equal [:skipped, :handled], [nil, 1].map { |value| HANDLERS[0].call(value) }
+    assert_equal :skipped, HANDLERS[0][nil]
+    assert_equal [:done, :done], [2, 3].map { |value| HANDLERS[1].call(value) }
+    assert_raises(ZeroDivisionError) { proc { 1 / 0 }.call }
   end
 
   def test_temp_folder_points_to_per_game_home

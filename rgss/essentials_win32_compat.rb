@@ -141,6 +141,22 @@ class << Thread
   end
 end
 
+# In Ruby 1.8 Kernel#proc made a lambda, so `return`/`break` inside e.g.
+# `Events.onAction += proc { return if ... }` just left the handler. Ruby 3
+# raises LocalJumpError once the defining scope is gone; Proc#call now ends
+# the called proc with the jump's value instead, as a 1.8 lambda did.
+class Proc
+  alias_method :nextui_native_call, :call
+  def call(*args, &block)
+    nextui_native_call(*args, &block)
+  rescue LocalJumpError => error
+    raise unless %i[return break].include?(error.reason)
+    error.exit_value
+  end
+  alias [] call
+  alias yield call
+end
+
 # Essentials' StringInput (an in-memory file over data read from the encrypted
 # archive) indexes its string, which gave bytes in Ruby 1.8 and gives
 # characters now: getc returned a String and binary readers crashed. The

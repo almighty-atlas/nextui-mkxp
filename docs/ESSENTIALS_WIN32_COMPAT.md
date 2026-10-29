@@ -103,6 +103,15 @@ smaller than what the bundled Pokemon fonts render, so the lower half is
 cropped. `enable_rmxp_compat.py` therefore also sets `"fontHeightReporting": 1`
 (rendered height) in the game's own `mkxp.json`.
 
+Eighth launch (owner, Rocket, verified-on-H700): name-entry text was complete,
+the game continued and saved, then stopped when the player talked to a
+character. Essentials registers handlers such as
+`Events.onAction += proc { return if ... }`. In Ruby 1.8 `proc` created a
+lambda, so `return` just left the handler. In Ruby 3 it raises
+`LocalJumpError`, because the section that defined the proc has finished.
+`Proc#call` now ends only the called proc with the jump's value, as a 1.8
+lambda did.
+
 Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
 through `/tmp/next`) were each followed by a full power-off of the device; the
 owner's normal menu launch was not. Agent remote launches are stopped until
@@ -121,7 +130,7 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 17 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 18 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |

@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d",
+    "sha256": "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -84,11 +84,12 @@
       "9e6faa8fbf7a31167c7a6c8317004a6e59da6bcefb9f29e3aaa095d4a0f5d0eb",
       "bfeb0c06d9bf23458bb2a7e53a23cd88b86c47e563e47390d2903d77a2c71af5",
       "d0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b",
-      "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4"
+      "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4",
+      "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d"
     ],
     "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
     "temp_env": "TEMP/TMP default to per-game HOME",
-    "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL, Thread.critical, StringInput byte semantics",
+    "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL, Thread.critical, StringInput byte semantics, proc return/break as 1.8 lambda",
     "screen": "native screen follows Graphics.width/height (+border offsets) once per frame",
     "diagnostics": "NEXTUI_EXIT / NEXTUI_SCENE_NIL caller lines in run.log",
     "mkxp_config": {
@@ -150,5 +151,12 @@
     "sage": "starts, full-screen scaling OK, load menu Down no longer quits, continues after name entry",
     "rocket": "starts, full-screen scaling OK, load menu OK, name entry screen reached",
     "name_entry_screenshot": "framebuffer read-only capture: lower half of every glyph cropped (Power Green font, nominal text height)"
+  },
+  "eighth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "rocket",
+    "result": "name entry text complete; continued, saved (Game.rxdata in private copy), abort when talking to a character",
+    "error": "116:PField_FieldMoves:779 unexpected return (LocalJumpError) in Events.onAction proc"
   }
 }
