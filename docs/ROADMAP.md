@@ -25,6 +25,12 @@ This is a **planning roadmap**, not a statement of implemented features. Phase c
 
 ## M2 — NextUI standalone Pak
 
+Issue #10 has an [offline session-supervision candidate](RMXP_SESSION.md):
+validated per-game mappings, optional passive input chord and owned-process
+termination with a timed fallback. Host tests and target cross-build pass;
+physical input/loader/teardown acceptance remains open. The earlier private
+Knight Blade playability milestone remains **100%** in pending #39.
+
 - Implement layout and valid launch entry point compatible with NextUI's Pak and ROM discovery conventions.
 - Game-per-directory discovery with paths containing spaces; absence and error handling.
 - Map handheld input, maintain usable exit chord and handle audio/display cleanup.
