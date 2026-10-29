@@ -19,6 +19,11 @@ still blocked independently of the **100%** first-game playability milestone.
 
 ## M0 — Foundations (prerequisite for engineering work)
 
+Issue #4's [environment identity check](H700_ENVIRONMENT_IDENTITY.md) now binds
+the actual extracted compiler/sysroot/native Ruby/SDL trees and all container
+package versions. A real capture/verify passed; public clean-room bootstrap
+remains blocked by the private base-image recipe, not missing device access.
+
 - Confirm H700 NextUI aarch64 ABI, graphics, audio, input, memory and exact firmware baseline.
 - Compare native mkxp-z, R36S ArkOS port and NextUI Pak lifecycle; write the architecture decision.
 - Run a narrowly scoped, independently reviewed, game-free Mali-fbdev GLES2 feasibility spike ([#22](https://github.com/almighty-atlas/nextui-mkxp/issues/22)) **before treating H700 graphics as functional**; this is not the later full engine/audio/input test.

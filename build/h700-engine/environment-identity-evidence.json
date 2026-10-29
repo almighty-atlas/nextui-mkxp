@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "level": "verified-on-host",
+  "date": "2026-10-29",
+  "status": "ENVIRONMENT_MATCH",
+  "image": "sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b",
+  "package_count": 217,
+  "package_list_sha256": "f00cdad5c1c81119fd3b0b4f3b854f081f021a6b1fffa9e76c61cd31adc75bd7",
+  "private_receipt_sha256": "016220abd4e4c52d456c3431d7cbe16886f33babe95513ec324506ee99629237",
+  "components": {
+    "toolchain": {"algorithm": "relative-tree-v1", "sha256": "5528c85308944c2eaf57a73bc6ace9c0ff7537c35918722a820a51999b5eb61a", "entries": 4323, "bytes": 1333721680},
+    "sysroot": {"algorithm": "relative-tree-v1", "sha256": "32bb80f9e5d00a4f7b11a16ab8add77e80d094b5eb5ab63457055d2ef48eec4d", "entries": 2352, "bytes": 138625664},
+    "native": {"algorithm": "relative-tree-v1", "sha256": "7e4bd229703adc64b27d409b4336a9f3496897e539739287cd2d08660d393802", "entries": 2767, "bytes": 173966956},
+    "sdl": {"algorithm": "relative-tree-v1", "sha256": "b14977840d2f6969a624f62553bcddd49ee1e49756f4a6e37b666aa6794db16f", "entries": 100, "bytes": 4941105}
+  },
+  "arm_execution": "NEVER",
+  "clean_room_rebuild": "NOT_VERIFIED",
+  "distribution": "BLOCKED",
+  "blockers": [
+    "Tools image recipe inherits a private local builder image; identity is not a public clean-room bootstrap.",
+    "Raw SDL run contains outward tool symlinks and is rejected. The measured SDL component is the staged include/library prefix.",
+    "Human source/license/relink review remains separate."
+  ]
+}
