@@ -1,6 +1,6 @@
 # Knight Blade: first playable RPG Maker XP game
 
-**Current progress: 70% — static ABI and device loader pass; engine start pending.**
+**Current progress: 85% — asset-free engine smoke passes on H700; Knight Blade files needed next.**
 
 Updated: 2026-10-28. Source of truth:
 [`knight-blade-progress.json`](../build/h700-engine/knight-blade-progress.json).
@@ -18,8 +18,8 @@ reduces progress. Hard blockers can still exist at 99%.
 | Yes | 5% | Offline cross configuration |
 | Yes | 30% | Dependencies, patched Ruby and engine compiled and linked |
 | Yes | 5% | Remove build RPATH; audit architecture, interpreter and exact symbol/version/provider closure |
-| No | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
-| No | 5% | Audio, controls, bounded exit and clean NextUI return |
+| Yes | 10% | Asset-free engine start, Ruby binding and visible GLES rendering on H700 |
+| Yes | 5% | Audio, controls, bounded exit and clean NextUI return |
 | No | 3% | Inventory owner-provided Knight Blade version/files and RTP requirements |
 | No | 5% | Title screen, new game, first playable map |
 | No | 5% | Movement, dialogue, representative battle/event, music/effects |
@@ -52,7 +52,21 @@ No game assets or RTP may be committed or distributed here.
 - Device access restored: [loader-only test](H700_ENGINE_ABI.md) now PASS
   (`--verify` and `--list`, both exit 0; provider hashes matched before/after).
   Engine was transferred to a private `/tmp` stage but **not started**.
-  **Next:** asset-free engine smoke; visible output needs human confirmation.
+  **Next:** [asset-free engine smoke](H700_ENGINE_SMOKE.md); visible output needs
+  human confirmation. v2 produced four successful process traces, patched
+  Ruby 3.1.3, Mali-G31/GLES 3.2 and owner-confirmed color bars/moving square.
+  One frame-limit exit and three Cancel exits completed normally.
+- Owner heard no v2 tone (volume 40 ≈ −21 dB, 200 ms). [v3](H700_ENGINE_SMOKE.md)
+  (volume 85, 600 ms) is **audible**; the pink square follows D-pad and left
+  stick; RGSS A/B/C/X/Y/Z/L/R events are logged; NextUI menu works normally
+  after the automatic end. Lifecycle milestone done (verified-on-H700).
+- Known input gaps for the Pak: mkxp-z's default controller table leaves
+  Start, Select, Menu/Guide and L2/R2 unbound and uses Xbox positions, so RGSS
+  names differ from Anbernic labels (physical A acted as Cancel). A Pak needs
+  an explicit, documented mapping (physical A = Confirm, B = Cancel, Start =
+  menu) plus a deliberate quit path; this belongs to game inputs / Pak work.
+- **Next:** inventory owner-provided Knight Blade files and RTP requirements
+  (3%). Needs the owner to legally supply the game; nothing is downloaded.
 - The local OpenAL Soft GCC 8 patch and the SDL pkg-config sysroot correction
   are necessary build fixes; successful setup alone did not detect them.
 

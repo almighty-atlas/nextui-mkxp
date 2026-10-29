@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "issue": 7,
+  "status": "PASS; V3_AUDIO_INPUT_RETURN_CONFIRMED",
+  "tested_payload_version": "v2",
+  "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+  "archive_sha256": "266230d3194f30172230c7a170f5e0bd866f474b1f10cd9030a96288b8a086dd",
+  "archive_bytes": 14359358,
+  "pure_ruby_files": 842,
+  "private_receipt_sha256": "5640aa8426dbf1e6706d32df4678201d09fedbe1b3e34d5b009d072f51dc9ab9",
+  "device_stage": "/tmp/nextui-mkxp-engine-smoke-v3",
+  "tool_entry": "Tools/h700/MKXP Engine Smoke.pak/launch.sh",
+  "previous_staging": "v1 was superseded; SSH outage initially blocked the v2 transfer. Owner restored access and kept device awake using Pak Store.",
+  "final_staging": "All v2 manifest files hash-verified on device; own Tools launcher atomically updated after checking previous hash. No v1 or v2 work directory existed at final check.",
+  "firmware": "NextUI-20261013-0 (39a06de)",
+  "kernel": "4.9.170",
+  "all_nine_provider_hashes_reconfirmed": true,
+  "video": "PASS; owner saw color bars and moving white square, logs show ARM Mali-G31 GLES 3.2",
+  "audio": "PASS in v3 (owner heard tones); v2 NOT_HEARD at volume40/200ms",
+  "input": "PASS for RGSS core set: D-pad and left analog stick move square; A B C X Y Z L R events logged. Start, Select, Menu, L2, R2 not mapped by mkxp-z default bindings; RGSS names differ from physical labels",
+  "ruby_embedding": "PASS; four traces report Ruby 3.1.3 aarch64-linux and SMOKE_SCRIPT_PASS",
+  "clean_exit": "PASS: 7 process exits 0 + SMOKE_RUNNER_PASS (v2+v3); owner confirmed normal NextUI menu after v3 automatic end; v2 Cancel exit also returned. v3 hold-to-cancel PASS",
+  "user_observation": "Color bars and moving white square seen; physical A ended test; no tones heard; automatic end after about 30 seconds reported",
+  "log_excerpt": "docs/evidence/2026-10-28-engine-smoke-v2.txt",
+  "raw_log_sha256": {
+    "run-AEpEjG": "da6d868180a9e3fb5424620add9ece89a0e8d42a2893838544936d4c556e7350",
+    "run-OMdGCA": "c5cc1b5e7aec31763faa01695a31f907e9422c6f9fc77adcedf8433cddbf098e",
+    "run-hKnlgJ": "477607633479f2a1e4130972369054d732fd47ec39d1e641a2cc819efbce977d",
+    "run-oFbnAH": "4f59164fe04c82be589b2676f07138c3104bf80f344eaba99c598bff47b239bd"
+  },
+  "followup": {
+    "version": "v3",
+    "status": "PASS; OWNER_OBSERVED",
+    "reason": "v2 input actions other than Cancel had no visual feedback; 200ms PCM at volume40 corresponds to about -42dBFS peak before device mixer",
+    "changes": "Visible RGSS labels and D-pad-controlled pink square; Cancel held 60 frames to exit; tone 600ms with PCM peak6000 and SE volume85, Confirm replays tone; no mixer changes",
+    "audio_cause": "Consistent with low signal level: v3 at volume85/600ms audible where v2 was not; not a formal root-cause proof",
+    "archive_sha256": "4f6ec237d6a178d1b29bea2b509fb46d35f622250156030eda0c76186abfaeca",
+    "archive_bytes": 14359819,
+    "private_receipt_sha256": "490663d83579f67c78868ea128fc434701558eb0c74b02e75b73228eb3998196",
+    "device_stage": "/tmp/nextui-mkxp-engine-smoke-v3",
+    "staging": "All v3 manifest files hash-verified on device; own Tools launcher atomically replaced after checking v2 launcher hash; no engine process running and no v3 work directory at final check",
+    "fixture_sha256": {
+      "smoke.rb": "898f4e7ec71b6f37e5c104899b8436d915b3056c7bed68f0b27334cddb10d424",
+      "run.sh": "617ead5299ed5d288fdebf86ccf67ddecdff5a83d5baec7f042f17a125e094f5",
+      "mkxp.json": "6deccb56667a4efaf4fd0108d6b274e38637a25494f1d6391fa468e711f98b7a",
+      "launch.sh": "13cb699299e3009322c5d03e2a328429562bb07a62c4442ca07b02bb44e40418"
+    },
+    "audio": "PASS; owner heard timed and Confirm-triggered tones",
+    "input_visual_feedback": "PASS; pink square follows D-pad and left analog stick; labels shown for most buttons",
+    "hold_cancel": "PASS; owner held Cancel 1s and the tool ended (SMOKE_EXIT cancel_hold, exit 0)",
+    "nextui_navigation_after_return": "PASS; owner reports NextUI menu works normally after automatic end",
+    "user_observation": "Tones heard; pink square follows D-pad and left stick; most buttons recognized but RGSS labels do not match printed labels; Select, Start and Menu not recognized; only 2 of 4 shoulder buttons shown; NextUI menu normal after automatic close",
+    "log_excerpt": "docs/evidence/2026-10-28-engine-smoke-v3.txt",
+    "raw_log_sha256": {
+      "run-bfPJOf": "5821ef97ff594b1ca8458343aff747133b5378a7ddebe109563e32a215a56f7f",
+      "run-pdAjoP": "547a70ff80cc516e7490981046c0707f1a979beaf05bc434c5542f738ccdc9cd",
+      "run-GpcFNB": "f85015da294c4d4571e698feb35b8fb63e3a1bf637feb4163e2af8439b803528"
+    },
+    "mkxp_z_default_controller_bindings": {
+      "SDL X": "A",
+      "SDL B": "B",
+      "SDL A": "C",
+      "SDL Y": "X",
+      "LEFTSTICK click": "Y",
+      "RIGHTSTICK click": "Z",
+      "LEFTSHOULDER": "L",
+      "RIGHTSHOULDER": "R",
+      "DPAD and LEFT stick axes": "directions",
+      "unbound": "START BACK GUIDE TRIGGERLEFT TRIGGERRIGHT"
+    },
+    "bindings_source": "mkxp-z src/input/keybindings.cpp default controller tables (source-reviewed, not measured per SDL event)"
+  },
+  "engine_main_executed_by_agent": false,
+  "host_checks": {
+    "unit_tests": 136,
+    "result": "PASS",
+    "ruby_3_1_3_syntax": "PASS",
+    "level": "verified-on-host",
+    "ci_execution": false
+  },
+  "distribution": "BLOCKED",
+  "tested_fixture_sha256": {
+    "smoke.rb": "50e8f533b06c33cf90eadbfdc3cef52aece938d833cf3eede90e1dc16fac17b3",
+    "run.sh": "617ead5299ed5d288fdebf86ccf67ddecdff5a83d5baec7f042f17a125e094f5",
+    "mkxp.json": "6deccb56667a4efaf4fd0108d6b274e38637a25494f1d6391fa468e711f98b7a",
+    "launch.sh": "fa98ec6f9788dda9bce70e77335efd8178fa9f6331245bddc360f21da302d380"
+  }
+}

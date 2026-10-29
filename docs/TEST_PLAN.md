@@ -18,6 +18,10 @@
 
 ## M2: Pak
 
+Before the full Pak, use the [asset-free engine smoke checklist](H700_ENGINE_SMOKE.md)
+for original procedural graphics/tone, physical inputs and clean NextUI return.
+The fixture being prepared or staged is not hardware execution evidence.
+
 - Detects missing `Game.ini`/missing data with actionable message; no partial state damage.
 - ROM path with spaces / Unicode; multiple games, isolated saves and config.
 - Menu/exiting returns to NextUI; process tree clean; no accidental key capture.
