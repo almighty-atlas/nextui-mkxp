@@ -90,7 +90,10 @@
     "temp_env": "TEMP/TMP default to per-game HOME",
     "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL, Thread.critical, StringInput byte semantics",
     "screen": "native screen follows Graphics.width/height (+border offsets) once per frame",
-    "diagnostics": "NEXTUI_EXIT / NEXTUI_SCENE_NIL caller lines in run.log"
+    "diagnostics": "NEXTUI_EXIT / NEXTUI_SCENE_NIL caller lines in run.log",
+    "mkxp_config": {
+      "fontHeightReporting": 1
+    }
   },
   "second_owner_launch": {
     "date": "2026-10-29",
@@ -140,5 +143,12 @@
     "level": "verified-on-H700",
     "result": "BOTH_ABORTED_AT_START",
     "cause": "shim a2295d2f prepended Graphics.update; game aliases of the prepended method recursed (SystemStackError)"
+  },
+  "seventh_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "sage": "starts, full-screen scaling OK, load menu Down no longer quits, continues after name entry",
+    "rocket": "starts, full-screen scaling OK, load menu OK, name entry screen reached",
+    "name_entry_screenshot": "framebuffer read-only capture: lower half of every glyph cropped (Power Green font, nominal text height)"
   }
 }

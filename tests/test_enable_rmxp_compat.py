@@ -24,6 +24,11 @@ class EnableCompat(unittest.TestCase):
     def write_config(self, preload):
         (self.state / 'mkxp.json').write_text(json.dumps({'rgssVersion': 1, 'preloadScript': preload}))
 
+    def write_config_value(self, key, value):
+        config = self.config()
+        config[key] = value
+        (self.state / 'mkxp.json').write_text(json.dumps(config, ensure_ascii=True, indent=2) + '\n')
+
     def config(self):
         return json.loads((self.state / 'mkxp.json').read_text())
 
@@ -36,6 +41,7 @@ class EnableCompat(unittest.TestCase):
         self.assertEqual(copied.read_bytes(), E.SHIM.read_bytes())
         expected = '/mnt/SDCARD/' + copied.relative_to(self.sd).as_posix()
         self.assertEqual(self.config()['preloadScript'], [expected])
+        self.assertEqual(self.config()['fontHeightReporting'], 1)
         self.assertEqual(result['h700_result'], 'NOT_TESTED')
         self.assertFalse((self.state / 'mkxp.json.tmp').exists())
 
@@ -63,6 +69,8 @@ class EnableCompat(unittest.TestCase):
         original = E.PREVIOUS_SHA256
         E.PREVIOUS_SHA256 = {old}
         self.addCleanup(setattr, E, 'PREVIOUS_SHA256', original)
+        self.write_config_value('fontHeightReporting', 0)
+        before = (self.state / 'mkxp.json').read_bytes().replace(b'"fontHeightReporting": 0', b'"fontHeightReporting": 1')
         self.assertEqual(E.enable(self.sd, GAME_ID)['status'], 'COMPAT_UPGRADED')
         self.assertEqual(shim.read_bytes(), E.SHIM.read_bytes())
         self.assertEqual((self.state / 'mkxp.json').read_bytes(), before)

@@ -27,6 +27,18 @@ PREVIOUS_SHA256 = {'899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db8390541
                    'd0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b',
                    'a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4'}
 STATE_ROOT = '.userdata/h700/nextui-mkxp'
+# mkxp-z options for Essentials. With the default nominal text height
+# (TTF_FontHeight) the bundled Pokemon fonts render taller than reported and
+# pbDrawTextPositions crops the lower half of every glyph (seen on H700).
+CONFIG = {'fontHeightReporting': 1}
+
+
+def write_config(config_path, config):
+    config.update(CONFIG)
+    temporary = config_path.with_name('mkxp.json.tmp')
+    P.require(not temporary.exists(), 'Stale temporary config')
+    temporary.write_text(json.dumps(config, ensure_ascii=True, indent=2) + '\n')
+    os.replace(temporary, config_path)
 
 
 def enable(sd, game_id, device_root='/mnt/SDCARD'):
@@ -50,6 +62,7 @@ def enable(sd, game_id, device_root='/mnt/SDCARD'):
         replacement.write_bytes(SHIM.read_bytes())
         P.require(P.digest(replacement) == SHIM_SHA256, 'Shim changed while copying')
         os.replace(replacement, target)
+        write_config(config_path, config)
         return {'status': 'COMPAT_UPGRADED', 'game_id': game_id, 'shim_sha256': SHIM_SHA256,
                 'preload': preload, 'h700_result': 'NOT_TESTED'}
     P.require(config.get('preloadScript') == [], 'Existing preload; refusing to combine scripts')
@@ -58,10 +71,7 @@ def enable(sd, game_id, device_root='/mnt/SDCARD'):
     target.write_bytes(SHIM.read_bytes())
     P.require(P.digest(target) == SHIM_SHA256, 'Shim changed while copying')
     config['preloadScript'] = preload
-    temporary = config_path.with_name('mkxp.json.tmp')
-    P.require(not temporary.exists(), 'Stale temporary config')
-    temporary.write_text(json.dumps(config, ensure_ascii=True, indent=2) + '\n')
-    os.replace(temporary, config_path)
+    write_config(config_path, config)
     return {'status': 'COMPAT_ENABLED', 'game_id': game_id, 'shim_sha256': SHIM_SHA256,
             'preload': config['preloadScript'], 'h700_result': 'NOT_TESTED'}
 

@@ -94,6 +94,15 @@ stopped at start (sixth launch, verified-on-H700). `Graphics.update` and
 `Kernel#exit` are now chained with `alias`, like the games do, and the
 synthetic suite chains them the same way as a regression test.
 
+Seventh launch (owner, verified-on-H700): both games start and fill the
+screen. The load menu works, and Sage continues past name entry. A read-only
+framebuffer capture of Rocket's name entry showed only the upper half of
+every glyph. `pbDrawTextPositions` draws each string into a rectangle exactly
+`text_size.height` tall. mkxp-z's default nominal height (`TTF_FontHeight`) is
+smaller than what the bundled Pokemon fonts render, so the lower half is
+cropped. `enable_rmxp_compat.py` therefore also sets `"fontHeightReporting": 1`
+(rendered height) in the game's own `mkxp.json`.
+
 Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
 through `/tmp/next`) were each followed by a full power-off of the device; the
 owner's normal menu launch was not. Agent remote launches are stopped until
