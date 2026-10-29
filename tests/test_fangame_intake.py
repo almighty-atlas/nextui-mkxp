@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 """Source-report consistency, not proof of game contents or compatibility."""
 import json
+import hashlib
 from pathlib import Path
 import unittest
 
@@ -64,3 +65,18 @@ class FangameIntake(unittest.TestCase):
         for package in report['packages']:
             self.assertRegex(package['sha256'], r'^[a-f0-9]{64}$')
             self.assertEqual(package['arch'], 'amd64')
+
+    def test_device_staging_evidence_is_not_a_gameplay_claim(self):
+        report = json.loads((ROOT / 'build/h700-engine/fangame-device-stage.json').read_text())
+        self.assertEqual(report['level'], 'verified-on-H700')
+        self.assertEqual(report['existing_save_checksums'], {'records': 7, 'result': 'UNCHANGED'})
+        self.assertFalse(report['game_launch_by_agent'])
+        self.assertFalse(report['firmware_or_service_changes'])
+        for game in report['games']:
+            self.assertEqual(game['checksums'], 'ALL_PASS')
+            self.assertEqual(game['h700_game_result'], 'NOT_TESTED')
+            self.assertEqual(game['preload_scripts'], [])
+            self.assertEqual(game['game_id'], hashlib.sha256(game['source'].encode()).hexdigest())
+        resume = report['sage_resume']
+        self.assertEqual(resume['already_verified_files'] + resume['resent_files'],
+                         report['games'][0]['manifest_files'])

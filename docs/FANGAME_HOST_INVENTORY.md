@@ -22,6 +22,11 @@ not be committed, attached or distributed. Earlier
 Every H700 result remains **NOT_TESTED**. The device SSH connection timed out;
 no candidate was copied there and no running game or system service was touched.
 
+**Later device session:** connectivity returned and both candidates were
+[installed and checksum-verified](FANGAME_DEVICE_TEST.md) into new paths.
+The preceding paragraph records the initial host-only round; the new file
+checks do not establish that either game boots or plays. Reborn remains held.
+
 ### Reborn is not a drop-in Knight Blade profile
 
 The supplied configuration uses 512×384, extra binding names d/e/f and a patch

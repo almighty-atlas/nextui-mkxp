@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "level": "verified-on-H700",
+  "scope": "File installation, checksums and existing runtime/input identity only; not game execution",
+  "device": "RG35XX Pro",
+  "arch": "aarch64",
+  "firmware": "NextUI-20261013-0",
+  "firmware_commit": "39a06de",
+  "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+  "supervisor_sha256": "3e1aa386ec7fbf08e3d4f97610604e5d97ddfbe09fee31168232a26288f1396d",
+  "shared_runtime_manifest": "PASS_BEFORE_AND_AFTER",
+  "existing_save_checksums": {"records": 7, "result": "UNCHANGED"},
+  "input": {"device_name": "ANBERNIC-keys", "event_node": "/dev/input/event1", "select": 310, "start": 311, "supervisor_capability_check": "PASS", "fresh_physical_chord_test": "NOT_TESTED"},
+  "games": [
+    {"id": "sage", "name": "Pokemon Sage", "source": "Games/Pokemon Sage", "game_id": "e0e60a365f8c72b114bd3a480efabf1b257f43da4e4fdaf8cd907adaa7eb8b4e", "manifest_files": 1416, "checksums": "ALL_PASS", "preload_scripts": [], "session_config": "VERIFIED_310_311", "h700_game_result": "NOT_TESTED"},
+    {"id": "team-rocket-lucksack", "name": "Pokemon Team Rocket", "source": "Games/Pokemon Team Rocket", "game_id": "6af6b0591ce6305a04030834d7a9c40a57490a98b4fb0d60e7abc4fc66273a17", "manifest_files": 2014, "checksums": "ALL_PASS", "preload_scripts": [], "session_config": "VERIFIED_310_311", "h700_game_result": "NOT_TESTED"}
+  ],
+  "sage_resume": {"reason": "Initial transfer exceeded command deadline before marker creation", "already_verified_files": 1369, "resent_files": 47, "resent_bytes": 78713770, "deleted_files": 0, "final_complete_manifest": "ALL_PASS"},
+  "reborn": "NOT_INSTALLED_PENDING_INPUT_AND_CONFIG_REVIEW",
+  "game_launch_by_agent": false,
+  "firmware_or_service_changes": false,
+  "public_game_distribution": false
+}
