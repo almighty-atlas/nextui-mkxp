@@ -70,6 +70,11 @@ Knight Blade. No save states or game switcher.
 
 ## M3 — Pokémon Infinite Fusion
 
+Additional owner-requested targets (Sage, Reborn and LucksackGames Team Rocket
+Edition) have a separate [source/intake plan](FANGAME_INTAKE.md). They are not
+ported or hardware-tested; private payloads and per-game API/save/memory audits
+must precede registration. This does not replace the Infinite Fusion/Decay gates.
+
 - Audit supported tested game version and private game content layout (never commit the game).
 - Test boots/title screen/field movement/battles/saving/fusions/custom sprites.
 - Measure FPS, RAM, load time, zram need, crashes, thermal behavior across repeated cold starts.
