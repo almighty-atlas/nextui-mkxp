@@ -1,5 +1,12 @@
 # Architecture proposal (not yet validated on device)
 
+Update: [one game-free stock-SDL H700 trial](H700_VIDEO_EVIDENCE.md) now supports
+the narrow native Mali/GLES video and normal NextUI-return path. The **engine
+architecture remains unvalidated**. Userspace AArch64/kernel 4.9.170 are supplied
+facts for that run; its exact NextUI version is still missing. See the
+[bounded implementation plan](H700_MINIMAL_ENGINE_PLAN.md); standalone MinArch
+integration limitations, licensing and engine/audio/input gates remain unchanged.
+
 ## Target platform
 
 - Device: Anbernic RG35XX Pro; SoC family H700.
