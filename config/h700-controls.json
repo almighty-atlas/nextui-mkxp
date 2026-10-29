@@ -1,0 +1,23 @@
+{
+  "format": 3,
+  "rgss_version": 1,
+  "bindings": [
+    {"type": "button", "source": "DPAD_UP", "target": "Up"},
+    {"type": "button", "source": "DPAD_DOWN", "target": "Down"},
+    {"type": "button", "source": "DPAD_LEFT", "target": "Left"},
+    {"type": "button", "source": "DPAD_RIGHT", "target": "Right"},
+    {"type": "axis", "source": "LEFTX", "direction": "negative", "target": "Left"},
+    {"type": "axis", "source": "LEFTX", "direction": "positive", "target": "Right"},
+    {"type": "axis", "source": "LEFTY", "direction": "negative", "target": "Up"},
+    {"type": "axis", "source": "LEFTY", "direction": "positive", "target": "Down"},
+    {"type": "button", "source": "B", "target": "C"},
+    {"type": "button", "source": "A", "target": "B"},
+    {"type": "button", "source": "START", "target": "B"},
+    {"type": "button", "source": "X", "target": "A"},
+    {"type": "button", "source": "Y", "target": "X"},
+    {"type": "button", "source": "LEFTSTICK", "target": "Y"},
+    {"type": "button", "source": "RIGHTSTICK", "target": "Z"},
+    {"type": "button", "source": "LEFTSHOULDER", "target": "L"},
+    {"type": "button", "source": "RIGHTSHOULDER", "target": "R"}
+  ]
+}

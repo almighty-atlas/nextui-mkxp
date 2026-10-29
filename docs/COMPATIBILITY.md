@@ -151,3 +151,14 @@ Real-device recovery, physical restart/upgrade behavior and FAT32 power-loss
 semantics are untested. Raw runtime logs remain private; the exported summary
 does not expose their text. A shell exit code alone cannot prove crash versus
 explicit high-numbered exit. See the [grouped test plan](RMXP_BATCH_TEST.md).
+
+## Session supervisor candidate (#10)
+
+[The optional native supervisor](RMXP_SESSION.md) and per-game mapping encoder
+pass host tests; the supervisor cross-compiles to AArch64 with a GLIBC_2.17
+requirement. Target execution, physical evdev keycodes, SDL coexistence and
+Mali/audio teardown remain untested. No default event device/chord is enabled.
+The controller fixture matches the prior Knight Blade mapping; that is not an
+all-buttons/all-games compatibility claim. Forced termination can interrupt a
+save and cannot stop kernel-uninterruptible tasks immediately. No R36S code,
+game content or native binary is distributed in this candidate.
