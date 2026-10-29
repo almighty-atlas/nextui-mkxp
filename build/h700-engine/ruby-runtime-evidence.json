@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "source": "Owner-supplied tiny02 build and RG35XX Pro trial results, 2026-10-28; not independently repeated or re-hashed in the documenting session",
+  "evidence_level": "OWNER_REPORTED_H700",
+  "raw_device_log_committed": false,
+  "nextui_firmware_version": null,
+  "device": {"model": "RG35XX Pro", "arch": "aarch64", "kernel": "4.9.170",
+             "staging_dir": "/tmp/nextui-mkxp-ruby-3.1.3-8b884d90", "staging_fs": "tmpfs"},
+  "builder": {"host": "tiny02", "image": "nextui-mkxp-tools:trixie-20261020",
+              "image_id": "sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b",
+              "network": "disabled", "cpu_limit": 2, "memory_limit_gib": 4,
+              "gcc": "8.3.0", "sysroot_glibc": "2.28",
+              "private_root": "/home/atlas/nextui-mkxp-tools-20261020",
+              "ruby_build_dir": "ruby-aarch64-3.1.3-v2",
+              "ruby_source_dir": "ruby-native-3.1.3/src/ruby-3.1.3"},
+  "sources": {
+    "ruby": {"url": "https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.3.tar.xz",
+             "sha256": "4ee161939826bcdfdafa757cf8e293a7f14e357f62be7144f040335cc8c7371a"},
+    "zlib": {"url": "https://zlib.net/zlib-1.3.2.tar.gz",
+             "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"}
+  },
+  "artifacts": [
+    {"name": "libruby.so.3.1.3", "visibility": "private",
+     "sha256": "4c67d3c1f21393dfaac1485298b770ab1fcec6e74b775ca66d3eff58ff4a9793",
+     "h700": "PASS", "tests": ["interpreter_start", "ruby_core"]},
+    {"name": "ruby ($ORIGIN RUNPATH probe)", "visibility": "private",
+     "sha256": "8b884d90eeacd792218d33f5cd2d407529ffe32ffeb5bffe974581c0783af14c",
+     "h700": "PASS_ASSUMED_FROM_STAGING_DIR_NAME_CONFIRM_FROM_LOG"},
+    {"name": "zlib.so", "visibility": "private",
+     "sha256": "fcc514925e8274c6d06819c0988ae2ed06aa68bdee3fdd92b311649f7e708752",
+     "h700": "PASS", "tests": ["deflate", "inflate", "crc32"]},
+    {"name": "psych.so", "visibility": "private", "libyaml": "bundled (Ruby 3.1.3 ext/psych/yaml)",
+     "sha256": "49ab079312da72116993e0cadba827fb16b87a76de0adc7622bb686035bb727f",
+     "h700": "PASS", "tests": ["require", "yaml_parse", "syntax_error_handling"],
+     "warnings": ["UTF-16LE encoding missing", "UTF-16BE encoding missing"],
+     "not_tested": ["Psych.safe_load", "Psych.dump"]}
+  ],
+  "not_built": ["ruby encodings enc/*.so", "fiddle (bundled libffi 3.2.1)", "mkxp-z"],
+  "public_reproducibility": "NOT_REPRODUCIBLE_FROM_REPOSITORY",
+  "distribution": "BLOCKED"
+}
