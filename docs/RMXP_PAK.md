@@ -36,6 +36,21 @@ python3 scripts/rmxp_pak.py register --sd-root /media/SD \
   --game '/media/SD/Games/Knight Blade' --name 'Knight Blade'
 ```
 
+Optional supervision from [PR #42](https://github.com/almighty-atlas/nextui-mkxp/pull/42)
+can be included at initial installation with
+`--session /private/rmxp-session.aarch64`. Only the reviewed cross-build hash
+`3e1aa386ec7fbf08e3d4f97610604e5d97ddfbe09fee31168232a26288f1396d` is accepted.
+The helper participates in the runtime checksum manifest. Without a per-game
+`session.conf`, it supervises signals/child cleanup without monitoring buttons.
+The target cross-build passed; actual H700 execution is still untested.
+
+After verifying evdev codes on the device, a `session.conf` beside `mkxp.json`
+may contain exactly three newline-terminated lines: `/dev/input/eventN`, first
+keycode, second keycode. It is parsed as data, never sourced. There is no default
+node or guessed code. The helper validates capabilities and uses a 1.5-second
+hold / 3-second grace. Invalid settings fail before engine execution. Leave
+this configuration absent until physical input is checked.
+
 The original game requires `Game.ini`, `Data/`, `Graphics/`, `Audio/`.
 Registration copies it once into `.userdata/h700/nextui-mkxp/<ID>/game/` and
 writes a JSON configuration alongside it. Existing saves are copied initially;
@@ -57,7 +72,7 @@ game menu. Exit through the game's Shutdown command; the general exit chord
 is tracked in #10. There is no MinArch menu, save state or instant resume.
 
 Each game retains `run.log` and `previous.log`, each limited to 256 truncated
-lines plus the exit status. Engine output may contain private paths: review
+lines plus a final supervisor record (if present) and exit status. Engine output may contain private paths: review
 before sharing. A lock prevents concurrent launches of the same game. After
 power loss, verify no engine is running before manually removing the empty
 `<ID>/lock` directory. No automatic stale-lock or save recovery is claimed.
@@ -88,7 +103,7 @@ Verification on 2026-10-29:
 
 | Level | Command/check | Result |
 | --- | --- | --- |
-| verified-on-host | `python3 -m unittest discover -s tests -v` | 8 tests PASS; synthetic engine only |
+| verified-on-host | `python3 -m unittest discover -s tests -v` | 10 tests PASS; synthetic engine only |
 | verified-on-host | `sh -n pak/RMXP.pak/launch.sh` | PASS |
 | verified-on-host | `git diff --check` | PASS |
 | upstream-reported | pinned NextUI discovery/lifecycle source review above | contract identified |

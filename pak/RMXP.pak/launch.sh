@@ -31,6 +31,24 @@ for dir in "$SDCARD_PATH/$source" "$state/game"; do
 done
 test -x "$base/engine" && test -f "$base/SHA256SUMS" || fail 'Install private runtime first'
 (cd "$base" && sha256sum -c SHA256SUMS >/dev/null 2>&1) || fail 'Runtime checksum failed'
+set -- "$base/engine"
+if test -x "$base/rmxp-session"; then
+    set -- "$base/rmxp-session" -- "$base/engine"
+fi
+if test -e "$state/session.conf"; then
+    test -x "$base/rmxp-session" || fail 'Install session helper first'
+    test -f "$state/session.conf" && test "$(wc -c < "$state/session.conf")" -le 256 || fail 'Invalid session config'
+    test "$(wc -l < "$state/session.conf")" -eq 3 || fail 'Session config needs 3 lines'
+    {
+        IFS= read -r input && IFS= read -r first && IFS= read -r second || fail 'Invalid session config'
+        if IFS= read -r extra || test -n "$extra"; then fail 'Extra session config data'; fi
+    } < "$state/session.conf"
+    case "$input" in /dev/input/event*) node=${input#/dev/input/event} ;; *) fail 'Invalid input node' ;; esac
+    case "$node" in ''|*[!0-9]*) fail 'Invalid input node' ;; esac
+    case "$first:$second" in *[!0-9:]*) fail 'Invalid quit keys' ;; esac
+    test -n "$first" && test -n "$second" || fail 'Invalid quit keys'
+    set -- "$base/rmxp-session" --input "$input" --keys "$first" "$second" -- "$base/engine"
+fi
 mkdir "$state/lock" 2>/dev/null || fail 'Game busy; check lock'
 engine_pid=
 logger_pid=
@@ -50,7 +68,9 @@ test ! -f "$state/run.log" || mv "$state/run.log" "$state/previous.log"
 pipe_dir=$(mktemp -d /tmp/rmxp-output-XXXXXX)
 mkfifo "$pipe_dir/output"
 # Drain output, retaining only 256 truncated lines; do not limit save-file sizes.
-awk 'NR <= 256 { print substr($0,1,1024) }' < "$pipe_dir/output" > "$state/run.log" &
+awk 'length($0) <= 128 && /^RMXP_RESULT=(exit CODE=[0-9]+|signal SIGNAL=[0-9]+) REASON=(natural|chord|supervisor_signal)$/ { result=$0 }
+     NR <= 256 { print substr($0,1,1024) }
+     END { if (result != "") print result }' < "$pipe_dir/output" > "$state/run.log" &
 logger_pid=$!
 cd "$state"
 ulimit -c 0
@@ -58,7 +78,7 @@ env -i PATH=/usr/bin:/bin HOME="$state/home" XDG_DATA_HOME="$state/data" \
     LANG=C LC_ALL=C LD_LIBRARY_PATH="$SDCARD_PATH/.system/h700/lib" LD_BIND_NOW=1 \
     SDL_VIDEODRIVER=mali SDL_OPENGL_ES_DRIVER=1 ALSOFT_DRIVERS=alsa ALSOFT_LOGLEVEL=1 \
     ALSA_CONFIG_PATH=/usr/share/alsa/alsa.conf ALSA_PLUGIN_DIR=/usr/lib/aarch64-linux-gnu/alsa-lib \
-    "$base/engine" > "$pipe_dir/output" 2>&1 &
+    "$@" > "$pipe_dir/output" 2>&1 &
 engine_pid=$!
 status=0
 wait "$engine_pid" || status=$?

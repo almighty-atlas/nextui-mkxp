@@ -31,7 +31,7 @@ class PakTests(unittest.TestCase):
         (game / 'Save1.rxdata').write_text('synthetic existing save')
         return game
 
-    def runtime(self):
+    def runtime(self, session=None):
         runtime = Path(self.temp.name) / 'runtime'
         (runtime / 'stdlib').mkdir(parents=True)
         (runtime / 'stdlib/test.rb').write_text('# synthetic')
@@ -39,8 +39,9 @@ class PakTests(unittest.TestCase):
         (runtime / 'engine').write_text(
             '#!/bin/sh\nprintf "changed" > game/Save1.rxdata\n'
             'i=0; while test "$i" -lt 400; do echo test-output; i=$((i+1)); done\n')
-        with patch.object(P, 'ENGINE_SHA256', P.digest(runtime / 'engine')):
-            return P.install(self.sd, runtime)
+        with patch.object(P, 'ENGINE_SHA256', P.digest(runtime / 'engine')), \
+                patch.object(P, 'SESSION_SHA256', P.digest(session) if session else P.SESSION_SHA256):
+            return P.install(self.sd, runtime, session)
 
     def launch(self, pak, marker):
         env = dict(os.environ, IS_NEXT='yes', PLATFORM='h700', SDCARD_PATH=str(self.sd),
@@ -143,6 +144,35 @@ class PakTests(unittest.TestCase):
         subprocess.run(['sh', '-n', str(launcher)], check=True)
         result = subprocess.run(['sh', str(launcher)], env={'PATH': '/usr/bin:/bin'}, capture_output=True)
         self.assertEqual(result.returncode, 2)
+
+    def test_optional_helper_and_status_survive_log_truncation(self):
+        helper = Path(self.temp.name) / 'helper'
+        helper.write_text('#!/bin/sh\ntest "$1" = -- || exit 125\nshift\n"$@"\n'
+                          'status=$?\necho "RMXP_RESULT=exit CODE=$status REASON=natural" >&2\nexit "$status"\n')
+        marker = P.register(self.sd, self.game(), 'Test', str(self.sd))
+        pak = self.runtime(helper)
+        result = self.launch(pak, marker)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        state = self.sd / '.userdata/h700/nextui-mkxp' / marker.read_text().strip()
+        lines = (state / 'run.log').read_text().splitlines()
+        self.assertEqual(len(lines), 258)
+        self.assertEqual(lines[-2:], ['RMXP_RESULT=exit CODE=0 REASON=natural', 'RMXP_EXIT=0'])
+        (state / 'session.conf').write_text('/dev/input/event0\n$(touch BAD)\n315\n')
+        result = self.launch(pak, marker)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('Invalid quit keys', result.stderr)
+        self.assertFalse((state / 'BAD').exists())
+        (state / 'session.conf').write_text('/dev/input/event0\n314\n315\ntrailing-data')
+        self.assertIn('Extra session config data', self.launch(pak, marker).stderr)
+
+    def test_quit_configuration_requires_helper(self):
+        marker = P.register(self.sd, self.game(), 'Test', str(self.sd))
+        pak = self.runtime()
+        state = self.sd / '.userdata/h700/nextui-mkxp' / marker.read_text().strip()
+        (state / 'session.conf').write_text('/dev/input/event0\n314\n315\n')
+        result = self.launch(pak, marker)
+        self.assertIn('Install session helper first', result.stderr)
+        self.assertFalse((state / 'lock').exists())
 
 
 if __name__ == '__main__':

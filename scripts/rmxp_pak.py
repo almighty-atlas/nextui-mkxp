@@ -12,6 +12,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE_SHA256 = '33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3'
+SESSION_SHA256 = '3e1aa386ec7fbf08e3d4f97610604e5d97ddfbe09fee31168232a26288f1396d'
 KIT_FILES = ('pak/RMXP.pak/launch.sh', 'scripts/rmxp_pak.py', 'docs/RMXP_PAK.md')
 
 
@@ -56,12 +57,15 @@ def bindings():
     return struct.pack('<III', 3, 1, len(records)) + b''.join(struct.pack('<IIII', *r) for r in records)
 
 
-def install(sd, runtime):
+def install(sd, runtime, session=None):
     """Import only the known private runtime; never distribute it in the source kit."""
     target = sd / 'Emus/h700/RMXP.pak'
     writable_destination(sd, target)
     require(not target.exists(), 'Pak already exists; no automatic overwrite')
     require(digest(runtime / 'engine') == ENGINE_SHA256, 'Unverified engine hash')
+    if session is not None:
+        require(session.is_file() and not session.is_symlink() and digest(session) == SESSION_SHA256,
+                'Unverified session helper')
     files = [runtime / 'engine', runtime / 'LICENSE.txt'] + sorted((runtime / 'stdlib').rglob('*.rb'))
     require(len(files) > 2, 'Ruby stdlib missing')
     for path in files:
@@ -78,6 +82,11 @@ def install(sd, runtime):
     (target / 'keybindings.mkxp1').write_bytes(bindings())
     (target / 'engine').chmod(0o755)
     (target / 'launch.sh').chmod(0o755)
+    if session is not None:
+        shutil.copyfile(session, target / 'rmxp-session')
+        (target / 'rmxp-session').chmod(0o755)
+        require(digest(target / 'rmxp-session') == SESSION_SHA256, 'Session changed while copying')
+    require(digest(target / 'engine') == ENGINE_SHA256, 'Engine changed while copying')
     manifest = ''.join(f'{digest(p)}  {p.relative_to(target).as_posix()}\n'
                        for p in sorted(target.rglob('*')) if p.is_file())
     (target / 'SHA256SUMS').write_text(manifest)
@@ -148,6 +157,7 @@ def main():
     p = sub.add_parser('install')
     p.add_argument('--sd-root', type=Path, required=True)
     p.add_argument('--runtime', type=Path, required=True)
+    p.add_argument('--session', type=Path, help='Optional reviewed private AArch64 supervisor from PR #42')
     p = sub.add_parser('register')
     p.add_argument('--sd-root', type=Path, required=True)
     p.add_argument('--game', type=Path, required=True)
@@ -158,7 +168,7 @@ def main():
     p.add_argument('archive', type=Path)
     args = parser.parse_args()
     if args.action == 'install':
-        print(install(args.sd_root.resolve(strict=True), args.runtime.resolve(strict=True)))
+        print(install(args.sd_root.resolve(strict=True), args.runtime.resolve(strict=True), args.session))
     elif args.action == 'register':
         print(register(args.sd_root, args.game, args.name))
     elif args.action == 'kit':
