@@ -70,11 +70,12 @@ mkfifo "$pipe_dir/output"
 # Drain output, retaining only 256 truncated lines; do not limit save-file sizes.
 awk 'length($0) <= 128 && /^RMXP_RESULT=(exit CODE=[0-9]+|signal SIGNAL=[0-9]+) REASON=(natural|chord|supervisor_signal)$/ { result=$0 }
      NR <= 256 { print substr($0,1,1024) }
-     END { if (result != "") print result }' < "$pipe_dir/output" > "$state/run.log" &
+     END { if (result != "" && NR > 256) print result }' < "$pipe_dir/output" > "$state/run.log" &
 logger_pid=$!
 cd "$state"
 ulimit -c 0
-env -i PATH=/usr/bin:/bin HOME="$state/home" XDG_DATA_HOME="$state/data" \
+# mkxp-z on Linux chdirs to its own directory unless SRCDIR names the config/work directory.
+env -i PATH=/usr/bin:/bin HOME="$state/home" XDG_DATA_HOME="$state/data" SRCDIR="$state" \
     LANG=C LC_ALL=C LD_LIBRARY_PATH="$SDCARD_PATH/.system/h700/lib" LD_BIND_NOW=1 \
     SDL_VIDEODRIVER=mali SDL_OPENGL_ES_DRIVER=1 ALSOFT_DRIVERS=alsa ALSOFT_LOGLEVEL=1 \
     ALSA_CONFIG_PATH=/usr/share/alsa/alsa.conf ALSA_PLUGIN_DIR=/usr/lib/aarch64-linux-gnu/alsa-lib \

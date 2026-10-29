@@ -37,7 +37,9 @@ class PakTests(unittest.TestCase):
         (runtime / 'stdlib/test.rb').write_text('# synthetic')
         (runtime / 'LICENSE.txt').write_text('synthetic test fixture')
         (runtime / 'engine').write_text(
-            '#!/bin/sh\nprintf "changed" > game/Save1.rxdata\n'
+            '#!/bin/sh\n# Like mkxp-z: run from SRCDIR, else from the engine directory.\n'
+            'cd "${SRCDIR:-$(dirname "$0")}" && test -f mkxp.json || exit 3\n'
+            'printf "changed" > game/Save1.rxdata\n'
             'i=0; while test "$i" -lt 400; do echo test-output; i=$((i+1)); done\n')
         with patch.object(P, 'ENGINE_SHA256', P.digest(runtime / 'engine')), \
                 patch.object(P, 'SESSION_SHA256', P.digest(session) if session else P.SESSION_SHA256):
