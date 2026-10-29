@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_ONLY_BLOCKED",
+  "issue": 22,
+  "project_base": "fb4a3cd60b1b8d6d6f2e96eff0b05e6f45866fe4",
+  "original_source_license": "MIT (this directory only; no dependency clearance implied)",
+  "owner_metadata": "https://github.com/almighty-atlas/nextui-mkxp/issues/1#issuecomment-6403001093",
+  "adr": "https://github.com/almighty-atlas/nextui-mkxp/blob/94c2e0287df8776680d89bc33c184db4dc61935f/docs/ADR-0001-h700-native-pak.md",
+  "license_gate": "https://github.com/almighty-atlas/nextui-mkxp/blob/9d482dc981401166b40155678ad00e29daad9163/docs/DISTRIBUTION_GATE.md",
+  "sources": [
+    {
+      "repository": "https://github.com/LoveRetro/NextUI",
+      "commit": "5291344b3aceae5fa197437a70824afb41e2d338",
+      "scope": "Research source snapshot only, not an installed-runtime or build lock",
+      "files": [
+        {
+          "path": "skeleton/SYSTEM/h700/bin/h700-init.sh",
+          "url": "https://github.com/LoveRetro/NextUI/blob/5291344b3aceae5fa197437a70824afb41e2d338/skeleton/SYSTEM/h700/bin/h700-init.sh",
+          "sha256": "86f55d36de7d1653ac00861f7c31503c1727ac372d12aae101196932e36b1652"
+        },
+        {
+          "path": "skeleton/SYSTEM/h700/paks/MinUI.pak/launch.sh",
+          "url": "https://github.com/LoveRetro/NextUI/blob/5291344b3aceae5fa197437a70824afb41e2d338/skeleton/SYSTEM/h700/paks/MinUI.pak/launch.sh",
+          "sha256": "170b2aadfd28676a78c66c83ac3643a277e4c438a9aa4cb60d7976c491c67d41"
+        },
+        {
+          "path": "workspace/h700/makefile",
+          "url": "https://github.com/LoveRetro/NextUI/blob/5291344b3aceae5fa197437a70824afb41e2d338/workspace/h700/makefile",
+          "sha256": "a9301b0110c2aa2a786af7aca4f0aa34a4dca269c56885ec6525218f7d562588"
+        },
+        {
+          "path": "makefile.toolchain",
+          "url": "https://github.com/LoveRetro/NextUI/blob/5291344b3aceae5fa197437a70824afb41e2d338/makefile.toolchain",
+          "sha256": "19a8ea03d44c4a5181d7a6e2f8e0240b2481de356dfcb3b8cc0f841b4d0c5b6f"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/LoveRetro/h700-toolchain",
+      "commit": "04faa348c112617fc6b99be62308099ee6d43581",
+      "scope": "Research source snapshot only, not an installed-runtime or build lock",
+      "files": [
+        {
+          "path": "Dockerfile",
+          "url": "https://github.com/LoveRetro/h700-toolchain/blob/04faa348c112617fc6b99be62308099ee6d43581/Dockerfile",
+          "sha256": "16111e7358ee8ee8c6fdebaf8d20f159121969ab651f586dcf0813c6df6f24b1"
+        },
+        {
+          "path": "support/build-sdl2.sh",
+          "url": "https://github.com/LoveRetro/h700-toolchain/blob/04faa348c112617fc6b99be62308099ee6d43581/support/build-sdl2.sh",
+          "sha256": "6baa5250e4155fb1366eb3693de5af97ec26e364e6924b88ce65276fbf1d1b35"
+        },
+        {
+          "path": "support/sdl2-h700.patch",
+          "url": "https://github.com/LoveRetro/h700-toolchain/blob/04faa348c112617fc6b99be62308099ee6d43581/support/sdl2-h700.patch",
+          "sha256": "e6d7e16806c36f619d1cd99ff49a30d34d044f9c6c94761fa2c7f846605cbf04"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot",
+      "commit": "d4a7d7503524cc469fe775242f3f925d4dd56c88",
+      "scope": "Research source snapshot only, not an installed-runtime or build lock",
+      "files": [
+        {
+          "path": "src/video/mali-fbdev/SDL_malivideo.c",
+          "url": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_malivideo.c",
+          "sha256": "9dd97d60edaef1328d5bf81e6f93cd035e8612c0372d1243ccaec61093fd22dc"
+        },
+        {
+          "path": "src/video/mali-fbdev/SDL_maliopengles.c",
+          "url": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/SDL_maliopengles.c",
+          "sha256": "c05ff14716d11b3430ef4a485e02299857d2f15a0d87fddcc2c09221bc57359e"
+        },
+        {
+          "path": "src/video/mali-fbdev/mali.h",
+          "url": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/mali-fbdev/mali.h",
+          "sha256": "bdec38aca4ac6fe81271d5b357481762b345a68d7baa0d8e2c8dfd24f4a1da8d"
+        },
+        {
+          "path": "src/video/SDL_egl.c",
+          "url": "https://github.com/JohnnyonFlame/SDL-malifbdev-rot/blob/d4a7d7503524cc469fe775242f3f925d4dd56c88/src/video/SDL_egl.c",
+          "sha256": "3e12e86a9a7a887a95909bf367129827cef8dcb5463e60282fa2193aa33ab7b7"
+        }
+      ]
+    }
+  ],
+  "unresolved": {
+    "compiler_archive_sha256": "UNKNOWN",
+    "toolchain_image_digest": "UNKNOWN",
+    "sysroot_file_manifest_sha256": "UNKNOWN",
+    "installed_sdl_sha256_and_build_source": "UNKNOWN",
+    "installed_egl_gles_abi_and_provenance": "UNKNOWN",
+    "required_elf_interpreter": "UNKNOWN",
+    "glibc_symbol_floor": "UNKNOWN",
+    "actual_dt_needed_and_dlopen_closure": "UNKNOWN",
+    "mali_backend_license_review": "UNKNOWN",
+    "h700_ion_and_vendor_access": "UNKNOWN"
+  },
+  "recipe_toolchain_claim": {
+    "repository": "https://github.com/LoveRetro/gcc-arm-8.3-aarch64-tg5040",
+    "release": "v8.3.0-20260204-190602-d37268f5",
+    "target": "aarch64-nextui-linux-gnu",
+    "sysroot_in_recipe": "/opt/aarch64-nextui-linux-gnu/aarch64-nextui-linux-gnu/libc",
+    "verification": "Dockerfile declaration only; no archive/image fetched, checksum or H700 ABI clearance"
+  }
+}
