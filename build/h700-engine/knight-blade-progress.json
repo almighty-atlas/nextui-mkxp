@@ -1,6 +1,7 @@
 {
   "schema": 1,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
+  "rebuild_evidence": "build/h700-engine/engine-rebuild-evidence.json",
   "milestones": [
     {"id": "foundation", "weight": 15, "done": true, "evidence": "docs/H700_RUBY_BATCH.md"},
     {"id": "ruby-probe", "weight": 5, "done": true, "evidence": "build/h700-engine/runtime-batch-evidence.json"},
