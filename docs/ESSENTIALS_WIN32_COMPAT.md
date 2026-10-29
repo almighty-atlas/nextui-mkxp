@@ -87,6 +87,13 @@ scales that to the display. Open items: Sage quits without an error when Down
 is pressed on the load menu, and name-entry letters are cut in half. For the
 quit, the shim logs `NEXTUI_EXIT`/`NEXTUI_SCENE_NIL` with callers in `run.log`.
 
+The first version of that screen hook prepended a module to `Graphics`.
+Because the games `alias` `Graphics.update` themselves, the alias captured the
+prepended method, which then recursed until the stack overflowed and both games
+stopped at start (sixth launch, verified-on-H700). `Graphics.update` and
+`Kernel#exit` are now chained with `alias`, like the games do, and the
+synthetic suite chains them the same way as a regression test.
+
 Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
 through `/tmp/next`) were each followed by a full power-off of the device; the
 owner's normal menu launch was not. Agent remote launches are stopped until

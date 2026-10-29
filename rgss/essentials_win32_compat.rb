@@ -203,23 +203,28 @@ module NextUIScreen
     @size = size
     RESIZE.call(*size)
   end
+end
 
-  def update(*)
+# Chained by alias, not prepend: games alias Graphics.update and Kernel#exit
+# themselves, and an alias of a prepended method would call itself forever.
+class << Graphics
+  alias_method :nextui_native_update, :update
+  def update(*args)
     NextUIScreen.follow
-    super
+    nextui_native_update(*args)
   end
 end
-Graphics.singleton_class.prepend(NextUIScreen)
 
 # Diagnostics in run.log for silent quits: who ended the scene loop or exited.
 trace_var(:$scene) { |scene| warn("NEXTUI_SCENE_NIL #{caller(1, 4).join(' < ')}") if scene.nil? }
-module NextUIExitTrace
+module Kernel
+  alias_method :nextui_native_exit, :exit
   def exit(*args)
     warn("NEXTUI_EXIT #{caller(1, 4).join(' < ')}")
-    super
+    nextui_native_exit(*args)
   end
+  module_function :exit
 end
-Kernel.prepend(NextUIExitTrace)
 
 # The launcher starts the engine with an empty environment, but Essentials
 # enters ENV["TEMP"] (e.g. for every GIF/empty picture). The per-game HOME

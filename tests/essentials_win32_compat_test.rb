@@ -111,6 +111,17 @@ class StringInput
   end
 end
 
+# Games chain Graphics.update and Kernel#exit with alias (Essentials, RMFlash).
+class << Graphics
+  alias game_update update
+  def update = game_update
+end
+
+module Kernel
+  alias game_exit exit
+  def exit(*args) = game_exit(*args)
+end
+
 module FontInstaller
   def self.install = raise('must be replaced')
   def self.kept = :kept
