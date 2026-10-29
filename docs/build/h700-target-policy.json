@@ -1,0 +1,8 @@
+{
+  "interpreter": null,
+  "allowed_needed": null,
+  "max_glibc": null,
+  "allowed_rpaths": null,
+  "allowed_other_versions": [],
+  "kernel": "4.9.170"
+}
