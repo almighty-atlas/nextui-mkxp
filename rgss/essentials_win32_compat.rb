@@ -130,6 +130,61 @@ class Object
   alias_method :type, :class unless method_defined?(:type)
 end
 
+# Thread.critical was a 1.8 global scheduler lock; RGSS game code runs on one
+# Ruby thread here, so a plain flag keeps the save/restore pattern working.
+class << Thread
+  unless method_defined?(:critical)
+    def critical = @nextui_critical || false
+    def critical=(value)
+      @nextui_critical = value
+    end
+  end
+end
+
+# Essentials' StringInput (an in-memory file over data read from the encrypted
+# archive) indexes its string, which gave bytes in Ruby 1.8 and gives
+# characters now: getc returned a String and binary readers crashed. The
+# prepended module keeps the game's methods but makes them work on a binary
+# copy, returns Integer bytes from getc and hands text back in its original
+# encoding. Prepending also wins over the game's later definitions.
+module NextUIStringInput
+  def initialize(str)
+    super
+    @nextui_text = str
+    @string = str.b
+  end
+
+  def string = @nextui_text
+
+  def getc
+    raise IOError, 'closed stream' if @closed
+    byte = @string.getbyte(@pos)
+    @pos += 1
+    @pos += 1 if @pos == @string.size
+    byte
+  end
+
+  def gets = text(super)
+
+  def read(*args) = text(super)
+
+  def each(&block)
+    raise IOError, 'closed stream' if @closed
+    @nextui_text.each_line(&block)
+  ensure
+    @pos = 0
+  end
+
+  private
+
+  def text(value)
+    value.is_a?(String) ? value.force_encoding(@nextui_text.encoding) : value
+  end
+end
+
+class StringInput; end
+StringInput.prepend(NextUIStringInput)
+
 # The launcher starts the engine with an empty environment, but Essentials
 # enters ENV["TEMP"] (e.g. for every GIF/empty picture). The per-game HOME
 # from the launcher is the closest writable equivalent.

@@ -74,6 +74,38 @@ module Input
   def self.down?(key) = (@key_state.call(key) & 0x8000) > 0
 end
 
+# Shaped like Essentials' StringInput: character indexing, as written for 1.8.
+class StringInput
+  def initialize(str)
+    @string, @pos, @closed = str, 0, false
+  end
+
+  def getc
+    ch = @string[@pos]
+    @pos += 1
+    ch
+  end
+
+  def gets
+    idx = @string.index("\n", @pos)
+    line = idx ? @string[@pos..idx] : @string[@pos..]
+    @pos = idx ? idx + 1 : @string.size + 1
+    line
+  end
+
+  def read(len)
+    str = @string[@pos, len]
+    @pos += len
+    str
+  end
+
+  def each_byte
+    while (byte = getc)
+      yield byte
+    end
+  end
+end
+
 module FontInstaller
   def self.install = raise('must be replaced')
   def self.kept = :kept
@@ -179,6 +211,25 @@ class EssentialsWin32CompatTest < Minitest::Test
     object = Object.new
     assert_equal object.object_id, object.id
     assert_equal [true, false, nil], [TRUE, FALSE, NIL]
+    old = Thread.critical
+    Thread.critical = true
+    assert Thread.critical
+    Thread.critical = old
+    refute Thread.critical
+  end
+
+  def test_string_input_reads_bytes_like_ruby18
+    data = [0x12345678].pack('V') + "\u00e9t\u00e9\nok\n"
+    input = StringInput.new(data.dup.force_encoding('UTF-8'))
+    value = 0
+    4.times { |shift| value |= input.getc << (8 * shift) }
+    assert_equal 0x12345678, value
+    line = input.gets
+    assert_equal "\u00e9t\u00e9\n", line
+    assert_equal Encoding::UTF_8, line.encoding
+    assert_equal 'ok', input.read(2)
+    assert_equal ["a\n", 'b'], StringInput.new("a\nb").each.to_a
+    assert_equal data.force_encoding('UTF-8'), input.string
   end
 
   def test_temp_folder_points_to_per_game_home

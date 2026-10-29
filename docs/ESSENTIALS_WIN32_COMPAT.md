@@ -70,6 +70,18 @@ It also restores the Ruby 1.8 core methods these games call, unless a game
 defines them itself: `Array#nitems` (party and box counts), `Hash#index`,
 `Object#id`/`#type` and `TRUE`/`FALSE`/`NIL`. This is an original
 implementation of the idea in mkxp-z's CC0 `ruby_classic_wrap.rb`.
+Fourth launch (owner, verified-on-H700): Sage reached its title screen, then
+stopped in `Thread.critical` (a 1.8 scheduler lock, now a plain flag) and in
+the archive reader. Essentials' `StringInput` indexes its string, which gave
+bytes in 1.8; a prepended module now runs the game's own methods on a binary
+copy, returns Integer bytes from `getc` and returns text in the original
+encoding.
+
+Two agent-initiated SSH launches (stopping `nextui.elf` and queueing the game
+through `/tmp/next`) were each followed by a full power-off of the device; the
+owner's normal menu launch was not. Agent remote launches are stopped until
+that is understood.
+
 Known remaining 1.8 difference: `String#[]` returns a character, not a byte,
 so byte checks such as GIF/BOM detection quietly evaluate to false.
 
@@ -83,7 +95,7 @@ shared Pak. Knight Blade is unaffected.
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 13 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 14 runs, 0 failures |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |
@@ -91,6 +103,8 @@ shared Pak. Knight Blade is unaffected.
 | verified-on-H700 | Repaired shim `88380c8d…` upgraded in place for both games | checksums PASS; saves and shared runtime unchanged |
 | verified-on-H700 | Third launch | all sections parsed; intro reached; `ENV["TEMP"]` nil abort |
 | verified-on-H700 | Shim `9e6faa8f…` (TEMP, Ruby 1.8 core methods) upgraded in place | checksums PASS; saves and shared runtime unchanged |
+| verified-on-H700 | Fourth launch (Sage, owner) | title screen reached; `StringInput` byte error |
+| verified-on-host | Private harness: both games' real `StringInput` + `FileInputMixin` after the shim | words/dwords/bytes and UTF-8 lines read correctly |
 | untested | Title screen, audio, controls, new game, save/load on H700 | needs owner launch |
 
 Rollback per game: restore `mkxp.json.pre-compat` over `mkxp.json`, then remove
