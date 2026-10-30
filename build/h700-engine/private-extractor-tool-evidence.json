@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "scope": "Private host metadata/extraction tools only, not H700 runtime dependencies",
+  "repository_snapshot": "http://snapshot.debian.org/archive/debian/20261020T213255Z/",
+  "package_index_verification": "apt-get update verified signed Debian metadata using the existing image keyring; apt-get download used that immutable snapshot",
+  "host_package_installation": false,
+  "method": "Download .deb files as uid 1000; extract with dpkg-deb -x into an isolated private prefix; no maintainer scripts run",
+  "packages": [
+    {"name": "7zip", "version": "25.01+dfsg-1~deb13u2", "arch": "amd64", "bytes": 1573700, "sha256": "b2cb210bee3be6a10230b38b8645d71846d19364b157f44fd08e1a54cae1652f", "use": "Read-only identification of embedded CAB offset/format, no game executable run"},
+    {"name": "libunshield0", "version": "1.5.1-1+b2", "arch": "amd64", "bytes": 22332, "sha256": "97b411fb339223d108a87b11f49a424cc960a710eab25e5be00add63bbf7d8b4", "use": "Exploratory tool prerequisite, not required or executed for the final CAB extraction"},
+    {"name": "unshield", "version": "1.5.1-1+b2", "arch": "amd64", "bytes": 12236, "sha256": "1924071101e8f3aa7e2588c3f585436573138c7f65355c4e25f29c47b6c73231", "use": "Exploratory tool, not required or executed for the final CAB extraction"}
+  ],
+  "final_extraction": "libarchive CAB reader from the existing pinned tools image",
+  "game_bundle_downloads": false,
+  "tool_binary_distribution": false
+}

@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "level": "verified-on-H700",
+  "scope": "File installation, checksums and existing runtime/input identity only; not game execution",
+  "device": "RG35XX Pro",
+  "arch": "aarch64",
+  "firmware": "NextUI-20261013-0",
+  "firmware_commit": "39a06de",
+  "engine_sha256": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+  "supervisor_sha256": "3e1aa386ec7fbf08e3d4f97610604e5d97ddfbe09fee31168232a26288f1396d",
+  "shared_runtime_manifest": "PASS_BEFORE_AND_AFTER",
+  "existing_save_checksums": {
+    "records": 7,
+    "result": "UNCHANGED"
+  },
+  "input": {
+    "device_name": "ANBERNIC-keys",
+    "event_node": "/dev/input/event1",
+    "select": 310,
+    "start": 311,
+    "supervisor_capability_check": "PASS",
+    "fresh_physical_chord_test": "NOT_TESTED"
+  },
+  "games": [
+    {
+      "id": "sage",
+      "name": "Pokemon Sage",
+      "source": "Games/Pokemon Sage",
+      "game_id": "e0e60a365f8c72b114bd3a480efabf1b257f43da4e4fdaf8cd907adaa7eb8b4e",
+      "manifest_files": 1416,
+      "checksums": "ALL_PASS",
+      "preload_scripts": [],
+      "session_config": "VERIFIED_310_311",
+      "h700_game_result": "NOT_TESTED"
+    },
+    {
+      "id": "team-rocket-lucksack",
+      "name": "Pokemon Team Rocket",
+      "source": "Games/Pokemon Team Rocket",
+      "game_id": "6af6b0591ce6305a04030834d7a9c40a57490a98b4fb0d60e7abc4fc66273a17",
+      "manifest_files": 2014,
+      "checksums": "ALL_PASS",
+      "preload_scripts": [],
+      "session_config": "VERIFIED_310_311",
+      "h700_game_result": "NOT_TESTED"
+    }
+  ],
+  "sage_resume": {
+    "reason": "Initial transfer exceeded command deadline before marker creation",
+    "already_verified_files": 1369,
+    "resent_files": 47,
+    "resent_bytes": 78713770,
+    "deleted_files": 0,
+    "final_complete_manifest": "ALL_PASS"
+  },
+  "reborn": "NOT_INSTALLED_PENDING_INPUT_AND_CONFIG_REVIEW",
+  "game_launch_by_agent": false,
+  "firmware_or_service_changes": false,
+  "public_game_distribution": false,
+  "first_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "result": "BOTH_ABORTED_BEFORE_TITLE",
+    "error": "004:Win32API:3:in `initialize': wrong number of arguments (given 4, expected 0) (ArgumentError)",
+    "cause": "Engine built with use_miniffi=false; Essentials 17.2 requires Win32API",
+    "engine_exit": "RMXP_EXIT=0 natural, no crash or hang"
+  },
+  "compat_adapter": {
+    "script": "rgss/essentials_win32_compat.rb",
+    "sha256": "e5fac2c3c1932b745fc0a6de0e0a6b78e058e513b536fc24cdc60b17b1887063",
+    "installed_for": [
+      "sage",
+      "team-rocket-lucksack"
+    ],
+    "device_checksums": "ALL_PASS",
+    "previous_config_kept": "mkxp.json.pre-compat",
+    "existing_saves_after": "UNCHANGED",
+    "shared_runtime_after": "UNCHANGED",
+    "h700_game_result": "NOT_TESTED",
+    "previous_sha256": [
+      "899a7ec157bcfa4a22010322828565c344b610e0f160e7c50d0db83905416f80",
+      "88380c8d68906764514599e02e8de82684a5c73a0821bf245afef853040b02b1",
+      "9e6faa8fbf7a31167c7a6c8317004a6e59da6bcefb9f29e3aaa095d4a0f5d0eb",
+      "bfeb0c06d9bf23458bb2a7e53a23cd88b86c47e563e47390d2903d77a2c71af5",
+      "d0245919803049ced9a4e5ebfc0bd3c153cd5f446cc6ddb534e8dc2378a9cb8b",
+      "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4",
+      "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d",
+      "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289",
+      "5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e",
+      "e3ef586e115f944c1590dc4417bf8aeba8f5751bb62f226a8a154cfaae0103c6"
+    ],
+    "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
+    "temp_env": "TEMP/TMP default to per-game HOME",
+    "ruby18_core": "Array#nitems, Hash#index, Object#id/#type, TRUE/FALSE/NIL, Thread.critical, StringInput byte semantics, proc return/break as 1.8 lambda",
+    "screen": "native screen follows Graphics.width/height (+border offsets) once per frame",
+    "diagnostics": "NEXTUI_EXIT / NEXTUI_SCENE_NIL caller lines in run.log",
+    "mkxp_config": {
+      "fontHeightReporting": 1
+    },
+    "profiler": "v2 opt-in via $HOME/nextui-profile; create/copy/dispose and animation pixel estimates, uncollected bitmap inventory, native update/report timing; stops at 256 KiB log threshold",
+    "bitmap_budget": "Unchanged experimental 48 MiB pixel budget; failed to prevent Rocket OOM; not actual native memory accounting",
+    "profiler_enabled_on_device": [
+      "sage",
+      "team-rocket-lucksack"
+    ]
+  },
+  "second_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "result": "BOTH_ABORTED_BEFORE_TITLE",
+    "win32api": "shim loaded; no Win32API error",
+    "errors": {
+      "sage": [
+        "046:AudioUtilities:919 `when 0:` (Ruby 1.8 syntax)",
+        "171:PSystem_Utilities:199 invalid multibyte escape \\x7f-\\x9f",
+        "184:_SAGE_Battle_MoveEffects:401 end-of-input (`=0.` before end/elsif)"
+      ],
+      "rocket": [
+        "190:PSystem_Utilities:300 invalid multibyte escape \\x7f-\\x9f"
+      ]
+    }
+  },
+  "third_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "result": "BOTH_ABORTED_IN_INTRO",
+    "progress": "all script sections parsed; intro scene reached",
+    "error": "SpriteWindow Dir.chdir(ENV[\"TEMP\"]): no implicit conversion of nil into String (TypeError)",
+    "cause": "launcher env -i leaves TEMP unset; Windows always sets it"
+  },
+  "fourth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "sage",
+    "result": "TITLE_SCREEN_REACHED_THEN_ABORT",
+    "errors": [
+      "048:BitmapCache Thread.critical undefined (fixed in bfeb0c06, dev copy)",
+      "040:File_Mixins fgetdw: String can't be coerced into Integer (StringInput#getc returns a character in Ruby 3)"
+    ],
+    "remote_launch_note": "Two agent SSH launches (killing nextui.elf) were followed by full device power-off; owner menu launch did not power off. Remote launches stopped."
+  },
+  "fifth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "sage": "title and load menu shown; Down on load menu quits without logged error; new game starts; name entry letters half visible; abort after name entry",
+    "rocket": "title, load menu navigation and new game work; name entry letters half visible; abort after name entry",
+    "error": "PokeBattle_Trainer#gender: Marshal.load(StringInput) failed (no getbyte), game fell back to the StringInput",
+    "display": "game drawn 512x384 in top-left of 640x480 screen"
+  },
+  "sixth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "result": "BOTH_ABORTED_AT_START",
+    "cause": "shim a2295d2f prepended Graphics.update; game aliases of the prepended method recursed (SystemStackError)"
+  },
+  "seventh_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "sage": "starts, full-screen scaling OK, load menu Down no longer quits, continues after name entry",
+    "rocket": "starts, full-screen scaling OK, load menu OK, name entry screen reached",
+    "name_entry_screenshot": "framebuffer read-only capture: lower half of every glyph cropped (Power Green font, nominal text height)"
+  },
+  "eighth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "rocket",
+    "result": "name entry text complete; continued, saved (Game.rxdata in private copy), abort when talking to a character",
+    "error": "116:PField_FieldMoves:779 unexpected return (LocalJumpError) in Events.onAction proc"
+  },
+  "ninth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "rocket",
+    "result": "talking to many characters works; occasional frame drops while walking",
+    "cpu_sample": "5 s /proc sample during play: rgss thread 67% of one core, mali 5%, OpenAL mixer 2.6%; governor performance at 1.512 GHz"
+  },
+  "tenth_owner_launch": {
+    "date": "2026-10-29",
+    "level": "verified-on-H700",
+    "game": "rocket",
+    "result": "played and saved repeatedly; engine OOM-killed (SIGKILL, exit 137) after an overworld Pokemon appeared",
+    "kernel": "Out of memory: Kill process engine total-vm 1756732kB anon-rss 235900kB file-rss 639636kB",
+    "save": "Game.rxdata in private copy written 23:49, intact"
+  }
+}

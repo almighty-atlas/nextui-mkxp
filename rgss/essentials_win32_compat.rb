@@ -1,0 +1,476 @@
+# SPDX-License-Identifier: MIT
+# Win32API stand-in for Pokemon Essentials (v17-era) RGSS1 games under the
+# H700 mkxp-z build, loaded per game through mkxp.json "preloadScript".
+# Original implementation.
+#
+# The engine is built without MiniFFI and no Windows libraries exist on the
+# device, so Essentials' `Win32API.new(dll, function, ...)` calls hit a missing
+# constructor and the game aborts before its title screen. Every emulated call
+# answers like an unavailable Windows API, except:
+#   * window/thread identity probes, so the game finds "its" window, and
+#   * GetAsyncKeyState/GetKeyState, which report the engine's own RGSS button
+#     state (and therefore the reviewed gamepad bindings) for one virtual key
+#     per button from Essentials' default Input.buttonToKey lists.
+# It also repairs, in memory only, three Ruby 1.8 constructs that Ruby 3.1
+# rejects as syntax errors (see NextUIRuby18). No native code is loaded and
+# nothing outside the game's own folder is written.
+module NextUIWin32
+  WINDOW = 1
+  THREAD = 1
+  ERROR_FILE_NOT_FOUND = 2
+  E_FAIL = -2147467259
+  MCIERR_INVALID_DEVICE_NAME = 263
+  LANG_ENGLISH_US = 0x0409
+
+  # Windows virtual-key code => native RGSS1 buttons (captured before game
+  # scripts redefine the Input constants). Exactly one key per button: the
+  # game polls its key list lazily, so reporting C, Enter and Space together
+  # would trigger the same press again on the following frames.
+  KEYS = {
+    0x28 => [Input::DOWN], 0x25 => [Input::LEFT], 0x27 => [Input::RIGHT], 0x26 => [Input::UP],
+    0x0D => [Input::C],                 # Enter
+    0x1B => [Input::B],                 # Esc
+    0x5A => [Input::A],                 # Z (run)
+    0x21 => [Input::L], 0x22 => [Input::R],  # Page Up/Down
+    0x74 => [Input::F5, Input::X],      # F5: registered item, also on RGSS X
+    0x10 => [Input::SHIFT], 0x11 => [Input::CTRL], 0x12 => [Input::ALT],
+    0x75 => [Input::F6], 0x76 => [Input::F7], 0x77 => [Input::F8], 0x78 => [Input::F9]
+  }.freeze
+
+  # Functions whose Windows success value is non-zero (or a fixed answer).
+  FIXED = {
+    'GetCurrentThreadId' => THREAD, 'GetWindowThreadProcessId' => THREAD,
+    'GetForegroundWindow' => WINDOW, 'GetUserDefaultLangID' => LANG_ENGLISH_US,
+    'RegOpenKeyExA' => ERROR_FILE_NOT_FOUND, 'RegQueryValueExA' => ERROR_FILE_NOT_FOUND,
+    'SHGetKnownFolderPath' => E_FAIL, 'SHGetSpecialFolderLocation' => E_FAIL,
+    'mciSendString' => MCIERR_INVALID_DEVICE_NAME
+  }.freeze
+
+  class << Input
+    alias_method :nextui_native_update, :update
+    alias_method :nextui_native_press?, :press?
+  end
+
+  @frame = nil
+
+  class << self
+    def pressed?(key)
+      buttons = KEYS[key]
+      return false unless buttons
+      # Game scripts replace Input.update, so refresh native state once a frame.
+      frame = Graphics.frame_count
+      unless frame == @frame
+        @frame = frame
+        Input.nextui_native_update
+      end
+      buttons.any? { |button| Input.nextui_native_press?(button) }
+    end
+
+    def call(function, args)
+      case function
+      when 'GetAsyncKeyState', 'GetKeyState'
+        pressed?(args[0]) ? 0x8000 : 0
+      when 'FindWindowEx'
+        args[1] == 0 ? WINDOW : 0
+      when 'GetClientRect', 'GetWindowRect'
+        fill(args[1], [0, 0, Graphics.width, Graphics.height].pack('l4'))
+      when 'GetSystemMetrics'
+        { 0 => Graphics.width, 1 => Graphics.height }.fetch(args[0], 0)
+      else
+        FIXED.fetch(function, 0)
+      end
+    end
+
+    # Writes a native-style result into the caller's packed buffer.
+    def fill(buffer, bytes)
+      return 0 unless buffer.is_a?(String) && buffer.bytesize >= bytes.bytesize
+      bytes.each_byte.with_index { |byte, index| buffer.setbyte(index, byte) }
+      1
+    end
+
+    # Replaces a game-defined module function as soon as the game defines it.
+    def replace_when_defined(mod, name, &body)
+      mod.define_singleton_method(:singleton_method_added) do |added|
+        next unless added == name && !@nextui_replacing
+        @nextui_replacing = true
+        define_singleton_method(name, &body)
+        @nextui_replacing = false
+      end
+    end
+  end
+end
+
+class Win32API
+  def initialize(_dll, function, *_signature)
+    @function = function.to_s
+  end
+
+  def call(*args)
+    NextUIWin32.call(@function, args)
+  end
+  alias Call call
+end
+
+# Ruby 1.8 core methods that RGSS1 games call and Ruby 3.1 removed (same idea
+# as mkxp-z's CC0 ruby_classic_wrap.rb, plus Array#nitems). Game-defined
+# methods of the same name still take precedence.
+class Array
+  def nitems = count { |item| !item.nil? } unless method_defined?(:nitems)
+end
+
+class Hash
+  alias_method :index, :key unless method_defined?(:index)
+end
+
+class Object
+  TRUE = true unless const_defined?(:TRUE)
+  FALSE = false unless const_defined?(:FALSE)
+  NIL = nil unless const_defined?(:NIL)
+  alias_method :id, :object_id unless method_defined?(:id)
+  alias_method :type, :class unless method_defined?(:type)
+end
+
+# Thread.critical was a 1.8 global scheduler lock; RGSS game code runs on one
+# Ruby thread here, so a plain flag keeps the save/restore pattern working.
+class << Thread
+  unless method_defined?(:critical)
+    def critical = @nextui_critical || false
+    def critical=(value)
+      @nextui_critical = value
+    end
+  end
+end
+
+# In Ruby 1.8 Kernel#proc made a lambda, so `return`/`break` inside e.g.
+# `Events.onAction += proc { return if ... }` just left the handler. Ruby 3
+# raises LocalJumpError once the defining scope is gone; Proc#call now ends
+# the called proc with the jump's value instead, as a 1.8 lambda did.
+class Proc
+  alias_method :nextui_native_call, :call
+  def call(*args, &block)
+    nextui_native_call(*args, &block)
+  rescue LocalJumpError => error
+    raise unless %i[return break].include?(error.reason)
+    error.exit_value
+  end
+  alias [] call
+  alias yield call
+end
+
+# Essentials' StringInput (an in-memory file over data read from the encrypted
+# archive) indexes its string, which gave bytes in Ruby 1.8 and gives
+# characters now: getc returned a String and binary readers crashed. The
+# prepended module keeps the game's methods but makes them work on a binary
+# copy, returns Integer bytes from getc and hands text back in its original
+# encoding. Prepending also wins over the game's later definitions.
+module NextUIStringInput
+  def initialize(str)
+    super
+    @nextui_text = str
+    @string = str.b
+  end
+
+  def string = @nextui_text
+
+  def getc
+    raise IOError, 'closed stream' if @closed
+    byte = @string.getbyte(@pos)
+    @pos += 1
+    @pos += 1 if @pos == @string.size
+    byte
+  end
+
+  # Ruby 3's Marshal.load reads IO-like objects through getbyte and read.
+  alias getbyte getc
+
+  def gets = text(super)
+
+  def read(*args) = text(super)
+
+  def each(&block)
+    raise IOError, 'closed stream' if @closed
+    @nextui_text.each_line(&block)
+  ensure
+    @pos = 0
+  end
+
+  private
+
+  def text(value)
+    value.is_a?(String) ? value.force_encoding(@nextui_text.encoding) : value
+  end
+end
+
+class StringInput; end
+StringInput.prepend(NextUIStringInput)
+
+# Essentials draws at its nominal size (512x384) and resized the Windows
+# window through Win32API, which does nothing here, so the game sat in the
+# top-left corner of mkxp-z's default 640x480 RGSS1 screen. Once per frame
+# the native screen follows the game's Graphics.width/height (plus any border
+# offsets); mkxp-z then scales it to the display with the fixed aspect ratio.
+module NextUIScreen
+  RESIZE = Graphics.method(:resize_screen)
+  @size = [640, 480]
+
+  def self.follow
+    size = [Graphics.width + 2 * $ResizeOffsetX.to_i, Graphics.height + 2 * $ResizeOffsetY.to_i]
+    return if size == @size || size.any? { |length| length < 1 }
+    @size = size
+    RESIZE.call(*size)
+  end
+end
+
+# Chained by alias, not prepend: games alias Graphics.update and Kernel#exit
+# themselves, and an alias of a prepended method would call itself forever.
+class << Graphics
+  alias_method :nextui_native_update, :update
+  def update(*args)
+    NextUIScreen.follow
+    NextUIProfile.frame
+    if NextUIProfile.active?
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      result = nextui_native_update(*args)
+      NextUIProfile.native_update(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started)
+      result
+    else
+      nextui_native_update(*args)
+    end
+  end
+end
+
+# Experimental GC budget, not a proven OOM fix. This counts a single image's
+# pixels, not native memory; diagnostic accounting below also observes clones
+# and animation frames without changing this budget's behaviour.
+module NextUIBitmapBudget
+  LIMIT = 48 * 1024 * 1024
+  @pending = 0
+  @collections = 0
+
+  class << self
+    attr_reader :pending, :collections
+
+    def created(bitmap)
+      @pending += bytes(bitmap)
+      return if @pending < LIMIT
+      @pending = 0
+      @collections += 1
+      GC.start
+    end
+
+    def disposed(bitmap) = @pending = [@pending - bytes(bitmap), 0].max
+
+    def bytes(bitmap) = bitmap.width * bitmap.height * 4
+  end
+end
+
+# Opt-in allocation telemetry. Keep only scalar counters, never Bitmap
+# references or finalizers: observing a bitmap must not keep it alive.
+module NextUIBitmapTelemetry
+  @counts = Hash.new(0)
+  @sites = Hash.new(0)
+  @sizes = Hash.new(0)
+
+  class << self
+    def estimate(bitmap)
+      frames = bitmap.respond_to?(:frame_count) ? [bitmap.frame_count, 1].max : 1
+      [bitmap.width * bitmap.height * 4 * frames, frames]
+    end
+
+    def record(kind, bitmap)
+      return unless NextUIProfile.active?
+      bytes, frames = estimate(bitmap)
+      @counts[kind] += 1
+      @counts[:"#{kind}_bytes"] += bytes
+      @counts[:animated] += 1 if kind != :dispose && frames > 1
+      return if kind == :dispose
+      site = caller_locations(2, 12).find { |frame| !frame.path.include?('/compat/') }
+      label = site ? "#{site.path}:#{site.lineno}" : 'native'
+      label = 'other' unless @sites.key?(label) || @sites.size < 32
+      @sites[label] += bytes
+      size = "#{bitmap.width}x#{bitmap.height}x#{frames}"
+      size = 'other' unless @sizes.key?(size) || @sizes.size < 32
+      @sizes[size] += bytes
+    end
+
+    def summary
+      # Reachable/uncollected objects only, not GPU residency. This scan can
+      # add overhead and is deliberately restricted to diagnostic reports.
+      live = disposed = bytes = animated = 0
+      ObjectSpace.each_object(Bitmap) do |bitmap|
+        if bitmap.disposed?
+          disposed += 1
+        else
+          value, frames = estimate(bitmap)
+          live += 1
+          bytes += value
+          animated += 1 if frames > 1
+        end
+      end
+      counts = @counts.sort.map { |key, value| "#{key}=#{value}" }.join(',')
+      sites = @sites.sort_by { |_, value| -value }.first(4).map { |key, value| "#{value}:#{key}" }.join('|')
+      sizes = @sizes.sort_by { |_, value| -value }.first(4).map { |key, value| "#{value}:#{key}" }.join('|')
+      "bitmap_counts=#{counts} live_bitmaps=#{live} disposed_wrappers=#{disposed} " \
+        "live_pixel_bytes_est=#{bytes} live_animated=#{animated} alloc_sites=#{sites} alloc_sizes=#{sizes}"
+    end
+  end
+end
+
+class Bitmap
+  alias_method :nextui_native_initialize, :initialize
+  alias_method :nextui_native_dispose, :dispose
+  alias_method :nextui_native_initialize_copy, :initialize_copy
+
+  def initialize(*args)
+    nextui_native_initialize(*args)
+    NextUIBitmapTelemetry.record(:create, self)
+    NextUIBitmapBudget.created(self)
+  end
+
+  def initialize_copy(other)
+    nextui_native_initialize_copy(other)
+    NextUIBitmapTelemetry.record(:copy, self)
+  end
+
+  def dispose
+    unless disposed?
+      NextUIBitmapTelemetry.record(:dispose, self)
+      NextUIBitmapBudget.disposed(self)
+    end
+    nextui_native_dispose
+  end
+end
+
+# Opt-in profiler for stutter reports: only active while the file
+# $HOME/nextui-profile exists (HOME is the launcher's per-game directory).
+# Every 10 s it appends one line to $HOME/nextui-profile.log: frames, frames
+# over 50 ms, the longest frame, GC time, and the most frequent game frames
+# seen when Ruby's scheduler preempted the main thread.
+module NextUIProfile
+  FLAG = ENV['HOME'] ? File.join(ENV['HOME'], 'nextui-profile') : nil
+
+  def self.start
+    return unless FLAG && File.file?(FLAG)
+    @main, @samples, @frames, @slow, @longest = Thread.current, Hash.new(0), 0, 0, 0.0
+    @last = @report = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    @gc = GC.respond_to?(:total_time) ? GC.total_time : 0
+    @native_seconds = 0.0
+    @worker = Thread.new { loop { sleep 0.05; sample } }
+  end
+
+  def self.active? = !@main.nil?
+
+  def self.stop
+    @main = nil
+    @worker&.kill
+    @worker = nil
+  end
+
+  def self.native_update(seconds) = @native_seconds += seconds
+
+  def self.sample
+    return unless @main
+    location = @main.backtrace_locations(0, 12)&.find { |frame| !frame.path.to_s.include?('/compat/') }
+    @samples["#{frame_label(location)}"] += 1 if location
+  end
+
+  def self.rss_mb = File.read('/proc/self/statm').split[1].to_i * 4096 / 1048576
+
+  def self.frame_label(location) = "#{location.path}:#{location.lineno}:#{location.label}"
+
+  def self.frame
+    return unless @main
+    now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    length = (now - @last) * 1000
+    @last = now
+    @frames += 1
+    @slow += 1 if length > 50
+    @longest = length if length > @longest
+    report(now) if now - @report >= 10
+  end
+
+  def self.report(now)
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    path = File.join(ENV['HOME'], 'nextui-profile.log')
+    return stop if File.file?(path) && File.size(path) >= 256 * 1024
+    gc = GC.respond_to?(:total_time) ? GC.total_time : 0
+    memory = NextUIBitmapTelemetry.summary
+    top = @samples.sort_by { |_, count| -count }.first(6).map { |label, count| "#{count}x #{label}" }
+    File.open(path, 'a') do |log|
+      log.puts(format('frames=%d slow=%d longest_ms=%.0f gc_ms=%.0f major_gc=%d rss_mb=%d bitmap_gc=%d top=%s',
+                      @frames, @slow, @longest, (gc - @gc) / 1e6, GC.stat(:major_gc_count), rss_mb,
+                      NextUIBitmapBudget.collections, top.join(' | ')))
+      log.puts(format('memory %s native_update_ms=%.0f report_ms=%.1f', memory,
+                      @native_seconds * 1000,
+                      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000))
+    end
+    @native_seconds = 0.0
+    @report, @gc, @frames, @slow, @longest = now, gc, 0, 0, 0.0
+    @samples.clear
+  rescue SystemCallError
+    stop
+  end
+end
+NextUIProfile.start
+
+# Diagnostics in run.log for silent quits: who ended the scene loop or exited.
+trace_var(:$scene) { |scene| warn("NEXTUI_SCENE_NIL #{caller(1, 4).join(' < ')}") if scene.nil? }
+module Kernel
+  alias_method :nextui_native_exit, :exit
+  def exit(*args)
+    warn("NEXTUI_EXIT #{caller(1, 4).join(' < ')}")
+    nextui_native_exit(*args)
+  end
+  module_function :exit
+end
+
+# The launcher starts the engine with an empty environment, but Essentials
+# enters ENV["TEMP"] (e.g. for every GIF/empty picture). The per-game HOME
+# from the launcher is the closest writable equivalent.
+temp = ENV['HOME'] && File.directory?(ENV['HOME']) ? ENV['HOME'] : '.'
+ENV['TEMP'] ||= temp
+ENV['TMP'] ||= temp
+
+# mkxp-z registers the game's Fonts/ folder itself; copying into a Windows
+# font directory can only fail here and would prompt on every start.
+module FontInstaller; end
+NextUIWin32.replace_when_defined(FontInstaller, :install) { nil }
+
+# Ruby 1.8 source that RGSS1 accepted but Ruby 3.1 refuses to parse. mkxp-z
+# runs preloads after decoding $RGSS_SCRIPTS, so the decoded text (entry 3)
+# can be rewritten before evaluation. Line numbers are preserved, and a
+# rewrite is kept only if the script then compiles.
+module NextUIRuby18
+  FIXES = [
+    # `when 0: # comment` => `when 0 then # comment`
+    [/^([ \t]*when[ \t][^\n#]*[^:\s]):(?=[ \t]*(?:#[^\n]*)?\r?$)/, ' then'],
+    # Byte escapes above 0x7F are invalid in a UTF-8 regexp.
+    ['\\x7f-\\x9f]', '\\x7f\\u0080-\\u009f]'],
+    # `x=0.` + newline turns the next keyword into a method call.
+    [/(=[ \t]*\d+)\.(?=[ \t]*\r?\n[ \t]*(?:end|elsif|else|when)\b)/, '']
+  ].freeze
+
+  def self.repair(source)
+    # Scripts with invalid UTF-8 (in comments or strings) still parse as is.
+    return source unless source.valid_encoding?
+    fixed = FIXES.reduce(source) { |text, (pattern, replacement)| text.gsub(pattern) { $1 ? $1 + replacement : replacement } }
+    return source if fixed == source
+    RubyVM::InstructionSequence.compile(fixed)
+    fixed
+  rescue SyntaxError
+    source
+  end
+
+  def self.repair_scripts(scripts)
+    count = 0
+    scripts.each do |script|
+      next unless script.is_a?(Array) && script[3].is_a?(String)
+      fixed = repair(script[3])
+      next if fixed.equal?(script[3])
+      script[3] = fixed
+      count += 1
+    end
+    count
+  end
+end
+NextUIRuby18.repair_scripts($RGSS_SCRIPTS) if $RGSS_SCRIPTS.is_a?(Array)

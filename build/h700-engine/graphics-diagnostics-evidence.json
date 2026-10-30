@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "issue": 52,
+  "date": "2026-10-30",
+  "engine_commit": "37a04d14413454551a7b6aadbb4e93e67168accb",
+  "image": "sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b",
+  "scope": "private diagnostic candidate; no public binary or game assets",
+  "build": "PASS_INCREMENTAL_CROSS_BUILD",
+  "clean_reproduction": "NOT_VERIFIED",
+  "engine_sha256": "32ddd436259ba75db60abab6208f7d8556b571ed402df8ed8e3349546e3eade9",
+  "engine_bytes": 34953616,
+  "payload_manifest_sha256": "ae25e11f0f391ceec7542ae5c69f6b1161949294c653129a678cc740f1eb513e",
+  "shared_engine_before_after": "33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3",
+  "host_suite": {"run": 291, "passed": 290, "skipped": 1},
+  "device": "RG35XX Pro / H700 / NextUI-20261013-0",
+  "device_hash_manifest": "PASS",
+  "device_loader_verify": "PASS_EXIT_0",
+  "device_loader_list": "PASS_ALL_DEPENDENCIES_RESOLVED",
+  "device_graphics_execution": "PASS_GENERATED_STRESS_COMPLETE_EXIT_0",
+  "normal_nextui_return": "PASS_MENU_PROCESS_OBSERVED_AFTER_TEST",
+  "stress_observations": {
+    "rss_pages_min": 18992,
+    "rss_pages_max": 23813,
+    "page_bytes": 4096,
+    "last_report_blits": 1335059,
+    "last_report_upload_bytes": 1874329600,
+    "last_report_texture_bytes": 5816320,
+    "last_report_incomplete": false,
+    "interpretation": "No reproduction of Rocket memory growth in this generated workload; not proof of game stability."
+  },
+  "rocket_native_followup": {
+    "entry": "Tools/h700/Rocket Diagnostic.pak",
+    "stage": ".userdata/h700/nextui-mkxp-rocket-diag-v1",
+    "manifest_sha256": "9dc959a4fd11f8eaed54bc81f4a95be8d725a3ddeadac65219000d5bbbcd1002",
+    "host_suite": {"run": 293, "passed": 292, "skipped": 1},
+    "device_hash_manifest": "PASS",
+    "execution": "TWO_RUNS_EXITED_0_AT_MEMORY_GUARD",
+    "observed_stops": [
+      {"rss_bytes": 424652800, "elapsed_seconds": 9.75, "save": "UNCHANGED"},
+      {"rss_bytes": 424595456, "elapsed_seconds": 8.84, "save": "UNCHANGED"}
+    ],
+    "limits": {"rss_cutoff_mib": 400, "script_seconds": 90, "runner_seconds": 100},
+    "normal_rocket_config": "UNCHANGED; hash matched private source config before setup",
+    "save_policy": "Snapshot existing Game.rxdata on each manual run; no automatic save or restore; original remains selected for loading."
+  },
+  "native_v2": {
+    "engine_sha256": "e5240b938bf4b000484331e907eecce55a3921441e299de4b3a025539215165d",
+    "payload_manifest_sha256": "a71a214963f7b4b857ac5e21766a7c2a328eb382b6353efbd24bb8f93ef1c746",
+    "rocket_runner_manifest_sha256": "bbcf0b0f18531baaa2d5f912a0a672ff57f5ce8a9cd6924f0f705f1c4af095ab",
+    "stage": ".userdata/h700/nextui-mkxp-graphics-v2",
+    "elf_type": "EXEC",
+    "first_load_address": "0x400000",
+    "incremental_cross_build": "PASS",
+    "device_manifest_and_loader": "PASS",
+    "device_rendering": "NOT_TESTED",
+    "notes": "At most 32 large-image definition caller offsets for offline symbolization; same memory/time guard."
+  },
+  "runtime_fix": false,
+  "stage": ".userdata/h700/nextui-mkxp-graphics-v1",
+  "entry": "Tools/h700/Graphics Diagnostic.pak",
+  "limits": {"rss_cutoff_mib": 400, "rss_check_frames": 10, "script_seconds": 70, "runner_seconds": 80},
+  "warning": "Cutoffs are best-effort, not an OOM guarantee; driver residency is not measured by texture byte estimates."
+}

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "observed": "2026-10-29",
+  "scope": "source-page-triage-only",
+  "automatic_bundle_download": false,
+  "payloads_inspected": false,
+  "games": [
+    {
+      "id": "sage",
+      "name": "Pokemon Sage",
+      "source_page": "https://www.mediafire.com/file/03axirb5x2he3is/Sage+2.0.6.1++Public+Copy.zip",
+      "source_level": "owner-selected-hosting-page",
+      "page_access": "OK",
+      "page_claimed_version": "2.0.6.1",
+      "page_claimed_size": "273.64 MB",
+      "page_claimed_upload": "2017-10-26 20:33:41",
+      "selected_input": "Owner-supplied original ZIP from the selected link",
+      "payload_sha256": null,
+      "essentials_version": null,
+      "native_calls_reviewed": false,
+      "h700_result": "NOT_TESTED",
+      "pause_menu": "DISABLED_PENDING_ADAPTER",
+      "blockers": ["Private archive absent", "Developer provenance/version must be confirmed from supplied files"]
+    },
+    {
+      "id": "reborn",
+      "name": "Pokemon Reborn",
+      "source_page": "https://www.rebornevo.com/pr/download/",
+      "source_level": "upstream-reported",
+      "page_access": "OK",
+      "page_claimed_version": "19.5",
+      "page_claimed_size": "approximately 700 MB download; 750 MB storage requirement",
+      "selected_input": "Windows 19.5 package for data-only inventory, provisional until layout is inspected",
+      "linux_input": "Page offers Game.AppImage; CPU architecture not established from that label",
+      "upstream_ram_requirement": "4 GB or more",
+      "upstream_graphics_requirement": "OpenGL 2.1 or later",
+      "faq_page": "https://www.rebornevo.com/pr/gamefaq/",
+      "faq_save_file": "Game.rxdata",
+      "payload_sha256": null,
+      "essentials_version": null,
+      "native_calls_reviewed": false,
+      "h700_result": "NOT_TESTED",
+      "pause_menu": "DISABLED_PENDING_ADAPTER",
+      "blockers": ["Private archive absent", "Published RAM requirement exceeds H700 physical memory", "Bundled-engine/script/API requirements unknown"]
+    },
+    {
+      "id": "team-rocket-lucksack",
+      "name": "Pokemon Team Rocket Edition (LucksackGames)",
+      "source_page": "https://lucksackgames.itch.io/pokemon-team-rocket-edition",
+      "source_level": "owner-selected-creator-page",
+      "page_access": "HTTP_403",
+      "page_claimed_version": null,
+      "selected_input": "Owner-supplied original download from this exact creator page, or its privately extracted game folder",
+      "payload_sha256": null,
+      "essentials_version": null,
+      "native_calls_reviewed": false,
+      "h700_result": "NOT_TESTED",
+      "pause_menu": "DISABLED_PENDING_ADAPTER",
+      "blockers": ["Creator page denied automated access", "Private payload and exact release absent", "Engine and installer format unknown"]
+    }
+  ],
+  "distribution": "NO_GAME_ASSETS"
+}
