@@ -1,0 +1,111 @@
+# Private native graphics diagnostic — #52
+
+## Scope and provenance
+
+Rocket repeatedly runs out of memory despite only ~25 MiB of undisposed bitmap
+pixel estimates. This diagnostic is **not a fix** and contains no game/RTP data.
+It must not replace `Emus/h700/RMXP.pak/engine` or its configuration.
+Knight Blade remains at its independently verified 100% playability milestone.
+
+The engine is pinned to mkxp-z commit
+`37a04d14413454551a7b6aadbb4e93e67168accb`. Original engine source is GPL-2.0-or-later;
+the new diagnostic header, source instrumentation tool and generated stress
+script are original MIT code. The private candidate is not a public release;
+existing source/reproduction/license gates still apply.
+
+`scripts/instrument_h700_graphics.py --source-copy <separate-engine-source>`
+validates all three original source hashes before writing anything, then adds
+`native/graphics_diagnostics.hpp` to the copy and hooks the GL texture wrapper,
+texture pool and `Bitmap::stretchBlt`. Running it on modified/wrong input fails.
+Never point it at the working/shared engine source tree.
+
+## What the counters mean
+
+Enabled only by `NEXTUI_GL_DIAGNOSTICS=1` in the diagnostic runner:
+
+- generated/deleted texture names; texture image definitions and redefinitions;
+- estimated live/peak level-zero RGBA bytes, cumulative image and upload bytes;
+- subimage uploads and attempted bitmap stretch/blit operations;
+- texture-pool occupancy (a subset of live texture bytes, not additive);
+- resident process pages from `/proc/self/statm` (4096-byte pages on this H700).
+
+`NEXTUI_GL` lines are emitted at most every two seconds during relevant calls,
+up to 90 reports. Texture accounting holds at most 65536 IDs and marks
+`incomplete=1` if coverage is lost. Counters are shared across translation units
+and called on the GL thread. No diagnostic GL calls, synchronization, GC changes
+or buffer flushes are added. Only texture-wrapper calls are covered: mipmaps,
+buffers, driver-internal versions, pending GPU commands and allocation failures
+are not measured. Byte counts describe requested RGBA storage, not proven GPU
+residency or successful driver allocation. Shader texture binds outside the
+wrapper are not counted; image uploads use the wrapper's current binding.
+
+## Reproduction and host verification
+
+1. Make a separate private copy of the existing pinned cross-build job, preserving
+   its build directory and dependencies. This is an incremental private build,
+   **not** evidence of a clean-from-source public reproduction.
+2. Run the instrumentation tool against that copy's `src` directory.
+3. In the existing pinned sandbox, bind the copied job as `/job`, the unchanged
+   GCC 8.3/sysroot/native-Ruby inputs at the original build paths, and run
+   `meson compile -C /job/build -j 2`.
+4. Stage only into the copied job:
+   `meson install -C /job/build --no-rebuild --destdir /job/diagnostic-staged --tags mkxp-z`.
+5. Assemble `engine`, its installed `stdlib`, GPL `COPYING`, and the source-only
+   `tests/hardware/graphics-stress/{run.sh,stress.rb,mkxp.json}`. Hash every file
+   into `SHA256SUMS` before transfer. No game files belong in this payload.
+
+Sandbox image: `sha256:1c4ddd5655ad020d5e320e2181a04e4356af7c0e70f2be3cd5e901657cd8596b`.
+Network disabled, unprivileged UID 1000, no capabilities, read-only container
+root, two CPUs/4 GiB memory; pinned inputs are the existing engine build inputs
+recorded in `build/h700-engine/mkxp-z-profile.json` and ABI/build evidence.
+
+Observed 2026-10-30:
+
+| Level | Command/check | Result |
+| --- | --- | --- |
+| verified-on-host | pinned-source instrumentation | PASS, all original hashes/anchors matched |
+| verified-on-host | incremental AArch64 cross-build | PASS (20 build steps) |
+| verified-on-host | `python3 -m unittest discover -s tests` in pinned container with Ruby | 291 tests, 290 pass, one optional skip |
+| verified-on-host | new C++ ledger test | reallocation, delete, upload counts, opt-in, 64-bit sizing and unknown-ID handling pass |
+| verified-on-host | synthetic Ruby stress control flow | complete run and early high-memory stop both pass; disposal in ensure verified |
+| verified-on-H700 | payload hash manifest | PASS |
+| verified-on-H700 | `/lib/ld-linux-aarch64.so.1 --verify ./engine` | exit 0; no engine main/rendering executed |
+| verified-on-H700 | loader `--list` with existing NextUI library path | all dependencies resolved |
+| untested | actual rendering, memory trajectory and normal return | owner tool launch needed |
+
+Installed candidate SHA-256:
+`32ddd436259ba75db60abab6208f7d8556b571ed402df8ed8e3349546e3eade9`.
+Payload manifest SHA-256:
+`ae25e11f0f391ceec7542ae5c69f6b1161949294c653129a678cc740f1eb513e`.
+Shared engine before/after SHA-256:
+`33b15913859596645d4051bed403e6f0e0953e6d8366db3b06665a9a96ce73f3`.
+
+## Manual hardware checklist (German)
+
+1. Über NextUI **Tools → Graphics Diagnostic** starten, nicht über SSH.
+2. Eine erzeugte grüne Kachelfläche ist normal. Es werden nacheinander kleine
+   und sehr hohe Quellbilder sowie Bildkopien getestet (2400 Frames bei 40 FPS,
+   nominell etwa eine Minute).
+3. Der Test beendet sich selbst und kehrt zu NextUI zurück. Die Ruby-Seite
+   beendet ihn bei mehr als 400 MiB RSS (Prüfung alle zehn Frames) oder nach
+   70 Sekunden; der Runner hat zusätzlich ein 80-Sekunden-Prozesslimit.
+   Das ist keine absolute OOM-Garantie: einzelne native Aufrufe können zwischen
+   den Prüfungen zusätzlichen Speicher anfordern oder blockieren.
+4. Kein Spiel laden, nichts speichern, keine weiteren Tasten erforderlich.
+   Danach melden, ob NextUI wieder erschien oder das Gerät ausgegangen ist.
+   Letzteres wäre ein Fehler, nicht ein erwartetes Testergebnis.
+
+Payload: `.userdata/h700/nextui-mkxp-graphics-v1/`.
+Logs: `runs/run-*/run.log` inside that directory. The runner checks its own
+manifest, refuses a running game or menu, limits core/log output, clears the
+environment and uses null audio. It does not kill NextUI, manipulate shutdown
+markers, restart services or change firmware/kernel/swap settings.
+
+`GRAPHICS_STRESS_COMPLETE` means the script completed; `GRAPHICS_STRESS_STOP`
+means its memory/time cutoff was reached. Neither marker proves Rocket works.
+Keep both the counters and process-exit marker when interpreting a run. A
+passing generated workload does not rule out a Rocket-specific native path.
+
+Rollback: while no diagnostic process is running, remove only the separately
+installed `Tools/h700/Graphics Diagnostic.pak` entry and private diagnostic
+directory after preserving logs. No rollback of the shared engine is needed.

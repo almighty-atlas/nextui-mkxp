@@ -241,6 +241,10 @@ repeated tile-blit stress test. A separate diagnostic engine build must not
 replace the shared working Pak or Knight Blade runtime. No additional
 play-until-OOM test is requested on the unchanged runtime.
 
+The separate [native graphics diagnostic](H700_GRAPHICS_DIAGNOSTICS.md) is now
+cross-built and staged with loader/hash checks; actual rendering remains
+untested until a normal NextUI Tools launch. It does not replace the game engine.
+
 ## Verification
 
 | Level | Check | Result |
