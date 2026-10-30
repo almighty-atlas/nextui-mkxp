@@ -34,10 +34,26 @@
     "manifest_sha256": "9dc959a4fd11f8eaed54bc81f4a95be8d725a3ddeadac65219000d5bbbcd1002",
     "host_suite": {"run": 293, "passed": 292, "skipped": 1},
     "device_hash_manifest": "PASS",
-    "execution": "NOT_TESTED",
+    "execution": "TWO_RUNS_EXITED_0_AT_MEMORY_GUARD",
+    "observed_stops": [
+      {"rss_bytes": 424652800, "elapsed_seconds": 9.75, "save": "UNCHANGED"},
+      {"rss_bytes": 424595456, "elapsed_seconds": 8.84, "save": "UNCHANGED"}
+    ],
     "limits": {"rss_cutoff_mib": 400, "script_seconds": 90, "runner_seconds": 100},
     "normal_rocket_config": "UNCHANGED; hash matched private source config before setup",
     "save_policy": "Snapshot existing Game.rxdata on each manual run; no automatic save or restore; original remains selected for loading."
+  },
+  "native_v2": {
+    "engine_sha256": "e5240b938bf4b000484331e907eecce55a3921441e299de4b3a025539215165d",
+    "payload_manifest_sha256": "a71a214963f7b4b857ac5e21766a7c2a328eb382b6353efbd24bb8f93ef1c746",
+    "rocket_runner_manifest_sha256": "bbcf0b0f18531baaa2d5f912a0a672ff57f5ce8a9cd6924f0f705f1c4af095ab",
+    "stage": ".userdata/h700/nextui-mkxp-graphics-v2",
+    "elf_type": "EXEC",
+    "first_load_address": "0x400000",
+    "incremental_cross_build": "PASS",
+    "device_manifest_and_loader": "PASS",
+    "device_rendering": "NOT_TESTED",
+    "notes": "At most 32 large-image definition caller offsets for offline symbolization; same memory/time guard."
   },
   "runtime_fix": false,
   "stage": ".userdata/h700/nextui-mkxp-graphics-v1",

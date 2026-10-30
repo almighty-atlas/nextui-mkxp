@@ -10,7 +10,7 @@ GAME_ID = '6af6b0591ce6305a04030834d7a9c40a57490a98b4fb0d60e7abc4fc66273a17'
 DEVICE_BASE = '/mnt/SDCARD/.userdata/h700'
 STATE = DEVICE_BASE + '/nextui-mkxp/' + GAME_ID
 DIAGNOSTIC = DEVICE_BASE + '/nextui-mkxp-rocket-diag-v1'
-NATIVE = DEVICE_BASE + '/nextui-mkxp-graphics-v1'
+NATIVE = DEVICE_BASE + '/nextui-mkxp-graphics-v2'
 
 
 def prepare(config_path, output):

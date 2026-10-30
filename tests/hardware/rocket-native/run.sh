@@ -9,7 +9,7 @@ test "${1-}" = --from-nextui-tools
 test "${IS_NEXT-}:${PLATFORM-}" = yes:h700
 ! pidof nextui.elf >/dev/null 2>&1
 ! pidof engine >/dev/null 2>&1
-native=/mnt/sdcard/.userdata/h700/nextui-mkxp-graphics-v1
+native=/mnt/sdcard/.userdata/h700/nextui-mkxp-graphics-v2
 state=/mnt/sdcard/.userdata/h700/nextui-mkxp/6af6b0591ce6305a04030834d7a9c40a57490a98b4fb0d60e7abc4fc66273a17
 (cd "$base" && sha256sum -c SHA256SUMS >/dev/null)
 (cd "$native" && sha256sum -c SHA256SUMS >/dev/null)

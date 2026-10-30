@@ -153,6 +153,47 @@ Host tests now total 293 (292 pass, one optional skip), including guard
 memory/time exits, alias chaining, refusal of wrong inputs/existing outputs,
 and preservation of the original registration bytes.
 
+### First two guarded Rocket results
+
+Both owner runs ended normally via `ROCKET_DIAGNOSTIC_STOP` rather than an OOM:
+424652800 bytes at 9.75 seconds and 424595456 bytes at 8.84 seconds, both
+`ROCKET_DIAGNOSTIC_EXIT=0` and `ROCKET_SAVE_UNCHANGED`. The device remained up;
+the kernel log contains only the earlier OOM events. This early return is the
+guard working as designed, not a claim that Rocket is fixed.
+
+One native sample before the cutoff recorded 149863272 bytes of requested live
+level-zero texture storage across 77 names. The other run hit the cutoff before
+the next periodic native sample; its last sample was 12512104 bytes. Periodic
+sampling therefore misses important allocation bursts around map loading.
+
+Diagnostic engine v2 adds at most 32 `NEXTUI_GL_IMAGE` lines for image definitions
+of at least 1 MiB, including dimensions, texture ID and an image-relative caller
+address from `dladdr`. This captures the burst's allocation sites for offline
+symbolization with the exact candidate ELF (and ELF load-address correction if
+it is not PIE). The call-site wrapper is noinline; no stack walking is done.
+These are still requested sizes, not a proof that driver allocation succeeded.
+No memory fix, GC threshold change or higher cutoff is introduced.
+
+V2 incremental cross-build and install staging pass; host suite remains 293
+tests (292 pass, one optional skip). Device manifest and loader checks pass;
+actual v2 rendering is untested. Engine SHA-256:
+`e5240b938bf4b000484331e907eecce55a3921441e299de4b3a025539215165d`.
+Engine payload manifest SHA-256:
+`a71a214963f7b4b857ac5e21766a7c2a328eb382b6353efbd24bb8f93ef1c746`.
+Updated Rocket runner manifest SHA-256:
+`bbcf0b0f18531baaa2d5f912a0a672ff57f5ce8a9cd6924f0f705f1c4af095ab`.
+The matching ELF is `EXEC` with first LOAD virtual address `0x400000`, not PIE.
+For symbolization add `0x400000` to a resolved `caller_offset` before running
+`addr2line -f -C -e <exact-v2-ELF>` (subtract one to locate the call instruction).
+Function symbols are available; source line DWARF is not, so line numbers may
+be reported as unknown. A zero/unresolved offset must not be symbolized as a
+real caller. Tail-call optimization may attribute the return PC to a higher
+caller; treat the symbol as context, not exact allocation ownership.
+
+The guarded Rocket runner selects `nextui-mkxp-graphics-v2`; the successful
+green test and original v1 engine remain separately available. Do not interpret
+the v1 green test as execution verification of v2's new call-site reporting.
+
 Rollback: while no diagnostic process is running, remove only the separately
 installed `Tools/h700/Graphics Diagnostic.pak` entry and private diagnostic
 directory after preserving logs. No rollback of the shared engine is needed.

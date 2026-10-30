@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <dlfcn.h>
 #include <unordered_map>
 
 namespace NextUIGraphics {
@@ -17,6 +18,7 @@ struct Ledger {
     uint64_t generated = 0, deleted = 0, images = 0, subimages = 0;
     uint64_t imageBytes = 0, uploadBytes = 0, liveBytes = 0, peakBytes = 0;
     uint64_t blits = 0, poolBytes = 0, poolObjects = 0, reports = 0;
+    uint64_t largeReports = 0;
     bool overflow = false;
 
     static uint64_t pixels(int w, int h) {
@@ -81,8 +83,25 @@ inline void report(bool force = false) {
 inline void gen(unsigned id) { if (enabled()) ledger().gen(id); }
 inline void erase(unsigned id) { if (enabled()) ledger().erase(id); }
 inline void bind(unsigned id) { if (enabled()) ledger().bound = id; }
-inline void image(int w, int h, bool upload) {
-    if (enabled()) { ledger().image(w, h, upload); report(); }
+// Preserve a call site for offline addr2line. Only a small number of large
+// image definitions are sampled; no stack walking or per-tile symbol lookup.
+__attribute__((noinline)) inline void image(int w, int h, bool upload) {
+    if (!enabled()) return;
+    auto &s = ledger();
+    s.image(w, h, upload);
+    if (Ledger::pixels(w, h) >= 1024 * 1024 && s.largeReports < 32) {
+        Dl_info info = {};
+        void *pc = __builtin_return_address(0);
+        bool resolved = dladdr(pc, &info) != 0 && info.dli_fbase;
+        auto relative = resolved ? reinterpret_cast<uintptr_t>(pc) -
+                                   reinterpret_cast<uintptr_t>(info.dli_fbase) : 0;
+        std::fprintf(stderr,
+            "NEXTUI_GL_IMAGE id=%u w=%d h=%d upload=%d bytes=%llu caller_offset=0x%llx resolved=%d\n",
+            s.bound, w, h, upload, (unsigned long long)Ledger::pixels(w, h),
+            (unsigned long long)relative, resolved);
+        ++s.largeReports;
+    }
+    report();
 }
 inline void subimage(int w, int h) {
     if (enabled()) { ledger().subimage(w, h); report(); }

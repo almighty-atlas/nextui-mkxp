@@ -109,15 +109,16 @@ int main() {
     s.erase(5); assert(s.liveBytes == 0);
     s.bound = 9; s.image(1, 1, false); assert(s.overflow);
     gen(7); bind(7); image(8, 8, false); subimage(4, 4); blit(); pool(256, 1);
+    gen(8); bind(8); image(1024, 1024, false); erase(8);
     report(true);
-    assert(ledger().generated == (enabled() ? 1U : 0U));
+    assert(ledger().generated == (enabled() ? 2U : 0U));
 }
 '''
         with tempfile.TemporaryDirectory() as temp:
             source, binary = Path(temp) / 'test.cpp', Path(temp) / 'test'
             source.write_text(code)
             result = subprocess.run(['c++', '-std=c++11', '-Wall', '-Wextra', '-Werror',
-                                     '-I', str(ROOT / 'native'), str(source), '-o', str(binary)],
+                                     '-I', str(ROOT / 'native'), str(source), '-o', str(binary), '-ldl'],
                                     capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             for flag in ('0', '1'):
@@ -128,6 +129,7 @@ int main() {
                 if flag == '1':
                     self.assertIn('bytes=256', result.stderr)
                     self.assertIn('incomplete=0', result.stderr)
+                    self.assertIn('NEXTUI_GL_IMAGE id=8 w=1024 h=1024', result.stderr)
 
     def test_unknown_source_is_rejected_before_writes(self):
         spec = importlib.util.spec_from_file_location('instrument_graphics',
