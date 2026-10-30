@@ -8,9 +8,9 @@
 | Knight Blade | Owner-supplied English build; see inventory | RMXP / RGSS1, mkxp-z 37a04d1 | PLAYABLE on RG35XX Pro / NextUI-20261013-0 | [Boot](KNIGHT_BLADE_BOOT.md), [Pak tests](RMXP_BATCH_TEST.md), [pause menu](RMXP_PAUSE_MENU.md) | Private engine; full playthrough and public release not covered |
 | Pokémon Infinite Fusion | TBD (6.8.x reported on R36S only) | RPG Maker XP/mkxp-z variant TBD | NOT_TESTED | — | R36S success is not H700 evidence |
 | Pokémon Decay | TBD | Confirm upstream game package / Essentials version | NOT_TESTED | — | Scripts/plugins and native dependency audit needed |
-| Pokémon Sage | Owner-supplied 2.0.6.1 archive; title says 2.0 | RGSSAD v1; 209 script entries | NOT_TESTED | [Win32API shim](ESSENTIALS_WIN32_COMPAT.md) | Launches aborted before title (missing Win32API, Ruby 1.8 syntax, unset TEMP); per-game shim with in-memory repair installed, relaunch pending; no Flash intro/GIF/online features |
+| Pokémon Sage | Owner-supplied 2.0.6.1 archive; title says 2.0 | RGSSAD v1; 209 script entries | PARTIALLY_TESTED_ON_H700 | [Win32API shim](ESSENTIALS_WIN32_COMPAT.md) | Owner reached new game beyond name entry; scaling/text corrected; sustained stability and battle coverage not established |
 | Pokémon Reborn | Owner-supplied 19.5.0 Windows | Loose loader + 193 external Ruby files | NOT_TESTED | [Host inventory](FANGAME_HOST_INVENTORY.md) | Input/config/network review pending; upstream requires 4 GB RAM+ versus H700 ~973 MiB |
-| Pokémon Team Rocket Edition (LucksackGames) | Exact release unknown; supplied RAR/EXE/CAB hashed | RGSSAD v1; 211 script entries | NOT_TESTED | [Win32API shim](ESSENTIALS_WIN32_COMPAT.md) | Launches aborted before title (missing Win32API, Ruby 1.8 syntax, unset TEMP); per-game shim with in-memory repair installed, relaunch pending; no GIF/online features |
+| Pokémon Team Rocket Edition (LucksackGames) | Exact release unknown; supplied RAR/EXE/CAB hashed | RGSSAD v1; 211 script entries | FAILED_SUSTAINED_PLAY_ON_H700 | [Win32API shim](ESSENTIALS_WIN32_COMPAT.md) | Owner verified new game, name entry, dialogue and saving; repeated OOM kills and severe stutter persist despite bitmap-budget workaround; not stable |
 
 ## Current integration status (2026-10-29)
 

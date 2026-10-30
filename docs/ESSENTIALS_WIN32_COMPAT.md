@@ -144,6 +144,44 @@ reviewed shim version is upgraded in place. It refuses other
 existing preloads (e.g. the Knight Blade pause menu) and never touches the
 shared Pak. Knight Blade is unaffected.
 
+## Memory/performance follow-up — 2026-10-30
+
+**verified-on-H700, Rocket, NextUI-20261013-0:** the owner repeated normal
+play after the bitmap-budget change. Severe stutter persisted and the kernel
+again killed the engine: `RMXP_EXIT=137`, `SIGNAL=9`. Kernel accounting at the
+kill was anon-rss 154316 kB and file-rss 725080 kB. This is not a Ruby exception.
+
+The four available 10-second profiler windows reported:
+
+| Frames | Frames over 50 ms | Longest interval (ms) | GC time (ms) | RSS (MiB) | Budget-triggered collections |
+| --- | --- | --- | --- | --- | --- |
+| 222 | 7 | 3125 | 841 | 172 | 0 |
+| 349 | 6 | 819 | 290 | 388 | 0 |
+| 344 | 13 | 254 | 129 | 519 | 0 |
+| 362 | 8 | 247 | 145 | 528 | 0 |
+
+Startup/loading may be included in these intervals. Sampling often sees
+`Graphics.update` (which also waits for rendering/frame pacing); that alone
+does not identify CPU work. Other frequent locations are file existence checks
+and archive reads. The earlier claim that these samples established a Ruby CPU
+bottleneck was too strong. GPU/file mappings are also not exclusively textures.
+
+The bitmap-budget workaround **did not prevent the OOM**. Its counter subtracts
+disposals and estimates only one `width * height * 4` image per construction;
+it is neither live native memory nor cumulative allocation pressure. Native
+animated GIF loading allocates one texture per frame, and native clones and
+other temporary allocations are not all observed by `Bitmap#initialize`.
+These are confirmed accounting gaps, not proof of the actual leak's cause.
+The upstream texture reuse pool is bounded to 20 MB by default.
+
+Next step: measure bitmap creation/disposal/clone counts, animated-frame bytes,
+and native texture allocations/releases alongside RSS, before choosing a memory
+fix. Keep profiling bounded and compare identical gameplay with profiling off
+to quantify its overhead. Do not lower a GC threshold, enable swap/zram, change
+kernel settings, or claim stability based on the existing synthetic tests.
+No new runtime change was deployed for this report; no further owner retest
+is useful until the allocation accounting is improved.
+
 ## Verification
 
 | Level | Check | Result |
@@ -158,7 +196,9 @@ shared Pak. Knight Blade is unaffected.
 | verified-on-H700 | Shim `9e6faa8f…` (TEMP, Ruby 1.8 core methods) upgraded in place | checksums PASS; saves and shared runtime unchanged |
 | verified-on-H700 | Fourth launch (Sage, owner) | title screen reached; `StringInput` byte error |
 | verified-on-host | Private harness: both games' real `StringInput` + `FileInputMixin` after the shim | words/dwords/bytes and UTF-8 lines read correctly |
-| untested | Title screen, audio, controls, new game, save/load on H700 | needs owner launch |
+| verified-on-H700 (owner) | Title/menu, new game, name entry, Rocket dialogue and saving | exercised; see chronological observations above |
+| failed-on-H700 | Sustained Rocket play with bitmap budget | OOM repeats; severe stutter persists |
+| untested | Sustained stability, battle coverage and performance acceptance | not established |
 
 Rollback per game: restore `mkxp.json.pre-compat` over `mkxp.json`, then remove
 `compat/`.
