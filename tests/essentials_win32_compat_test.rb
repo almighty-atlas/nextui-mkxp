@@ -7,6 +7,8 @@ require 'tmpdir'
 # mkxp-z native Bitmap stand-in (size and dispose only).
 class Bitmap
   attr_reader :width, :height
+  attr_writer :frame_count
+  def frame_count = @frame_count || 1
   def initialize(width, height) = (@width, @height, @disposed = width, height, false)
   def dispose = @disposed = true
   def disposed? = @disposed
@@ -313,9 +315,45 @@ class EssentialsWin32CompatTest < Minitest::Test
     NextUIProfile.report(Process.clock_gettime(Process::CLOCK_MONOTONIC))
     line = File.read(File.join($HOME, 'nextui-profile.log'))
     assert_match(/\Aframes=3 slow=\d+ longest_ms=\d+ gc_ms=\d+ major_gc=\d+ rss_mb=\d+ bitmap_gc=\d+ top=/, line)
+    assert_equal 2, line.lines.size
+    assert_match(/^memory bitmap_counts=.*live_pixel_bytes_est=\d+.*native_update_ms=\d+ report_ms=/, line)
+    path = File.join($HOME, 'nextui-profile.log')
+    File.write(path, 'x' * (256 * 1024))
+    NextUIProfile.report(Process.clock_gettime(Process::CLOCK_MONOTONIC))
+    refute NextUIProfile.active?
+    assert_equal 256 * 1024, File.size(path)
   ensure
-    NextUIProfile.instance_variable_set(:@main, nil)
+    NextUIProfile.stop
     File.delete(File.join($HOME, 'nextui-profile')) rescue nil
+  end
+
+  def test_allocation_telemetry_counts_animation_copies_and_actual_disposals
+    NextUIBitmapTelemetry.instance_variable_set(:@counts, Hash.new(0))
+    NextUIBitmapTelemetry.instance_variable_set(:@sites, Hash.new(0))
+    NextUIBitmapTelemetry.instance_variable_set(:@sizes, Hash.new(0))
+    NextUIProfile.instance_variable_set(:@main, Thread.current)
+    bitmap = Bitmap.new(8, 8)
+    bitmap.frame_count = 10
+    assert_equal [2560, 10], NextUIBitmapTelemetry.estimate(bitmap)
+    copy = bitmap.clone
+    copy.dispose
+    copy.dispose
+    counts = NextUIBitmapTelemetry.instance_variable_get(:@counts)
+    assert_equal 1, counts[:create]
+    assert_equal 1, counts[:copy]
+    assert_equal 2560, counts[:copy_bytes]
+    assert_equal 1, counts[:dispose]
+    assert_equal 2560, counts[:dispose_bytes]
+    assert_match(/live_pixel_bytes_est=\d+/, NextUIBitmapTelemetry.summary)
+    # The new diagnostics must not alter the existing GC budget for copies.
+    pending = NextUIBitmapBudget.pending
+    bitmap.clone
+    assert_equal pending, NextUIBitmapBudget.pending
+    NextUIProfile.stop
+    bitmap.clone
+    assert_equal 2, counts[:copy]
+  ensure
+    NextUIProfile.stop
   end
 
   def test_undisposed_bitmaps_trigger_collection

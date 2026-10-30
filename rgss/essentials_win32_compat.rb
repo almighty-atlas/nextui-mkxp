@@ -228,15 +228,20 @@ class << Graphics
   def update(*args)
     NextUIScreen.follow
     NextUIProfile.frame
-    nextui_native_update(*args)
+    if NextUIProfile.active?
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      result = nextui_native_update(*args)
+      NextUIProfile.native_update(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started)
+      result
+    else
+      nextui_native_update(*args)
+    end
   end
 end
 
-# Essentials leaves many bitmaps to the garbage collector instead of disposing
-# them. Ruby only sees small wrapper objects, so it rarely collects while the
-# textures behind them fill the H700's ~1 GB (the kernel OOM-killed Rocket
-# at ~640 MB of GPU mappings). Count pixel bytes of bitmaps created and not
-# yet disposed, and collect once that exceeds LIMIT.
+# Experimental GC budget, not a proven OOM fix. This counts a single image's
+# pixels, not native memory; diagnostic accounting below also observes clones
+# and animation frames without changing this budget's behaviour.
 module NextUIBitmapBudget
   LIMIT = 48 * 1024 * 1024
   @pending = 0
@@ -259,17 +264,79 @@ module NextUIBitmapBudget
   end
 end
 
+# Opt-in allocation telemetry. Keep only scalar counters, never Bitmap
+# references or finalizers: observing a bitmap must not keep it alive.
+module NextUIBitmapTelemetry
+  @counts = Hash.new(0)
+  @sites = Hash.new(0)
+  @sizes = Hash.new(0)
+
+  class << self
+    def estimate(bitmap)
+      frames = bitmap.respond_to?(:frame_count) ? [bitmap.frame_count, 1].max : 1
+      [bitmap.width * bitmap.height * 4 * frames, frames]
+    end
+
+    def record(kind, bitmap)
+      return unless NextUIProfile.active?
+      bytes, frames = estimate(bitmap)
+      @counts[kind] += 1
+      @counts[:"#{kind}_bytes"] += bytes
+      @counts[:animated] += 1 if kind != :dispose && frames > 1
+      return if kind == :dispose
+      site = caller_locations(2, 12).find { |frame| !frame.path.include?('/compat/') }
+      label = site ? "#{site.path}:#{site.lineno}" : 'native'
+      label = 'other' unless @sites.key?(label) || @sites.size < 32
+      @sites[label] += bytes
+      size = "#{bitmap.width}x#{bitmap.height}x#{frames}"
+      size = 'other' unless @sizes.key?(size) || @sizes.size < 32
+      @sizes[size] += bytes
+    end
+
+    def summary
+      # Reachable/uncollected objects only, not GPU residency. This scan can
+      # add overhead and is deliberately restricted to diagnostic reports.
+      live = disposed = bytes = animated = 0
+      ObjectSpace.each_object(Bitmap) do |bitmap|
+        if bitmap.disposed?
+          disposed += 1
+        else
+          value, frames = estimate(bitmap)
+          live += 1
+          bytes += value
+          animated += 1 if frames > 1
+        end
+      end
+      counts = @counts.sort.map { |key, value| "#{key}=#{value}" }.join(',')
+      sites = @sites.sort_by { |_, value| -value }.first(4).map { |key, value| "#{value}:#{key}" }.join('|')
+      sizes = @sizes.sort_by { |_, value| -value }.first(4).map { |key, value| "#{value}:#{key}" }.join('|')
+      "bitmap_counts=#{counts} live_bitmaps=#{live} disposed_wrappers=#{disposed} " \
+        "live_pixel_bytes_est=#{bytes} live_animated=#{animated} alloc_sites=#{sites} alloc_sizes=#{sizes}"
+    end
+  end
+end
+
 class Bitmap
   alias_method :nextui_native_initialize, :initialize
   alias_method :nextui_native_dispose, :dispose
+  alias_method :nextui_native_initialize_copy, :initialize_copy
 
   def initialize(*args)
     nextui_native_initialize(*args)
+    NextUIBitmapTelemetry.record(:create, self)
     NextUIBitmapBudget.created(self)
   end
 
+  def initialize_copy(other)
+    nextui_native_initialize_copy(other)
+    NextUIBitmapTelemetry.record(:copy, self)
+  end
+
   def dispose
-    NextUIBitmapBudget.disposed(self) unless disposed?
+    unless disposed?
+      NextUIBitmapTelemetry.record(:dispose, self)
+      NextUIBitmapBudget.disposed(self)
+    end
     nextui_native_dispose
   end
 end
@@ -287,8 +354,19 @@ module NextUIProfile
     @main, @samples, @frames, @slow, @longest = Thread.current, Hash.new(0), 0, 0, 0.0
     @last = @report = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     @gc = GC.respond_to?(:total_time) ? GC.total_time : 0
-    Thread.new { loop { sleep 0.01; sample } }
+    @native_seconds = 0.0
+    @worker = Thread.new { loop { sleep 0.05; sample } }
   end
+
+  def self.active? = !@main.nil?
+
+  def self.stop
+    @main = nil
+    @worker&.kill
+    @worker = nil
+  end
+
+  def self.native_update(seconds) = @native_seconds += seconds
 
   def self.sample
     return unless @main
@@ -312,17 +390,25 @@ module NextUIProfile
   end
 
   def self.report(now)
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    path = File.join(ENV['HOME'], 'nextui-profile.log')
+    return stop if File.file?(path) && File.size(path) >= 256 * 1024
     gc = GC.respond_to?(:total_time) ? GC.total_time : 0
+    memory = NextUIBitmapTelemetry.summary
     top = @samples.sort_by { |_, count| -count }.first(6).map { |label, count| "#{count}x #{label}" }
-    File.open(File.join(ENV['HOME'], 'nextui-profile.log'), 'a') do |log|
+    File.open(path, 'a') do |log|
       log.puts(format('frames=%d slow=%d longest_ms=%.0f gc_ms=%.0f major_gc=%d rss_mb=%d bitmap_gc=%d top=%s',
                       @frames, @slow, @longest, (gc - @gc) / 1e6, GC.stat(:major_gc_count), rss_mb,
                       NextUIBitmapBudget.collections, top.join(' | ')))
+      log.puts(format('memory %s native_update_ms=%.0f report_ms=%.1f', memory,
+                      @native_seconds * 1000,
+                      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000))
     end
+    @native_seconds = 0.0
     @report, @gc, @frames, @slow, @longest = now, gc, 0, 0, 0.0
     @samples.clear
   rescue SystemCallError
-    @main = nil
+    stop
   end
 end
 NextUIProfile.start

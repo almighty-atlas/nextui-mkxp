@@ -179,14 +179,43 @@ and native texture allocations/releases alongside RSS, before choosing a memory
 fix. Keep profiling bounded and compare identical gameplay with profiling off
 to quantify its overhead. Do not lower a GC threshold, enable swap/zram, change
 kernel settings, or claim stability based on the existing synthetic tests.
-No new runtime change was deployed for this report; no further owner retest
-is useful until the allocation accounting is improved.
+No runtime change was deployed for that initial evidence report.
+
+### Allocation telemetry v2 (host-tested; device installation verified)
+
+The subsequent diagnostic shim counts creations, `initialize_copy` (clone/dup)
+and actual base `Bitmap#dispose` calls separately, with cumulative estimated
+pixel bytes for each category. Estimates include `frame_count` for native
+animations. Every report also inventories uncollected Bitmap wrappers, disposed
+wrappers and estimated pixels in currently undisposed objects. No bitmap is
+retained by the telemetry and no finalizer is added. Allocation-site and size
+tables are bounded to 32 keys plus an overflow bucket; only the top four are
+logged. Native temporary textures and driver residency still require engine-side
+instrumentation; these Ruby counters must not be labelled actual GPU usage.
+
+The profiler separately times the captured native `Graphics.update` (including
+rendering/waiting), reports its own reporting overhead, samples stacks at 20 Hz
+rather than 100 Hz, and stops at a 256 KiB existing-log threshold (the final
+report can overshoot the threshold by one bounded report). The GC budget and
+game logic are unchanged. With the profiling flag absent, no bitmap inventory
+or additional clock measurements are made.
+
+Installed for Sage and Rocket without starting either game; installed SHA-256
+`e5fac2c3c1932b745fc0a6de0e0a6b78e058e513b536fc24cdc60b17b1887063`.
+Existing saves matched their pre-install hashes. Old shim and profile log were
+retained as `compat/essentials_win32_compat.rb.before-telemetry` and
+`home/nextui-profile.before-telemetry.log` (if that log existed).
+
+Next hardware observation: load Rocket normally, walk for **20–30 seconds**,
+then quit normally; do not deliberately run to another OOM. Collect the new
+profile and compare RSS against create/copy/dispose and live-pixel estimates.
+The telemetry is not a memory fix and does not establish stability.
 
 ## Verification
 
 | Level | Check | Result |
 | --- | --- | --- |
-| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | 20 runs, 0 failures |
+| verified-on-host | Synthetic Ruby suite `tests/essentials_win32_compat_test.rb` (Ruby 3.1.3, pinned container) | allocation, animation/copy/disposal accounting, opt-in/report-size limits covered; root suite 288 tests, 287 pass, one optional skip |
 | verified-on-host | Private harness (not committed) that loads both games' real Win32API, controls, file and font-installer scripts after the shim | Window found; trigger only on first held frame; repeat from frame 21; release, dir4/dir8, B, A, F5 OK; save folder `.`; registry default; font installer no-op |
 | verified-on-host | Synthetic Ruby 1.8 repair cases in the same suite | PASS |
 | verified-on-H700 | Shim + updated `mkxp.json` installed for both games, prior `mkxp.json` kept as `mkxp.json.pre-compat` | checksums PASS; existing saves and shared runtime unchanged |

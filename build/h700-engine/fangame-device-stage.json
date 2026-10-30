@@ -68,7 +68,7 @@
   },
   "compat_adapter": {
     "script": "rgss/essentials_win32_compat.rb",
-    "sha256": "e3ef586e115f944c1590dc4417bf8aeba8f5751bb62f226a8a154cfaae0103c6",
+    "sha256": "e5fac2c3c1932b745fc0a6de0e0a6b78e058e513b536fc24cdc60b17b1887063",
     "installed_for": [
       "sage",
       "team-rocket-lucksack"
@@ -87,7 +87,8 @@
       "a2295d2f6f254a603f6b36f4434ad5a0dbed21c6aa0144337518846ab70a9fa4",
       "1b6ac0e02e5aec4a94756a1b377c850e00239949aab2d1d5275f0ceb8deb575d",
       "18355c267e0db188682dcc4be19b4a648f198cbfb836074d54e5887820727289",
-      "5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e"
+      "5f1bba203f65ea808107722eaa12c5a67032e6c09d3356310384faedd58b311e",
+      "e3ef586e115f944c1590dc4417bf8aeba8f5751bb62f226a8a154cfaae0103c6"
     ],
     "ruby18_repair": "in-memory, line-preserving; host harness: all 209 Sage and 211 Rocket sections compile",
     "temp_env": "TEMP/TMP default to per-game HOME",
@@ -97,8 +98,8 @@
     "mkxp_config": {
       "fontHeightReporting": 1
     },
-    "profiler": "opt-in via $HOME/nextui-profile; writes $HOME/nextui-profile.log",
-    "bitmap_budget": "GC.start after 48 MiB of created-but-undisposed bitmap pixels",
+    "profiler": "v2 opt-in via $HOME/nextui-profile; create/copy/dispose and animation pixel estimates, uncollected bitmap inventory, native update/report timing; stops at 256 KiB log threshold",
+    "bitmap_budget": "Unchanged experimental 48 MiB pixel budget; failed to prevent Rocket OOM; not actual native memory accounting",
     "profiler_enabled_on_device": [
       "sage",
       "team-rocket-lucksack"
