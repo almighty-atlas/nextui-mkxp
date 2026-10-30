@@ -211,6 +211,36 @@ then quit normally; do not deliberately run to another OOM. Collect the new
 profile and compare RSS against create/copy/dispose and live-pixel estimates.
 The telemetry is not a memory fix and does not establish stability.
 
+### Result of allocation telemetry v2 — verified-on-H700
+
+Owner retest again ended with SIGKILL/exit 137, confirmed by the kernel OOM
+log (anon-rss 204408 kB, file-rss 673184 kB). The final diagnostic window
+reported RSS 855 MiB, 25 undisposed bitmap wrappers, estimated live pixels
+25878528 bytes, no live animated bitmaps, four copies, 645 creations and 618
+explicit native-base disposal calls cumulatively. These counts do not include
+all allocations made inside the engine.
+
+RSS initially fell from 578 to 238 MiB after a Ruby major collection and stayed
+around 234–239 MiB for several windows. Later it rose 481 → 680 → 855 MiB while
+live bitmap estimates stayed around 25–29 MiB, with no major collection after
+count 19. The final window contained an interval of 7996 ms. Reporting cost was
+17–31 ms per 10-second window; it cannot explain every reported long interval,
+but an unprofiled control is still needed for timing claims.
+
+Thus the data does not support blaming a growing live Ruby bitmap cache or
+animated GIFs for this run. Neither does it prove a driver leak: native
+temporary resources, pending commands, disposed-but-uncollected wrappers and
+driver-internal allocation/versioning remain unmeasured. Very tall tilesets
+(256x16064 pixels) and frequent tilemap `blt` calls are observed, not yet proven
+causes.
+
+The next diagnostic must be below Ruby: count native texture allocation,
+reallocation and deletion, pooled resources and blit/upload activity, correlate
+those with process mappings and frame times, and validate using a game-free
+repeated tile-blit stress test. A separate diagnostic engine build must not
+replace the shared working Pak or Knight Blade runtime. No additional
+play-until-OOM test is requested on the unchanged runtime.
+
 ## Verification
 
 | Level | Check | Result |
