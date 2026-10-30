@@ -71,7 +71,7 @@ Observed 2026-10-30:
 | verified-on-H700 | payload hash manifest | PASS |
 | verified-on-H700 | `/lib/ld-linux-aarch64.so.1 --verify ./engine` | exit 0; no engine main/rendering executed |
 | verified-on-H700 | loader `--list` with existing NextUI library path | all dependencies resolved |
-| untested | actual rendering, memory trajectory and normal return | owner tool launch needed |
+| verified-on-H700 | owner tool launch, generated graphics | `GRAPHICS_STRESS_COMPLETE`, `GRAPHICS_STRESS_EXIT=0`; menu process present afterward |
 
 Installed candidate SHA-256:
 `32ddd436259ba75db60abab6208f7d8556b571ed402df8ed8e3349546e3eade9`.
@@ -105,6 +105,53 @@ markers, restart services or change firmware/kernel/swap settings.
 means its memory/time cutoff was reached. Neither marker proves Rocket works.
 Keep both the counters and process-exit marker when interpreting a run. A
 passing generated workload does not rule out a Rocket-specific native path.
+
+## Observed generated-workload result
+
+The owner saw the expected green display. The script completed all three
+phases; native counter reports cover more than 1.3 million attempted blits and
+1,874,329,600 cumulative uploaded bytes. Resident memory ranged from 18992 to
+23813 pages (about 74–93 MiB) and ended near 79 MiB. Reported live texture
+level-zero estimates stayed around 5–6 MiB. No accounting overflow was reported.
+The latest kernel OOM messages still refer to the earlier Rocket processes,
+not this diagnostic. This workload does **not** reproduce Rocket's growth.
+
+## Next controlled run: Rocket with native counters
+
+`scripts/prepare_rocket_native_diagnostic.py` creates a new configuration only
+from the reviewed Rocket registration. It refuses an existing output directory,
+keeps the game folder, settings and compatibility preload, adds a memory guard,
+and redirects diagnostic userdata to an isolated directory. The normal Rocket
+entry and shared engine are untouched. Installation is hash-verified, but this
+follow-up run is **not yet tested on H700**.
+
+Manual entry: **Tools → Rocket Diagnostic**. It uses the same candidate engine
+as the successful green test and reads the existing Rocket game/save. Load the
+save, walk briefly (about 20 seconds), and do **not** save during this diagnostic.
+No game files are packaged with the tool.
+
+Every ten calls through `Graphics.update`, the extra preload checks resident
+memory and elapsed time. Above 400 MiB or 90 seconds since preload it requests
+normal exit and logs `ROCKET_DIAGNOSTIC_STOP`; the runner adds a 100-second
+process timeout. These are best-effort bounds, not a guarantee against a large
+allocation or stalled native operation between checks. Rendering uses normal
+audio and the reviewed controller bindings. The previous Ruby stack/allocation
+profiler is not enabled in this run, so native counter collection can be
+compared without its sampling/inventory overhead; the experimental GC budget
+and compatibility fixes otherwise remain unchanged.
+
+On each run, the runner snapshots an existing `Game.rxdata` into the private
+run directory before starting. It does not automatically save or restore it;
+it reports whether its checksum changed. The normal game's lock is held for
+the run and removed on exit. Log output is drained but retained only up to 512
+truncated lines; **no file-size ulimit is applied to the game or its saves**.
+
+Follow-up payload: `.userdata/h700/nextui-mkxp-rocket-diag-v1/`.
+Logs and save snapshot: `runs/run-*/` below that directory. Tool payload manifest
+SHA-256: `9dc959a4fd11f8eaed54bc81f4a95be8d725a3ddeadac65219000d5bbbcd1002`.
+Host tests now total 293 (292 pass, one optional skip), including guard
+memory/time exits, alias chaining, refusal of wrong inputs/existing outputs,
+and preservation of the original registration bytes.
 
 Rollback: while no diagnostic process is running, remove only the separately
 installed `Tools/h700/Graphics Diagnostic.pak` entry and private diagnostic
